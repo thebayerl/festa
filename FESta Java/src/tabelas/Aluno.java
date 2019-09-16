@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 
 @Entity
 @Table(name="aluno")
@@ -42,6 +46,33 @@ public class Aluno {
 		this.dataIngresso = dataIngresso;
 		this.usuarioId = usuarioId;
 		this.cursoId = cursoId;
+	}
+	
+	public void create() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {			
+			// start a transaction
+			session.beginTransaction();
+			
+			// save the Aluno object
+			System.out.println("Saving the Aluno...");
+			session.save(this);
+			
+			// commit transaction
+			session.getTransaction().commit();
+			
+			System.out.println("Done!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
 	}
 
 	public int getId() {
