@@ -1,4 +1,4 @@
-package com.fes.entityClasses;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,8 +31,11 @@ public class Aluno {
 	@Column(name="curso_id")
 	private int cursoId;
 
-	public Aluno(String matricula, String nome, String dataNascimento, String dataIngresso, int usuarioId,
+	
+	public Aluno(int id, String matricula, String nome, String dataNascimento, String dataIngresso, int usuarioId,
 			int cursoId) {
+		super();
+		this.id = id;
 		this.matricula = matricula;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;

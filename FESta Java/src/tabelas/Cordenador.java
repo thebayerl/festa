@@ -1,4 +1,4 @@
-package com.fes.entityClasses;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
