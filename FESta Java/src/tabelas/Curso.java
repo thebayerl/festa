@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 @Entity
 @Table(name="curso")
 public class Curso {
@@ -19,7 +23,34 @@ public class Curso {
 		this.id = id;
 		this.codigoTurma = codigoTurma;
 	}
-
+	
+	public void create() {
+		// criando session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		
+		// criando session
+		Session session = factory.getCurrentSession();
+		
+		try {			
+			// iniciando a transação
+			session.beginTransaction();
+			
+			// salvando o objeto
+			System.out.println("Salvando o Curso...");
+			session.save(this);
+			
+			// finalizando transação
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}

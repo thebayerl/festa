@@ -60,13 +60,13 @@ public class Aluno {
 			session.beginTransaction();
 			
 			// save the Aluno object
-			System.out.println("Saving the Aluno...");
+			System.out.println("Salvando o Aluno...");
 			session.save(this);
 			
 			// commit transaction
 			session.getTransaction().commit();
 			
-			System.out.println("Done!");
+			System.out.println("Feito!");
 			
 		} catch(Exception exc){
 		}
