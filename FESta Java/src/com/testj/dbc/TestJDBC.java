@@ -7,9 +7,9 @@ public class TestJDBC {
 
 	public static void main(String[] args) {
 		
-		String jdbcUrl = "jdbc:mysql://localhost:3306/festa?useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
-		String user = "admin";
-		String password = "123";
+		String jdbcUrl = "jdbc:mysql://remotemysql.com:3306/6BkoHsgUIY?useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
+		String user = "6BkoHsgUIY";
+		String password = "DXaGJHcRpC";
 		try {
 			System.out.println("onnecting to database: " + jdbcUrl);
 			
