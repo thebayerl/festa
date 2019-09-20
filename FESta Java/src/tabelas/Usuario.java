@@ -40,13 +40,12 @@ public class Usuario {
 			session.beginTransaction();
 			
 			// salvando o objeto
-			System.out.println("Salvando o Usuario...");
 			session.save(this);
 			
 			// finalizando transação
 			session.getTransaction().commit();
 			
-			System.out.println("Pronto!");
+			System.out.println("Commited!");
 			
 		} catch(Exception exc){
 		}
