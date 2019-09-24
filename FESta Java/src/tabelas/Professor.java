@@ -13,8 +13,8 @@ import org.hibernate.cfg.Configuration;
 public class Professor {
 	
 	@Id
-	@Column(name="id")
-	private int id;
+	@Column(name="usuario_id")
+	private int usuarioId;
 	
 	@Column(name="nome")
 	private String nome;
@@ -24,9 +24,6 @@ public class Professor {
 	
 	@Column(name="nivel_formacao")
 	private String nivelFormacao;
-	
-	@Column(name="usuario_id")
-	private int usuarioId;
 	
 	@Column(name="cordenador_id")
 	private int cordenadorId;
@@ -67,14 +64,6 @@ public class Professor {
 		}
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -117,8 +106,8 @@ public class Professor {
 
 	@Override
 	public String toString() {
-		return "Professor [id=" + id + ", nome=" + nome + ", matricula=" + matricula + ", nivelFormacao="
-				+ nivelFormacao + ", usuarioId=" + usuarioId + ", cordenadorId=" + cordenadorId + "]";
+		return "Professor [usuarioId=" + usuarioId + ", nome=" + nome + ", matricula=" + matricula + ", nivelFormacao="
+				+ nivelFormacao + ", cordenadorId=" + cordenadorId + "]";
 	}
 	
 }

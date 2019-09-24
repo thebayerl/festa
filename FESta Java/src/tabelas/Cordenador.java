@@ -13,18 +13,17 @@ import org.hibernate.cfg.Configuration;
 public class Cordenador {
 	
 	@Id
-	@Column(name="id")
-	private int id;
+	@Column(name="usuario_id")
+	private int usuarioId;
 	
 	@Column(name="nome")
 	private String nome;
 	
-	@Column(name="usuario_id")
-	private int usuarioId;
+
 
 	public Cordenador(String nome, int usuarioId) {
-		this.nome = nome;
 		this.usuarioId = usuarioId;
+		this.nome = nome;
 	}
 	
 	public void create() {
@@ -54,14 +53,6 @@ public class Cordenador {
 		}
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -80,7 +71,7 @@ public class Cordenador {
 
 	@Override
 	public String toString() {
-		return "Cordenador [id=" + id + ", nome=" + nome + ", usuarioId=" + usuarioId + "]";
+		return "Cordenador [usuarioId=" + usuarioId + ", nome=" + nome + "]";
 	}
 	
 }

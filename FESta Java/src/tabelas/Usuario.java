@@ -21,13 +21,23 @@ public class Usuario {
 	
 	@Column(name="senha")
 	private String senha;
+	
+	@Column(name="rg")
+	private int rg;
+	
+	@Column(name="cpf")
+	private int cpf;
 
-	public Usuario(int id, String username, String senha) {
+	
+	public Usuario(int id, String username, String senha, int rg, int cpf) {
+		super();
 		this.id = id;
 		this.username = username;
 		this.senha = senha;
+		this.rg = rg;
+		this.cpf = cpf;
 	}
-	
+
 	public void create() {
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
@@ -78,9 +88,27 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	public int getRg() {
+		return rg;
+	}
+
+	public void setRg(int rg) {
+		this.rg = rg;
+	}
+
+	public int getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(int cpf) {
+		this.cpf = cpf;
+	}
+
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", username=" + username + ", senha=" + senha + "]";
+		return "Usuario [id=" + id + ", username=" + username + ", senha=" + senha + ", rg=" + rg + ", cpf=" + cpf
+				+ "]";
 	}
+
 	
 }

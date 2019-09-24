@@ -14,9 +14,6 @@ import org.hibernate.cfg.Configuration;
 public class Aluno {
 	
 	@Id
-	@Column(name="id")
-	private int id;
-	
 	@Column(name="matricula")
 	private String matricula;
 	
@@ -36,10 +33,9 @@ public class Aluno {
 	private int cursoId;
 
 	
-	public Aluno(int id, String matricula, String nome, String dataNascimento, String dataIngresso, int usuarioId,
+	public Aluno(String matricula, String nome, String dataNascimento, String dataIngresso, int usuarioId,
 			int cursoId) {
 		super();
-		this.id = id;
 		this.matricula = matricula;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
@@ -49,18 +45,45 @@ public class Aluno {
 	}
 	
 	public void create() {
+		boolean erro = false;
 		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).addAnnotatedClass(Curso.class).addAnnotatedClass(Aluno.class).buildSessionFactory();
 		
 		//create session
 		Session session = factory.getCurrentSession();
 		
-		try {			
+		try {
 			// start a transaction
 			session.beginTransaction();
 			
-			// save the object
-			session.save(this);
+			
+			// testando a validade dos dados recebidos
+			
+			if(session.get(Aluno.class, matricula) == null) {
+				System.out.println("Aluno com Matricula = " + matricula + " já existente\n");
+				erro = true;
+			}
+			
+			if(session.createQuery("from Aluno where usuarioId=" + usuarioId ) != null) {
+				System.out.println("Aluno com UsuarioId = " + usuarioId + " já existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Usuario.class, usuarioId) == null) {
+				System.out.println("Usuario com UsuarioId = " + usuarioId + "não encontrado\n");
+				erro = true;
+			}
+			
+			if(session.get(Curso.class, cursoId) == null) {
+				System.out.println("Curso com CursoId = " + cursoId + " não encontrado\n");
+				erro = true;
+			}
+			
+			if(!erro) {
+			
+				// save the object
+				session.save(this);
+			}
 			
 			// commit transaction
 			session.getTransaction().commit();
@@ -72,14 +95,6 @@ public class Aluno {
 		finally {
 			factory.close();
 		}
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getMatricula() {
@@ -132,7 +147,7 @@ public class Aluno {
 
 	@Override
 	public String toString() {
-		return "Aluno [id=" + id + ", matricula=" + matricula + ", nome=" + nome + ", dataNascimento=" + dataNascimento
+		return "Aluno [matricula=" + matricula + ", nome=" + nome + ", dataNascimento=" + dataNascimento
 				+ ", dataIngresso=" + dataIngresso + ", usuarioId=" + usuarioId + ", cursoId=" + cursoId + "]";
 	}
 	

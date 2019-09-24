@@ -1,7 +1,6 @@
 package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
@@ -9,21 +8,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 @Entity
-@Table(name="sala")
-public class Sala {
+@Table(name="disciplina_curso")
+public class DisciplinaCurso {
 	
-	@Id
-	@Column(name="codigo_sala")
-	private String codigoSala;
+	@Column(name="codigo_curso")
+	private int codigoCurso;
 	
-	@Column(name="capacidade")
-	private int capacidade;
-
-	public Sala(int id, String codigoSala, int capacidade) {
-		super();
-		this.codigoSala = codigoSala;
-		this.capacidade = capacidade;
-	}
+	@Column(name="disciplina_id")
+	private int disciplinaId;
 	
 	public void create() {
 		// criando session factory
@@ -37,7 +29,7 @@ public class Sala {
 			session.beginTransaction();
 			
 			// salvando o objeto
-			System.out.println("Salvando a Sala...");
+			System.out.println("Salvando a Diciplina no Curso...");
 			session.save(this);
 			
 			// finalizando transação
@@ -52,26 +44,32 @@ public class Sala {
 		}
 	}
 
-
-	public String getCodigoSala() {
-		return codigoSala;
+	public DisciplinaCurso(int codigoCurso, int disciplinaId) {
+		super();
+		this.codigoCurso = codigoCurso;
+		this.disciplinaId = disciplinaId;
 	}
 
-	public void setCodigoSala(String codigoSala) {
-		this.codigoSala = codigoSala;
+	public int getCodigoCurso() {
+		return codigoCurso;
 	}
 
-	public int getCapacidade() {
-		return capacidade;
+	public void setCodigoCurso(int codigoCurso) {
+		this.codigoCurso = codigoCurso;
 	}
 
-	public void setCapacidade(int capacidade) {
-		this.capacidade = capacidade;
+	public int getDisciplinaId() {
+		return disciplinaId;
+	}
+
+	public void setDisciplinaId(int disciplinaId) {
+		this.disciplinaId = disciplinaId;
 	}
 
 	@Override
 	public String toString() {
-		return "Sala [ codigoSala=" + codigoSala + ", capacidade=" + capacidade + "]";
+		return "DisciplinaCurso [codigoCurso=" + codigoCurso + ", disciplinaId=" + disciplinaId + "]";
 	}
+
 	
 }
