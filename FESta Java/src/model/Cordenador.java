@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,16 +27,19 @@ public class Cordenador {
 	}
 	
 	public void create() {
+		
+		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Cordenador.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
-		try {			
+		try {	
+			
 			// iniciando a transação
 			session.beginTransaction();
-			
+				
 			// salvando o objeto
 			System.out.println("Salvando o Cordenador...");
 			session.save(this);

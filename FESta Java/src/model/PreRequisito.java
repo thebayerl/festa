@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -24,8 +24,10 @@ public class PreRequisito {
 	}
 	
 	public void create() {
+		boolean erro = false;
+		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(PreRequisito.class).addAnnotatedClass(Disciplina.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
@@ -34,9 +36,22 @@ public class PreRequisito {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando o Pre Requisito...");
-			session.save(this);
+			if(session.get(Disciplina.class, disciplinaId) == null) {
+				System.out.println("\nERRO: Disciplina com disciplinaId = " + disciplinaId + " já existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Disciplina.class, disciplinaId) == null) {
+				System.out.println("\nERRO: Disciplina com prerequisitoId = " + prerequisitoId + " já existente\n");
+				erro = true;
+			}
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando o Pre Requisito...");
+				session.save(this);
+			}
 			
 			// finalizando transação
 			session.getTransaction().commit();

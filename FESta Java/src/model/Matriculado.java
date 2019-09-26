@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -24,19 +24,36 @@ public class Matriculado {
 	}
 	
 	public void create() {
+		boolean erro = false;
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).addAnnotatedClass(Turma.class).addAnnotatedClass(Matriculado.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
+		
 		
 		try {			
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando o Matriculado...");
-			session.save(this);
+			//tratando os dados de entrada
+			
+			if(session.get(Turma.class, turmaId) == null) {
+				System.out.println("Turma com turmaId = " + turmaId + " não existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Aluno.class, alunoId) == null) {
+				System.out.println("Aluno com alunoId = " + alunoId + " não existente\n");
+				erro = true;
+			}
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando o Matriculado...");
+				session.save(this);
+			}
 			
 			// finalizando transação
 			session.getTransaction().commit();

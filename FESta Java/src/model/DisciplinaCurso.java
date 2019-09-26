@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,19 +18,37 @@ public class DisciplinaCurso {
 	private int disciplinaId;
 	
 	public void create() {
+		boolean erro = false;
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DisciplinaCurso.class).addAnnotatedClass(Disciplina.class).addAnnotatedClass(Curso.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
-		try {			
+		try {		
+			
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando a Diciplina no Curso...");
-			session.save(this);
+			// testando validade dos dados recebidos
+			
+			if(session.get(Disciplina.class, disciplinaId) == null) {
+				System.out.println("Disciplina com Id = " + disciplinaId + " já existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Curso.class, codigoCurso) == null) {
+				System.out.println("Curso com codigoCurso = " + codigoCurso + " já existente\n");
+				erro = true;
+			}
+			
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando a Diciplina no Curso...");
+				session.save(this);
+			}
 			
 			// finalizando transação
 			session.getTransaction().commit();

@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,8 +26,10 @@ public class Sala {
 	}
 	
 	public void create() {
+		boolean erro = false;
+		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
@@ -36,9 +38,17 @@ public class Sala {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando a Sala...");
-			session.save(this);
+			if(session.get(Sala.class, codigoSala) == null) {
+				System.out.println("\nERRO: Sala com codigoSala = " + codigoSala + " já existente\n");
+				erro = true;
+			}
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando a Sala...");
+				session.save(this);
+			}
 			
 			// finalizando transação
 			session.getTransaction().commit();

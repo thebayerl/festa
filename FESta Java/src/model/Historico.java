@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -39,6 +39,8 @@ public class Historico {
 		
 		// criando session
 		Session session = factory.getCurrentSession();
+		
+		//falta tratar os dados e trabalhar melhor na tabela de histórico
 		
 		try {			
 			// iniciando a transação

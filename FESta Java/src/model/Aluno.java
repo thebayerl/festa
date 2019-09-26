@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -47,7 +47,7 @@ public class Aluno {
 	public void create() {
 		boolean erro = false;
 		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).addAnnotatedClass(Curso.class).addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).addAnnotatedClass(Aluno.class).buildSessionFactory();
 		
 		//create session
 		Session session = factory.getCurrentSession();
@@ -60,28 +60,19 @@ public class Aluno {
 			// testando a validade dos dados recebidos
 			
 			if(session.get(Aluno.class, matricula) == null) {
-				System.out.println("Aluno com Matricula = " + matricula + " já existente\n");
-				erro = true;
-			}
-			
-			if(session.createQuery("from Aluno where usuarioId=" + usuarioId ) != null) {
-				System.out.println("Aluno com UsuarioId = " + usuarioId + " já existente\n");
-				erro = true;
-			}
-			
-			if(session.get(Usuario.class, usuarioId) == null) {
-				System.out.println("Usuario com UsuarioId = " + usuarioId + "não encontrado\n");
+				System.out.println("\nERRO: Aluno com Matricula = " + matricula + " já existente\n");
 				erro = true;
 			}
 			
 			if(session.get(Curso.class, cursoId) == null) {
-				System.out.println("Curso com CursoId = " + cursoId + " não encontrado\n");
+				System.out.println("\nERRO: Curso com CursoId = " + cursoId + " não encontrado\n");
 				erro = true;
 			}
 			
 			if(!erro) {
 			
-				// save the object
+				// salvando o objeto
+				System.out.println("Salvando o Aluno...");
 				session.save(this);
 			}
 			
