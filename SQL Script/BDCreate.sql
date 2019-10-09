@@ -1,5 +1,5 @@
 use 6BkoHsgUIY;
-DROP TABLE aluno, coordenador, curso, disciplina, disciplina_curso, professor, sala, usuario, pre_requisito, professor_capacidade, turma, matriculado, historico;
+DROP TABLE aluno, coordenador, curso, disciplina, disciplina_curso, professor, sala, usuario, turma, matriculado;
 
 
 create table usuario (
@@ -19,28 +19,28 @@ create table curso (
 
 create table aluno (
 	usuario_id bigint unsigned,
-    matricula varchar(20) not null,
+	matricula varchar(20) not null,
 	nome varchar(20) not null,
 	data_nascimento date not null,
-	data_ingresso date not null,	
-	curso_id varchar(20), 
+	data_ingresso date not null,
+	codigo_curso varchar(20), 
 	foreign key (usuario_id) references usuario(id),
-	foreign key (curso_id) references curso(codigo_curso),
+	foreign key (codigo_curso) references curso(codigo_curso),
     primary key (usuario_id)
 );
 
 create table coordenador (
-	nome varchar(100) not null,
 	usuario_id bigint unsigned,
+	nome varchar(100) not null,
 	foreign key (usuario_id) references usuario(id),
     primary key (usuario_id)
 );
 
 create table professor (
 	usuario_id bigint unsigned,
-    nome varchar(100) not null,
+	nome varchar(100) not null,
 	matricula varchar(20) not null,
-	nivel_formacao varchar(50) not null,	
+	nivel_formacao varchar(50) not null,
 	codigo_curso varchar(20),
 	foreign key (usuario_id) references usuario(id),
 	foreign key (codigo_curso) references curso(codigo_curso),
@@ -50,6 +50,7 @@ create table professor (
 create table sala ( 
 	codigo_sala varchar(20) not null,
 	capacidade int not null,
+    predio varchar(20),
 	primary key (codigo_sala)
 );
 
@@ -70,7 +71,6 @@ create table disciplina_curso (
 );
 
 create table turma ( 
-	id bigint unsigned auto_increment,
 	codigo_turma varchar(20) not null,
 	max_alunos int not null,
 	semestre varchar(2) not null,
@@ -81,24 +81,24 @@ create table turma (
 	foreign key (professor_id) references professor(usuario_id),
 	foreign key (disciplina_id) references disciplina(id),
 	foreign key (sala_id) references sala(codigo_sala),
-	primary key (id)
+	primary key (codigo_turma)
 );
 
 create table matriculado ( 
 	aluno_id bigint unsigned,
-	turma_id bigint unsigned,
+	codigo_turma varchar(20),
 	foreign key (aluno_id) references aluno(usuario_id),
-	foreign key (turma_id) references turma(id),
-	primary key (aluno_id, turma_id)
+	foreign key (codigo_turma) references turma(codigo_turma),
+	primary key (aluno_id, codigo_turma)
 );
 
 create table historico (
 	nota double not null,
 	aluno_id bigint unsigned,
-	turma_id bigint unsigned,
+	codigo_turma varchar(20),
 	foreign key (aluno_id) references aluno(usuario_id),
-	foreign key (turma_id) references turma(id),
-	primary key (aluno_id, turma_id)
+	foreign key (codigo_turma) references turma(codigo_turma),
+	primary key (aluno_id, codigo_turma)
 );
 
 -- evitar em codigo que uma disciplina faça referência a si mesma
