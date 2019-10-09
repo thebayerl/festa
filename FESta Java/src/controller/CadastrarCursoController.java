@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
-import DAO.CursoDao;
-import Model.Curso;
+import model.Curso;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -17,8 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.CadastrarCurso;
-import javafxfesta.Principal;
+import view.CadastrarCurso;
+import view.Principal;
 
 /**
  * FXML Controller class
@@ -52,16 +51,8 @@ public class CadastrarCursoController implements Initializable {
 
     public void cadastraCurso(){
         String nome = txNome.getText();
-        Curso c = new Curso(nome);
-        CursoDao dao = new CursoDao();
+        //Curso c = new Curso(nome);        
         
-        //Dao
-        //
-        //
-        //
-        //
-        //
-        //Dao
     }
     public void fecha(){
         CadastrarCurso.getStage().close();

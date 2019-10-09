@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Controller.PrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controller.PrincipalController">
    <children>
       <Button fx:id="btCadastrarCurso" layoutX="33.0" layoutY="48.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Curso" />
       <Button fx:id="btCadastrarDisciplina" layoutX="221.0" layoutY="48.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Disciplina" />
-      <Button fx:id="btCadastrarPreRequisitos" layoutX="409.0" layoutY="48.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Pré-requisitos" />
-      <Button fx:id="btCadastrarUsuário" layoutX="409.0" layoutY="211.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Usuário" />
+      <Button fx:id="btCadastrarPreRequisitos" layoutX="409.0" layoutY="48.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Pre-requisitos" />
+      <Button fx:id="btCadastrarUsuario" layoutX="409.0" layoutY="211.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Usuario" />
       <Button fx:id="btCadastrarSala" layoutX="221.0" layoutY="211.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Sala" />
       <Button fx:id="btCadastrarTurma" layoutX="33.0" layoutY="211.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Turma" />
    </children>

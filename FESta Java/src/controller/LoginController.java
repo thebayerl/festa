@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,8 +20,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.Login;
-import javafxfesta.Principal;
+import view.Login;
+import view.Principal;
 
 /**
  *
@@ -59,16 +59,18 @@ public class LoginController implements Initializable {
             Principal p = new Principal();
             fecha();
             try {
+            	//System.out.println("ENTREI NESSA BAGA«A");
                 p.start(new Stage());
             } catch (Exception ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            	System.out.println("ENTREI NESSA BAGA«A");
             }
 
         }else{
             Alert alert = new Alert(AlertType.ERROR);
             alert.setHeaderText("Erro");
             alert.setTitle("Erro");
-            alert.setContentText("Usuario ou Senha Inv√°lido(s)");
+            alert.setContentText("Usuario ou Senha Invalido(s)");
             alert.show();
 
         }

@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,16 +27,19 @@ public class Cordenador {
 	}
 	
 	public void create() {
+		
+		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Cordenador.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
-		try {			
+		try {	
+			
 			// iniciando a transação
 			session.beginTransaction();
-			
+				
 			// salvando o objeto
 			System.out.println("Salvando o Cordenador...");
 			session.save(this);
@@ -53,6 +56,34 @@ public class Cordenador {
 		}
 	}
 
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Cordenador.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			
+			// deletando o objeto
+			System.out.println("Deletando o Cordenador...");
+			session.delete(this);
+			
+			// commit transaction
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
+	}
+	
 	public String getNome() {
 		return nome;
 	}

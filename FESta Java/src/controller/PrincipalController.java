@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,13 +14,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.CadastrarCurso;
-import javafxfesta.CadastrarDisciplina;
-import javafxfesta.CadastrarPreRequisitos;
-import javafxfesta.CadastrarSala;
-import javafxfesta.CadastrarTurma;
-import javafxfesta.CadastrarUsuario;
-import javafxfesta.Principal;
+import view.CadastrarCurso;
+import view.CadastrarDisciplina;
+import view.CadastrarPreRequisitos;
+import view.CadastrarSala;
+import view.CadastrarTurma;
+import view.CadastrarUsuario;
+import view.Principal;
 
 /**
  * FXML Controller class
@@ -35,7 +35,7 @@ public class PrincipalController implements Initializable {
     @FXML private Button btCadastrarCurso;
     @FXML private Button btCadastrarDisciplina;
     @FXML private Button btCadastrarPreRequisitos;
-    @FXML private Button btCadastrarUsuário;
+    @FXML private Button btCadastrarUsuario;
     @FXML private Button btCadastrarSala;
     @FXML private Button btCadastrarTurma;
     
@@ -55,10 +55,8 @@ public class PrincipalController implements Initializable {
             abreCadastroPreRequisitos();
         });
         
-        btCadastrarUsuário.setOnMouseClicked((MouseEvent e)->{
-            abreCadastroUsuario();      
-        });
-        
+        btCadastrarUsuario.setOnMouseClicked((MouseEvent e)->{
+            abreCadastroUsuario();              });        
         btCadastrarSala.setOnMouseClicked((MouseEvent e)->{
             abreCadastroSala(); 
         });

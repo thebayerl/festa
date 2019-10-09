@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
-import DAO.DisciplinaDao;
-import Model.Disciplina;
+import model.Disciplina;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,8 +17,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.CadastrarDisciplina;
-import javafxfesta.Principal;
+import view.CadastrarDisciplina;
+import view.Principal;
 
 /**
  * FXML Controller class
@@ -57,16 +56,8 @@ public class CadastrarDisciplinaController implements Initializable {
         int creditos = Integer.parseInt(txCreditos.getText());
         String departamento = txDepartamento.getText();
         
-        Disciplina d = new Disciplina(nome, creditos, departamento);
-        DisciplinaDao dao = new DisciplinaDao();
-        
-        //Dao
-        //
-        //
-        //
-        //
-        //
-        //Dao
+     //   Disciplina d = new Disciplina(nome, creditos, departamento);
+     
     }
     
     public void fecha(){

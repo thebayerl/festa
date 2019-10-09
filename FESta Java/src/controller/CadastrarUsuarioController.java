@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
-import DAO.UsuarioDao;
-import Model.Usuario;
+import model.Usuario;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -20,8 +19,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.CadastrarUsuario;
-import javafxfesta.Principal;
+import view.CadastrarUsuario;
+import view.Principal;
 
 /**
  * FXML Controller class
@@ -67,22 +66,21 @@ public class CadastrarUsuarioController implements Initializable {
     
         
         if(senha.equals(confirmacao)){
-            Usuario u = new Usuario(nome, senha, rg, cpf);
-            UsuarioDao dao = new UsuarioDao();
-            if(dao.add(u)){
-                Alert al = new Alert(AlertType.CONFIRMATION);
-                al.setHeaderText("Usuario cadastrado");
-                abrePrincipal();
-                al.show();
-            }else{
-                Alert al = new Alert(AlertType.ERROR);
-                al.setHeaderText("Usuario não cadastrado");
-                al.show();
-            }
-        }else{
-            Alert al = new Alert(AlertType.ERROR);
-            al.setHeaderText("As senhas não coincidem");
-            al.show();
+//            Usuario u = new Usuario(nome, senha, rg, cpf);            
+//            if(dao.add(u)){
+//                Alert al = new Alert(AlertType.CONFIRMATION);
+//                al.setHeaderText("Usuario cadastrado");
+//                abrePrincipal();
+//                al.show();
+//            }else{
+//                Alert al = new Alert(AlertType.ERROR);
+//                al.setHeaderText("Usuario não cadastrado");
+//                al.show();
+//            }
+//        }else{
+//            Alert al = new Alert(AlertType.ERROR);
+//            al.setHeaderText("As senhas não coincidem");
+//            al.show();
         }
     }
     

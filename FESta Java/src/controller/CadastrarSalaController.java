@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
-import DAO.SalaDao;
-import Model.Sala;
+import model.Sala;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -17,8 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.CadastrarSala;
-import javafxfesta.Principal;
+import view.CadastrarSala;
+import view.Principal;
 
 /**
  * FXML Controller class
@@ -52,16 +51,8 @@ public class CadastrarSalaController implements Initializable {
     
     public void cadastraSala(){
         int capacidade = Integer.parseInt(txCapacidade.getText());
-        Sala s = new Sala(capacidade);
-        SalaDao dao = new SalaDao();
+        //Sala s = new Sala(capacidade);
         
-        //Dao
-        //
-        //
-        //
-        //
-        //
-        //Dao
     }
     
     public void fecha(){

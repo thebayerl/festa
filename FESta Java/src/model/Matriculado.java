@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -14,31 +14,76 @@ public class Matriculado {
 	@Column(name="aluno_id")
 	private int alunoId;
 	
-	@Column(name="turma_id")
-	private int turmaId;
+	@Column(name="codigo_turma")
+	private String codigoTurma;
 
-	public Matriculado(int alunoId, int turmaId) {
+	public Matriculado(int alunoId, String codigoTurma) {
 		super();
 		this.alunoId = alunoId;
-		this.turmaId = turmaId;
+		this.codigoTurma = codigoTurma;
 	}
 	
 	public void create() {
+		boolean erro = false;
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).addAnnotatedClass(Turma.class).addAnnotatedClass(Matriculado.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
+		
 		
 		try {			
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando o Matriculado...");
-			session.save(this);
+			//tratando os dados de entrada
+			
+			if(session.get(Turma.class, codigoTurma) == null) {
+				System.out.println("Turma com codigoTurma = " + codigoTurma + " não existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Aluno.class, alunoId) == null) {
+				System.out.println("Aluno com alunoId = " + alunoId + " não existente\n");
+				erro = true;
+			}
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando o Matriculado...");
+				session.save(this);
+			}
 			
 			// finalizando transação
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
+	}
+	
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Matriculado.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			
+			// deletando o objeto
+			System.out.println("Deletando o Matriculado...");
+			session.delete(this);
+			
+			// commit transaction
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -58,17 +103,17 @@ public class Matriculado {
 		this.alunoId = alunoId;
 	}
 
-	public int getTurmaId() {
-		return turmaId;
+	public String getcodigoTurma() {
+		return codigoTurma;
 	}
 
-	public void setTurmaId(int turmaId) {
-		this.turmaId = turmaId;
+	public void setcodigoTurma(String codigoTurma) {
+		this.codigoTurma = codigoTurma;
 	}
 
 	@Override
 	public String toString() {
-		return "Matriculado [alunoId=" + alunoId + ", turmaId=" + turmaId + "]";
+		return "Matriculado [alunoId=" + alunoId + ", codigoTurma=" + codigoTurma + "]";
 	}
 	
 }

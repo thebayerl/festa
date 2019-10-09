@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
-import DAO.TurmaDao;
-import Model.Turma;
+import model.Turma;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,8 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.CadastrarTurma;
-import javafxfesta.Principal;
+import view.CadastrarTurma;
+import view.Principal;
 
 /**
  * FXML Controller class
@@ -72,16 +71,7 @@ public class CadastrarTurmaController implements Initializable {
         BigInteger disciplina_id = new BigInteger (txIdDisciplina.getText());
         BigInteger sala_id = new BigInteger (txIdSala.getText());
         
-        Turma t = new Turma(max_alunos, semestre, ano, professor_id, disciplina_id, sala_id);
-        TurmaDao dao = new TurmaDao();
-
-        //Dao
-        //
-        //
-        //
-        //
-        //
-        //Dao
+        //Turma t = new Turma(max_alunos, semestre, ano, professor_id, disciplina_id, sala_id);       
         
         
     }

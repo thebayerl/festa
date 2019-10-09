@@ -1,7 +1,6 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
@@ -12,25 +11,20 @@ import org.hibernate.cfg.Configuration;
 @Table(name="historico")
 public class Historico {
 	
-	@Id
-	@Column(name="id")
-	private int id;
-	
 	@Column(name="nota")
 	private double nota;
 	
 	@Column(name="aluno_id")
 	private int alunoId;
 	
-	@Column(name="turma_id")
-	private int turmaId;
+	@Column(name="codigo_turma")
+	private String codigoTurma;
 
-	public Historico(int id, double nota, int alunoId, int turmaId) {
+	public Historico(double nota, int alunoId, String codigoTurma) {
 		super();
-		this.id = id;
 		this.nota = nota;
 		this.alunoId = alunoId;
-		this.turmaId = turmaId;
+		this.codigoTurma = codigoTurma;
 	}
 
 	public void create() {
@@ -39,6 +33,8 @@ public class Historico {
 		
 		// criando session
 		Session session = factory.getCurrentSession();
+		
+		//falta tratar os dados e trabalhar melhor na tabela de histórico
 		
 		try {			
 			// iniciando a transação
@@ -60,12 +56,32 @@ public class Historico {
 		}
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Historico.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			
+			// deletando o objeto
+			System.out.println("Deletando o Historico...");
+			session.delete(this);
+			
+			// commit transaction
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
 	}
 
 	public double getNota() {
@@ -84,17 +100,17 @@ public class Historico {
 		this.alunoId = alunoId;
 	}
 
-	public int getTurmaId() {
-		return turmaId;
+	public String getcodigoTurma() {
+		return codigoTurma;
 	}
 
-	public void setTurmaId(int turmaId) {
-		this.turmaId = turmaId;
+	public void setcodigoTurma(String codigoTurma) {
+		this.codigoTurma = codigoTurma;
 	}
 
 	@Override
 	public String toString() {
-		return "Historico [id=" + id + ", nota=" + nota + ", alunoId=" + alunoId + ", turmaId=" + turmaId + "]";
+		return "Historico [nota=" + nota + ", alunoId=" + alunoId + ", codigoTurma=" + codigoTurma + "]";
 	}
 	
 }

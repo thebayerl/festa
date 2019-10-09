@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Controller.CadastrarPreRequisitosController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controller.CadastrarPreRequisitosController">
     <children>
       <Label layoutX="84.0" layoutY="92.0" text="Disciplina" />
       <TextField fx:id="txIdDisciplina" layoutX="160.0" layoutY="88.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Disciplina..." />

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxfesta;
+package view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ public class Login extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));//Carrega FXML
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));//Carrega FXML
         
         Scene scene = new Scene(root);//Coloca o FXML em uma cena
         stage.setTitle("Login");

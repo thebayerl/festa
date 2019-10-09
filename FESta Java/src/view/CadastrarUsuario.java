@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javafxfesta;
+package view;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -30,12 +30,15 @@ public class CadastrarUsuario extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/View/CadastrarUsuario.fxml"));//Carrega FXML
+    	//System.out.println("ENTREI NESSA BAGAÇA1");
+        Parent root = FXMLLoader.load(getClass().getResource("/view/CadastrarUsuario.fxml"));//Carrega FXML
+        //System.out.println("ENTREI NESSA BAGAÇA2");
         
         Scene scene = new Scene(root);//Coloca o FXML em uma cena
         stage.setTitle("CadastrarUsuario");
         stage.setScene(scene);//Coloca a cena em uma janela
         stage.show();//Abre a janela2
+        //System.out.println("ENTREI NESSA BAGAÇA");
         setStage(stage);
     }
 

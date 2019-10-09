@@ -1,12 +1,12 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
 
 
 @Entity
@@ -14,6 +14,9 @@ import org.hibernate.cfg.Configuration;
 public class Aluno {
 	
 	@Id
+	@Column(name="usuario_id")
+	private int usuarioId;
+	
 	@Column(name="matricula")
 	private String matricula;
 	
@@ -26,69 +29,58 @@ public class Aluno {
 	@Column(name="data_ingresso")
 	private String dataIngresso;
 	
-	@Column(name="usuario_id")
-	private int usuarioId;
-	
-	@Column(name="curso_id")
-	private int cursoId;
+	@Column(name="codigo_curso")
+	private String codigoCurso;
 
 	
-	public Aluno(String matricula, String nome, String dataNascimento, String dataIngresso, int usuarioId,
-			int cursoId) {
+	public Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
+			String codigoCurso) {
 		super();
 		this.matricula = matricula;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.dataIngresso = dataIngresso;
 		this.usuarioId = usuarioId;
-		this.cursoId = cursoId;
+		this.codigoCurso = codigoCurso;
 	}
 	
 	public void create() {
 		boolean erro = false;
 		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).addAnnotatedClass(Curso.class).addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).addAnnotatedClass(Aluno.class).buildSessionFactory();
 		
 		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// start a transaction
+			// começando a transação
+			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			
 			// testando a validade dos dados recebidos
 			
-			if(session.get(Aluno.class, matricula) == null) {
-				System.out.println("Aluno com Matricula = " + matricula + " já existente\n");
+			if(session.get(Aluno.class, usuarioId) == null) {
+				System.out.println("\nERRO: Aluno com Matricula = " + usuarioId + " já existente\n");
 				erro = true;
 			}
 			
-			if(session.createQuery("from Aluno where usuarioId=" + usuarioId ) != null) {
-				System.out.println("Aluno com UsuarioId = " + usuarioId + " já existente\n");
-				erro = true;
-			}
-			
-			if(session.get(Usuario.class, usuarioId) == null) {
-				System.out.println("Usuario com UsuarioId = " + usuarioId + "não encontrado\n");
-				erro = true;
-			}
-			
-			if(session.get(Curso.class, cursoId) == null) {
-				System.out.println("Curso com CursoId = " + cursoId + " não encontrado\n");
+			if(session.get(Curso.class, codigoCurso) == null) {
+				System.out.println("\nERRO: Curso com codigoCurso = " + codigoCurso + " não encontrado\n");
 				erro = true;
 			}
 			
 			if(!erro) {
 			
-				// save the object
+				// salvando o objeto
+				System.out.println("Salvando o Aluno...");
 				session.save(this);
 			}
 			
-			// commit transaction
+			// finalizando transação
 			session.getTransaction().commit();
 			
-			System.out.println("Commited!");
+			System.out.println("Pronto!");
 			
 		} catch(Exception exc){
 		}
@@ -97,6 +89,36 @@ public class Aluno {
 		}
 	}
 
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).addAnnotatedClass(Usuario.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			
+			// deletando o(s) objeto(s)
+			System.out.println("Deletando o Aluno e Usuario referente a ele...");
+			session.delete(this);
+			Usuario user = session.get(Usuario.class, usuarioId);
+			session.delete(user);
+			
+			// commit transaction
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
+	}
+	
 	public String getMatricula() {
 		return matricula;
 	}
@@ -137,18 +159,18 @@ public class Aluno {
 		this.usuarioId = usuarioId;
 	}
 
-	public int getCursoId() {
-		return cursoId;
+	public String getcodigoCurso() {
+		return codigoCurso;
 	}
 
-	public void setCursoId(int cursoId) {
-		this.cursoId = cursoId;
+	public void setcodigoCurso(String codigoCurso) {
+		this.codigoCurso = codigoCurso;
 	}
 
 	@Override
 	public String toString() {
 		return "Aluno [matricula=" + matricula + ", nome=" + nome + ", dataNascimento=" + dataNascimento
-				+ ", dataIngresso=" + dataIngresso + ", usuarioId=" + usuarioId + ", cursoId=" + cursoId + "]";
+				+ ", dataIngresso=" + dataIngresso + ", usuarioId=" + usuarioId + ", codigoCurso=" + codigoCurso + "]";
 	}
 	
 }

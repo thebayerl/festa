@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package controller;
 
-import DAO.PreRequisitosDao;
-import Model.PreRequisitos;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,8 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafxfesta.CadastrarPreRequisitos;
-import javafxfesta.Principal;
+import view.CadastrarPreRequisitos;
+import view.Principal;
 
 /**
  * FXML Controller class
@@ -53,17 +51,7 @@ public class CadastrarPreRequisitosController implements Initializable {
     
     public void cadastraPreRequisito(){
         BigInteger disciplina_id = new BigInteger(txIdDisciplina.getText());
-        PreRequisitos pr = new PreRequisitos(disciplina_id);
-        PreRequisitosDao dao = new PreRequisitosDao();
-        
-        //Dao
-        //
-        //
-        //
-        //
-        //
-        //
-        //Dao
+    
     }
     
     public void fecha(){

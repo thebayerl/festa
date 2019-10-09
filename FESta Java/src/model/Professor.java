@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,21 +25,23 @@ public class Professor {
 	@Column(name="nivel_formacao")
 	private String nivelFormacao;
 	
-	@Column(name="cordenador_id")
-	private int cordenadorId;
+	@Column(name="codigo_curso")
+	private int codigoCurso;
 
-	public Professor(String nome, String matricula, String nivelFormacao, int usuarioId, int cordenadorId) {
+	public Professor( int usuarioId, String nome, String matricula, String nivelFormacao, int codigoCurso) {
 		super();
 		this.nome = nome;
 		this.matricula = matricula;
 		this.nivelFormacao = nivelFormacao;
 		this.usuarioId = usuarioId;
-		this.cordenadorId = cordenadorId;
+		this.codigoCurso = codigoCurso;
 	}
 	
 	public void create() {
+		boolean erro = false;
+		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Professor.class).addAnnotatedClass(Cordenador.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
@@ -48,11 +50,49 @@ public class Professor {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando o Professor...");
-			session.save(this);
+			if(session.get(Cordenador.class, codigoCurso) == null) {
+				System.out.println("\nERRO: Aluno com codigoCurso = " + codigoCurso + " já existente\n");
+				erro = true;
+			}
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando o Professor...");
+				session.save(this);
+			};
 			
 			// finalizando transação
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
+	}
+	
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Professor.class).addAnnotatedClass(Usuario.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			
+			// deletando o(s) objeto(s)
+			System.out.println("Deletando o Professor e Usuario referente a ele...");
+			session.delete(this);
+			Usuario user = session.get(Usuario.class, usuarioId);
+			session.delete(user);
+			
+			// commit transaction
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -96,18 +136,18 @@ public class Professor {
 		this.usuarioId = usuarioId;
 	}
 
-	public int getCordenadorId() {
-		return cordenadorId;
+	public int getcodigoCurso() {
+		return codigoCurso;
 	}
 
-	public void setCordenadorId(int cordenadorId) {
-		this.cordenadorId = cordenadorId;
+	public void setcodigoCurso(int codigoCurso) {
+		this.codigoCurso = codigoCurso;
 	}
 
 	@Override
 	public String toString() {
 		return "Professor [usuarioId=" + usuarioId + ", nome=" + nome + ", matricula=" + matricula + ", nivelFormacao="
-				+ nivelFormacao + ", cordenadorId=" + cordenadorId + "]";
+				+ nivelFormacao + ", codigoCurso=" + codigoCurso + "]";
 	}
 	
 }

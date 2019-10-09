@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,9 +13,6 @@ import org.hibernate.cfg.Configuration;
 public class Turma {
 	
 	@Id
-	@Column(name="id")
-	private int id;
-	
 	@Column(name="codigo_turma")
 	private String codigoTurma;
 	
@@ -50,8 +47,10 @@ public class Turma {
 	}
 	
 	public void create() {
+		boolean erro = false;
+		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Turma.class).addAnnotatedClass(Professor.class).addAnnotatedClass(Disciplina.class).addAnnotatedClass(Sala.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
@@ -60,9 +59,34 @@ public class Turma {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando a Turma...");
-			session.save(this);
+			// testando a validade dos dados recebidos
+			
+			if(session.get(Turma.class, codigoTurma) == null) {
+				System.out.println("Turma com codigoTurma = " + codigoTurma + " já existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Professor.class, professorId) == null) {
+				System.out.println("Professor com professorId = " + professorId + " não existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Disciplina.class, disciplinaId) == null) {
+				System.out.println("Disciplina com disciplinaId = " + disciplinaId + " não existente\n");
+				erro = true;
+			}
+			
+			if(session.get(Sala.class, salaId) == null) {
+				System.out.println("Sala com salaId = " + salaId + " não existente\n");
+				erro = true;
+			}
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando a Turma...");
+				session.save(this);
+			}
 			
 			// finalizando transação
 			session.getTransaction().commit();
@@ -75,13 +99,33 @@ public class Turma {
 			factory.close();
 		}
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Turma.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			
+			// deletando o objeto
+			System.out.println("Deletando a Turma...");
+			session.delete(this);
+			
+			// commit transaction
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
 	}
 
 	public String getCodigoTurma() {
@@ -142,7 +186,7 @@ public class Turma {
 
 	@Override
 	public String toString() {
-		return "Turma [id=" + id + ", codigoTurma=" + codigoTurma + ", maxAlunos=" + maxAlunos + ", ano=" + ano
+		return "Turma [codigoTurma=" + codigoTurma + ", maxAlunos=" + maxAlunos + ", ano=" + ano
 				+ ", semestre=" + semestre + ", professorId=" + professorId + ", disciplinaId=" + disciplinaId
 				+ ", salaId=" + salaId + "]";
 	}

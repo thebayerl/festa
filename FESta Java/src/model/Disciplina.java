@@ -1,4 +1,4 @@
-package model;
+package tabelas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,20 +23,22 @@ public class Disciplina {
 	@Column(name="creditos")
 	private int creditos;
 	
-	@Column(name="departamento")
-	private String departamento;
+	@Column(name="departamento_id")
+	private String departamentoId;
 
-	public Disciplina(int id, String nome, int creditos, String departamento) {
+	public Disciplina(int id, String nome, int creditos, String departamentoId) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.creditos = creditos;
-		this.departamento = departamento;
+		this.departamentoId = departamentoId;
 	}
 	
 	public void create() {
+		boolean erro = false;
+		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
@@ -45,11 +47,51 @@ public class Disciplina {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// salvando o objeto
-			System.out.println("Salvando a Disciplina...");
-			session.save(this);
+			// testando a validade dos dados recebidos
+			
+			if(session.get(Disciplina.class, id) == null) {
+				System.out.println("Disciplina com Id = " + id + " já existente\n");
+				erro = true;
+			}
+			
+			//inserir check do departamento depois
+			
+			if(!erro) {
+				
+				// salvando o objeto
+				System.out.println("Salvando a Disciplina...");
+				session.save(this);
+			}
 			
 			// finalizando transação
+			session.getTransaction().commit();
+			
+			System.out.println("Pronto!");
+			
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
+	}
+	
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
+		
+		//create session
+		Session session = factory.getCurrentSession();
+		
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+			
+			// deletando o objeto
+			System.out.println("Deletando a Disciplina...");
+			session.delete(this);
+			
+			// commit transaction
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -86,16 +128,16 @@ public class Disciplina {
 	}
 
 	public String getDepartamento() {
-		return departamento;
+		return departamentoId;
 	}
 
-	public void setDepartamento(String departamento) {
-		this.departamento = departamento;
+	public void setDepartamento(String departamentoId) {
+		this.departamentoId = departamentoId;
 	}
 
 	@Override
 	public String toString() {
-		return "Disciplina [id=" + id + ", nome=" + nome + ", creditos=" + creditos + ", departamento=" + departamento
+		return "Disciplina [id=" + id + ", nome=" + nome + ", creditos=" + creditos + ", departamentoId =" + departamentoId
 				+ "]";
 	}
 
