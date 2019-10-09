@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,15 +27,6 @@ public class Professor {
 	
 	@Column(name="codigo_curso")
 	private int codigoCurso;
-
-	public Professor( int usuarioId, String nome, String matricula, String nivelFormacao, int codigoCurso) {
-		super();
-		this.nome = nome;
-		this.matricula = matricula;
-		this.nivelFormacao = nivelFormacao;
-		this.usuarioId = usuarioId;
-		this.codigoCurso = codigoCurso;
-	}
 	
 	public void create() {
 		boolean erro = false;

@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,12 +20,6 @@ public class Historico {
 	@Column(name="codigo_turma")
 	private String codigoTurma;
 
-	public Historico(double nota, int alunoId, String codigoTurma) {
-		super();
-		this.nota = nota;
-		this.alunoId = alunoId;
-		this.codigoTurma = codigoTurma;
-	}
 
 	public void create() {
 		// criando session factory

@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,10 +19,6 @@ public class Curso {
 	@Column(name="nome")
 	private String nome;
 
-	public Curso(String codigoCurso, String nome) {
-		this.codigoCurso = codigoCurso;
-		this.nome = nome;
-	}
 	
 	public void create() {
 		boolean erro = false;

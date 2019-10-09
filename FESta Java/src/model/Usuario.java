@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,15 +28,6 @@ public class Usuario {
 	@Column(name="cpf")
 	private int cpf;
 
-	
-	public Usuario(int id, String username, String senha, int rg, int cpf) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.senha = senha;
-		this.rg = rg;
-		this.cpf = cpf;
-	}
 
 	public void create() {
 		boolean erro = false;

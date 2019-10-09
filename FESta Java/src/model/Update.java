@@ -6,9 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class Delete {
+public class Update {
+
 	
-	public boolean Aluno(int id) {
+	public boolean Aluno(Integer id, String matricula, String nome, String dataNascimento, String dataIngresso, 
+			String codigoCurso) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -30,10 +32,23 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				session.delete(obj);
-				Usuario user = session.get(Usuario.class, id);
-				session.delete(user);
+				
+				if(matricula != null) {
+					obj.setMatricula(matricula);
+				}
+				if(codigoCurso != null) {
+					obj.setcodigoCurso(codigoCurso);
+				}
+				if(dataIngresso != null) {
+					obj.setDataIngresso(dataIngresso);
+				}
+				if(dataNascimento != null) {
+					obj.setDataNascimento(dataNascimento);
+				}
+				if(nome != null) {
+					obj.setNome(nome);
+				}
+				
 			}
 			
 			// finalizando transação
@@ -51,7 +66,7 @@ public class Delete {
 		return sucesso;
 	}
 	
-	public boolean Cordenador(int id) {
+	public boolean Cordenador(Integer usuarioId, String nome) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -65,7 +80,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			Cordenador obj = session.get(Cordenador.class, id);
+			Cordenador obj = session.get(Cordenador.class, usuarioId);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -73,9 +88,9 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				System.out.println("Deletando o Cordenador...");
-				session.delete(obj);
+				if(nome != null) {
+					obj.setNome(nome);
+				}
 			}
 			
 			// finalizando transação
@@ -93,7 +108,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Curso(String id) {
+	public boolean Curso(String codigoCurso, String nome) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -107,7 +122,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			Curso obj = session.get(Curso.class, id);
+			Curso obj = session.get(Curso.class, codigoCurso);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -115,9 +130,9 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				System.out.println("Deletando o Curso...");
-				session.delete(obj);
+				if(nome != null) {
+					obj.setnome(nome);
+				}
 			}
 			
 			// finalizando transação
@@ -134,7 +149,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Disciplina(int id) {
+	public boolean Disciplina(Integer id, String nome, Integer creditos, String departamentoId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -157,9 +172,15 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				System.out.println("Deletando a Disciplina...");
-				session.delete(obj);
+				if(departamentoId != null) {
+					obj.setDepartamento(departamentoId);
+				}
+				if(nome != null) {
+					obj.setNome(nome);
+				}
+				if(creditos != null) {
+					obj.setCreditos(creditos);
+				}
 			}
 			
 			// finalizando transação
@@ -176,7 +197,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean DisciplinaCurso(String id, int id2) {
+	public boolean DisciplinaCurso(String codigoCurso, Integer disciplinaId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -190,7 +211,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 
-			List<DisciplinaCurso> obj = session.createQuery("select * from DisciplinaCurso where codigo_curso = " + id + "disciplinaId = " + id2).getResultList();
+			List<DisciplinaCurso> obj = session.createQuery("from DisciplinaCurso where codigo_curso = " + codigoCurso + "disciplinaId = " + disciplinaId).getResultList();
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -198,10 +219,7 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				for(DisciplinaCurso o : obj) {
-					session.delete(o);
-				}
+				//
 			}
 			
 			// finalizando transação
@@ -218,7 +236,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Historico(int id, String id2) {
+	public boolean Historico(Integer alunoId, String codigoTurma, Double nota) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -232,7 +250,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 
-			List<Historico> obj = session.createQuery("select * from Historico where alunoId = " + id + "turmaId = " + id2).getResultList();
+			List<Historico> obj = session.createQuery("from Historico where alunoId = " + alunoId + "codigoTurma = " + codigoTurma).getResultList();
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -242,7 +260,9 @@ public class Delete {
 			if(sucesso) {
 				// deletando o objeto
 				for(Historico o : obj) {
-					session.delete(o);
+					if(nota != null) {
+						//
+					}
 				}
 			}
 			
@@ -260,7 +280,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Matriculado(int id, String id2) {
+	public boolean Matriculado(Integer alunoId, String codigoTurma) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -274,7 +294,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 
-			List<Matriculado> obj = session.createQuery("select * from Matriculado where alunoId = " + id + "turmaId = " + id2).getResultList();
+			List<Matriculado> obj = session.createQuery("from Matriculado where alunoId = " + alunoId + "codigoTurma = " + codigoTurma).getResultList();
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -284,7 +304,7 @@ public class Delete {
 			if(sucesso) {
 				// deletando o objeto
 				for(Matriculado o : obj) {
-					session.delete(o);
+					//
 				}
 			}
 			
@@ -302,7 +322,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean PreRequisito(int id, int id2) {
+	public boolean PreRequisito(Integer disciplinaId, Integer prerequisitoId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -316,7 +336,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 
-			List<PreRequisito> obj = session.createQuery("select * from PreRequisito where disciplinaId = " + id + "prerequisitoId = " + id2).getResultList();
+			List<PreRequisito> obj = session.createQuery("from PreRequisito where disciplinaId = " + disciplinaId + "prerequisitoId = " + prerequisitoId).getResultList();
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -326,7 +346,7 @@ public class Delete {
 			if(sucesso) {
 				// deletando o objeto
 				for(PreRequisito o : obj) {
-					session.delete(o);
+					//
 				}
 			}
 			
@@ -344,7 +364,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Professor(int id) {
+	public boolean Professor( Integer usuarioId, String nome, String matricula, String nivelFormacao, Integer codigoCurso) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -358,7 +378,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			Professor obj = session.get(Professor.class, id);
+			Professor obj = session.get(Professor.class, usuarioId);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -366,8 +386,15 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				session.delete(obj);
+				if(nome != null) {
+					obj.setNome(nome);
+				}
+				if(matricula != null) {
+					obj.setMatricula(matricula);
+				}
+				if(nivelFormacao != null) {
+					obj.setNivelFormacao(nivelFormacao);
+				}
 			}
 			
 			// finalizando transação
@@ -385,7 +412,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean ProfessorCapacidade(int id, int id2) {
+	public boolean ProfessorCapacidade(Integer professorId, Integer disciplinaId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -399,7 +426,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 
-			List<ProfessorCapacidade> obj = session.createQuery("select * from ProfessorCapacidade where professorId = " + id + "disciplinaId = " + id2).getResultList();
+			List<ProfessorCapacidade> obj = session.createQuery("from ProfessorCapacidade where professorId = " + professorId + "disciplinaId = " + disciplinaId).getResultList();
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -409,7 +436,7 @@ public class Delete {
 			if(sucesso) {
 				// deletando o objeto
 				for(ProfessorCapacidade o : obj) {
-					session.delete(o);
+					//
 				}
 			}
 			
@@ -427,7 +454,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Sala(String id) {
+	public boolean Sala(String codigoSala, Integer capacidade, Integer predio) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -441,7 +468,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			Sala obj = session.get(Sala.class, id);
+			Sala obj = session.get(Sala.class, codigoSala);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -449,8 +476,12 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				session.delete(obj);
+				if(capacidade != null) {
+					obj.setCapacidade(capacidade);
+				}
+				if(predio != null) {
+					obj.setPredio(predio);
+				}
 			}
 			
 			// finalizando transação
@@ -468,7 +499,8 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Turma(String id) {
+	public boolean Turma(String codigoTurma, Integer maxAlunos, String ano, String semestre, Integer professorId, Integer disciplinaId,
+			Integer salaId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -482,7 +514,7 @@ public class Delete {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			Turma obj = session.get(Turma.class, id);
+			Turma obj = session.get(Turma.class, codigoTurma);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -490,8 +522,25 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				session.delete(obj);
+				if(ano != null) {
+					obj.setAno(ano);
+				}
+				if(maxAlunos != null) {
+					obj.setMaxAlunos(maxAlunos);
+				}
+				if(semestre != null) {
+					obj.setSemestre(semestre);
+				}
+				if(salaId != null) {
+					obj.setSalaId(salaId);
+				}
+				if(professorId != null) {
+					obj.setProfessorId(professorId);
+				}
+				if(disciplinaId != null) {
+					obj.setDisciplinaId(disciplinaId);
+				}
+				
 			}
 			
 			// finalizando transação
@@ -509,7 +558,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Usuario(int id) {
+	public boolean Usuario(Integer id, String username, String senha, Integer rg, Integer cpf) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -531,8 +580,18 @@ public class Delete {
 			}
 			
 			if(sucesso) {
-				// deletando o objeto
-				session.delete(obj);
+				if(cpf != null) {
+					obj.setCpf(cpf);
+				}
+				if(rg != null) {
+					obj.setRg(rg);
+				}
+				if(senha != null) {
+					obj.setSenha(senha);
+				}
+				if(username != null) {
+					obj.setUsername(username);
+				}
 			}
 			
 			// finalizando transação
@@ -549,6 +608,6 @@ public class Delete {
 		
 		return sucesso;
 	}
-
+	
 	
 }

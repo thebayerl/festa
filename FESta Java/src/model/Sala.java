@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,12 +22,6 @@ public class Sala {
 	@Column(name="predio")
 	private int predio;
 	
-	public Sala(String codigoSala, int capacidade, int predio) {
-		super();
-		this.codigoSala = codigoSala;
-		this.capacidade = capacidade;
-		this.predio = predio;
-	}
 
 	public void create() {
 		boolean erro = false;

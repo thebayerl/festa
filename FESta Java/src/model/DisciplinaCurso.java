@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -88,12 +88,6 @@ public class DisciplinaCurso {
 		finally {
 			factory.close();
 		}
-	}
-
-	public DisciplinaCurso(String codigoCurso, int disciplinaId) {
-		super();
-		this.codigoCurso = codigoCurso;
-		this.disciplinaId = disciplinaId;
 	}
 
 	public String getCodigoCurso() {

@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -16,12 +16,6 @@ public class ProfessorCapacidade {
 	
 	@Column(name="disciplina_id")
 	private int disciplinaId;
-
-	public ProfessorCapacidade(int professorId, int disciplinaId) {
-		super();
-		this.professorId = professorId;
-		this.disciplinaId = disciplinaId;
-	}
 	
 	public void create() {
 		// criando session factory

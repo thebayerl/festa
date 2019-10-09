@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,11 +20,6 @@ public class Cordenador {
 	private String nome;
 	
 
-
-	public Cordenador(String nome, int usuarioId) {
-		this.usuarioId = usuarioId;
-		this.nome = nome;
-	}
 	
 	public void create() {
 		

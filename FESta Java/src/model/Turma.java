@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -33,18 +33,6 @@ public class Turma {
 	
 	@Column(name="sala_id")
 	private int salaId;
-
-	public Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, int disciplinaId,
-			int salaId) {
-		super();
-		this.codigoTurma = codigoTurma;
-		this.maxAlunos = maxAlunos;
-		this.ano = ano;
-		this.semestre = semestre;
-		this.professorId = professorId;
-		this.disciplinaId = disciplinaId;
-		this.salaId = salaId;
-	}
 	
 	public void create() {
 		boolean erro = false;

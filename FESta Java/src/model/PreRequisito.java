@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -17,11 +17,6 @@ public class PreRequisito {
 	@Column(name="prerequisito_id")
 	private int prerequisitoId;
 	
-	public PreRequisito(int disciplinaId, int prerequisitoId) {
-		super();
-		this.disciplinaId = disciplinaId;
-		this.prerequisitoId = prerequisitoId;
-	}
 	
 	public void create() {
 		boolean erro = false;

@@ -1,4 +1,4 @@
-package tabelas;
+package model;
 
 import java.util.List;
 import org.hibernate.Session;
@@ -7,25 +7,30 @@ import org.hibernate.cfg.Configuration;
 
 public class Read {
 	
+	public String aspas(String string) {
+		return "'" + string + "'";
+	}
+	
 	public String add(String atributo, String valor) {
 		
-		if(valor != null) {
+		if(valor != null || valor == "-1") {
 			return  atributo + " = " + valor + " AND ";
 		}
 		return "";
 	}
 	
-	public List<Aluno> Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
+	public List<Aluno> Aluno(String usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
 			String codigoCurso) {
 		
-		String query = "select * from Aluno where ";
-		query += add("usuarioId",Integer.toString(usuarioId));
+		String query = "from Aluno where ";
+		query += add("usuarioId",usuarioId);
 		query += add("matricula",matricula);
 		query += add("nome",nome);
 		query += add("dataNascimento",dataNascimento);
 		query += add("dataIngresso",dataIngresso);
 		query += add("codigoCurso",codigoCurso);
 		query = query.substring(0, query.length() - 4);
+		System.out.println(query);
 		
 		List<Aluno> resultado = null;
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
@@ -44,10 +49,10 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Cordenador> Cordenador(String nome, int usuarioId) {
+	public List<Cordenador> Cordenador(String nome, String usuarioId) {
 		
-		String query = "select * from Cordenador where ";
-		query += add("usuarioId",Integer.toString(usuarioId));
+		String query = "from Cordenador where ";
+		query += add("usuarioId",usuarioId);
 		query += add("nome",nome);
 		query = query.substring(0, query.length() - 4);
 		
@@ -71,7 +76,7 @@ public class Read {
 	
 	public List<Curso> Curso(String codigoCurso, String nome) {
 		
-		String query = "select * from Curso where ";
+		String query = "from Curso where ";
 		query += add("codigoCurso",codigoCurso);
 		query += add("nome",nome);
 		query = query.substring(0, query.length() - 4);
@@ -93,11 +98,11 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Disciplina> Disciplina(int id, String nome, int creditos, String departamento) {
+	public List<Disciplina> Disciplina(String id, String nome, String creditos, String departamento) {
 
-		String query = "select * from Disciplina where ";
-		query += add("id",Integer.toString(id));
-		query += add("creditos",Integer.toString(creditos));
+		String query = "from Disciplina where ";
+		query += add("id",id);
+		query += add("creditos",creditos);
 		query += add("nome", nome);
 		query += add("departamento", departamento);
 		query = query.substring(0, query.length() - 4);
@@ -119,10 +124,10 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<DisciplinaCurso> DisciplinaCurso(String codigoCurso, int disciplinaId) {
+	public List<DisciplinaCurso> DisciplinaCurso(String codigoCurso, String disciplinaId) {
 		
-		String query = "select * from Aluno where ";
-		query += add("disciplinaId",Integer.toString(disciplinaId));
+		String query = "from DisciplinaCurso where ";
+		query += add("disciplinaId",disciplinaId);
 		query += add("codigoCurso",codigoCurso);
 		query = query.substring(0, query.length() - 4);
 		
@@ -143,12 +148,12 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Historico> Historico(int id, double nota, int alunoId, String codigoTurma) {
+	public List<Historico> Historico(String id, String nota, String alunoId, String codigoTurma) {
 		
-		String query = "select * from Aluno where ";
-		query += add("id",Integer.toString(id));
-		query += add("nota",Double.toString(nota));
-		query += add("alunoId",Integer.toString(alunoId));
+		String query = "from Historico where ";
+		query += add("id",id);
+		query += add("nota",nota);
+		query += add("alunoId",alunoId);
 		query += add("codigoTurma",codigoTurma);
 		query = query.substring(0, query.length() - 4);
 			
@@ -169,10 +174,10 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Matriculado> Matriculado(int alunoId, String codigoTurma) {
+	public List<Matriculado> Matriculado(String alunoId, String codigoTurma) {
 	
-		String query = "select * from Aluno where ";
-		query += add("alunoId",Integer.toString(alunoId));
+		String query = "from Matriculado where ";
+		query += add("alunoId",alunoId);
 		query += add("codigoTurma",codigoTurma);
 		query = query.substring(0, query.length() - 4);
 	
@@ -193,11 +198,11 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<PreRequisito> PreRequisito(int disciplinaId, int prerequisitoId) {
+	public List<PreRequisito> PreRequisito(String disciplinaId, String prerequisitoId) {
 		
-		String query = "select * from Aluno where ";
-		query += add("disciplinaId",Integer.toString(disciplinaId));
-		query += add("prerequisitoId",Integer.toString(prerequisitoId));
+		String query = "from PreRequisito where ";
+		query += add("disciplinaId",disciplinaId);
+		query += add("prerequisitoId",prerequisitoId);
 		query = query.substring(0, query.length() - 4);
 		
 		List<PreRequisito> resultado = null;
@@ -218,10 +223,10 @@ public class Read {
 	
 	}
 	
-	public List<Professor> Professor(int usuarioId, String nome, String matricula, String nivelFormacao,  String codigoCurso) {
+	public List<Professor> Professor(String usuarioId, String nome, String matricula, String nivelFormacao,  String codigoCurso) {
 		
-		String query = "select * from Aluno where ";
-		query += add("usuarioId",Integer.toString(usuarioId));
+		String query = "from Professor where ";
+		query += add("usuarioId",usuarioId);
 		query += add("matricula",matricula);
 		query += add("nome",nome);
 		query += add("nivelFormacao",nivelFormacao);
@@ -245,11 +250,11 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<ProfessorCapacidade> ProfessorCapacidade(int professorId, int disciplinaId) {
+	public List<ProfessorCapacidade> ProfessorCapacidade(String professorId, String disciplinaId) {
 		
-		String query = "select * from Aluno where ";
-		query += add("disciplinaId",Integer.toString(disciplinaId));
-		query += add("professorId",Integer.toString(professorId));
+		String query = "from ProfessorCapacidade where ";
+		query += add("disciplinaId",disciplinaId);
+		query += add("professorId",professorId);
 		query = query.substring(0, query.length() - 4);
 		
 		List<ProfessorCapacidade> resultado = null;
@@ -270,11 +275,11 @@ public class Read {
 		
 	}
 	
-	public List<Sala> Sala( String codigoSala, int capacidade, String predio) {
+	public List<Sala> Sala( String codigoSala, String capacidade, String predio) {
 		
-		String query = "select * from Aluno where ";
+		String query = "from Sala where ";
 		query += add("codigoCurso",codigoSala);
-		query += add("capacidade",Integer.toString(capacidade));
+		query += add("capacidade",capacidade);
 		query += add("predio",predio);
 		query = query.substring(0, query.length() - 4);
 		
@@ -296,16 +301,16 @@ public class Read {
 		
 	}
 	
-	public List<Turma> Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, int disciplinaId,
+	public List<Turma> Turma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
 			String codigoSala) {
 		
-		String query = "select * from Aluno where ";
+		String query = "from Turma where ";
 		query += add("codigoTurma",codigoTurma);
-		query += add("maxAlunos",Integer.toString(maxAlunos));
+		query += add("maxAlunos",maxAlunos);
 		query += add("ano",ano);
 		query += add("semestre",semestre);
-		query += add("professorId",Integer.toString(professorId));
-		query += add("disciplinaId",Integer.toString(disciplinaId));
+		query += add("professorId",professorId);
+		query += add("disciplinaId",disciplinaId);
 		query += add("codigoSala",codigoSala);
 		query = query.substring(0, query.length() - 4);
 		
@@ -327,15 +332,16 @@ public class Read {
 		
 	}
 	
-	public List<Usuario> Usuario(int id, String username, String senha, int rg, int cpf) {
+	public List<Usuario> Usuario(String id, String username, String senha, String rg, String cpf) {
 		
-		String query = "select * from Aluno where ";
-		query += add("disciplinaId",Integer.toString(id));
+		String query = "from Usuario where ";
+		query += add("id",id);
 		query += add("username",username);
 		query += add("senha",senha);
-		query += add("rg",Integer.toString(rg));
-		query += add("cpf",Integer.toString(cpf));
+		query += add("rg",rg);
+		query += add("cpf",cpf);
 		query = query.substring(0, query.length() - 4);
+		System.out.println(query);
 		
 		List<Usuario> resultado = null;
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).buildSessionFactory();
