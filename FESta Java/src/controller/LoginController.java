@@ -9,6 +9,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.hibernate.Session;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.Login;
 import view.Principal;
+import model.Usuario;
 
 /**
  *
@@ -55,24 +59,36 @@ public class LoginController implements Initializable {
     }
     
     public void logar(){
-        if(txEmail.getText().equals("Adm") && txSenha.getText().equals("1234")){
-            Principal p = new Principal();
-            fecha();
-            try {
-            	//System.out.println("ENTREI NESSA BAGAÇA");
-                p.start(new Stage());
-            } catch (Exception ex) {
-                //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            	System.out.println("ENTREI NESSA BAGAÇA");
-            }
-
-        }else{
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setHeaderText("Erro");
-            alert.setTitle("Erro");
-            alert.setContentText("Usuario ou Senha Invalido(s)");
-            alert.show();
-
-        }
+        
+    	String username = txEmail.getText();
+    	String password = txSenha.getText();
+    	
+    	// pega a sessão do hibernate
+    	Session session = HibernateUtil.getSession();
+    	// cria caso default de usuario caso não exista no banco
+    	Usuario user = null;
+    	
+    	if (session != null) {
+    		try {
+    			user = (Usuario) session.get(Usuario.class, username);
+    			if (password.equals(user.getSenha())) {
+    				System.out.println("User: " + user.toString()); 
+    				Principal p = new Principal();
+    	            fecha();
+    	            
+    	            p.start(new Stage());
+    			} else {
+    				Alert alert = new Alert(AlertType.ERROR);
+    	            alert.setHeaderText("Erro");
+    	            alert.setTitle("Erro");
+    	            alert.setContentText("Usuario ou Senha Invalido(s)");
+    	            alert.show();
+    			}
+    		} catch (Exception exception) {
+    			System.out.println("Exception occred while reading user data: " + exception.getMessage());    			
+		   }
+    	} 
+    	
+    	
     }
 }

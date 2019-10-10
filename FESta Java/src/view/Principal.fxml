@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controller.PrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrincipalController">
    <children>
-      <Button fx:id="btCadastrarCurso" layoutX="33.0" layoutY="48.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Curso" />
-      <Button fx:id="btCadastrarDisciplina" layoutX="221.0" layoutY="48.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Disciplina" />
-      <Button fx:id="btCadastrarPreRequisitos" layoutX="409.0" layoutY="48.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Pre-requisitos" />
-      <Button fx:id="btCadastrarUsuario" layoutX="409.0" layoutY="211.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Usuario" />
-      <Button fx:id="btCadastrarSala" layoutX="221.0" layoutY="211.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Sala" />
-      <Button fx:id="btCadastrarTurma" layoutX="33.0" layoutY="211.0" mnemonicParsing="false" prefHeight="146.0" prefWidth="171.0" text="Cadastrar Turma" />
+      <Button fx:id="btCadastrarCurso" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Curso" />
+      <Button fx:id="btCadastrarDisciplina" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Disciplina" />
+      <Button fx:id="btCadastrarPreRequisitos" layoutX="14.0" layoutY="118.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Pre-requisitos" />
+      <Button fx:id="btCadastrarUsuario" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Usuario" />
+      <Button fx:id="btCadastrarSala" layoutX="14.0" layoutY="201.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Sala" />
+      <Button fx:id="btCadastrarTurma" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Turma" />
+      <AnchorPane layoutX="180.0" prefHeight="600.0" prefWidth="820.0" style="-fx-background-color: lightgray;">
+         <cursor>
+            <Cursor fx:constant="S_RESIZE" />
+         </cursor>
+      </AnchorPane>
    </children>
 </AnchorPane>
