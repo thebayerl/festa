@@ -36,6 +36,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
+            <Button fx:id="deleteEntidadeButton" layoutX="567.0" layoutY="127.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="225.0" text="Delete" visible="false" />
          </children>
       </AnchorPane>
    </children>

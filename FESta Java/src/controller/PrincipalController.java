@@ -64,9 +64,14 @@ public class PrincipalController implements Initializable {
     @FXML private TextField pesquisarTextiArea;
     @FXML private ListView<String> listaResultadosListView;
     @FXML private Label alertaDePesquisaLabel;
+    @FXML private Button deleteEntidadeButton;
     
     // variavel contendo os tipos que podem ser pesquisados
-    private String[] tiposPesquisa = {"Curso", "Aluno", "Professor", "Disciplina"};    
+    private String[] tiposPesquisa = {"Curso", "Aluno", "Professor", "Disciplina"};
+    
+    // variavel para guardar lista de entidades
+    @SuppressWarnings("rawtypes")
+	List resultados;
     
     
     @SuppressWarnings("unchecked")
@@ -81,6 +86,9 @@ public class PrincipalController implements Initializable {
         
         this.pesquisaButton.setOnMouseClicked(e -> {
         	
+        	// esconde o botão de deletar
+        	this.deleteEntidadeButton.setVisible(false);        
+        	
         	this.alertaDePesquisaLabel.setText("");
         	// pega a sessão do hibernate
         	Session session = HibernateUtil.getSession();
@@ -92,13 +100,13 @@ public class PrincipalController implements Initializable {
         		
         		String stringQuery = "from " + this.tiposPesquisa[selecaoTabelaIndice] + " where nome like :param"; 
         		// create query
-        		Query pesquisarQuery = session.createQuery(stringQuery);
+        		Query pesquisarQuery = session.createQuery(stringQuery);;
         		        		
         		// adiciona os parametros        		
         		pesquisarQuery.setParameter("param", "%"+this.pesquisarTextiArea.getText()+"%");
         		        		
         		// resultados da pesquisa
-        		List resultados = pesquisarQuery.list();        		
+        		resultados = pesquisarQuery.list();      		
         		ObservableList<String> row = FXCollections.observableArrayList();
         		// limpa a listView 
         		this.listaResultadosListView.getItems().clear();
@@ -147,11 +155,49 @@ public class PrincipalController implements Initializable {
         	
         });       
         
+        this.deleteEntidadeButton.setOnMouseClicked(e -> {
+        	        	
+        	// pega a session
+        	Session session = HibernateUtil.getSession();
+        	
+        	if (session != null) {
+        		// indice do item da pesquisa selecionado
+            	int indiceSelecionado = this.listaResultadosListView.getSelectionModel().getSelectedIndex();
+            	// indice da entidade selecionada
+            	int indiceEntidade = this.tipoPesquisaChoiceBox.getSelectionModel().getSelectedIndex();                
+            	
+            	if (indiceEntidade  == 0) {
+            		Curso curso = (Curso) this.resultados.get(indiceSelecionado);            		
+            		curso.delete();
+            	} else if (indiceEntidade == 1) {
+            		Aluno aluno = (Aluno) this.resultados.get(indiceSelecionado);
+            		aluno.delete();
+            	} else if (indiceEntidade == 2) {
+            		Professor prof = (Professor) this.resultados.get(indiceSelecionado);
+            		prof.delete();
+            	} else if (indiceEntidade == 3) {
+            		Disciplina disc = (Disciplina) this.resultados.get(indiceSelecionado);
+            		disc.delete();
+            	}            	
+        	}
+        	
+        	this.listaResultadosListView.getItems().clear();        	        	        	
+        });
+        
+        this.listaResultadosListView.setOnMouseClicked(e -> {
+        	// mostra o botão de deletar
+        	 int indiceSelecao = this.listaResultadosListView.getSelectionModel().getSelectedIndex();
+        	 if (indiceSelecao >= 0) {
+        		 this.deleteEntidadeButton.setVisible(true);
+        	 }
+        });
+        
         // configura a choice box
         this.tipoPesquisaChoiceBox.getItems().addAll(Arrays.asList(tiposPesquisa));
         this.tipoPesquisaChoiceBox.getSelectionModel().select(0);
                  
     }
+    
     public void fecha(){
         Principal.getStage().close();
     }
