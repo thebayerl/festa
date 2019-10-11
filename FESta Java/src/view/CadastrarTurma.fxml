@@ -7,26 +7,28 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controller.CadastrarTurmaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarTurmaController">
     <children>
-      <Label layoutX="68.0" layoutY="159.0" text="Número de Alunos" />
-      <Label layoutX="68.0" layoutY="251.0" prefHeight="17.0" prefWidth="62.0" text="Disciplina" />
-      <Label layoutX="68.0" layoutY="202.0" prefHeight="17.0" prefWidth="62.0" text="Professor" />
-      <TextField fx:id="txMaxAluno" layoutX="177.0" layoutY="155.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Número Máximo de Alunos..." />
-      <TextField fx:id="txIdDisciplina" layoutX="177.0" layoutY="247.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Disciplina ..." />
-      <Label layoutX="68.0" layoutY="301.0" prefHeight="17.0" prefWidth="28.0" text="Sala" />
+      <Label layoutX="58.0" layoutY="180.0" text="Número de Alunos" />
+      <Label layoutX="99.0" layoutY="260.0" prefHeight="17.0" prefWidth="62.0" text="Disciplina" />
+      <Label layoutX="99.0" layoutY="220.0" prefHeight="17.0" prefWidth="62.0" text="Professor" />
+      <TextField fx:id="txMaxAluno" layoutX="177.0" layoutY="176.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Número Máximo de Alunos..." />
+      <TextField fx:id="txIdDisciplina" layoutX="177.0" layoutY="256.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Disciplina ..." />
+      <Label layoutX="116.0" layoutY="301.0" prefHeight="17.0" prefWidth="28.0" text="Sala" />
       <TextField fx:id="txIdSala" layoutX="177.0" layoutY="297.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Sala ..." />
       <Button fx:id="btCadastrar" layoutX="402.0" layoutY="343.0" mnemonicParsing="false" text="Cadastrar" />
       <Button fx:id="btCancelar" layoutX="225.0" layoutY="343.0" mnemonicParsing="false" text="Cancelar" />
-      <Label layoutX="71.0" layoutY="117.0" text="Ano" />
-      <Label layoutX="69.0" layoutY="79.0" text="Semestre" />
-      <TextField fx:id="txAno" layoutX="177.0" layoutY="113.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Ano..." />
-      <RadioButton fx:id="radioBt1" layoutX="177.0" layoutY="79.0" mnemonicParsing="false" selected="true" text="1º">
+      <Label layoutX="119.0" layoutY="138.0" text="Ano" />
+      <Label layoutX="95.0" layoutY="53.0" text="Semestre" />
+      <TextField fx:id="txAno" layoutX="177.0" layoutY="134.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Ano..." />
+      <RadioButton fx:id="radioBt1" layoutX="177.0" layoutY="53.0" mnemonicParsing="false" selected="true" text="1º">
          <toggleGroup>
             <ToggleGroup fx:id="grupoSemestre" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="radioBt2" layoutX="271.0" layoutY="79.0" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
-      <TextField fx:id="txIdProfessor" layoutX="177.0" layoutY="198.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID do Professor..." />
+      <RadioButton fx:id="radioBt2" layoutX="271.0" layoutY="53.0" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
+      <TextField fx:id="txIdProfessor" layoutX="177.0" layoutY="216.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID do Professor..." />
+      <TextField fx:id="txCodigoTurma" layoutX="177.0" layoutY="92.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código da Turma..." />
+      <Label layoutX="70.0" layoutY="96.0" text="Código da Turma" />
    </children>
 </AnchorPane>

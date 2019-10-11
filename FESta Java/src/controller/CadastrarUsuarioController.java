@@ -5,8 +5,10 @@
  */
 package controller;
 
+import model.Create;
 import model.Usuario;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +21,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import view.CadastrarAluno;
+import view.CadastrarProfessor;
 import view.CadastrarUsuario;
 import view.Principal;
 
@@ -35,8 +39,10 @@ public class CadastrarUsuarioController implements Initializable {
     @FXML private PasswordField psSenha;
     @FXML private PasswordField psSenhaConf;
     @FXML private TextField txCPF;
-    @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
+    @FXML private Button btAluno;
+    @FXML private Button btProfessor;
+    
     
     
     /**
@@ -51,36 +57,36 @@ public class CadastrarUsuarioController implements Initializable {
             abrePrincipal();
         });
         
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
+        btAluno.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
-            cadastraUsuario();
+            cadastraAluno();
+        });
+        
+        btProfessor.setOnMouseClicked((MouseEvent e)->{
+            //System.out.println("Sai");
+            cadastraProfessor();
         });
     }   
     
     public void cadastraUsuario(){
-        String nome = txNome.getText();
+        String username = txNome.getText();
         String senha = psSenha.getText();
         String confirmacao = psSenhaConf.getText();
         int cpf = Integer.parseInt(txCPF.getText());
         int rg = Integer.parseInt(txRG.getText());
-    
+        //Random rand = new Random();
+        //int id = rand.nextInt(100);
+        final String sql = "SELECT max( u.id ) FROM Usuario u";
+        Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
         
+        int id = lastId+1;
         if(senha.equals(confirmacao)){
-//            Usuario u = new Usuario(nome, senha, rg, cpf);            
-//            if(dao.add(u)){
-//                Alert al = new Alert(AlertType.CONFIRMATION);
-//                al.setHeaderText("Usuario cadastrado");
-//                abrePrincipal();
-//                al.show();
-//            }else{
-//                Alert al = new Alert(AlertType.ERROR);
-//                al.setHeaderText("Usuario não cadastrado");
-//                al.show();
-//            }
-//        }else{
-//            Alert al = new Alert(AlertType.ERROR);
-//            al.setHeaderText("As senhas não coincidem");
-//            al.show();
+        	Create u = new Create();
+            u.Usuario(id, username, senha, rg, cpf);                       
+        }else{
+            Alert al = new Alert(AlertType.ERROR);
+            al.setHeaderText("As senhas n�o coincidem");
+            al.show();
         }
     }
     
@@ -89,13 +95,35 @@ public class CadastrarUsuarioController implements Initializable {
         CadastrarUsuario.getStage().close();
     }
     
+    public void cadastraAluno(){
+    	cadastraUsuario();
+        CadastrarAluno ca = new CadastrarAluno();
+        fecha();
+        try {
+            ca.start(new Stage());
+        } catch (Exception ex) {
+            Logger.getLogger(CadastrarAlunoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void cadastraProfessor(){
+    	cadastraUsuario();
+    	CadastrarProfessor cp = new CadastrarProfessor();
+        fecha();
+        try {
+            cp.start(new Stage());
+        } catch (Exception ex) {
+            Logger.getLogger(CadastrarProfessorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void abrePrincipal(){
         Principal p = new Principal();
         fecha();
         try {
             p.start(new Stage());
         } catch (Exception ex) {
-            Logger.getLogger(CadastrarDisciplinaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

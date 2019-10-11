@@ -159,8 +159,8 @@ public class Aluno {
 
 	@Override
 	public String toString() {
-		return "Aluno [matricula=" + matricula + ", nome=" + nome + ", dataNascimento=" + dataNascimento
-				+ ", dataIngresso=" + dataIngresso + ", usuarioId=" + usuarioId + ", codigoCurso=" + codigoCurso + "]";
+		return "Aluno [usuarioId=" + usuarioId + ", matricula=" + matricula + ", nome=" + nome + ", dataNascimento=" + dataNascimento
+				+ ", dataIngresso=" + dataIngresso + ", codigoCurso=" + codigoCurso + "]";
 	}
 	
 }

@@ -9,6 +9,8 @@ public class Create {
 	public void Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
 			String codigoCurso) {
 		
+		System.out.println("ENTREI NO CREATE.ALUNO");
+		
 		Aluno obj = new Aluno();
 		boolean erro = false;
 		obj.setUsuarioId(usuarioId);
@@ -96,6 +98,8 @@ public class Create {
 	}
 
 	public void Curso(String codigoCurso, String nome) {
+		
+		System.out.println("ENTREI NO CREATE.curso");
 		
 		Curso obj = new Curso();
 		boolean erro = false;
@@ -502,12 +506,12 @@ public class Create {
 	}
 	
 	public void Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, int disciplinaId,
-			int salaId) {
+			String codigoSala) {
 		
 		Turma obj = new Turma();
 		boolean erro = false;
 		obj.setSemestre(semestre);
-		obj.setSalaId(salaId);
+		obj.setcodigoSala(codigoSala);
 		obj.setProfessorId(professorId);
 		obj.setMaxAlunos(maxAlunos);
 		obj.setDisciplinaId(disciplinaId);

@@ -5,6 +5,7 @@
  */
 package controller;
 
+import model.Create;
 import model.Curso;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ public class CadastrarCursoController implements Initializable {
     @FXML private TextField txNome;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
+    @FXML private TextField txCodigoCurso;
 
     /**
      * Initializes the controller class.
@@ -51,7 +53,12 @@ public class CadastrarCursoController implements Initializable {
 
     public void cadastraCurso(){
         String nome = txNome.getText();
-        //Curso c = new Curso(nome);        
+        String codigoCurso = txCodigoCurso.getText();
+        Create c = new Create();
+        c.Curso(codigoCurso, nome);
+		//Curso c = new Curso(nome); 
+        abrePrincipal();
+        
         
     }
     public void fecha(){
@@ -64,7 +71,7 @@ public class CadastrarCursoController implements Initializable {
         try {
             p.start(new Stage());
         } catch (Exception ex) {
-            Logger.getLogger(CadastrarDisciplinaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

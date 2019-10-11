@@ -32,7 +32,7 @@ public class Turma {
 	private int disciplinaId;
 	
 	@Column(name="sala_id")
-	private int salaId;
+	private String codigoSala;
 	
 	public void create() {
 		boolean erro = false;
@@ -64,8 +64,8 @@ public class Turma {
 				erro = true;
 			}
 			
-			if(session.get(Sala.class, salaId) == null) {
-				System.out.println("Sala com salaId = " + salaId + " não existente\n");
+			if(session.get(Sala.class, codigoSala) == null) {
+				System.out.println("Sala com codigoSala = " + codigoSala + " não existente\n");
 				erro = true;
 			}
 			
@@ -164,19 +164,19 @@ public class Turma {
 		this.disciplinaId = disciplinaId;
 	}
 
-	public int getSalaId() {
-		return salaId;
+	public String getcodigoSala() {
+		return codigoSala;
 	}
 
-	public void setSalaId(int salaId) {
-		this.salaId = salaId;
+	public void setcodigoSala(String codigoSala) {
+		this.codigoSala = codigoSala;
 	}
 
 	@Override
 	public String toString() {
 		return "Turma [codigoTurma=" + codigoTurma + ", maxAlunos=" + maxAlunos + ", ano=" + ano
 				+ ", semestre=" + semestre + ", professorId=" + professorId + ", disciplinaId=" + disciplinaId
-				+ ", salaId=" + salaId + "]";
+				+ ", codigoSala=" + codigoSala + "]";
 	}
 	
 }

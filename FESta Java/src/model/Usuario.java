@@ -1,6 +1,8 @@
 package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,6 +15,7 @@ import org.hibernate.cfg.Configuration;
 public class Usuario {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private int id;
 	
@@ -39,13 +42,13 @@ public class Usuario {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transaï¿½ï¿½o
+			// iniciando a transação
 			session.beginTransaction();
 			
 			// testando a validade dos dados recebidos
 			
 			if(session.get(Usuario.class, id) == null) {
-				System.out.println("Usuario com Id = " + id + " ja existente\n");
+				System.out.println("Usuario com Id = " + id + " já existente\n");
 				erro = true;
 			}
 			
@@ -56,7 +59,7 @@ public class Usuario {
 				session.save(this);
 			}
 			
-			// finalizando transaï¿½ï¿½o
+			// finalizando transação
 			session.getTransaction().commit();
 			
 			System.out.println("Commited!");
@@ -76,7 +79,7 @@ public class Usuario {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// comeï¿½ando a transaï¿½ï¿½o
+			// começando a transação
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			

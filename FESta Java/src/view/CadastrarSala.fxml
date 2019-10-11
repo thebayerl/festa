@@ -5,11 +5,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controller.CadastrarSalaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarSalaController">
     <children>
-      <Label layoutX="84.0" layoutY="92.0" text="Capacidade" />
-      <TextField fx:id="txCapacidade" layoutX="160.0" layoutY="88.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Capacidade da Sala..." />
-      <Button fx:id="btCadastrar" layoutX="386.0" layoutY="151.0" mnemonicParsing="false" text="Cadastrar" />
-      <Button fx:id="btCancelar" layoutX="203.0" layoutY="151.0" mnemonicParsing="false" text="Cancelar" />
+      <Label layoutX="95.0" layoutY="204.0" text="Prédio" />
+      <TextField fx:id="txCodigoSala" layoutX="160.0" layoutY="97.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código da Sala..." />
+      <Button fx:id="btCadastrar" layoutX="375.0" layoutY="270.0" mnemonicParsing="false" text="Cadastrar" />
+      <Button fx:id="btCancelar" layoutX="204.0" layoutY="270.0" mnemonicParsing="false" text="Cancelar" />
+      <TextField fx:id="txCapacidade" layoutX="160.0" layoutY="149.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Capacidade da Sala..." />
+      <TextField fx:id="txPredio" layoutX="160.0" layoutY="200.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Prédio em que a Sala está localizada..." />
+      <Label layoutX="79.0" layoutY="153.0" text="Capacidade" />
+      <Label layoutX="73.0" layoutY="101.0" text="Código da Sala" />
    </children>
 </AnchorPane>

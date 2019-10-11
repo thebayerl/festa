@@ -5,6 +5,7 @@
  */
 package controller;
 
+import model.Create;
 import model.Disciplina;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ public class CadastrarDisciplinaController implements Initializable {
     @FXML private TextField txNome;
     @FXML private TextField txDepartamento;
     @FXML private TextField txCreditos;
+    @FXML private TextField txIdDisciplina;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
     
@@ -54,7 +56,13 @@ public class CadastrarDisciplinaController implements Initializable {
     public void cadastraDisciplina(){
         String nome = txNome.getText();
         int creditos = Integer.parseInt(txCreditos.getText());
-        String departamento = txDepartamento.getText();
+        String departamentoId = txDepartamento.getText();
+        int id = Integer.parseInt(txIdDisciplina.getText());
+        
+        Create d = new Create();
+        d.Disciplina(id, nome, creditos, departamentoId);
+        abrePrincipal();
+        
         
      //   Disciplina d = new Disciplina(nome, creditos, departamento);
      
@@ -70,7 +78,7 @@ public class CadastrarDisciplinaController implements Initializable {
         try {
             p.start(new Stage());
         } catch (Exception ex) {
-            Logger.getLogger(CadastrarDisciplinaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

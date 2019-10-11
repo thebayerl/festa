@@ -5,7 +5,8 @@
  */
 package controller;
 
-import java.math.BigInteger;
+import model.Create;
+import model.Sala;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -16,8 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Create;
-import view.CadastrarPreRequisitos;
+import view.CadastrarProfessor;
+import view.CadastrarSala;
 import view.Principal;
 
 /**
@@ -25,21 +26,22 @@ import view.Principal;
  *
  * @author denin
  */
-public class CadastrarPreRequisitosController implements Initializable {
+public class CadastrarProfessorController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     
-    @FXML private TextField txIdDisciplina;
-    @FXML private TextField txIdPrerequisito;
+	@FXML private TextField txNome;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
-        
+    @FXML private TextField txFormacao;
+    @FXML private TextField txMatricula;
+    @FXML private TextField txCodigoCurso;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
         btCancelar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
             abrePrincipal();
@@ -47,23 +49,30 @@ public class CadastrarPreRequisitosController implements Initializable {
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
-            cadastraPreRequisito();
+        	cadastraProfessor();
         });
-    } 
-    
-    public void cadastraPreRequisito(){
-        int disciplinaId = Integer.parseInt(txIdDisciplina.getText());
-        int prerequisitoId = Integer.parseInt(txIdPrerequisito.getText());
         
-        Create pr = new Create();
-        System.out.println("Sai1");
-        pr.PreRequisito(disciplinaId, prerequisitoId);
-        System.out.println("Sai2");
+    }
+    
+    public void cadastraProfessor(){
+    	
+    	String nome = txNome.getText();
+    	String matricula = txMatricula.getText();
+    	String nivelFormacao = txFormacao.getText();
+    	int codigoCurso = Integer.parseInt(txCodigoCurso.getText());
+
+    	final String sql = "SELECT max( u.id ) FROM Usuario u";
+        Integer usuarioId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
+    	
+        Create p = new Create();
+        p.Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
         abrePrincipal();
+        //Sala s = new Sala(capacidade);
+        
     }
     
     public void fecha(){
-        CadastrarPreRequisitos.getStage().close();
+        CadastrarProfessor.getStage().close();
     }
     
     public void abrePrincipal(){

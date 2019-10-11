@@ -5,6 +5,7 @@
  */
 package controller;
 
+import model.Create;
 import model.Turma;
 import java.math.BigInteger;
 import java.net.URL;
@@ -40,6 +41,7 @@ public class CadastrarTurmaController implements Initializable {
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
     @FXML private TextField txAno;
+    @FXML private TextField txCodigoTurma;
     @FXML private ToggleGroup grupoSemestre;
     @FXML private RadioButton radioBt1;
     @FXML private RadioButton radioBt2;
@@ -64,13 +66,17 @@ public class CadastrarTurmaController implements Initializable {
     public void cadastraTurma(){
         
         RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
-        int max_alunos = Integer.parseInt(txMaxAluno.getText());
+        int maxAlunos = Integer.parseInt(txMaxAluno.getText());
         String semestre = radio.getText();
         String ano = txAno.getText();
-        BigInteger professor_id = new BigInteger (txIdProfessor.getText());
-        BigInteger disciplina_id = new BigInteger (txIdDisciplina.getText());
-        BigInteger sala_id = new BigInteger (txIdSala.getText());
+        int professorId = Integer.parseInt(txIdProfessor.getText());
+        int disciplinaId = Integer.parseInt(txIdDisciplina.getText());
+        String codigoSala = txIdSala.getText();
+        String codigoTurma = txCodigoTurma.getText();
         
+        Create t = new Create();
+        t.Turma(codigoTurma, maxAlunos, ano, semestre, professorId, disciplinaId, codigoSala);
+        abrePrincipal();
         //Turma t = new Turma(max_alunos, semestre, ano, professor_id, disciplina_id, sala_id);       
         
         
@@ -87,7 +93,7 @@ public class CadastrarTurmaController implements Initializable {
         try {
             p.start(new Stage());
         } catch (Exception ex) {
-            Logger.getLogger(CadastrarDisciplinaController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

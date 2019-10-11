@@ -22,6 +22,12 @@ public class Read {
 	public List<Aluno> Aluno(String usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
 			String codigoCurso) {
 		
+		matricula = aspas(matricula);
+		nome = aspas(nome);
+		dataNascimento = aspas(dataNascimento);
+		dataIngresso = aspas(dataIngresso);
+		codigoCurso = aspas(codigoCurso);
+		
 		String query = "from Aluno where ";
 		query += add("usuarioId",usuarioId);
 		query += add("matricula",matricula);
@@ -49,7 +55,9 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Cordenador> Cordenador(String nome, String usuarioId) {
+	public List<Cordenador> Cordenador(String usuarioId, String nome) {
+		
+		nome = aspas(nome);
 		
 		String query = "from Cordenador where ";
 		query += add("usuarioId",usuarioId);
@@ -76,6 +84,9 @@ public class Read {
 	
 	public List<Curso> Curso(String codigoCurso, String nome) {
 		
+		codigoCurso = aspas(codigoCurso);
+		nome = aspas(nome);
+		
 		String query = "from Curso where ";
 		query += add("codigoCurso",codigoCurso);
 		query += add("nome",nome);
@@ -100,6 +111,9 @@ public class Read {
 	
 	public List<Disciplina> Disciplina(String id, String nome, String creditos, String departamento) {
 
+		nome = aspas(nome);
+		departamento = aspas(departamento);
+		
 		String query = "from Disciplina where ";
 		query += add("id",id);
 		query += add("creditos",creditos);
@@ -126,6 +140,8 @@ public class Read {
 	
 	public List<DisciplinaCurso> DisciplinaCurso(String codigoCurso, String disciplinaId) {
 		
+		codigoCurso = aspas(codigoCurso);
+		
 		String query = "from DisciplinaCurso where ";
 		query += add("disciplinaId",disciplinaId);
 		query += add("codigoCurso",codigoCurso);
@@ -148,10 +164,11 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Historico> Historico(String id, String nota, String alunoId, String codigoTurma) {
+	public List<Historico> Historico( String nota, String alunoId, String codigoTurma) {
+		
+		codigoTurma = aspas(codigoTurma);
 		
 		String query = "from Historico where ";
-		query += add("id",id);
 		query += add("nota",nota);
 		query += add("alunoId",alunoId);
 		query += add("codigoTurma",codigoTurma);
@@ -225,6 +242,11 @@ public class Read {
 	
 	public List<Professor> Professor(String usuarioId, String nome, String matricula, String nivelFormacao,  String codigoCurso) {
 		
+		nome = aspas(nome);
+		matricula = aspas(matricula);
+		nivelFormacao = aspas(nivelFormacao);
+		codigoCurso = aspas(codigoCurso);
+		
 		String query = "from Professor where ";
 		query += add("usuarioId",usuarioId);
 		query += add("matricula",matricula);
@@ -277,6 +299,9 @@ public class Read {
 	
 	public List<Sala> Sala( String codigoSala, String capacidade, String predio) {
 		
+		codigoSala = aspas(codigoSala);
+		predio = aspas(predio);
+		
 		String query = "from Sala where ";
 		query += add("codigoCurso",codigoSala);
 		query += add("capacidade",capacidade);
@@ -303,6 +328,12 @@ public class Read {
 	
 	public List<Turma> Turma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
 			String codigoSala) {
+		
+		codigoTurma = aspas(codigoTurma);
+		ano = aspas(ano);
+		semestre = aspas(semestre);
+		codigoSala = aspas(codigoSala);
+		
 		
 		String query = "from Turma where ";
 		query += add("codigoTurma",codigoTurma);
@@ -333,6 +364,9 @@ public class Read {
 	}
 	
 	public List<Usuario> Usuario(String id, String username, String senha, String rg, String cpf) {
+		
+		username = aspas(username);
+		senha = aspas(senha);
 		
 		String query = "from Usuario where ";
 		query += add("id",id);
