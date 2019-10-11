@@ -25,7 +25,12 @@
 		<property name="current_session_context_class">thread</property>
 		
 		<mapping package="model"/>
-	    <mapping class="model.Usuario"/>    
+	    <mapping class="model.Usuario"/>
+	    <mapping class="model.Curso"/>
+	    <mapping class="model.Aluno"/>
+	    <mapping class="model.Professor"/>
+	    <mapping class="model.Turma"/>
+	    <mapping class="model.Disciplina"/>	        
  
     </session-factory>
 

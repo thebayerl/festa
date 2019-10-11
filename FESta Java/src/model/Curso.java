@@ -24,7 +24,7 @@ public class Curso {
 		boolean erro = false;
 		
 		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
@@ -59,7 +59,7 @@ public class Curso {
 	
 	public void delete() {
 		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
 		
 		//create session
 		Session session = factory.getCurrentSession();

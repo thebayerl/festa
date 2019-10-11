@@ -2,20 +2,36 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PrincipalController">
    <children>
-      <Button fx:id="btCadastrarCurso" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Curso" />
-      <Button fx:id="btCadastrarDisciplina" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Disciplina" />
-      <Button fx:id="btCadastrarPreRequisitos" layoutX="14.0" layoutY="118.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Pre-requisitos" />
-      <Button fx:id="btCadastrarUsuario" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Usuario" />
-      <Button fx:id="btCadastrarSala" layoutX="14.0" layoutY="201.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Sala" />
-      <Button fx:id="btCadastrarTurma" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Cadastrar Turma" />
-      <AnchorPane layoutX="180.0" prefHeight="600.0" prefWidth="820.0" style="-fx-background-color: lightgray;">
+      <Button fx:id="btCadastrarCurso" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Curso" />
+      <Button fx:id="btCadastrarDisciplina" layoutX="14.0" layoutY="78.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Disciplina" />
+      <Button fx:id="btCadastrarUsuario" layoutX="14.0" layoutY="202.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Usuario" />
+      <Button fx:id="btCadastrarSala" layoutX="14.0" layoutY="160.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Sala" />
+      <Button fx:id="btCadastrarTurma" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Turma" />
+      <AnchorPane fx:id="mainAnchorPane" layoutX="180.0" prefHeight="600.0" prefWidth="820.0" style="-fx-background-color: lightgray;">
          <cursor>
             <Cursor fx:constant="S_RESIZE" />
          </cursor>
+         <children>
+            <TextField fx:id="pesquisarTextiArea" layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="409.0" />
+            <ChoiceBox fx:id="tipoPesquisaChoiceBox" layoutX="432.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" />
+            <Button fx:id="pesquisaButton" layoutX="693.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Pesquisar" />
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="109.0" text="Pesquisar">
+               <font>
+                  <Font name="Arial Unicode MS" size="14.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="atributoChoiceBox" disable="true" layoutX="559.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" />
+            <ListView fx:id="listaResultadosListView" layoutX="14.0" layoutY="83.0" prefHeight="493.0" prefWidth="544.0" />
+         </children>
       </AnchorPane>
    </children>
 </AnchorPane>
