@@ -39,13 +39,13 @@ public class Usuario {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			// testando a validade dos dados recebidos
 			
 			if(session.get(Usuario.class, id) == null) {
-				System.out.println("Usuario com Id = " + id + " já existente\n");
+				System.out.println("Usuario com Id = " + id + " ja existente\n");
 				erro = true;
 			}
 			
@@ -56,7 +56,7 @@ public class Usuario {
 				session.save(this);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Commited!");
@@ -76,7 +76,7 @@ public class Usuario {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
+			// comeï¿½ando a transaï¿½ï¿½o
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			

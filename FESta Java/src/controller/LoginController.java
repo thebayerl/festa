@@ -6,12 +6,11 @@
 package controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.hibernate.Session;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -70,19 +69,32 @@ public class LoginController implements Initializable {
     	
     	if (session != null) {
     		try {
-    			user = (Usuario) session.get(Usuario.class, username);
-    			if (password.equals(user.getSenha())) {
-    				System.out.println("User: " + user.toString()); 
-    				Principal p = new Principal();
-    	            fecha();
-    	            
-    	            p.start(new Stage());
-    			} else {
-    				Alert alert = new Alert(AlertType.ERROR);
-    	            alert.setHeaderText("Erro");
-    	            alert.setTitle("Erro");
-    	            alert.setContentText("Usuario ou Senha Invalido(s)");
-    	            alert.show();
+    			// tenta buscar um usuário no banco pelo username
+    			
+				@SuppressWarnings("unchecked")
+				List<Usuario> results = session.createQuery("from Usuario where username = :name").setParameter("name", username).list();
+				
+    			
+    			// verifica se o usuario existe
+    			if (!results.isEmpty()) {
+    				
+    				// pega o usuario com username unico - a unicidade do username deve ser garantida na inserção
+    				user = results.get(0);
+    			
+	    			if (password.equals(user.getSenha())) {
+	    				 
+	    				Principal p = new Principal();
+	    	            fecha();
+	    	            
+	    	            p.start(new Stage());
+	    			} else {
+	    				Alert alert = new Alert(AlertType.ERROR);
+	    	            alert.setHeaderText("Erro");
+	    	            alert.setTitle("Erro");
+	    	            alert.setContentText("Usuario ou Senha Invalido(s)");
+	    	            alert.show();
+	    			}
+	    			
     			}
     		} catch (Exception exception) {
     			System.out.println("Exception occred while reading user data: " + exception.getMessage());    			

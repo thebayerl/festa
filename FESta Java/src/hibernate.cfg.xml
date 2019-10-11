@@ -8,9 +8,9 @@
 
         <!-- JDBC Database connection settings -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://remotemysql.com:3306/6BkoHsgUIY?useSSL=false&amp;serverTimezone=UTC</property>
-        <property name="connection.username">6BkoHsgUIY</property>
-        <property name="connection.password">DXaGJHcRpC</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/controle_academico?serverTimezone=UTC</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">g4usS=1799</property>
 
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="connection.pool_size">1</property>
@@ -23,6 +23,9 @@
 
 		<!-- Set the current session context -->
 		<property name="current_session_context_class">thread</property>
+		
+		<mapping package="model"/>
+	    <mapping class="model.Usuario"/>    
  
     </session-factory>
 
