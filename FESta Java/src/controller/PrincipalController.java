@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -62,12 +63,14 @@ public class PrincipalController implements Initializable {
     @FXML private Button resultadosTableView;
     @FXML private TextField pesquisarTextiArea;
     @FXML private ListView<String> listaResultadosListView;
+    @FXML private Label alertaDePesquisaLabel;
     
     // variavel contendo os tipos que podem ser pesquisados
     private String[] tiposPesquisa = {"Curso", "Aluno", "Professor", "Disciplina"};    
     
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         btCadastrarCurso.setOnMouseClicked(e ->{ abreCadastroCurso(); });
@@ -77,6 +80,8 @@ public class PrincipalController implements Initializable {
         btCadastrarTurma.setOnMouseClicked(e-> { abreCadastroTurma(); });
         
         this.pesquisaButton.setOnMouseClicked(e -> {
+        	
+        	this.alertaDePesquisaLabel.setText("");
         	// pega a sessão do hibernate
         	Session session = HibernateUtil.getSession();
         	if (session != null) {
@@ -92,53 +97,52 @@ public class PrincipalController implements Initializable {
         		// adiciona os parametros        		
         		pesquisarQuery.setParameter("param", "%"+this.pesquisarTextiArea.getText()+"%");
         		        		
-  
-    			if (selecaoTabelaIndice == 0) {
-    				
-    				List<Curso> resultados = pesquisarQuery.list();
-    				ObservableList<String> row = FXCollections.observableArrayList();
-    				
-    				for (Curso curso : resultados) {
-    					System.out.println(" -> " + curso.getnome());    					
-    	                row.add(curso.getnome());    	                
-    				}
-    				
-    				this.listaResultadosListView.setItems(row);
-    			} else if (selecaoTabelaIndice == 1) {
-    				
-    				List<Aluno> resultados = pesquisarQuery.list();
-    				ObservableList<String> row = FXCollections.observableArrayList();
-    				
-    				for (Aluno aluno : resultados) {
-    					System.out.println(" -> " + aluno.getNome());    					
-    	                row.add(aluno.getNome());	                
-    				}
-    				
-    				this.listaResultadosListView.setItems(row);    			
-    			} else if (selecaoTabelaIndice == 2) {
-    				
-    				List<Professor> resultados = pesquisarQuery.list();
-    				ObservableList<String> row = FXCollections.observableArrayList();
-    				
-    				for (Professor prof : resultados) {
-    					System.out.println(" -> " + prof.getNome());    					
-    	                row.add(prof.getNome());	                
-    				}
-    				
-    				this.listaResultadosListView.setItems(row);   
-    				
-    			} else if (selecaoTabelaIndice == 3) {
-    				
-    				List<Disciplina> resultados = pesquisarQuery.list();
-    				ObservableList<String> row = FXCollections.observableArrayList();
-    				
-    				for (Disciplina disc : resultados) {
-    					System.out.println(" -> " + disc.getNome());    					
-    	                row.add(disc.getNome());	                
-    				}
-    				
-    				this.listaResultadosListView.setItems(row); 			
-    			} 
+        		// resultados da pesquisa
+        		List resultados = pesquisarQuery.list();        		
+        		ObservableList<String> row = FXCollections.observableArrayList();
+        		// limpa a listView 
+        		this.listaResultadosListView.getItems().clear();
+        		
+    			if (!resultados.isEmpty()) {
+	        		if (selecaoTabelaIndice == 0) {
+	    				
+	    				// cast para lista de cursos
+	    				List<Curso> cursos = (List<Curso>) resultados;
+	    				
+	    				for (Curso curso : cursos)    					
+	    	                row.add(curso.getnome());    	                
+	    				
+	    				this.listaResultadosListView.setItems(row);
+	    			} else if (selecaoTabelaIndice == 1) {
+	    				
+	    				List<Aluno> alunos = (List<Aluno>) resultados;
+	    				
+	    				for (Aluno aluno : alunos) {    					
+	    	                row.add(aluno.getNome());	                
+	    				}
+	    					
+	    			} else if (selecaoTabelaIndice == 2) {
+	    				
+	    				List<Professor> profs = (List<Professor>) resultados;
+	    				
+	    				for (Professor prof : profs) {
+	    					System.out.println(" -> " + prof.getNome());    					
+	    	                row.add(prof.getNome());	                
+	    				}	    				   	    				
+	    			} else if (selecaoTabelaIndice == 3) {
+	    				
+	    				List<Disciplina> disciplinas = (List<Disciplina>) resultados;
+	    				
+	    				for (Disciplina disc : disciplinas) {
+	    					System.out.println(" -> " + disc.getNome());    					
+	    	                row.add(disc.getNome());	                
+	    				}	    				    						
+	    			}
+	    			// seta os resultados na lista
+	    			this.listaResultadosListView.setItems(row);
+	        	} else {
+	        		this.alertaDePesquisaLabel.setText("Nenhum resultado encontrado!");
+	        	}
         	}
         	
         });       

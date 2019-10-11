@@ -31,6 +31,11 @@
             </Label>
             <ChoiceBox fx:id="atributoChoiceBox" disable="true" layoutX="559.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" />
             <ListView fx:id="listaResultadosListView" layoutX="14.0" layoutY="83.0" prefHeight="493.0" prefWidth="544.0" />
+            <Label fx:id="alertaDePesquisaLabel" layoutX="567.0" layoutY="83.0" prefHeight="30.0" prefWidth="225.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
