@@ -7,7 +7,11 @@ package controller;
 
 import model.Create;
 import model.Curso;
+import model.Read;
+import model.Update;
+
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarCurso;
 import view.Principal;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 /**
  * FXML Controller class
@@ -41,27 +47,37 @@ public class CadastrarCursoController implements Initializable {
         // TODO
         
         btCancelar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
+
             abrePrincipal();
         });
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
+
             cadastraCurso();
+                      
         });
     }
 
     public void cadastraCurso(){
-        String nome = txNome.getText();
+        
+    	String nome = txNome.getText();
         String codigoCurso = txCodigoCurso.getText();
-        Create c = new Create();
-        c.Curso(codigoCurso, nome);
-		//Curso c = new Curso(nome); 
+        // verifica se o curso já existe        
+        Query pesquisarQuery = HibernateUtil.getSession().createQuery("from Curso where codigo_curso = :codigo");
+        pesquisarQuery.setParameter("codigo", codigoCurso);
+        List<Curso> ret = pesquisarQuery.list();
+                                
+        if (ret.isEmpty()) {
+        	Create c = new Create();
+        	c.Curso(codigoCurso, nome);		         	
+        } else {        	
+        	Update upt = new Update();
+        	upt.Curso(codigoCurso, nome);
+        }
+        
         abrePrincipal();
-        
-        
     }
-    public void fecha(){
+    public void fecha() {
         CadastrarCurso.getStage().close();
     }
     

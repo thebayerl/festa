@@ -10,7 +10,9 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Aluno;
 
 /**
  *
@@ -18,7 +20,15 @@ import javafx.stage.Stage;
  */
 public class CadastrarAluno extends Application {
     
-    private static Stage stage;//Ã© uma janela1
+    private static Stage stage;
+    private Aluno aluno = null;
+    
+    public CadastrarAluno () {    
+    }
+    
+    public CadastrarAluno (Aluno aluno) {
+    	this.aluno = aluno;
+    }
     
     private int id_usuario;
 
@@ -33,29 +43,40 @@ public class CadastrarAluno extends Application {
     @Override
     public void start(Stage stage) throws Exception {
     	
-    	//System.out.println("ENTREI NESSA BAGAÇA1");
         Parent root = FXMLLoader.load(getClass().getResource("/view/CadastrarAluno.fxml"));//Carrega FXML
-        //System.out.println("ENTREI NESSA BAGAÇA2");
+        
         Scene scene = new Scene(root);//Coloca o FXML em uma cena
-        //System.out.println("ENTREI NESSA BAGAÇA3");
-        stage.setTitle("CadastrarAluno");
-        stage.setScene(scene);//Coloca a cena em uma janela
-        //System.out.println("ENTREI NESSA BAGAÇA4");
-        stage.show();//Abre a janela2
-        //System.out.println("ENTREI NESSA BAGAÇA5");
-        setStage(stage);
-        //System.out.println("ENTREI NESSA BAGAÇA5");
+        
+        // String do titulo
+        String titulo = "CadastrarAluno";
+        
+        if (aluno != null) {
+        	populaUI(aluno, scene);
+        	titulo = "Update Aluno";
+        }
+        
+        stage.setTitle(titulo);
+        stage.setScene(scene);
+        
+        stage.show();
+        
+        setStage(stage);        
     }
 
-    /**
+    private void populaUI(Aluno aluno, Scene scene) {
+    	
+    	// popula text field
+    	TextField matriculaTextview = (TextField) scene.lookup("#txMatricula");
+    	matriculaTextview.setText(aluno.getMatricula());    	
+		
+	}
+
+	/**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
     
-//    public CadastrarAluno(int id_usuario) {
-//    	this.id_usuario = id_usuario;
-//    }
     
 }

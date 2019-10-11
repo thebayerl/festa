@@ -97,6 +97,7 @@ public class CadastrarUsuarioController implements Initializable {
     
     public void cadastraAluno(){
     	cadastraUsuario();
+    	    	
         CadastrarAluno ca = new CadastrarAluno();
         fecha();
         try {

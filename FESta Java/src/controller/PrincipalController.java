@@ -65,6 +65,7 @@ public class PrincipalController implements Initializable {
     @FXML private ListView<String> listaResultadosListView;
     @FXML private Label alertaDePesquisaLabel;
     @FXML private Button deleteEntidadeButton;
+    @FXML private Button atualizaInstanciaButton;
     
     // variavel contendo os tipos que podem ser pesquisados
     private String[] tiposPesquisa = {"Curso", "Aluno", "Professor", "Disciplina"};
@@ -78,7 +79,7 @@ public class PrincipalController implements Initializable {
 	@Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btCadastrarCurso.setOnMouseClicked(e ->{ abreCadastroCurso(); });
+        btCadastrarCurso.setOnMouseClicked(e ->{ abreCadastroCurso(null); });
         btCadastrarDisciplina.setOnMouseClicked(e ->{ abreCadastroDiscplina(); });
         btCadastrarUsuario.setOnMouseClicked(e ->{ abreCadastroUsuario(); });        
         btCadastrarSala.setOnMouseClicked(e ->{ abreCadastroSala(); });        
@@ -189,7 +190,32 @@ public class PrincipalController implements Initializable {
         	 int indiceSelecao = this.listaResultadosListView.getSelectionModel().getSelectedIndex();
         	 if (indiceSelecao >= 0) {
         		 this.deleteEntidadeButton.setVisible(true);
+        		 this.atualizaInstanciaButton.setVisible(true);
         	 }
+        });
+        
+        
+        this.atualizaInstanciaButton.setOnMouseClicked(e -> {
+        	// mostra o botão de deletar
+        	int indiceSelecao = this.listaResultadosListView.getSelectionModel().getSelectedIndex();
+        	// pega a entidade selecionada
+        	int indiceEntidade = this.tipoPesquisaChoiceBox.getSelectionModel().getSelectedIndex();
+        	
+        	if (indiceEntidade  == 0) {
+        		Curso curso = (Curso) this.resultados.get(indiceSelecao);         		
+        		abreCadastroCurso(curso);
+        	} else if (indiceEntidade == 1) {
+        		Aluno aluno = (Aluno) this.resultados.get(indiceSelecao);
+        		aluno.delete();
+        	} else if (indiceEntidade == 2) {
+        		Professor prof = (Professor) this.resultados.get(indiceSelecao);
+        		prof.delete();
+        	} else if (indiceEntidade == 3) {
+        		Disciplina disc = (Disciplina) this.resultados.get(indiceSelecao);
+        		disc.delete();
+        	}   
+       	        	
+        	
         });
         
         // configura a choice box
@@ -202,7 +228,7 @@ public class PrincipalController implements Initializable {
         Principal.getStage().close();
     }
     
-    public void abreCadastroUsuario(){
+    public void abreCadastroUsuario() {
         CadastrarUsuario u = new CadastrarUsuario();
             fecha();
             try {
@@ -222,7 +248,8 @@ public class PrincipalController implements Initializable {
             }
     }
     
-    public void abreCadastroTurma(){
+    public void abreCadastroTurma(){    	
+    	
         CadastrarTurma t = new CadastrarTurma();
             fecha();
             try {
@@ -241,14 +268,16 @@ public class PrincipalController implements Initializable {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-    public void abreCadastroCurso(){
-        CadastrarCurso c = new CadastrarCurso();
-            fecha();
-            try {
-                c.start(new Stage());
-            } catch (Exception ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    
+    public void abreCadastroCurso(Curso curso){
+    	    	
+        CadastrarCurso c = new CadastrarCurso(curso);
+        fecha();
+        try {
+            c.start(new Stage());
+        } catch (Exception ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void abreCadastroPreRequisitos(){
