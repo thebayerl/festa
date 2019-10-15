@@ -70,12 +70,15 @@ public class CadastrarTurmaController implements Initializable {
         String semestre = radio.getText();
         String ano = txAno.getText();
         int professorId = Integer.parseInt(txIdProfessor.getText());
-        int disciplinaId = Integer.parseInt(txIdDisciplina.getText());
+        String disciplinaId = txIdDisciplina.getText();
         String codigoSala = txIdSala.getText();
         String codigoTurma = txCodigoTurma.getText();
         
-        Create t = new Create();
-        t.Turma(codigoTurma, maxAlunos, ano, semestre, professorId, disciplinaId, codigoSala);
+        //Create t = new Create();
+        //t.Turma(codigoTurma, maxAlunos, ano, semestre, professorId, disciplinaId, codigoSala);
+        
+        Turma t = new Turma(codigoTurma, maxAlunos, ano, semestre, professorId, disciplinaId, codigoSala);
+        t.create();
         abrePrincipal();
         //Turma t = new Turma(max_alunos, semestre, ano, professor_id, disciplina_id, sala_id);       
         

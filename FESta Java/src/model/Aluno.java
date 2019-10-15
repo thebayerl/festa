@@ -31,9 +31,21 @@ public class Aluno {
 	
 	@Column(name="codigo_curso")
 	private String codigoCurso;
+	
+	public Aluno() {
+		
+	}
+	
+	public Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, String codigoCurso) {
+		super();
+		this.usuarioId = usuarioId;
+		this.matricula = matricula;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.dataIngresso = dataIngresso;
+		this.codigoCurso = codigoCurso;
+	}
 
-	
-	
 	public void create() {
 		boolean erro = false;
 		// create session factory
@@ -50,15 +62,15 @@ public class Aluno {
 			
 			// testando a validade dos dados recebidos
 			
-			if(session.get(Aluno.class, usuarioId) == null) {
-				System.out.println("\nERRO: Aluno com Matricula = " + usuarioId + " já existente\n");
-				erro = true;
-			}
+			//if(session.get(Aluno.class, usuarioId) == null) {
+			//	System.out.println("\nERRO: Aluno com Matricula = " + usuarioId + " já existente\n");
+			//	erro = true;
+			//}
 			
-			if(session.get(Curso.class, codigoCurso) == null) {
-				System.out.println("\nERRO: Curso com codigoCurso = " + codigoCurso + " não encontrado\n");
-				erro = true;
-			}
+			//if(session.get(Curso.class, codigoCurso) == null) {
+			//	System.out.println("\nERRO: Curso com codigoCurso = " + codigoCurso + " não encontrado\n");
+			//	erro = true;
+			//}
 			
 			if(!erro) {
 			

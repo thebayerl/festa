@@ -23,6 +23,13 @@ public class Sala {
 	private int predio;
 	
 
+	public Sala(String codigoSala, int capacidade, int predio) {
+		super();
+		this.codigoSala = codigoSala;
+		this.capacidade = capacidade;
+		this.predio = predio;
+	}
+
 	public void create() {
 		boolean erro = false;
 		

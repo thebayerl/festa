@@ -141,11 +141,11 @@ public class Create {
 		}
 	}
 
-	public void Disciplina(int id, String nome, int creditos, String departamentoId) {
+	public void Disciplina(String codigoDisicplina, String nome, int creditos, String departamentoId) {
 		
 		Disciplina obj = new Disciplina();
 		boolean erro = false;
-		obj.setId(id);
+		obj.setcodigoDisciplina(codigoDisicplina);
 		obj.setNome(nome);
 		obj.setCreditos(creditos);
 		obj.setCreditos(creditos);
@@ -189,11 +189,11 @@ public class Create {
 				}
 	}
 
-	public void DisciplinaCurso(String codigoCurso, int disciplinaId) {
+	public void DisciplinaCurso(String codigoCurso, String codigoDisciplina) {
 		
 		DisciplinaCurso obj = new DisciplinaCurso();
 		boolean erro = false;
-		obj.setDisciplinaId(disciplinaId);
+		obj.setDisciplinaId(codigoDisciplina);
 		obj.setCodigoCurso(codigoCurso);
 		
 		// criando session factory
@@ -209,8 +209,8 @@ public class Create {
 			
 			// testando validade dos dados recebidos
 			
-			//if(session.get(Disciplina.class, disciplinaId) == null) {
-			//	System.out.println("Disciplina com Id = " + disciplinaId + " já existente\n");
+			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
+			//	System.out.println("Disciplina com Id = " + codigoDisciplina + " já existente\n");
 			//	erro = true;
 			//}
 			
@@ -323,12 +323,12 @@ public class Create {
 		}
 	}
 
-	public void PreRequisito(int disciplinaId, int prerequisitoId) {
+	public void PreRequisito(String codigoDisciplina, String prerequisitoId) {
 		
 		PreRequisito obj = new PreRequisito();
 		boolean erro = false;
 		obj.setPrerequisitoId(prerequisitoId);
-		obj.setDisciplinaId(disciplinaId);
+		obj.setDisciplinaId(codigoDisciplina);
 		
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(PreRequisito.class).addAnnotatedClass(Disciplina.class).buildSessionFactory();
@@ -340,12 +340,12 @@ public class Create {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			//if(session.get(Disciplina.class, disciplinaId) == null) {
-			//	System.out.println("\nERRO: Disciplina com disciplinaId = " + disciplinaId + " já existente\n");
+			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
+			//	System.out.println("\nERRO: Disciplina com codigoDisciplina = " + codigoDisciplina + " já existente\n");
 			//	erro = true;
 			//}
 			
-			//if(session.get(Disciplina.class, disciplinaId) == null) {
+			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
 			//	System.out.println("\nERRO: Disciplina com prerequisitoId = " + prerequisitoId + " já existente\n");
 			//	erro = true;
 			//}
@@ -373,13 +373,13 @@ public class Create {
 	
 	public void Professor( int usuarioId, String nome, String matricula, String nivelFormacao, int codigoCurso) {
 		
-		Professor obj = new Professor();
+		Professor obj = new Professor(codigoCurso, nivelFormacao, nivelFormacao, nivelFormacao, codigoCurso);
 		boolean erro = false;
-		obj.setUsuarioId(usuarioId);
-		obj.setNome(nome);
-		obj.setNivelFormacao(nivelFormacao);
-		obj.setMatricula(matricula);
-		obj.setcodigoCurso(codigoCurso);
+		//obj.setUsuarioId(usuarioId);
+		//obj.setNome(nome);
+		//obj.setNivelFormacao(nivelFormacao);
+		//obj.setMatricula(matricula);
+		//obj.setcodigoCurso(codigoCurso);
 		
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Professor.class).addAnnotatedClass(Cordenador.class).buildSessionFactory();
@@ -415,12 +415,12 @@ public class Create {
 		}
 	}
 	
-	public void ProfessorCapacidade(int professorId, int disciplinaId) {
+	public void ProfessorCapacidade(int professorId, String codigoDisciplina) {
 		
 		ProfessorCapacidade obj = new ProfessorCapacidade();
 		boolean erro = false;
 		obj.setProfessorId(professorId);
-		obj.setDisciplinaId(disciplinaId);
+		obj.setDisciplinaId(codigoDisciplina);
 		
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
@@ -437,7 +437,7 @@ public class Create {
 			//	System.out.println("\nERRO: Professor não encontrado!");
 			//	erro = true;
 			//}
-			//if(session.get(Disciplina.class, disciplinaId) == null) {
+			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
 			//	System.out.println("\nERRO: Disciplina não encontrada!");
 			//	erro = true;
 			//}
@@ -465,11 +465,11 @@ public class Create {
 	
 	public void Sala(String codigoSala, int capacidade, int predio) {
 		
-		Sala obj = new Sala();
+		Sala obj = new Sala(codigoSala, predio, predio);
 		boolean erro = false;
-		obj.setCodigoSala(codigoSala);
-		obj.setCapacidade(capacidade);
-		obj.setPredio(predio);
+		//obj.setCodigoSala(codigoSala);
+		//obj.setCapacidade(capacidade);
+		//obj.setPredio(predio);
 		
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
@@ -505,18 +505,18 @@ public class Create {
 		}
 	}
 	
-	public void Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, int disciplinaId,
+	public void Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, String codigoDisciplina,
 			String codigoSala) {
 		
-		Turma obj = new Turma();
+		Turma obj = new Turma(codigoSala, professorId, codigoSala, codigoSala, professorId, codigoSala, codigoSala);
 		boolean erro = false;
-		obj.setSemestre(semestre);
-		obj.setcodigoSala(codigoSala);
-		obj.setProfessorId(professorId);
-		obj.setMaxAlunos(maxAlunos);
-		obj.setDisciplinaId(disciplinaId);
-		obj.setCodigoTurma(codigoTurma);
-		obj.setAno(ano);
+//		obj.setSemestre(semestre);
+//		obj.setcodigoSala(codigoSala);
+//		obj.setProfessorId(professorId);
+//		obj.setMaxAlunos(maxAlunos);
+//		obj.setDisciplinaId(codigoDisciplina);
+//		obj.setCodigoTurma(codigoTurma);
+//		obj.setAno(ano);
 		
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Turma.class).addAnnotatedClass(Professor.class).addAnnotatedClass(Disciplina.class).addAnnotatedClass(Sala.class).buildSessionFactory();
@@ -540,8 +540,8 @@ public class Create {
 			//	erro = true;
 			//}
 			
-			//if(session.get(Disciplina.class, disciplinaId) == null) {
-			//	System.out.println("Disciplina com disciplinaId = " + disciplinaId + " não existente\n");
+			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
+			//	System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " não existente\n");
 			//	erro = true;
 			//}
 			
@@ -570,15 +570,15 @@ public class Create {
 		
 	}
 	
-	public void Usuario(int id, String username, String senha, int rg, int cpf) {
+	public void Usuario(int id, String username, String senha, String rg, String cpf) {
 		
-		Usuario obj = new Usuario();
+		//Usuario obj = new Usuario(cpf, senha, senha, senha, senha);
 		boolean erro = false;
-		obj.setId(id);
-		obj.setUsername(username);
-		obj.setSenha(senha);
-		obj.setRg(rg);
-		obj.setCpf(cpf);
+//		obj.setId(id);
+//		obj.setUsername(username);
+//		obj.setSenha(senha);
+//		obj.setRg(rg);
+//		obj.setCpf(cpf);
 		
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).buildSessionFactory();
@@ -601,7 +601,7 @@ public class Create {
 				
 				// salvando o objeto
 				System.out.println("Salvando o Usuario...");
-				session.save(obj);
+				//session.save(obj);
 			}
 			
 			// finalizando transação

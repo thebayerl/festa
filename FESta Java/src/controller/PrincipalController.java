@@ -64,31 +64,22 @@ public class PrincipalController implements Initializable {
     @FXML private TextField pesquisarTextiArea;
     @FXML private ListView<String> listaResultadosListView;
     @FXML private Label alertaDePesquisaLabel;
-    @FXML private Button deleteEntidadeButton;
-    @FXML private Button atualizaInstanciaButton;
     
     // variavel contendo os tipos que podem ser pesquisados
-    private String[] tiposPesquisa = {"Curso", "Aluno", "Professor", "Disciplina"};
-    
-    // variavel para guardar lista de entidades
-    @SuppressWarnings("rawtypes")
-	List resultados;
+    private String[] tiposPesquisa = {"Curso", "Aluno", "Professor", "Disciplina"};    
     
     
     @SuppressWarnings("unchecked")
 	@Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btCadastrarCurso.setOnMouseClicked(e ->{ abreCadastroCurso(null); });
+        btCadastrarCurso.setOnMouseClicked(e ->{ abreCadastroCurso(); });
         btCadastrarDisciplina.setOnMouseClicked(e ->{ abreCadastroDiscplina(); });
         btCadastrarUsuario.setOnMouseClicked(e ->{ abreCadastroUsuario(); });        
         btCadastrarSala.setOnMouseClicked(e ->{ abreCadastroSala(); });        
         btCadastrarTurma.setOnMouseClicked(e-> { abreCadastroTurma(); });
         
         this.pesquisaButton.setOnMouseClicked(e -> {
-        	
-        	// esconde o botão de deletar
-        	this.deleteEntidadeButton.setVisible(false);        
         	
         	this.alertaDePesquisaLabel.setText("");
         	// pega a sessão do hibernate
@@ -101,13 +92,13 @@ public class PrincipalController implements Initializable {
         		
         		String stringQuery = "from " + this.tiposPesquisa[selecaoTabelaIndice] + " where nome like :param"; 
         		// create query
-        		Query pesquisarQuery = session.createQuery(stringQuery);;
+        		Query pesquisarQuery = session.createQuery(stringQuery);
         		        		
         		// adiciona os parametros        		
         		pesquisarQuery.setParameter("param", "%"+this.pesquisarTextiArea.getText()+"%");
         		        		
         		// resultados da pesquisa
-        		resultados = pesquisarQuery.list();      		
+        		List resultados = pesquisarQuery.list();        		
         		ObservableList<String> row = FXCollections.observableArrayList();
         		// limpa a listView 
         		this.listaResultadosListView.getItems().clear();
@@ -156,84 +147,25 @@ public class PrincipalController implements Initializable {
         	
         });       
         
-        this.deleteEntidadeButton.setOnMouseClicked(e -> {
-        	        	
-        	// pega a session
-        	Session session = HibernateUtil.getSession();
-        	
-        	if (session != null) {
-        		// indice do item da pesquisa selecionado
-            	int indiceSelecionado = this.listaResultadosListView.getSelectionModel().getSelectedIndex();
-            	// indice da entidade selecionada
-            	int indiceEntidade = this.tipoPesquisaChoiceBox.getSelectionModel().getSelectedIndex();                
-            	
-            	if (indiceEntidade  == 0) {
-            		Curso curso = (Curso) this.resultados.get(indiceSelecionado);            		
-            		curso.delete();
-            	} else if (indiceEntidade == 1) {
-            		Aluno aluno = (Aluno) this.resultados.get(indiceSelecionado);
-            		aluno.delete();
-            	} else if (indiceEntidade == 2) {
-            		Professor prof = (Professor) this.resultados.get(indiceSelecionado);
-            		prof.delete();
-            	} else if (indiceEntidade == 3) {
-            		Disciplina disc = (Disciplina) this.resultados.get(indiceSelecionado);
-            		disc.delete();
-            	}            	
-        	}
-        	
-        	this.listaResultadosListView.getItems().clear();        	        	        	
-        });
-        
-        this.listaResultadosListView.setOnMouseClicked(e -> {
-        	// mostra o botão de deletar
-        	 int indiceSelecao = this.listaResultadosListView.getSelectionModel().getSelectedIndex();
-        	 if (indiceSelecao >= 0) {
-        		 this.deleteEntidadeButton.setVisible(true);
-        		 this.atualizaInstanciaButton.setVisible(true);
-        	 }
-        });
-        
-        
-        this.atualizaInstanciaButton.setOnMouseClicked(e -> {
-        	// mostra o botão de deletar
-        	int indiceSelecao = this.listaResultadosListView.getSelectionModel().getSelectedIndex();
-        	// pega a entidade selecionada
-        	int indiceEntidade = this.tipoPesquisaChoiceBox.getSelectionModel().getSelectedIndex();
-        	
-        	if (indiceEntidade  == 0) {
-        		Curso curso = (Curso) this.resultados.get(indiceSelecao);         		
-        		abreCadastroCurso(curso);
-        	} else if (indiceEntidade == 1) {
-        		Aluno aluno = (Aluno) this.resultados.get(indiceSelecao);
-        		aluno.delete();
-        	} else if (indiceEntidade == 2) {
-        		Professor prof = (Professor) this.resultados.get(indiceSelecao);
-        		prof.delete();
-        	} else if (indiceEntidade == 3) {
-        		Disciplina disc = (Disciplina) this.resultados.get(indiceSelecao);
-        		disc.delete();
-        	}   
-       	        	
-        	
-        });
-        
         // configura a choice box
         this.tipoPesquisaChoiceBox.getItems().addAll(Arrays.asList(tiposPesquisa));
         this.tipoPesquisaChoiceBox.getSelectionModel().select(0);
                  
     }
-    
     public void fecha(){
         Principal.getStage().close();
     }
     
-    public void abreCadastroUsuario() {
+    public void abreCadastroUsuario(){
+    	System.out.println("ENTREI USER1");
         CadastrarUsuario u = new CadastrarUsuario();
+        System.out.println("ENTREI USER2");
             fecha();
             try {
+            	System.out.println("ENTREI USER3");
                 u.start(new Stage());
             } catch (Exception ex) {
+            	System.out.println("ENTREI USER4");
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
@@ -248,8 +180,7 @@ public class PrincipalController implements Initializable {
             }
     }
     
-    public void abreCadastroTurma(){    	
-    	
+    public void abreCadastroTurma(){
         CadastrarTurma t = new CadastrarTurma();
             fecha();
             try {
@@ -268,16 +199,14 @@ public class PrincipalController implements Initializable {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-    
-    public void abreCadastroCurso(Curso curso){
-    	    	
-        CadastrarCurso c = new CadastrarCurso(curso);
-        fecha();
-        try {
-            c.start(new Stage());
-        } catch (Exception ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void abreCadastroCurso(){
+        CadastrarCurso c = new CadastrarCurso();
+            fecha();
+            try {
+                c.start(new Stage());
+            } catch (Exception ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     public void abreCadastroPreRequisitos(){

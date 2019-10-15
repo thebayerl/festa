@@ -112,6 +112,7 @@ public class Read {
 	public List<Disciplina> Disciplina(String id, String nome, String creditos, String departamento) {
 
 		nome = aspas(nome);
+		id = aspas(id);
 		departamento = aspas(departamento);
 		
 		String query = "from Disciplina where ";
@@ -141,6 +142,7 @@ public class Read {
 	public List<DisciplinaCurso> DisciplinaCurso(String codigoCurso, String disciplinaId) {
 		
 		codigoCurso = aspas(codigoCurso);
+		disciplinaId = aspas(disciplinaId);
 		
 		String query = "from DisciplinaCurso where ";
 		query += add("disciplinaId",disciplinaId);
@@ -217,6 +219,9 @@ public class Read {
 	
 	public List<PreRequisito> PreRequisito(String disciplinaId, String prerequisitoId) {
 		
+		disciplinaId = aspas(disciplinaId);
+		disciplinaId = aspas(disciplinaId);
+		
 		String query = "from PreRequisito where ";
 		query += add("disciplinaId",disciplinaId);
 		query += add("prerequisitoId",prerequisitoId);
@@ -274,6 +279,7 @@ public class Read {
 	
 	public List<ProfessorCapacidade> ProfessorCapacidade(String professorId, String disciplinaId) {
 		
+		disciplinaId = aspas(disciplinaId);
 		String query = "from ProfessorCapacidade where ";
 		query += add("disciplinaId",disciplinaId);
 		query += add("professorId",professorId);
@@ -333,6 +339,7 @@ public class Read {
 		ano = aspas(ano);
 		semestre = aspas(semestre);
 		codigoSala = aspas(codigoSala);
+		disciplinaId = aspas(disciplinaId);
 		
 		
 		String query = "from Turma where ";

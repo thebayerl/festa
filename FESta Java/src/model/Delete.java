@@ -134,7 +134,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean Disciplina(int id) {
+	public boolean Disciplina(String id) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -176,7 +176,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean DisciplinaCurso(String id, int id2) {
+	public boolean DisciplinaCurso(String id, String id2) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -302,7 +302,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean PreRequisito(int id, int id2) {
+	public boolean PreRequisito(String id, String id2) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -385,7 +385,7 @@ public class Delete {
 		return sucesso;
 	}
 
-	public boolean ProfessorCapacidade(int id, int id2) {
+	public boolean ProfessorCapacidade(int id, String id2) {
 		boolean sucesso = true;
 		
 		// create session factory

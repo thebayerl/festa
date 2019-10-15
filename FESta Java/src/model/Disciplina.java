@@ -14,8 +14,8 @@ import org.hibernate.cfg.Configuration;
 public class Disciplina {
 	
 	@Id
-	@Column(name="id")
-	private int id;
+	@Column(name="codigo_disciplina")
+	private String codigoDisciplina;
 	
 	@Column(name="nome")
 	private String nome;
@@ -23,11 +23,21 @@ public class Disciplina {
 	@Column(name="creditos")
 	private int creditos;
 	
-	@Column(name="departamento_id")
-	private String departamentoId;
+	@Column(name="departamento_codigoDisciplina")
+	private String departamentocodigoDisciplina;
 
+	public Disciplina() {
+		
+	}
 	
-	
+	public Disciplina(String codigoDisciplina, String nome, int creditos, String departamentocodigoDisciplina) {
+		super();
+		this.codigoDisciplina = codigoDisciplina;
+		this.nome = nome;
+		this.creditos = creditos;
+		this.departamentocodigoDisciplina = departamentocodigoDisciplina;
+	}
+
 	public void create() {
 		boolean erro = false;
 		
@@ -41,10 +51,10 @@ public class Disciplina {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			// testando a validade dos dados recebidos
+			// testando a valcodigoDisciplinaade dos dados recebcodigoDisciplinaos
 			
-			if(session.get(Disciplina.class, id) == null) {
-				System.out.println("Disciplina com Id = " + id + " já existente\n");
+			if(session.get(Disciplina.class, codigoDisciplina) == null) {
+				System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " já existente\n");
 				erro = true;
 			}
 			
@@ -97,12 +107,12 @@ public class Disciplina {
 		}
 	}
 	
-	public int getId() {
-		return id;
+	public String getcodigoDisciplina() {
+		return codigoDisciplina;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setcodigoDisciplina(String codigoDisciplina) {
+		this.codigoDisciplina = codigoDisciplina;
 	}
 
 	public String getNome() {
@@ -122,16 +132,16 @@ public class Disciplina {
 	}
 
 	public String getDepartamento() {
-		return departamentoId;
+		return departamentocodigoDisciplina;
 	}
 
-	public void setDepartamento(String departamentoId) {
-		this.departamentoId = departamentoId;
+	public void setDepartamento(String departamentocodigoDisciplina) {
+		this.departamentocodigoDisciplina = departamentocodigoDisciplina;
 	}
 
 	@Override
 	public String toString() {
-		return "Disciplina [id=" + id + ", nome=" + nome + ", creditos=" + creditos + ", departamentoId =" + departamentoId
+		return "Disciplina [codigoDisciplina=" + codigoDisciplina + ", nome=" + nome + ", creditos=" + creditos + ", departamentocodigoDisciplina =" + departamentocodigoDisciplina
 				+ "]";
 	}
 

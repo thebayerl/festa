@@ -57,7 +57,7 @@ public class CadastrarPreRequisitosController implements Initializable {
         
         Create pr = new Create();
         System.out.println("Sai1");
-        pr.PreRequisito(disciplinaId, prerequisitoId);
+        //pr.PreRequisito(disciplinaId, prerequisitoId);
         System.out.println("Sai2");
         abrePrincipal();
     }

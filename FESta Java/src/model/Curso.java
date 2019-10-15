@@ -19,7 +19,16 @@ public class Curso {
 	@Column(name="nome")
 	private String nome;
 
+	public Curso() {
+		
+	}
 	
+	public Curso(String codigoCurso, String nome) {
+		super();
+		this.codigoCurso = codigoCurso;
+		this.nome = nome;
+	}
+
 	public void create() {
 		boolean erro = false;
 		
