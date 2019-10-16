@@ -1,4 +1,6 @@
 package model;
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import org.hibernate.cfg.Configuration;
 public class Disciplina {
 	
 	@Id
+	private BigInteger id;
+	
 	@Column(name="codigo_disciplina")
 	private String codigoDisciplina;
 	
@@ -42,19 +46,23 @@ public class Disciplina {
 		boolean erro = false;
 		
 		// criando session factory
+		System.out.println("ERRROO1");
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
-		
+		System.out.println("ERRROO2");
 		// criando session
 		Session session = factory.getCurrentSession();
+		System.out.println("ERRROO3");
 		
-		try {			
-			// iniciando a transação
+		try {	
+			System.out.println("ERRROO4");
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
-			
+			System.out.println("HHHH");
 			// testando a valcodigoDisciplinaade dos dados recebcodigoDisciplinaos
 			
 			if(session.get(Disciplina.class, codigoDisciplina) == null) {
-				System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " já existente\n");
+				System.out.println("00000000");
+				System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " jï¿½ existente\n");
 				erro = true;
 			}
 			
@@ -67,12 +75,13 @@ public class Disciplina {
 				session.save(this);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
 			
 		} catch(Exception exc){
+			System.out.println("ERRROO5");
 		}
 		finally {
 			factory.close();
@@ -87,7 +96,7 @@ public class Disciplina {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
+			// comeï¿½ando a transaï¿½ï¿½o
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			

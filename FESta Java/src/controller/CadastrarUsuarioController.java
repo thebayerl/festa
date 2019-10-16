@@ -102,6 +102,7 @@ public class CadastrarUsuarioController implements Initializable {
             
         });
         
+        comboBoxUsers.getSelectionModel().select(0);
     }
     
     @FXML
