@@ -13,6 +13,9 @@ import org.hibernate.cfg.Configuration;
 public class Curso {
 	
 	@Id
+	@Column(name="id")
+	private int id; 
+	
 	@Column(name="codigo_curso")
 	private String codigoCurso;
 	

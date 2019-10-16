@@ -32,9 +32,8 @@ public class Usuario {
 	private String cpf;
 	
 
-	public Usuario(int id, String username, String senha, String rg, String cpf) {
+	public Usuario(String username, String senha, String rg, String cpf) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.senha = senha;
 		this.rg = rg;

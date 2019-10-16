@@ -16,7 +16,8 @@ import org.hibernate.cfg.Configuration;
 public class Disciplina {
 	
 	@Id
-	private BigInteger id;
+	@Column(name="id")
+	private int id;
 	
 	@Column(name="codigo_disciplina")
 	private String codigoDisciplina;

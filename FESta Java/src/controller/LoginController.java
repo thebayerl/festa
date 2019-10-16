@@ -62,14 +62,14 @@ public class LoginController implements Initializable {
     	String username = txEmail.getText();
     	String password = txSenha.getText();
     	
-    	// pega a sessão do hibernate
+    	// pega a sessï¿½o do hibernate
     	Session session = HibernateUtil.getSession();
-    	// cria caso default de usuario caso não exista no banco
+    	// cria caso default de usuario caso nï¿½o exista no banco
     	Usuario user = null;
     	
     	if (session != null) {
     		try {
-    			// tenta buscar um usuário no banco pelo username
+    			// tenta buscar um usuï¿½rio no banco pelo username
     			
 				@SuppressWarnings("unchecked")
 				List<Usuario> results = session.createQuery("from Usuario where username = :name").setParameter("name", username).list();
@@ -78,7 +78,7 @@ public class LoginController implements Initializable {
     			// verifica se o usuario existe
     			if (!results.isEmpty()) {
     				
-    				// pega o usuario com username unico - a unicidade do username deve ser garantida na inserção
+    				// pega o usuario com username unico - a unicidade do username deve ser garantida na inserï¿½ï¿½o
     				user = results.get(0);
     			
 	    			if (password.equals(user.getSenha())) {

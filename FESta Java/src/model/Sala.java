@@ -13,6 +13,9 @@ import org.hibernate.cfg.Configuration;
 public class Sala {
 	
 	@Id
+	@Column(name="id")
+	private String id;
+	
 	@Column(name="codigo_sala")
 	private String codigoSala;
 	

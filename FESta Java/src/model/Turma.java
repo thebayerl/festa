@@ -13,6 +13,9 @@ import org.hibernate.cfg.Configuration;
 public class Turma {
 	
 	@Id
+	@Column(name="id")
+	private String id;
+	
 	@Column(name="codigo_turma")
 	private String codigoTurma;
 	

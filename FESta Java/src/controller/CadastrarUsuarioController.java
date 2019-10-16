@@ -70,7 +70,10 @@ public class CadastrarUsuarioController implements Initializable {
     
     private List<ComboBoxTipo> tipos = new ArrayList<>();
     private ObservableList<ComboBoxTipo> obsTipos;
-    
+    private Aluno a;
+    private Usuario u;
+    private Professor p;
+    private int usuarioId;
     
      
     
@@ -91,12 +94,12 @@ public class CadastrarUsuarioController implements Initializable {
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
-        	int usuarioId = cadastraUsuario();
+        	cadastraUsuario();
         	ComboBoxTipo t2 = comboBoxUsers.getSelectionModel().getSelectedItem();
         	if(t2.getNome().equals("Professor")) {
-        		cadastraProfessor(usuarioId);
+        		cadastraProfessor();
         	}else {	
-        		cadastraAluno(usuarioId);
+        		cadastraAluno();
         	}
         	abrePrincipal();
             
@@ -132,29 +135,29 @@ public class CadastrarUsuarioController implements Initializable {
 	}
     
     
-    public int cadastraUsuario(){
+    public void cadastraUsuario(){
         String username = txUserName.getText();
         String senha = psSenha.getText();
         String confirmacao = psSenhaConf.getText();
         String cpf = txCPF.getText();
         String rg = txRG.getText();
-        //Random rand = new Random();
-        //int id = rand.nextInt(100);
-        final String sql = "SELECT max( u.id ) FROM Usuario u";
-        Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
+        Random rand = new Random();
+        int id = rand.nextInt(10000);
+        //final String sql = "SELECT max( u.id ) FROM Usuario u";
+        //Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
         
-        int usuarioId = lastId+1;
+        //usuarioId = lastId+1;
+        usuarioId = id;
         if(senha.equals(confirmacao)){
         	//Create u = new Create();
             //u.Usuario(id, username, senha, rg, cpf); 
-        	Usuario u = new Usuario(usuarioId, username, senha, rg, cpf);
+        	u = new Usuario(username, senha, rg, cpf);
         	u.create();
         }else{
             Alert al = new Alert(AlertType.ERROR);
             al.setHeaderText("As senhas não coincidem");
             al.show();
         }
-        return usuarioId;
     }
     
     
@@ -162,7 +165,7 @@ public class CadastrarUsuarioController implements Initializable {
         CadastrarUsuario.getStage().close();
     }
     
-    public void cadastraAluno(int usuarioId){
+    public void cadastraAluno(){
     	
     	String matricula = txMatriculaAluno.getText();
     	String dataNascimento = txNascimento.getText();
@@ -170,19 +173,28 @@ public class CadastrarUsuarioController implements Initializable {
     	String dataIngresso = txIngresso.getText();
     	String codigoCurso = txCodigoCursoAluno.getText();
     	
-        Aluno a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, codigoCurso);
+    	//final String sql = "SELECT max( a.id ) FROM Aluno a";
+    	//int lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
+    	        
+    	//int usuarioId = lastId;
+    	
+        a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, codigoCurso);
         a.create();
         abrePrincipal();
     }
     
-    public void cadastraProfessor(int usuarioId){
+    public void cadastraProfessor(){
     	
     	String nome = txNomeProfessor.getText();
     	String matricula = txMatriculaProfessor.getText();
     	String nivelFormacao = txFormacao.getText();
     	int codigoCurso = Integer.parseInt(txCodigoCursoProfessor.getText());
-    	
-    	Professor p = new Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
+    	//final String sql = "SELECT max( p.id ) FROM Professor p";
+    	//Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
+    	        
+    	//int usuarioId = (int) lastId;
+    	System.out.println("usuario id: " + usuarioId);
+    	p = new Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
         p.create();
     	abrePrincipal();
     }
