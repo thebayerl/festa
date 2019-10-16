@@ -15,7 +15,7 @@ public class ProfessorCapacidade {
 	private int professorId;
 	
 	@Column(name="disciplina_id")
-	private int disciplinaId;
+	private String disciplinaId;
 	
 	public void create() {
 		// criando session factory
@@ -95,11 +95,11 @@ public class ProfessorCapacidade {
 		this.professorId = professorId;
 	}
 
-	public int getDisciplinaId() {
+	public String getDisciplinaId() {
 		return disciplinaId;
 	}
 
-	public void setDisciplinaId(int disciplinaId) {
+	public void setDisciplinaId(String disciplinaId) {
 		this.disciplinaId = disciplinaId;
 	}
 

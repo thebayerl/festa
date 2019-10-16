@@ -54,9 +54,12 @@ public class CadastrarCursoController implements Initializable {
     public void cadastraCurso(){
         String nome = txNome.getText();
         String codigoCurso = txCodigoCurso.getText();
-        Create c = new Create();
-        c.Curso(codigoCurso, nome);
+        //Create c = new Create();
+        //c.Curso(codigoCurso, nome);
 		//Curso c = new Curso(nome); 
+        
+        Curso c = new Curso(codigoCurso, nome);
+        c.create();
         abrePrincipal();
         
         

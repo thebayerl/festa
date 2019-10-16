@@ -157,11 +157,15 @@ public class PrincipalController implements Initializable {
     }
     
     public void abreCadastroUsuario(){
+    	System.out.println("ENTREI USER1");
         CadastrarUsuario u = new CadastrarUsuario();
+        System.out.println("ENTREI USER2");
             fecha();
             try {
+            	System.out.println("ENTREI USER3");
                 u.start(new Stage());
             } catch (Exception ex) {
+            	System.out.println("ENTREI USER4");
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }

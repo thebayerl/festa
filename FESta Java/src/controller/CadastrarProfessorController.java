@@ -6,6 +6,7 @@
 package controller;
 
 import model.Create;
+import model.Professor;
 import model.Sala;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -64,8 +65,10 @@ public class CadastrarProfessorController implements Initializable {
     	final String sql = "SELECT max( u.id ) FROM Usuario u";
         Integer usuarioId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
     	
-        Create p = new Create();
-        p.Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
+        //Create p = new Create();
+        //p.Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
+        
+        Professor p = new Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
         abrePrincipal();
         //Sala s = new Sala(capacidade);
         

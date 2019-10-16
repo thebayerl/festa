@@ -15,7 +15,7 @@
       <Button fx:id="btCadastrar" layoutX="375.0" layoutY="255.0" mnemonicParsing="false" text="Cadastrar" />
       <Button fx:id="btCancelar" layoutX="192.0" layoutY="255.0" mnemonicParsing="false" text="Cancelar" />
       <TextField fx:id="txCreditos" layoutX="160.0" layoutY="152.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a quantidade de Créditos ..." />
-      <TextField fx:id="txIdDisciplina" layoutX="160.0" layoutY="77.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Disciplina ..." />
-      <Label layoutX="98.0" layoutY="81.0" text="ID" />
+      <TextField fx:id="txCodigoDisciplina" layoutX="160.0" layoutY="77.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Disciplina ..." />
+      <Label layoutX="57.0" layoutY="81.0" text="Codigo Disciplina" />
    </children>
 </AnchorPane>

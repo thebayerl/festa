@@ -28,6 +28,16 @@ public class Professor {
 	@Column(name="codigo_curso")
 	private int codigoCurso;
 	
+	
+	public Professor(int usuarioId, String nome, String matricula, String nivelFormacao, int codigoCurso) {
+		super();
+		this.usuarioId = usuarioId;
+		this.nome = nome;
+		this.matricula = matricula;
+		this.nivelFormacao = nivelFormacao;
+		this.codigoCurso = codigoCurso;
+	}
+
 	public void create() {
 		boolean erro = false;
 		
