@@ -15,7 +15,7 @@ import org.hibernate.cfg.Configuration;
 public class Usuario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -30,7 +30,8 @@ public class Usuario {
 	
 	@Column(name="cpf")
 	private String cpf;
-	
+
+	public Usuario(){}
 
 	public Usuario(String username, String senha, String rg, String cpf) {
 		super();
@@ -55,10 +56,10 @@ public class Usuario {
 			
 			// testando a validade dos dados recebidos
 			
-			if(session.get(Usuario.class, id) == null) {
+			/*if(session.get(Usuario.class, id) == null) {
 				System.out.println("Usuario com Id = " + id + " já existente\n");
 				erro = true;
-			}
+			}*/
 			
 			if(!erro) {
 				

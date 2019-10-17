@@ -1,8 +1,5 @@
 package model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 public class Sala {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private String id;
 	

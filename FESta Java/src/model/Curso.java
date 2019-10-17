@@ -1,18 +1,17 @@
 package model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name="curso")
 public class Curso {
-	
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id; 
 	
@@ -40,15 +39,15 @@ public class Curso {
 		
 		// criando session
 		Session session = factory.getCurrentSession();
-		
-		try {			
+
+		try {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			if(session.get(Curso.class, codigoCurso) == null) {
+			/*if(session.get(Curso.class, codigoCurso) == null) {
 				System.out.println("Curso com codigoCurso = " + codigoCurso + " já existente\n");
 				erro = true;
-			}
+			}*/
 			
 			if(!erro) {
 				
@@ -65,6 +64,7 @@ public class Curso {
 		} catch(Exception exc){
 		}
 		finally {
+			session.close();
 			factory.close();
 		}
 	}

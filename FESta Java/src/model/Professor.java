@@ -27,7 +27,8 @@ public class Professor {
 	
 	@Column(name="codigo_curso")
 	private int codigoCurso;
-	
+
+	public Professor(){}
 	
 	public Professor(int usuarioId, String nome, String matricula, String nivelFormacao, int codigoCurso) {
 		super();
