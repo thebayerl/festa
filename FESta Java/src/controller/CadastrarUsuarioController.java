@@ -5,6 +5,7 @@
  */
 package controller;
 
+import javafx.scene.layout.GridPane;
 import model.Aluno;
 import model.ComboBoxTipo;
 import model.Create;
@@ -62,7 +63,7 @@ public class CadastrarUsuarioController implements Initializable {
     @FXML  private TextField txNascimento;
     @FXML  private TextField txCodigoCursoAluno;
     @FXML  private TextField txIngresso;
-    @FXML  private AnchorPane paneProfessor;
+    @FXML  private GridPane gridProfessor;
     @FXML  private AnchorPane paneAluno;
     @FXML  private ComboBox<ComboBoxTipo> comboBoxUsers;
     
@@ -112,11 +113,11 @@ public class CadastrarUsuarioController implements Initializable {
     void selecionarTipo() {
     	ComboBoxTipo t = comboBoxUsers.getSelectionModel().getSelectedItem();
     	if(t.getNome().equals("Professor")) {
-    		paneProfessor.setVisible(true);
+    		gridProfessor.setVisible(true);
     		paneAluno.setVisible(false);
     		
     	}else {	
-    		paneProfessor.setVisible(false);
+    		gridProfessor.setVisible(false);
     		paneAluno.setVisible(true);
     	}
     	
@@ -141,18 +142,13 @@ public class CadastrarUsuarioController implements Initializable {
         String confirmacao = psSenhaConf.getText();
         String cpf = txCPF.getText();
         String rg = txRG.getText();
-        Random rand = new Random();
-        int id = rand.nextInt(10000);
-        //final String sql = "SELECT max( u.id ) FROM Usuario u";
-        //Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
-        
-        //usuarioId = lastId+1;
-        usuarioId = id;
+
         if(senha.equals(confirmacao)){
         	//Create u = new Create();
             //u.Usuario(id, username, senha, rg, cpf); 
         	u = new Usuario(username, senha, rg, cpf);
         	u.create();
+        	usuarioId = u.getId();
         }else{
             Alert al = new Alert(AlertType.ERROR);
             al.setHeaderText("As senhas não coincidem");

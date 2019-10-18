@@ -42,6 +42,7 @@ public class Aluno {
 		this.dataNascimento = dataNascimento;
 		this.dataIngresso = dataIngresso;
 		this.cursoId = cursoId;
+		System.out.println(this.toString());
 	}
 
 	public void create() {

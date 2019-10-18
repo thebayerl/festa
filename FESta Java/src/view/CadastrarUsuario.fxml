@@ -1,54 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Accordion?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="931.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarUsuarioController">
    <children>
-      <Label layoutX="221.0" layoutY="114.0" text="Username" />
-      <Label layoutX="226.0" layoutY="252.0" text="RG" />
-      <Label layoutX="222.0" layoutY="157.0" prefHeight="17.0" prefWidth="33.0" text="Senha" />
-      <TextField fx:id="txUserName" layoutX="293.0" layoutY="110.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite seu Username ..." />
-      <TextField fx:id="txRG" layoutX="293.0" layoutY="248.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite seu RG ..." />
-      <PasswordField fx:id="psSenha" layoutX="293.0" layoutY="153.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite sua Senha ..." />
-      <Label layoutX="228.0" layoutY="302.0" prefHeight="17.0" prefWidth="28.0" text="CPF" />
-      <TextField fx:id="txCPF" layoutX="293.0" layoutY="298.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite seu CPF ..." />
-      <Button fx:id="btCadastrar" layoutX="521.0" layoutY="561.0" mnemonicParsing="false" text="Cadastrar" />
-      <Button fx:id="btCancelar" layoutX="351.0" layoutY="561.0" mnemonicParsing="false" text="Cancelar" />
-      <Label layoutX="221.0" layoutY="205.0" text="Senha" />
-      <PasswordField fx:id="psSenhaConf" layoutX="293.0" layoutY="201.0" prefHeight="25.0" prefWidth="356.0" promptText="Confirme sua Senha ..." />
-      <Accordion layoutX="680.0" layoutY="110.0" />
-      <AnchorPane fx:id="paneProfessor" layoutX="174.0" layoutY="332.0" prefHeight="203.0" prefWidth="512.0">
+      <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="54.0" layoutY="63.0" text="Nome" />
-            <TextField fx:id="txNomeProfessor" layoutX="121.0" layoutY="59.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Professor..." />
-            <Label layoutY="106.0" text="Nivel de Formação" />
-            <TextField fx:id="txFormacao" layoutX="121.0" layoutY="102.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nivel de Formação..." />
-            <Label layoutX="46.0" layoutY="18.0" text="Matrícula" />
-            <TextField fx:id="txMatriculaProfessor" layoutX="121.0" layoutY="14.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
-            <Label layoutX="9.0" layoutY="154.0" text="Código do Curso" />
-            <TextField fx:id="txCodigoCursoProfessor" layoutX="121.0" layoutY="150.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código do Curso..." />
+            <GridPane alignment="TOP_CENTER" hgap="20.0" prefHeight="301.0" prefWidth="933.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="0.0" prefWidth="180.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="650.0" minWidth="10.0" prefWidth="550.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ComboBox fx:id="comboBoxUsers" onAction="#selecionarTipo" prefHeight="25.0" prefWidth="342.0" GridPane.columnIndex="1" />
+                  <Label text="Username" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <TextField fx:id="txUserName" prefHeight="25.0" prefWidth="356.0" promptText="Digite seu Username ..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label prefHeight="17.0" prefWidth="33.0" text="Senha" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <PasswordField fx:id="psSenha" prefHeight="25.0" prefWidth="356.0" promptText="Digite sua Senha ..." GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </PasswordField>
+                  <Label text="Senha" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                  <PasswordField fx:id="psSenhaConf" prefHeight="25.0" prefWidth="356.0" promptText="Confirme sua Senha ..." GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </PasswordField>
+                  <Label text="RG" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                  <TextField fx:id="txRG" prefHeight="25.0" prefWidth="356.0" promptText="Digite seu RG ..." GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="CPF" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                  <TextField fx:id="txCPF" prefHeight="25.0" prefWidth="356.0" promptText="Digite seu CPF ..." GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+            </GridPane>
+            <GridPane fx:id="gridProfessor" alignment="TOP_CENTER" hgap="20.0" prefHeight="203.0" prefWidth="931.0" scaleShape="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="310.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="0.0" prefWidth="180.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="650.0" minWidth="10.0" prefWidth="550.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Matrícula" GridPane.halignment="RIGHT">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txMatriculaProfessor" prefHeight="26.0" prefWidth="503.0" promptText="Digite a Matrícula..." GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Nome" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Nivel de Formação" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Código do Curso" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="txNomeProfessor" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Professor..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txFormacao" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nivel de Formação..." GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="txCodigoCursoProfessor" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código do Curso..." GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="200.0" />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+            </GridPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="paneAluno" layoutX="139.0" layoutY="332.0" prefHeight="229.0" prefWidth="547.0" visible="false">
          <children>
+            <Label layoutX="81.0" layoutY="17.0" text="Matrícula" />
             <TextField fx:id="txMatriculaAluno" layoutX="156.0" layoutY="13.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
             <Label layoutX="89.0" layoutY="62.0" text="Nome" />
             <TextField fx:id="txNomeAluno" layoutX="156.0" layoutY="58.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Aluno..." />
             <Label layoutX="35.0" layoutY="105.0" text="Data de Nascimento" />
             <TextField fx:id="txNascimento" layoutX="156.0" layoutY="101.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Data de Nascimento" />
-            <Label layoutX="81.0" layoutY="17.0" text="Matrícula" />
-            <Label layoutX="53.0" layoutY="196.0" text="Código do Curso" />
-            <TextField fx:id="txCodigoCursoAluno" layoutX="156.0" layoutY="192.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código do Curso..." />
             <Label layoutX="44.0" layoutY="153.0" text="Data de Ingresso" />
             <TextField fx:id="txIngresso" layoutX="156.0" layoutY="149.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a data de ingresso na Universidade..." />
+            <Label layoutX="53.0" layoutY="196.0" text="Código do Curso" />
+            <TextField fx:id="txCodigoCursoAluno" layoutX="156.0" layoutY="192.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código do Curso..." />
          </children>
       </AnchorPane>
-      <ComboBox fx:id="comboBoxUsers" layoutX="299.0" layoutY="43.0" onAction="#selecionarTipo" prefHeight="25.0" prefWidth="342.0" />
+      <Button fx:id="btCancelar" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="btCadastrar" mnemonicParsing="false" text="Cadastrar" />
    </children>
 </AnchorPane>

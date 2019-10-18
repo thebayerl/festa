@@ -37,6 +37,7 @@ public class Professor {
 		this.matricula = matricula;
 		this.nivelFormacao = nivelFormacao;
 		this.cursoId = cursoId;
+		System.out.println(this.toString());
 	}
 
 	public void create() {
@@ -149,7 +150,7 @@ public class Professor {
 	@Override
 	public String toString() {
 		return "Professor [usuarioId=" + usuarioId + ", nome=" + nome + ", matricula=" + matricula + ", nivelFormacao="
-				+ nivelFormacao + ", codigoCurso=" + cursoId + "]";
+				+ nivelFormacao + ", cursoId=" + cursoId + "]";
 	}
 	
 }
