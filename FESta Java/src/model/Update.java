@@ -10,7 +10,7 @@ public class Update {
 
 	
 	public boolean Aluno(Integer id, String matricula, String nome, String dataNascimento, String dataIngresso, 
-			String codigoCurso) {
+			Integer codigoCurso) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -37,7 +37,7 @@ public class Update {
 					obj.setMatricula(matricula);
 				}
 				if(codigoCurso != null) {
-					obj.setcodigoCurso(codigoCurso);
+					obj.setCursoId(codigoCurso);
 				}
 				if(dataIngresso != null) {
 					obj.setDataIngresso(dataIngresso);
@@ -454,7 +454,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Sala(String codigoSala, Integer capacidade, Integer predio) {
+	public boolean Sala(String codigoSala, Integer capacidade, String predio) {
 		boolean sucesso = true;
 		
 		// create session factory

@@ -171,14 +171,14 @@ public class CadastrarUsuarioController implements Initializable {
     	String dataNascimento = txNascimento.getText();
     	String nome = txNomeAluno.getText();
     	String dataIngresso = txIngresso.getText();
-    	String codigoCurso = txCodigoCursoAluno.getText();
+    	int cursoId = Integer.parseInt(txCodigoCursoAluno.getText());
     	
     	//final String sql = "SELECT max( a.id ) FROM Aluno a";
     	//int lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
     	        
     	//int usuarioId = lastId;
     	
-        a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, codigoCurso);
+        a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, cursoId);
         a.create();
         abrePrincipal();
     }

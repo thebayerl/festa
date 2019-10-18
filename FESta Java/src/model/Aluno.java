@@ -29,21 +29,19 @@ public class Aluno {
 	@Column(name="data_ingresso")
 	private String dataIngresso;
 	
-	@Column(name="codigo_curso")
-	private String codigoCurso;
+	@Column(name="curso_id")
+	private int cursoId;
 	
-	public Aluno() {
-		
-	}
+	public Aluno() {}
 	
-	public Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, String codigoCurso) {
+	public Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, int cursoId) {
 		super();
 		this.usuarioId = usuarioId;
 		this.matricula = matricula;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.dataIngresso = dataIngresso;
-		this.codigoCurso = codigoCurso;
+		this.cursoId = cursoId;
 	}
 
 	public void create() {
@@ -161,18 +159,18 @@ public class Aluno {
 		this.usuarioId = usuarioId;
 	}
 
-	public String getcodigoCurso() {
-		return codigoCurso;
+	public int getCursoId() {
+		return cursoId;
 	}
 
-	public void setcodigoCurso(String codigoCurso) {
-		this.codigoCurso = codigoCurso;
+	public void setCursoId(int cursoId) {
+		this.cursoId = cursoId;
 	}
 
 	@Override
 	public String toString() {
 		return "Aluno [usuarioId=" + usuarioId + ", matricula=" + matricula + ", nome=" + nome + ", dataNascimento=" + dataNascimento
-				+ ", dataIngresso=" + dataIngresso + ", codigoCurso=" + codigoCurso + "]";
+				+ ", dataIngresso=" + dataIngresso + ", codigoCurso=" + cursoId + "]";
 	}
 	
 }

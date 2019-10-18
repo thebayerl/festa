@@ -69,6 +69,7 @@ public class CadastrarProfessorController implements Initializable {
         //p.Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
         
         Professor p = new Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
+        p.create();
         abrePrincipal();
         //Sala s = new Sala(capacidade);
         

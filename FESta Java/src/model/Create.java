@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 public class Create {
 	
 	public void Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
-			String codigoCurso) {
+			int codigoCurso) {
 		
 		System.out.println("ENTREI NO CREATE.ALUNO");
 		
@@ -18,7 +18,7 @@ public class Create {
 		obj.setMatricula(matricula);
 		obj.setDataNascimento(dataNascimento);
 		obj.setDataIngresso(dataIngresso);
-		obj.setcodigoCurso(codigoCurso);
+		obj.setCursoId(codigoCurso);
 		obj.create();
 		
 		// create session factory
@@ -28,7 +28,7 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
+			// comeï¿½ando a transaï¿½ï¿½o
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
@@ -36,12 +36,12 @@ public class Create {
 			// testando a validade dos dados recebidos
 			
 			//if(session.get(Aluno.class, usuarioId) == null) {
-			//	System.out.println("\nERRO: Aluno com Matricula = " + usuarioId + " já existente\n");
+			//	System.out.println("\nERRO: Aluno com Matricula = " + usuarioId + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			//
 			//if(session.get(Curso.class, codigoCurso) == null) {
-			//	System.out.println("\nERRO: Curso com codigoCurso = " + codigoCurso + " não encontrado\n");
+			//	System.out.println("\nERRO: Curso com codigoCurso = " + codigoCurso + " nï¿½o encontrado\n");
 			//	erro = true;
 			//}
 			
@@ -52,7 +52,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -78,14 +78,14 @@ public class Create {
 		
 		try {	
 			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 				
 			// salvando o objeto
 			System.out.println("Salvando o Cordenador...");
 			session.save(obj);
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -114,11 +114,11 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			//if(session.get(Curso.class, codigoCurso) == null) {
-			//	System.out.println("Curso com codigoCurso = " + codigoCurso + " já existente\n");
+			//	System.out.println("Curso com codigoCurso = " + codigoCurso + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
@@ -129,7 +129,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -158,13 +158,13 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			// testando a validade dos dados recebidos
 			
 			//if(session.get(Disciplina.class, id) == null) {
-			//	System.out.println("Disciplina com Id = " + id + " já existente\n");
+			//	System.out.println("Disciplina com Id = " + id + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
@@ -177,7 +177,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -204,18 +204,18 @@ public class Create {
 		
 		try {		
 			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			// testando validade dos dados recebidos
 			
 			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
-			//	System.out.println("Disciplina com Id = " + codigoDisciplina + " já existente\n");
+			//	System.out.println("Disciplina com Id = " + codigoDisciplina + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
 			//if(session.get(Curso.class, codigoCurso) == null) {
-			//	System.out.println("Curso com codigoCurso = " + codigoCurso + " já existente\n");
+			//	System.out.println("Curso com codigoCurso = " + codigoCurso + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
@@ -227,7 +227,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -252,17 +252,17 @@ public class Create {
 		// criando session
 		Session session = factory.getCurrentSession();
 		
-		//falta tratar os dados e trabalhar melhor na tabela de histórico
+		//falta tratar os dados e trabalhar melhor na tabela de histï¿½rico
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			// salvando o objeto
-			System.out.println("Salvando o Histórico...");
+			System.out.println("Salvando o Histï¿½rico...");
 			session.save(obj);
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -289,18 +289,18 @@ public class Create {
 		
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			//tratando os dados de entrada
 			
 			//if(session.get(Turma.class, codigoTurma) == null) {
-			//	System.out.println("Turma com codigoTurma = " + codigoTurma + " não existente\n");
+			//	System.out.println("Turma com codigoTurma = " + codigoTurma + " nï¿½o existente\n");
 			//	erro = true;
 			//}
 			//
 			//if(session.get(Aluno.class, alunoId) == null) {
-			//	System.out.println("Aluno com alunoId = " + alunoId + " não existente\n");
+			//	System.out.println("Aluno com alunoId = " + alunoId + " nï¿½o existente\n");
 			//	erro = true;
 			//}
 			
@@ -311,7 +311,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -337,16 +337,16 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
-			//	System.out.println("\nERRO: Disciplina com codigoDisciplina = " + codigoDisciplina + " já existente\n");
+			//	System.out.println("\nERRO: Disciplina com codigoDisciplina = " + codigoDisciplina + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
 			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
-			//	System.out.println("\nERRO: Disciplina com prerequisitoId = " + prerequisitoId + " já existente\n");
+			//	System.out.println("\nERRO: Disciplina com prerequisitoId = " + prerequisitoId + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
@@ -357,7 +357,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -388,11 +388,11 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			if(session.get(Cordenador.class, codigoCurso) == null) {
-				System.out.println("\nERRO: Aluno com codigoCurso = " + codigoCurso + " já existente\n");
+				System.out.println("\nERRO: Aluno com codigoCurso = " + codigoCurso + " jï¿½ existente\n");
 				erro = true;
 			}
 			
@@ -403,7 +403,7 @@ public class Create {
 				session.save(obj);
 			};
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -429,16 +429,16 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			// Checando integridade dos dados
 			//if(session.get(Professor.class, professorId) == null) {
-			//	System.out.println("\nERRO: Professor não encontrado!");
+			//	System.out.println("\nERRO: Professor nï¿½o encontrado!");
 			//	erro = true;
 			//}
 			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
-			//	System.out.println("\nERRO: Disciplina não encontrada!");
+			//	System.out.println("\nERRO: Disciplina nï¿½o encontrada!");
 			//	erro = true;
 			//}
 			
@@ -450,7 +450,7 @@ public class Create {
 				
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -463,9 +463,9 @@ public class Create {
 		
 	}
 	
-	public void Sala(String codigoSala, int capacidade, int predio) {
+	public void Sala(String codigoSala, int capacidade, String predio) {
 		
-		Sala obj = new Sala(codigoSala, predio, predio);
+		Sala obj = new Sala(codigoSala, capacidade, predio);
 		boolean erro = false;
 		//obj.setCodigoSala(codigoSala);
 		//obj.setCapacidade(capacidade);
@@ -478,11 +478,11 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			//if(session.get(Sala.class, codigoSala) == null) {
-			//	System.out.println("\nERRO: Sala com codigoSala = " + codigoSala + " já existente\n");
+			//	System.out.println("\nERRO: Sala com codigoSala = " + codigoSala + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
@@ -493,7 +493,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -525,28 +525,28 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			// testando a validade dos dados recebidos
 			
 			//if(session.get(Turma.class, codigoTurma) == null) {
-			//	System.out.println("Turma com codigoTurma = " + codigoTurma + " já existente\n");
+			//	System.out.println("Turma com codigoTurma = " + codigoTurma + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
 			//if(session.get(Professor.class, professorId) == null) {
-			//	System.out.println("Professor com professorId = " + professorId + " não existente\n");
+			//	System.out.println("Professor com professorId = " + professorId + " nï¿½o existente\n");
 			//	erro = true;
 			//}
 			
 			//if(session.get(Disciplina.class, codigoDisciplina) == null) {
-			//	System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " não existente\n");
+			//	System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " nï¿½o existente\n");
 			//	erro = true;
 			//}
 			
 			//if(session.get(Sala.class, salaId) == null) {
-			//	System.out.println("Sala com salaId = " + salaId + " não existente\n");
+			//	System.out.println("Sala com salaId = " + salaId + " nï¿½o existente\n");
 			//	erro = true;
 			//}
 			
@@ -557,7 +557,7 @@ public class Create {
 				session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
@@ -587,13 +587,13 @@ public class Create {
 		Session session = factory.getCurrentSession();
 		
 		try {			
-			// iniciando a transação
+			// iniciando a transaï¿½ï¿½o
 			session.beginTransaction();
 			
 			// testando a validade dos dados recebidos
 			
 			//if(session.get(Usuario.class, id) == null) {
-			//	System.out.println("Usuario com Id = " + id + " já existente\n");
+			//	System.out.println("Usuario com Id = " + id + " jï¿½ existente\n");
 			//	erro = true;
 			//}
 			
@@ -604,7 +604,7 @@ public class Create {
 				//session.save(obj);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Commited!");

@@ -8,11 +8,11 @@ import org.hibernate.cfg.Configuration;
 @Entity
 @Table(name="sala")
 public class Sala {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private String id;
+	private int id;
 	
 	@Column(name="codigo_sala")
 	private String codigoSala;
@@ -21,10 +21,10 @@ public class Sala {
 	private int capacidade;
 	
 	@Column(name="predio")
-	private int predio;
+	private String predio;
 	
 
-	public Sala(String codigoSala, int capacidade, int predio) {
+	public Sala(String codigoSala, int capacidade, String predio) {
 		super();
 		this.codigoSala = codigoSala;
 		this.capacidade = capacidade;
@@ -44,10 +44,10 @@ public class Sala {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			if(session.get(Sala.class, codigoSala) == null) {
+			/*if(session.get(Sala.class, codigoSala) == null) {
 				System.out.println("\nERRO: Sala com codigoSala = " + codigoSala + " já existente\n");
 				erro = true;
-			}
+			}*/
 			
 			if(!erro) {
 				
@@ -112,11 +112,11 @@ public class Sala {
 		this.capacidade = capacidade;
 	}
 
-	public int getPredio() {
+	public String getPredio() {
 		return predio;
 	}
 
-	public void setPredio(int predio) {
+	public void setPredio(String predio) {
 		this.predio = predio;
 	}
 

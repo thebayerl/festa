@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS curso;
 
 CREATE TABLE `usuario` (
-  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `senha` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rg` varchar(9) NOT NULL,
@@ -24,19 +24,19 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `curso` (
-  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `codigo_curso` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nome` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 collate=utf8mb4_unicode_ci;
 
 CREATE TABLE `aluno` (
-  `usuario_id` int(20) unsigned NOT NULL,
+  `usuario_id` int unsigned NOT NULL,
   `matricula` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nome` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `data_nascimento` date NOT NULL,
   `data_ingresso` date NOT NULL,
-  `curso_id` int(20) unsigned NOT NULL,
+  `curso_id` int unsigned NOT NULL,
   PRIMARY KEY (`usuario_id`),
   KEY `curso_id` (`curso_id`),
   CONSTRAINT `aluno_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`),
@@ -44,24 +44,25 @@ CREATE TABLE `aluno` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `coordenador` (
-  `usuario_id` int(20) unsigned NOT NULL,
+  `usuario_id` int unsigned NOT NULL,
   `nome` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`usuario_id`),
   CONSTRAINT `coordenador_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `disciplina` (
-  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
-  `codigo_disciplina` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nome` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `codigo_disciplina` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `creditos` int(11) NOT NULL,
-  `departamento` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `departamento` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `codigo_disciplina_UNIQUE` (`codigo_disciplina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `disciplina_curso` (
-  `curso_id` int(20) unsigned NOT NULL,
-  `disciplina_id` int(20) unsigned NOT NULL,
+  `curso_id` int unsigned NOT NULL,
+  `disciplina_id` int unsigned NOT NULL,
   PRIMARY KEY (`disciplina_id`,`curso_id`),
   KEY `curso_id` (`curso_id`),
   CONSTRAINT `disciplina_curso_ibfk_1` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`),
@@ -69,11 +70,11 @@ CREATE TABLE `disciplina_curso` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `professor` (
-  `usuario_id` int(20) unsigned NOT NULL,
+  `usuario_id` int unsigned NOT NULL,
   `nome` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `matricula` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nivel_formacao` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `curso_id` int(20) unsigned NOT NULL,
+  `curso_id` int unsigned NOT NULL,
   PRIMARY KEY (`usuario_id`),
   KEY `curso_id` (`curso_id`),
   CONSTRAINT `professor_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`),
@@ -81,8 +82,8 @@ CREATE TABLE `professor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `professor_capacidade` (
-  `professor_id` int(20) unsigned DEFAULT NULL,
-  `disciplina_id` int(20) unsigned DEFAULT NULL,
+  `professor_id` int unsigned DEFAULT NULL,
+  `disciplina_id` int unsigned DEFAULT NULL,
   KEY `professor_id` (`professor_id`),
   KEY `disciplina_id` (`disciplina_id`),
   CONSTRAINT `professor_capacidade_ibfk_1` FOREIGN KEY (`professor_id`) REFERENCES `professor` (`usuario_id`),
@@ -90,7 +91,7 @@ CREATE TABLE `professor_capacidade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `sala` (
-  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `codigo_sala` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `capacidade` int(11) NOT NULL,
   `predio` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -98,14 +99,14 @@ CREATE TABLE `sala` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `turma` (
-  `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `codigo_turma` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `max_alunos` int(11) NOT NULL,
   `semestre` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ano` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `professor_id` int(20) unsigned DEFAULT NULL,
-  `disciplina_id` int(20) unsigned DEFAULT NULL,
-  `sala_id` int(20) unsigned NOT NULL,
+  `professor_id` int unsigned DEFAULT NULL,
+  `disciplina_id` int unsigned DEFAULT NULL,
+  `sala_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `professor_id` (`professor_id`),
   KEY `disciplina_id` (`disciplina_id`),
@@ -117,8 +118,8 @@ CREATE TABLE `turma` (
 
 CREATE TABLE `historico` (
   `nota` double NOT NULL,
-  `aluno_id` int(20) unsigned NOT NULL,
-  `turma_id` int(20) unsigned NOT NULL,
+  `aluno_id` int unsigned NOT NULL,
+  `turma_id` int unsigned NOT NULL,
   PRIMARY KEY (`aluno_id`,`turma_id`),
   KEY `turma_id` (`turma_id`),
   CONSTRAINT `historico_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `aluno` (`usuario_id`),
@@ -126,8 +127,8 @@ CREATE TABLE `historico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `matriculado` (
-  `aluno_id` int(20) unsigned NOT NULL,
-  `turma_id` int(20) unsigned NOT NULL,
+  `aluno_id` int unsigned NOT NULL,
+  `turma_id` int unsigned NOT NULL,
   PRIMARY KEY (`aluno_id`,`turma_id`),
   KEY `turma_id` (`turma_id`),
   CONSTRAINT `matriculado_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `aluno` (`usuario_id`),
@@ -135,8 +136,8 @@ CREATE TABLE `matriculado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `pre_requisito` (
-  `disciplina_id` int(20) unsigned DEFAULT NULL,
-  `prerequisito_id` int(20) unsigned DEFAULT NULL,
+  `disciplina_id` int unsigned DEFAULT NULL,
+  `prerequisito_id` int unsigned DEFAULT NULL,
   KEY `disciplina_id` (`disciplina_id`),
   KEY `prerequisito_id` (`prerequisito_id`),
   CONSTRAINT `pre_requisito_ibfk_1` FOREIGN KEY (`disciplina_id`) REFERENCES `disciplina` (`id`),

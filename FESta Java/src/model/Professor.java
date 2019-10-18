@@ -25,18 +25,18 @@ public class Professor {
 	@Column(name="nivel_formacao")
 	private String nivelFormacao;
 	
-	@Column(name="codigo_curso")
-	private int codigoCurso;
+	@Column(name="curso_id")
+	private int cursoId;
 
 	public Professor(){}
 	
-	public Professor(int usuarioId, String nome, String matricula, String nivelFormacao, int codigoCurso) {
+	public Professor(int usuarioId, String nome, String matricula, String nivelFormacao, int cursoId) {
 		super();
 		this.usuarioId = usuarioId;
 		this.nome = nome;
 		this.matricula = matricula;
 		this.nivelFormacao = nivelFormacao;
-		this.codigoCurso = codigoCurso;
+		this.cursoId = cursoId;
 	}
 
 	public void create() {
@@ -52,10 +52,10 @@ public class Professor {
 			// iniciando a transação
 			session.beginTransaction();
 			
-			if(session.get(Cordenador.class, codigoCurso) == null) {
+			/*if(session.get(Cordenador.class, codigoCurso) == null) {
 				System.out.println("\nERRO: Aluno com codigoCurso = " + codigoCurso + " já existente\n");
 				erro = true;
-			}
+			}*/
 			
 			if(!erro) {
 				
@@ -139,17 +139,17 @@ public class Professor {
 	}
 
 	public int getcodigoCurso() {
-		return codigoCurso;
+		return cursoId;
 	}
 
 	public void setcodigoCurso(int codigoCurso) {
-		this.codigoCurso = codigoCurso;
+		this.cursoId = codigoCurso;
 	}
 
 	@Override
 	public String toString() {
 		return "Professor [usuarioId=" + usuarioId + ", nome=" + nome + ", matricula=" + matricula + ", nivelFormacao="
-				+ nivelFormacao + ", codigoCurso=" + codigoCurso + "]";
+				+ nivelFormacao + ", codigoCurso=" + cursoId + "]";
 	}
 	
 }

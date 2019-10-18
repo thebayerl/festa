@@ -64,7 +64,7 @@ public class Turma {
 			
 			// testando a validade dos dados recebidos
 			
-			if(session.get(Turma.class, codigoTurma) == null) {
+			/*if(session.get(Turma.class, codigoTurma) == null) {
 				System.out.println("Turma com codigoTurma = " + codigoTurma + " não existente\n");
 				erro = true;
 			}
@@ -82,7 +82,7 @@ public class Turma {
 			if(session.get(Sala.class, codigoSala) == null) {
 				System.out.println("Sala com codigoSala = " + codigoSala + " não existente\n");
 				erro = true;
-			}
+			}*/
 			
 			if(!erro) {
 				

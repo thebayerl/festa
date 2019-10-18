@@ -16,7 +16,7 @@ public class Disciplina {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
-	
+
 	@Column(name="codigo_disciplina")
 	private String codigoDisciplina;
 	
@@ -26,44 +26,37 @@ public class Disciplina {
 	@Column(name="creditos")
 	private int creditos;
 	
-	@Column(name="departamento_codigoDisciplina")
-	private String departamentocodigoDisciplina;
+	@Column(name="departamento")
+	private String departamento;
 
-	public Disciplina() {
-		
-	}
+	public Disciplina() {}
 	
-	public Disciplina(String codigoDisciplina, String nome, int creditos, String departamentocodigoDisciplina) {
+	public Disciplina(String codigoDisciplina, String nome, int creditos, String departamento) {
 		super();
 		this.codigoDisciplina = codigoDisciplina;
 		this.nome = nome;
 		this.creditos = creditos;
-		this.departamentocodigoDisciplina = departamentocodigoDisciplina;
+		this.departamento = departamento;
 	}
 
 	public void create() {
 		boolean erro = false;
 		
 		// criando session factory
-		System.out.println("ERRROO1");
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
-		System.out.println("ERRROO2");
 		// criando session
 		Session session = factory.getCurrentSession();
-		System.out.println("ERRROO3");
 		
-		try {	
-			System.out.println("ERRROO4");
-			// iniciando a transa��o
+		try {
+			// iniciando a transação
 			session.beginTransaction();
-			System.out.println("HHHH");
+
 			// testando a valcodigoDisciplinaade dos dados recebcodigoDisciplinaos
-			
-			if(session.get(Disciplina.class, codigoDisciplina) == null) {
-				System.out.println("00000000");
+			/*if(session.get(Disciplina.class, codigoDisciplina) == null) {
 				System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " j� existente\n");
 				erro = true;
-			}
+				session.
+			}*/
 			
 			//inserir check do departamento depois
 			
@@ -80,9 +73,10 @@ public class Disciplina {
 			System.out.println("Pronto!");
 			
 		} catch(Exception exc){
-			System.out.println("ERRROO5");
+			System.out.println(exc);
 		}
 		finally {
+			session.close();
 			factory.close();
 		}
 	}
@@ -140,16 +134,16 @@ public class Disciplina {
 	}
 
 	public String getDepartamento() {
-		return departamentocodigoDisciplina;
+		return departamento;
 	}
 
-	public void setDepartamento(String departamentocodigoDisciplina) {
-		this.departamentocodigoDisciplina = departamentocodigoDisciplina;
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
 	}
 
 	@Override
 	public String toString() {
-		return "Disciplina [codigoDisciplina=" + codigoDisciplina + ", nome=" + nome + ", creditos=" + creditos + ", departamentocodigoDisciplina =" + departamentocodigoDisciplina
+		return "Disciplina [codigoDisciplina=" + codigoDisciplina + ", nome=" + nome + ", creditos=" + creditos + ", departamento =" + departamento
 				+ "]";
 	}
 
