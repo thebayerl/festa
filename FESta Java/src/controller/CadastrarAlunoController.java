@@ -5,6 +5,7 @@
  */
 package controller;
 
+import model.Aluno;
 import model.Create;
 import model.Disciplina;
 import java.net.URL;
@@ -62,12 +63,15 @@ public class CadastrarAlunoController implements Initializable {
     	String nome = txNome.getText();
     	String dataNascimento = txNascimento.getText();
     	String dataIngresso = txIngresso.getText();
-    	String codigoCurso = txCodigoCurso.getText();
+    	int cursoId = Integer.parseInt(txCodigoCurso.getText());
     	final String sql = "SELECT max( u.id ) FROM Usuario u";
         Integer usuarioId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
     	
-        Create a = new Create();
-        a.Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, codigoCurso);
+        Aluno a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, cursoId);
+        a.create();
+        
+        //Create a = new Create();
+        //a.Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, codigoCurso);
         abrePrincipal();
         
         

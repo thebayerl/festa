@@ -5,10 +5,10 @@ import java.util.List;
 public class Test {
 
 	public static void main(String[] args) {
-		Create create = new Create();
-		Read read = new Read();
-		Update update = new Update();
-		Delete delete = new Delete();
+		/*Disciplina disciplina = new Disciplina("1234", "Cálculo 1", 6, "Matemática");
+		disciplina.create();*/
+		Sala sala = new Sala("123", 50, "Letras");
+		sala.create();
 	}
 
 }

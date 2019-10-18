@@ -1,8 +1,5 @@
 package model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,6 +10,10 @@ import org.hibernate.cfg.Configuration;
 public class Turma {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private String id;
+	
 	@Column(name="codigo_turma")
 	private String codigoTurma;
 	
@@ -29,11 +30,25 @@ public class Turma {
 	private int professorId;
 	
 	@Column(name="disciplina_id")
-	private int disciplinaId;
+	private String disciplinaId;
 	
 	@Column(name="sala_id")
 	private String codigoSala;
 	
+	public Turma(){}
+	
+	public Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, String disciplinaId,
+			String codigoSala) {
+		super();
+		this.codigoTurma = codigoTurma;
+		this.maxAlunos = maxAlunos;
+		this.ano = ano;
+		this.semestre = semestre;
+		this.professorId = professorId;
+		this.disciplinaId = disciplinaId;
+		this.codigoSala = codigoSala;
+	}
+
 	public void create() {
 		boolean erro = false;
 		
@@ -49,8 +64,8 @@ public class Turma {
 			
 			// testando a validade dos dados recebidos
 			
-			if(session.get(Turma.class, codigoTurma) == null) {
-				System.out.println("Turma com codigoTurma = " + codigoTurma + " já existente\n");
+			/*if(session.get(Turma.class, codigoTurma) == null) {
+				System.out.println("Turma com codigoTurma = " + codigoTurma + " não existente\n");
 				erro = true;
 			}
 			
@@ -67,7 +82,7 @@ public class Turma {
 			if(session.get(Sala.class, codigoSala) == null) {
 				System.out.println("Sala com codigoSala = " + codigoSala + " não existente\n");
 				erro = true;
-			}
+			}*/
 			
 			if(!erro) {
 				
@@ -156,11 +171,11 @@ public class Turma {
 		this.professorId = professorId;
 	}
 
-	public int getDisciplinaId() {
+	public String getDisciplinaId() {
 		return disciplinaId;
 	}
 
-	public void setDisciplinaId(int disciplinaId) {
+	public void setDisciplinaId(String disciplinaId) {
 		this.disciplinaId = disciplinaId;
 	}
 

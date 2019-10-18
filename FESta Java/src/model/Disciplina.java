@@ -1,8 +1,7 @@
 package model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.math.BigInteger;
+
+import javax.persistence.*;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,8 +13,12 @@ import org.hibernate.cfg.Configuration;
 public class Disciplina {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
+
+	@Column(name="codigo_disciplina")
+	private String codigoDisciplina;
 	
 	@Column(name="nome")
 	private String nome;
@@ -23,30 +26,37 @@ public class Disciplina {
 	@Column(name="creditos")
 	private int creditos;
 	
-	@Column(name="departamento_id")
-	private String departamentoId;
+	@Column(name="departamento")
+	private String departamento;
 
+	public Disciplina() {}
 	
-	
+	public Disciplina(String codigoDisciplina, String nome, int creditos, String departamento) {
+		super();
+		this.codigoDisciplina = codigoDisciplina;
+		this.nome = nome;
+		this.creditos = creditos;
+		this.departamento = departamento;
+	}
+
 	public void create() {
 		boolean erro = false;
 		
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
-		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
-		try {			
-			// iniciando a transação
+		try {
+			// iniciando a transaÃ§Ã£o
 			session.beginTransaction();
-			
-			// testando a validade dos dados recebidos
-			
-			if(session.get(Disciplina.class, id) == null) {
-				System.out.println("Disciplina com Id = " + id + " já existente\n");
+
+			// testando a valcodigoDisciplinaade dos dados recebcodigoDisciplinaos
+			/*if(session.get(Disciplina.class, codigoDisciplina) == null) {
+				System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " jï¿½ existente\n");
 				erro = true;
-			}
+				session.
+			}*/
 			
 			//inserir check do departamento depois
 			
@@ -57,14 +67,16 @@ public class Disciplina {
 				session.save(this);
 			}
 			
-			// finalizando transação
+			// finalizando transaï¿½ï¿½o
 			session.getTransaction().commit();
 			
 			System.out.println("Pronto!");
 			
 		} catch(Exception exc){
+			System.out.println(exc);
 		}
 		finally {
+			session.close();
 			factory.close();
 		}
 	}
@@ -77,7 +89,7 @@ public class Disciplina {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
+			// comeï¿½ando a transaï¿½ï¿½o
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
@@ -97,12 +109,12 @@ public class Disciplina {
 		}
 	}
 	
-	public int getId() {
-		return id;
+	public String getcodigoDisciplina() {
+		return codigoDisciplina;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setcodigoDisciplina(String codigoDisciplina) {
+		this.codigoDisciplina = codigoDisciplina;
 	}
 
 	public String getNome() {
@@ -122,16 +134,16 @@ public class Disciplina {
 	}
 
 	public String getDepartamento() {
-		return departamentoId;
+		return departamento;
 	}
 
-	public void setDepartamento(String departamentoId) {
-		this.departamentoId = departamentoId;
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
 	}
 
 	@Override
 	public String toString() {
-		return "Disciplina [id=" + id + ", nome=" + nome + ", creditos=" + creditos + ", departamentoId =" + departamentoId
+		return "Disciplina [codigoDisciplina=" + codigoDisciplina + ", nome=" + nome + ", creditos=" + creditos + ", departamento =" + departamento
 				+ "]";
 	}
 

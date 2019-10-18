@@ -15,7 +15,7 @@ public class DisciplinaCurso {
 	private String codigoCurso;
 	
 	@Column(name="disciplina_id")
-	private int disciplinaId;
+	private String disciplinaId;
 	
 	public void create() {
 		boolean erro = false;
@@ -98,11 +98,11 @@ public class DisciplinaCurso {
 		this.codigoCurso = codigoCurso;
 	}
 
-	public int getDisciplinaId() {
+	public String getDisciplinaId() {
 		return disciplinaId;
 	}
 
-	public void setDisciplinaId(int disciplinaId) {
+	public void setDisciplinaId(String disciplinaId) {
 		this.disciplinaId = disciplinaId;
 	}
 

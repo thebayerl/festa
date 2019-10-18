@@ -10,7 +10,7 @@ public class Update {
 
 	
 	public boolean Aluno(Integer id, String matricula, String nome, String dataNascimento, String dataIngresso, 
-			String codigoCurso) {
+			Integer codigoCurso) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -37,7 +37,7 @@ public class Update {
 					obj.setMatricula(matricula);
 				}
 				if(codigoCurso != null) {
-					obj.setcodigoCurso(codigoCurso);
+					obj.setCursoId(codigoCurso);
 				}
 				if(dataIngresso != null) {
 					obj.setDataIngresso(dataIngresso);
@@ -197,7 +197,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean DisciplinaCurso(String codigoCurso, Integer disciplinaId) {
+	public boolean DisciplinaCurso(String codigoCurso, String disciplinaId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -322,7 +322,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean PreRequisito(Integer disciplinaId, Integer prerequisitoId) {
+	public boolean PreRequisito(String disciplinaId, String prerequisitoId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -412,7 +412,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean ProfessorCapacidade(Integer professorId, Integer disciplinaId) {
+	public boolean ProfessorCapacidade(Integer professorId, String disciplinaId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -454,7 +454,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Sala(String codigoSala, Integer capacidade, Integer predio) {
+	public boolean Sala(String codigoSala, Integer capacidade, String predio) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -499,7 +499,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Turma(String codigoTurma, Integer maxAlunos, String ano, String semestre, Integer professorId, Integer disciplinaId,
+	public boolean Turma(String codigoTurma, Integer maxAlunos, String ano, String semestre, Integer professorId, String disciplinaId,
 			String codigoSala) {
 		boolean sucesso = true;
 		
@@ -581,10 +581,10 @@ public class Update {
 			
 			if(sucesso) {
 				if(cpf != null) {
-					obj.setCpf(cpf);
+					//obj.setCpf(cpf);
 				}
 				if(rg != null) {
-					obj.setRg(rg);
+					//obj.setRg(rg);
 				}
 				if(senha != null) {
 					obj.setSenha(senha);

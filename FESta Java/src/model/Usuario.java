@@ -15,7 +15,7 @@ import org.hibernate.cfg.Configuration;
 public class Usuario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -26,11 +26,20 @@ public class Usuario {
 	private String senha;
 	
 	@Column(name="rg")
-	private int rg;
+	private String rg;
 	
 	@Column(name="cpf")
-	private int cpf;
+	private String cpf;
 
+	public Usuario(){}
+
+	public Usuario(String username, String senha, String rg, String cpf) {
+		super();
+		this.username = username;
+		this.senha = senha;
+		this.rg = rg;
+		this.cpf = cpf;
+	}
 
 	public void create() {
 		boolean erro = false;
@@ -47,10 +56,10 @@ public class Usuario {
 			
 			// testando a validade dos dados recebidos
 			
-			if(session.get(Usuario.class, id) == null) {
+			/*if(session.get(Usuario.class, id) == null) {
 				System.out.println("Usuario com Id = " + id + " já existente\n");
 				erro = true;
-			}
+			}*/
 			
 			if(!erro) {
 				
@@ -123,19 +132,19 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public int getRg() {
+	public String getRg() {
 		return rg;
 	}
 
-	public void setRg(int rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
 
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 

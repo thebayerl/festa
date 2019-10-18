@@ -31,9 +31,9 @@ public class CadastrarDisciplinaController implements Initializable {
     @FXML private TextField txNome;
     @FXML private TextField txDepartamento;
     @FXML private TextField txCreditos;
-    @FXML private TextField txIdDisciplina;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
+    @FXML private TextField txCodigoDisciplina;
     
     /**
      * Initializes the controller class.
@@ -57,10 +57,16 @@ public class CadastrarDisciplinaController implements Initializable {
         String nome = txNome.getText();
         int creditos = Integer.parseInt(txCreditos.getText());
         String departamentoId = txDepartamento.getText();
-        int id = Integer.parseInt(txIdDisciplina.getText());
+        String codigoDisciplina = txCodigoDisciplina.getText();
         
-        Create d = new Create();
-        d.Disciplina(id, nome, creditos, departamentoId);
+        //Create d = new Create();
+        //d.Disciplina(id, nome, creditos, departamentoId);
+        
+        
+        
+        Disciplina d = new Disciplina(codigoDisciplina, nome, creditos, departamentoId);
+        d.create();
+        
         abrePrincipal();
         
         

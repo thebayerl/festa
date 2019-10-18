@@ -54,10 +54,12 @@ public class CadastrarSalaController implements Initializable {
     
     public void cadastraSala(){
         int capacidade = Integer.parseInt(txCapacidade.getText());
-        int predio = Integer.parseInt(txPredio.getText());
+        String predio = txPredio.getText();
         String codigoSala = txCodigoSala.getText();
-        Create s = new Create();
-        s.Sala(codigoSala, capacidade, predio);
+        //Create s = new Create();
+        //s.Sala(codigoSala, capacidade, predio);
+        Sala s = new Sala(codigoSala, capacidade, predio);
+        s.create();
         abrePrincipal();
         //Sala s = new Sala(capacidade);
         

@@ -12,10 +12,10 @@ import org.hibernate.cfg.Configuration;
 public class PreRequisito {
 
 	@Column(name="disciplina_id")
-	private int disciplinaId;
+	private String disciplinaId;
 	
 	@Column(name="prerequisito_id")
-	private int prerequisitoId;
+	private String prerequisitoId;
 	
 	
 	public void create() {
@@ -88,19 +88,19 @@ public class PreRequisito {
 		}
 	}
 
-	public int getDisciplinaId() {
+	public String getDisciplinaId() {
 		return disciplinaId;
 	}
 
-	public void setDisciplinaId(int disciplinaId) {
+	public void setDisciplinaId(String disciplinaId) {
 		this.disciplinaId = disciplinaId;
 	}
 
-	public int getPrerequisitoId() {
+	public String getPrerequisitoId() {
 		return prerequisitoId;
 	}
 
-	public void setPrerequisitoId(int prerequisitoId) {
+	public void setPrerequisitoId(String prerequisitoId) {
 		this.prerequisitoId = prerequisitoId;
 	}
 	
