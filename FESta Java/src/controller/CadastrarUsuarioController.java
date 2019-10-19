@@ -64,7 +64,7 @@ public class CadastrarUsuarioController implements Initializable {
     @FXML  private TextField txCodigoCursoAluno;
     @FXML  private TextField txIngresso;
     @FXML  private GridPane gridProfessor;
-    @FXML  private AnchorPane paneAluno;
+    @FXML  private GridPane gridAluno;
     @FXML  private ComboBox<ComboBoxTipo> comboBoxUsers;
     
     
@@ -114,11 +114,11 @@ public class CadastrarUsuarioController implements Initializable {
     	ComboBoxTipo t = comboBoxUsers.getSelectionModel().getSelectedItem();
     	if(t.getNome().equals("Professor")) {
     		gridProfessor.setVisible(true);
-    		paneAluno.setVisible(false);
+    		gridAluno.setVisible(false);
     		
     	}else {	
     		gridProfessor.setVisible(false);
-    		paneAluno.setVisible(true);
+            gridAluno.setVisible(true);
     	}
     	
     }
