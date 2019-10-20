@@ -38,7 +38,7 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		System.out.println(query);
 		
-		List<Aluno> resultado = null;
+		List resultado = null;
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();

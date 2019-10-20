@@ -1,0 +1,31 @@
+.icon_window{
+    -fx-fill: rgba(0, 0, 0, 0.3);
+}
+.icon_window:hover{
+    -fx-fill: rgba(0, 0, 0, 0.5);
+}
+.button{
+    -fx-background-color:  #48A5EA;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Open Sans";
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+.label{
+    -fx-text-fill: #4e4e4e;
+    -fx-font-family: "Open Sans";
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+.label_title{
+    -fx-text-fill: #48A5EA;
+    -fx-font-family: "Open Sans";
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+.label_pane{
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Open Sans";
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}

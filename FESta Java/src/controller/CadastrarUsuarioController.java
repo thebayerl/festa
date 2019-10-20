@@ -8,19 +8,16 @@ package controller;
 import javafx.scene.layout.GridPane;
 import model.Aluno;
 import model.ComboBoxTipo;
-import model.Create;
 import model.Professor;
 import model.Usuario;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -28,14 +25,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import view.CadastrarAluno;
-import view.CadastrarProfessor;
 import view.CadastrarUsuario;
 import view.Principal;
 
@@ -67,17 +59,13 @@ public class CadastrarUsuarioController implements Initializable {
     @FXML  private GridPane gridAluno;
     @FXML  private ComboBox<ComboBoxTipo> comboBoxUsers;
     
-    
-    
     private List<ComboBoxTipo> tipos = new ArrayList<>();
     private ObservableList<ComboBoxTipo> obsTipos;
     private Aluno a;
     private Usuario u;
     private Professor p;
     private int usuarioId;
-    
-     
-    
+
     /**
      * Initializes the controller class.
      */

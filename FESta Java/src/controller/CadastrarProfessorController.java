@@ -5,22 +5,20 @@
  */
 package controller;
 
-import model.Create;
+import com.jfoenix.controls.JFXTextField;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.stage.Stage;
+import model.Aluno;
 import model.Professor;
-import model.Sala;
+import model.Usuario;
+import view.CadastrarProfessor;
+import view.Principal;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import view.CadastrarProfessor;
-import view.CadastrarSala;
-import view.Principal;
 
 /**
  * FXML Controller class
@@ -29,54 +27,37 @@ import view.Principal;
  */
 public class CadastrarProfessorController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
-    
-	@FXML private TextField txNome;
-    @FXML private Button btCadastrar;
-    @FXML private Button btCancelar;
-    @FXML private TextField txFormacao;
-    @FXML private TextField txMatricula;
-    @FXML private TextField txCodigoCurso;
-    
+    @FXML private JFXTextField tfUsername;
+    @FXML private JFXTextField tfEmail;
+    @FXML private JFXTextField tfSenha;
+    @FXML private JFXTextField tfConfimarSenha;
+    @FXML private JFXTextField tfNome;
+    @FXML private JFXTextField tfMatricula;
+    @FXML private JFXTextField tfFormacao;
+    @FXML private JFXTextField tfRg;
+    @FXML private JFXTextField tfCpf;
+
+    private Aluno a;
+    private Usuario u;
+    private Professor p;
+    private int usuarioId;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btCancelar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
-            abrePrincipal();
-        });
-        
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
-        	cadastraProfessor();
-        });
-        
+
     }
     
     public void cadastraProfessor(){
     	
-    	String nome = txNome.getText();
-    	String matricula = txMatricula.getText();
-    	String nivelFormacao = txFormacao.getText();
-    	int codigoCurso = Integer.parseInt(txCodigoCurso.getText());
+    	String nome = tfNome.getText();
+    	String matricula = tfMatricula.getText();
+    	String formacao = tfFormacao.getText();
+    	//int codigoCurso = Integer.parseInt(txCodigoCursoProfessor.getText());
 
-    	final String sql = "SELECT max( u.id ) FROM Usuario u";
-        Integer usuarioId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
-    	
-        //Create p = new Create();
-        //p.Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
-        
-        Professor p = new Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
+    	p = new Professor(usuarioId, nome, matricula, formacao, 1);
         p.create();
-        abrePrincipal();
-        //Sala s = new Sala(capacidade);
-        
-    }
-    
-    public void fecha(){
-        CadastrarProfessor.getStage().close();
+    	abrePrincipal();
     }
     
     public void abrePrincipal(){
@@ -87,5 +68,13 @@ public class CadastrarProfessorController implements Initializable {
         } catch (Exception ex) {
             Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    @FXML
+    public void minimiza(){
+        CadastrarProfessor.getStage().setMaximized(false);
+    }
+    @FXML
+    public void fecha(){
+        CadastrarProfessor.getStage().close();
     }
 }

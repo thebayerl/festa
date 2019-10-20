@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarProfessorController">
+   <children>
+      <Label layoutX="206.0" layoutY="24.0" styleClass="label_title" text="Cadastro de Professor" textFill="#1f9bed">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Pane prefHeight="420.0" prefWidth="160.0" style="-fx-background-color: #48A5EA;">
+         <children>
+            <VBox layoutX="20.0" layoutY="98.0" prefHeight="189.0" prefWidth="120.0">
+               <children>
+                  <HBox prefHeight="33.0" prefWidth="120.0">
+                     <children>
+                        <FontIcon iconColor="WHITE" iconLiteral="fa-home" iconSize="22">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </FontIcon>
+                        <Label styleClass="label_pane" text="Início" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="33.0" prefWidth="120.0">
+                     <children>
+                        <FontIcon iconColor="WHITE" iconLiteral="fa-search" iconSize="20">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </FontIcon>
+                        <Label styleClass="label_pane" text="Pesquisar" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="33.0" prefWidth="120.0">
+                     <children>
+                        <FontIcon iconColor="WHITE" iconLiteral="fa-mortar-board" iconSize="18">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </FontIcon>
+                        <Label styleClass="label_pane" text="Aluno" textFill="WHITE" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></Pane>
+      <FlowPane layoutX="206.0" layoutY="64.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="266.0" prefWidth="482.0">
+         <children>
+            <JFXTextField fx:id="tfUsername" labelFloat="true" prefWidth="120.0" promptText="Username">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+            <JFXPasswordField labelFloat="true" prefWidth="120.0" promptText="Senha">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXPasswordField>
+            <JFXPasswordField labelFloat="true" layoutX="10.0" layoutY="115.0" prefWidth="120.0" promptText="Confirmar senha">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXPasswordField>
+            <JFXTextField fx:id="tfEmail" labelFloat="true" prefWidth="200.0" promptText="Email">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tfNome" labelFloat="true" prefWidth="200.0" promptText="Nome">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tfMatricula" labelFloat="true" prefWidth="200.0" promptText="Matrícula">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tfFormacao" labelFloat="true" prefWidth="200.0" promptText="Formação">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tfRg" labelFloat="true" prefWidth="120.0" promptText="RG">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tfCpf" labelFloat="true" prefWidth="120.0" promptText="CPF">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tfCpf1" labelFloat="true" layoutX="185.0" layoutY="245.0" prefWidth="120.0" promptText="Código do Curso">
+               <FlowPane.margin>
+                  <Insets right="40.0" top="40.0" />
+               </FlowPane.margin>
+            </JFXTextField>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </FlowPane>
+      <HBox layoutX="669.0" layoutY="14.0" prefHeight="25.0" prefWidth="30.0">
+         <children>
+            <FontIcon iconLiteral="fa-window-minimize" onMouseClicked="#minimiza" strokeWidth="0.0" styleClass="icon_window">
+               <HBox.margin>
+                  <Insets right="10.0" top="4.0" />
+               </HBox.margin>
+            </FontIcon>
+            <FontIcon iconLiteral="fa-times" iconSize="18" onMouseClicked="#fecha" styleClass="icon_window" />
+         </children>
+      </HBox>
+      <HBox layoutX="502.0" layoutY="372.0" prefHeight="25.0" prefWidth="151.0">
+         <children>
+            <JFXButton fx:id="btVoltar" text="Voltar">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btCadastrar" layoutX="10.0" layoutY="10.0" text="Cadastrar" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

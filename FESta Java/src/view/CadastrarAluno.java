@@ -34,7 +34,7 @@ public class CadastrarAluno extends Application {
     public void start(Stage stage) throws Exception {
     	
     	//System.out.println("ENTREI NESSA BAGAÇA1");
-        Parent root = FXMLLoader.load(getClass().getResource("/view/CadastrarAluno.fxml"));//Carrega FXML
+        Parent root = FXMLLoader.load(getClass().getResource("/view/FXML/CadastrarAluno.fxml"));//Carrega FXML
         //System.out.println("ENTREI NESSA BAGAÇA2");
         Scene scene = new Scene(root);//Coloca o FXML em uma cena
         //System.out.println("ENTREI NESSA BAGAÇA3");

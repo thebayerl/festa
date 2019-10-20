@@ -30,7 +30,7 @@ public class CadastrarCurso extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/CadastrarCurso.fxml"));//Carrega FXML
+        Parent root = FXMLLoader.load(getClass().getResource("/view/FXML/CadastrarCurso.fxml"));//Carrega FXML
 
         Scene scene = new Scene(root);//Coloca o FXML em uma cena
         stage.setTitle("CadastrarCurso");
