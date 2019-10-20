@@ -36,6 +36,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
+            <Button fx:id="updateButton" layoutX="567.0" layoutY="98.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="225.0" text="Button" />
          </children>
       </AnchorPane>
    </children>
