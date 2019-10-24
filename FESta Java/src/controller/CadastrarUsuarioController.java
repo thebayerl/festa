@@ -75,30 +75,30 @@ public class CadastrarUsuarioController implements Initializable {
     private Professor p;
     private int usuarioId;
     
-     
+    // TODO: adicionar role secretaria
+    private String[] rolesAvailable = {"docente","discente"};
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     	
     	carregarTipos();
-    	
-    	
+    	    	
         btCancelar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
             abrePrincipal();
         });
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
+
         	cadastraUsuario();
         	ComboBoxTipo t2 = comboBoxUsers.getSelectionModel().getSelectedItem();
+        	
         	if(t2.getNome().equals("Professor")) {
         		cadastraProfessor();
-        	}else {	
+        	} else {	
         		cadastraAluno();
         	}
         	abrePrincipal();
@@ -110,7 +110,9 @@ public class CadastrarUsuarioController implements Initializable {
     
     @FXML
     void selecionarTipo() {
+    	
     	ComboBoxTipo t = comboBoxUsers.getSelectionModel().getSelectedItem();
+    	
     	if(t.getNome().equals("Professor")) {
     		paneProfessor.setVisible(true);
     		paneAluno.setVisible(false);
@@ -122,12 +124,16 @@ public class CadastrarUsuarioController implements Initializable {
     	
     }
     
+    // carrega os valores possíveis de usuário na combobox
     public void carregarTipos() {
+    	
 		ComboBoxTipo t1 = new ComboBoxTipo(1, "Professor");
 		ComboBoxTipo t2 = new ComboBoxTipo(2, "Aluno");
+		ComboBoxTipo t3 = new ComboBoxTipo(3, "Secretario");
 		
 		tipos.add(t1);
 		tipos.add(t2);
+		tipos.add(t3);
 		
 		obsTipos = FXCollections.observableArrayList(tipos);
 		
@@ -135,25 +141,27 @@ public class CadastrarUsuarioController implements Initializable {
 	}
     
     
+    // método para cadastrar usuário
     public void cadastraUsuario(){
-        String username = txUserName.getText();
+        
+    	// pega os dasdos do usuário
+    	String username = txUserName.getText();
         String senha = psSenha.getText();
         String confirmacao = psSenhaConf.getText();
         String cpf = txCPF.getText();
         String rg = txRG.getText();
-        Random rand = new Random();
-        int id = rand.nextInt(10000);
-        //final String sql = "SELECT max( u.id ) FROM Usuario u";
-        //Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
         
-        //usuarioId = lastId+1;
-        usuarioId = id;
+        int userType = this.comboBoxUsers.getSelectionModel().getSelectedIndex();
+        String role = this.rolesAvailable[userType];
+
         if(senha.equals(confirmacao)){
-        	//Create u = new Create();
-            //u.Usuario(id, username, senha, rg, cpf); 
-        	u = new Usuario(username, senha, rg, cpf);
+        	//Create u = new Create();; 
+        	u = new Usuario(username, senha, rg, cpf, role);
         	u.create();
-        }else{
+        	usuarioId = u.getId();
+
+        } else {
+
             Alert al = new Alert(AlertType.ERROR);
             al.setHeaderText("As senhas não coincidem");
             al.show();
@@ -171,12 +179,7 @@ public class CadastrarUsuarioController implements Initializable {
     	String dataNascimento = txNascimento.getText();
     	String nome = txNomeAluno.getText();
     	String dataIngresso = txIngresso.getText();
-    	int cursoId = Integer.parseInt(txCodigoCursoAluno.getText());
-    	
-    	//final String sql = "SELECT max( a.id ) FROM Aluno a";
-    	//int lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
-    	        
-    	//int usuarioId = lastId;
+    	int cursoId = Integer.parseInt(txCodigoCursoAluno.getText());    	
     	
         a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, cursoId);
         a.create();

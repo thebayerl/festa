@@ -30,15 +30,20 @@ public class Usuario {
 	
 	@Column(name="cpf")
 	private String cpf;
+	
+	@Column(name="role_user")
+	private String role;
+
 
 	public Usuario(){}
 
-	public Usuario(String username, String senha, String rg, String cpf) {
+	public Usuario(String username, String senha, String rg, String cpf, String role) {
 		super();
 		this.username = username;
 		this.senha = senha;
 		this.rg = rg;
 		this.cpf = cpf;
+		this.role = role;
 	}
 
 	public void create() {
@@ -52,14 +57,7 @@ public class Usuario {
 		
 		try {			
 			// iniciando a transação
-			session.beginTransaction();
-			
-			// testando a validade dos dados recebidos
-			
-			/*if(session.get(Usuario.class, id) == null) {
-				System.out.println("Usuario com Id = " + id + " já existente\n");
-				erro = true;
-			}*/
+			session.beginTransaction();			 
 			
 			if(!erro) {
 				
@@ -152,6 +150,15 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [id=" + id + ", username=" + username + ", senha=" + senha + ", rg=" + rg + ", cpf=" + cpf
 				+ "]";
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		// TODO: adicionar verificação no set
+		this.role = role;
 	}
 
 	

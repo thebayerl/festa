@@ -88,7 +88,7 @@ public class LoginController implements Initializable {
 	    			if (password.equals(user.getSenha())) {
 	    				
 	    				System.out.println("user e senha certos");
-	    				Principal p = new Principal();
+	    				Principal p = new Principal(user);
 	    	            fecha();
 	    	            
 	    	            p.start(new Stage());
