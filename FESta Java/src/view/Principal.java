@@ -54,6 +54,9 @@ public class Principal extends Application {
         } else if (this.loggedUser.getRole().compareTo("discente") == 0) {
         	// inicia tela de alunos        	
         	scene = new Scene(new TelaAluno());
+        } else if (this.loggedUser.getRole().compareTo("secretario") == 0) {
+        	// inicia a tela de secretario
+        	scene = new Scene(new TelaSecretario());
         } else {
         	// inicia tela padrão de erro
         	System.out.println("role desconhecida");

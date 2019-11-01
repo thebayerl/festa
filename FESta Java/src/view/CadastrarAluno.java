@@ -6,7 +6,6 @@
 package view;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,9 +17,7 @@ import javafx.stage.Stage;
  */
 public class CadastrarAluno extends Application {
     
-    private static Stage stage;//Ã© uma janela1
-    
-    private int id_usuario;
+    private static Stage stage;    
 
     public static Stage getStage() {
         return stage;
@@ -33,18 +30,16 @@ public class CadastrarAluno extends Application {
     @Override
     public void start(Stage stage) throws Exception {
     	
-    	//System.out.println("ENTREI NESSA BAGAÇA1");
         Parent root = FXMLLoader.load(getClass().getResource("/view/CadastrarAluno.fxml"));//Carrega FXML
-        //System.out.println("ENTREI NESSA BAGAÇA2");
+        
         Scene scene = new Scene(root);//Coloca o FXML em uma cena
-        //System.out.println("ENTREI NESSA BAGAÇA3");
+        
         stage.setTitle("CadastrarAluno");
         stage.setScene(scene);//Coloca a cena em uma janela
-        //System.out.println("ENTREI NESSA BAGAÇA4");
-        stage.show();//Abre a janela2
-        //System.out.println("ENTREI NESSA BAGAÇA5");
-        setStage(stage);
-        //System.out.println("ENTREI NESSA BAGAÇA5");
+        
+        stage.show();
+        
+        setStage(stage);       
     }
 
     /**
@@ -53,9 +48,5 @@ public class CadastrarAluno extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-//    public CadastrarAluno(int id_usuario) {
-//    	this.id_usuario = id_usuario;
-//    }
-    
+        
 }
