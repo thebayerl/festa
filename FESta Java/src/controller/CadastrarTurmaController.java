@@ -6,15 +6,25 @@
 package controller;
 
 import model.Create;
+import model.Departamento;
+import model.Disciplina;
+import model.Professor;
+import model.Read;
 import model.Turma;
 import java.math.BigInteger;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -35,21 +45,39 @@ public class CadastrarTurmaController implements Initializable {
      */
     
     @FXML private TextField txMaxAluno;
-    @FXML private TextField txIdDisciplina;
-    @FXML private TextField txIdProfessor;
-    @FXML private TextField txIdSala;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
     @FXML private TextField txAno;
-    @FXML private TextField txCodigoTurma;
     @FXML private ToggleGroup grupoSemestre;
     @FXML private RadioButton radioBt1;
     @FXML private RadioButton radioBt2;
+    @FXML private ComboBox<Disciplina> comboBoxDisciplina;
+    @FXML private ComboBox<Professor> comboBoxProfessor;
+    @FXML private ComboBox<?> comboBoxPredio;
+    @FXML private ComboBox<?> comboBoxSala;
     
+    
+    
+    
+    
+    
+    
+    private List<Disciplina> listDisciplinas = new ArrayList<>();
+    private ObservableList<Disciplina> obsDisciplinas;
+    
+    private List<Professor> listProfessores = new ArrayList<>();
+    private ObservableList<Professor> obsProfessores;
+    
+    private Disciplina disciplina;
+    private Professor professor;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    	
+    	carregarDisciplinas();
+    	carregarProfessores();
+    	
         btCancelar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
             abrePrincipal();
@@ -63,24 +91,39 @@ public class CadastrarTurmaController implements Initializable {
     
         
     } 
+    
+    public void carregarDisciplinas() {
+    	listDisciplinas = Read.getDisciplina();
+        obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
+        comboBoxDisciplina.setItems(obsDisciplinas);
+    }
+    
+    public void carregarProfessores() {
+    	listProfessores = Read.getProfessor();
+        obsProfessores = FXCollections.observableArrayList(listProfessores);
+        comboBoxProfessor.setItems(obsProfessores);
+        //professor = (Professor) comboBoxProfessor.getValue();
+    }
+    
     public void cadastraTurma(){
         
+    	professor = (Professor) comboBoxProfessor.getValue();
+    	disciplina = (Disciplina) comboBoxDisciplina.getValue();
+    	
         RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
         int maxAlunos = Integer.parseInt(txMaxAluno.getText());
         String semestre = radio.getText();
         String ano = txAno.getText();
-        int professorId = Integer.parseInt(txIdProfessor.getText());
-        String disciplinaId = txIdDisciplina.getText();
-        String codigoSala = txIdSala.getText();
-        String codigoTurma = txCodigoTurma.getText();
+        int professorId = professor.getUsuarioId();
+        String disciplinaId = disciplina.getcodigoDisciplina();
+        //String codigoSala = txIdSala.getText();
+        //String codigoTurma = txCodigoTurma.getText();
         
-        //Create t = new Create();
-        //t.Turma(codigoTurma, maxAlunos, ano, semestre, professorId, disciplinaId, codigoSala);
-        
-        Turma t = new Turma(codigoTurma, maxAlunos, ano, semestre, professorId, disciplinaId, codigoSala);
-        t.create();
-        abrePrincipal();
-        //Turma t = new Turma(max_alunos, semestre, ano, professor_id, disciplina_id, sala_id);       
+               
+        //Turma t = new Turma(codigoTurma, maxAlunos, ano, semestre, professorId, disciplinaId, codigoSala);
+        //t.create();
+        //abrePrincipal();
+            
         
         
     }

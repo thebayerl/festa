@@ -15,7 +15,6 @@
       <Label layoutX="99.0" layoutY="220.0" prefHeight="17.0" prefWidth="62.0" text="Professor" />
       <TextField fx:id="txMaxAluno" layoutX="177.0" layoutY="176.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Número Máximo de Alunos..." />
       <Label layoutX="116.0" layoutY="301.0" prefHeight="17.0" prefWidth="28.0" text="Sala" />
-      <TextField fx:id="txIdSala" layoutX="177.0" layoutY="297.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Sala ..." />
       <Button fx:id="btCadastrar" layoutX="402.0" layoutY="343.0" mnemonicParsing="false" text="Cadastrar" />
       <Button fx:id="btCancelar" layoutX="225.0" layoutY="343.0" mnemonicParsing="false" text="Cancelar" />
       <Label layoutX="119.0" layoutY="138.0" text="Ano" />
@@ -29,5 +28,8 @@
       <RadioButton fx:id="radioBt2" layoutX="271.0" layoutY="53.0" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
       <ComboBox fx:id="comboBoxDisciplina" layoutX="181.0" layoutY="256.0" prefHeight="25.0" prefWidth="356.0" />
       <ComboBox fx:id="comboBoxProfessor" layoutX="181.0" layoutY="216.0" prefHeight="25.0" prefWidth="356.0" />
+      <Label layoutX="116.0" layoutY="97.0" text="Prédio" />
+      <ComboBox fx:id="comboBoxPredio" layoutX="177.0" layoutY="93.0" prefHeight="25.0" prefWidth="356.0" />
+      <ComboBox fx:id="comboBoxSala" layoutX="177.0" layoutY="297.0" prefHeight="25.0" prefWidth="356.0" />
    </children>
 </AnchorPane>

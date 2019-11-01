@@ -183,6 +183,29 @@ public class Read {
 		return resultado;
 	}
 	
+	public static List<Professor> getProfessor() {
+
+		//nome = aspas(nome);
+		
+		String query = "from Professor ";
+		
+		List<Professor> resultado = null;
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
+
+		Session session = factory.getCurrentSession();
+		
+		try {		
+			session.beginTransaction();
+			resultado = session.createQuery(query).getResultList();
+			session.getTransaction().commit();
+		}
+		finally {
+			factory.close();
+		}
+	
+		return resultado;
+	}
+	
 	
 	public List<DisciplinaCurso> getDisciplinaCurso(String codigoCurso, String disciplinaId) {
 		
