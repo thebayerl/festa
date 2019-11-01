@@ -109,7 +109,7 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Disciplina> Disciplina(String id, String nome, String creditos, String departamento) {
+	public List<Disciplina> getDisciplina(String id, String nome, String creditos, String departamento) {
 
 		nome = aspas(nome);
 		id = aspas(id);
@@ -139,9 +139,7 @@ public class Read {
 		return resultado;
 	}
 	
-	public static List<Departamento> DepartamentoVazio() {
-
-		//nome = aspas(nome);
+	public static List<Departamento> getDepartamento() {
 		
 		String query = "from Departamento ";
 		
@@ -162,7 +160,31 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<DisciplinaCurso> DisciplinaCurso(String codigoCurso, String disciplinaId) {
+	public static List<Disciplina> getDisciplina() {
+
+		//nome = aspas(nome);
+		
+		String query = "from Disciplina ";
+		
+		List<Disciplina> resultado = null;
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
+
+		Session session = factory.getCurrentSession();
+		
+		try {		
+			session.beginTransaction();
+			resultado = session.createQuery(query).getResultList();
+			session.getTransaction().commit();
+		}
+		finally {
+			factory.close();
+		}
+	
+		return resultado;
+	}
+	
+	
+	public List<DisciplinaCurso> getDisciplinaCurso(String codigoCurso, String disciplinaId) {
 		
 		codigoCurso = aspas(codigoCurso);
 		disciplinaId = aspas(disciplinaId);

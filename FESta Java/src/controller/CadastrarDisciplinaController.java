@@ -41,7 +41,7 @@ public class CadastrarDisciplinaController implements Initializable {
 	@FXML private TextField txNome;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
-    @FXML private ComboBox<?> comboBoxDepartamento;
+    @FXML private ComboBox<Departamento> comboBoxDepartamento;
     @FXML private ComboBox<Integer> comboBoxCreditos;
     
     int maxCredito = 6;
@@ -86,25 +86,26 @@ public class CadastrarDisciplinaController implements Initializable {
     
 public void carregarDepartametos() {
 	
-	//listDepartamentos = Read.DepartamentoVazio();
+	listDepartamentos = Read.getDepartamento();
     obsDepartamentos = FXCollections.observableArrayList(listDepartamentos);
-    departamento = (Departamento) comboBoxDepartamento.getValue();
+    
+    comboBoxDepartamento.setItems(obsDepartamentos);
     	
     }
     
     public void cadastraDisciplina(){
-    	
+    	// TODO: verifica se todos os  campos estão selecionados
     	String nome = txNome.getText();
     	
-    	
     	int creditos = comboBoxCreditos.getValue();
-        
+            	
+    	departamento = (Departamento) comboBoxDepartamento.getValue();
         String departamentoId = departamento.getCodigoDepartamento();
         //System.out.println(departamentoId);
         Disciplina d = new Disciplina(nome, creditos, departamentoId);
         d.create();
         
-        abrePrincipal();
+        //abrePrincipal();
         
      
     }

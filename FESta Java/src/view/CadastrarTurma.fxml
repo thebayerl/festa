@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
@@ -13,7 +14,6 @@
       <Label layoutX="99.0" layoutY="260.0" prefHeight="17.0" prefWidth="62.0" text="Disciplina" />
       <Label layoutX="99.0" layoutY="220.0" prefHeight="17.0" prefWidth="62.0" text="Professor" />
       <TextField fx:id="txMaxAluno" layoutX="177.0" layoutY="176.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Número Máximo de Alunos..." />
-      <TextField fx:id="txIdDisciplina" layoutX="177.0" layoutY="256.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Disciplina ..." />
       <Label layoutX="116.0" layoutY="301.0" prefHeight="17.0" prefWidth="28.0" text="Sala" />
       <TextField fx:id="txIdSala" layoutX="177.0" layoutY="297.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Sala ..." />
       <Button fx:id="btCadastrar" layoutX="402.0" layoutY="343.0" mnemonicParsing="false" text="Cadastrar" />
@@ -27,8 +27,7 @@
          </toggleGroup>
       </RadioButton>
       <RadioButton fx:id="radioBt2" layoutX="271.0" layoutY="53.0" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
-      <TextField fx:id="txIdProfessor" layoutX="177.0" layoutY="216.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID do Professor..." />
-      <TextField fx:id="txCodigoTurma" layoutX="177.0" layoutY="92.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código da Turma..." />
-      <Label layoutX="70.0" layoutY="96.0" text="Código da Turma" />
+      <ComboBox fx:id="comboBoxDisciplina" layoutX="181.0" layoutY="256.0" prefHeight="25.0" prefWidth="356.0" />
+      <ComboBox fx:id="comboBoxProfessor" layoutX="181.0" layoutY="216.0" prefHeight="25.0" prefWidth="356.0" />
    </children>
 </AnchorPane>
