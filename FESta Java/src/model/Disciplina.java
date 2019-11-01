@@ -31,9 +31,9 @@ public class Disciplina {
 
 	public Disciplina() {}
 	
-	public Disciplina(String codigoDisciplina, String nome, int creditos, String departamento) {
+	public Disciplina(String nome, int creditos, String departamento) {
 		super();
-		this.codigoDisciplina = codigoDisciplina;
+		this.codigoDisciplina = "DASD";
 		this.nome = nome;
 		this.creditos = creditos;
 		this.departamento = departamento;

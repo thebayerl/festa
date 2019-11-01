@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 
 public class Read {
 	
-	public String aspas(String string) {
+	public static String aspas(String string) {
 		return "'" + string + "'";
 	}
 	
@@ -123,6 +123,29 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		
 		List<Disciplina> resultado = null;
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
+
+		Session session = factory.getCurrentSession();
+		
+		try {		
+			session.beginTransaction();
+			resultado = session.createQuery(query).getResultList();
+			session.getTransaction().commit();
+		}
+		finally {
+			factory.close();
+		}
+	
+		return resultado;
+	}
+	
+	public static List<Departamento> DepartamentoVazio() {
+
+		//nome = aspas(nome);
+		
+		String query = "from Departamento ";
+		
+		List<Departamento> resultado = null;
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();

@@ -5,15 +5,25 @@
  */
 package controller;
 
+import model.ComboBoxTipo;
 import model.Create;
+import model.Departamento;
 import model.Disciplina;
+import model.Read;
+
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -28,13 +38,20 @@ import view.Principal;
  */
 public class CadastrarDisciplinaController implements Initializable {
     
-    @FXML private TextField txNome;
-    @FXML private TextField txDepartamento;
-    @FXML private TextField txCreditos;
+	@FXML private TextField txNome;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
-    @FXML private TextField txCodigoDisciplina;
+    @FXML private ComboBox<?> comboBoxDepartamento;
+    @FXML private ComboBox<Integer> comboBoxCreditos;
     
+    int maxCredito = 6;
+    private List<Integer> listCreditos = new ArrayList<>();
+    private List<Departamento> listDepartamentos = new ArrayList<>();
+    private ObservableList<Integer> obsCreditos;
+    private ObservableList<Departamento> obsDepartamentos;
+    
+    private Departamento departamento;
+
     /**
      * Initializes the controller class.
      */
@@ -42,6 +59,9 @@ public class CadastrarDisciplinaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
+    	carregarCreditos();
+    	carregarDepartametos();
+    	
         btCancelar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
             abrePrincipal();
@@ -53,24 +73,39 @@ public class CadastrarDisciplinaController implements Initializable {
         });
     }
     
+    public void carregarCreditos() {
+    	
+    	for(int i = 1 ;  i <= maxCredito ; i++) {
+    		listCreditos.add(i);
+    	}
+    	
+    	obsCreditos = FXCollections.observableArrayList(listCreditos);
+    	comboBoxCreditos.setItems(obsCreditos);  
+    	
+    }
+    
+public void carregarDepartametos() {
+	
+	//listDepartamentos = Read.DepartamentoVazio();
+    obsDepartamentos = FXCollections.observableArrayList(listDepartamentos);
+    departamento = (Departamento) comboBoxDepartamento.getValue();
+    	
+    }
+    
     public void cadastraDisciplina(){
-        String nome = txNome.getText();
-        int creditos = Integer.parseInt(txCreditos.getText());
-        String departamentoId = txDepartamento.getText();
-        String codigoDisciplina = txCodigoDisciplina.getText();
+    	
+    	String nome = txNome.getText();
+    	
+    	
+    	int creditos = comboBoxCreditos.getValue();
         
-        //Create d = new Create();
-        //d.Disciplina(id, nome, creditos, departamentoId);
-        
-        
-        
-        Disciplina d = new Disciplina(codigoDisciplina, nome, creditos, departamentoId);
+        String departamentoId = departamento.getCodigoDepartamento();
+        //System.out.println(departamentoId);
+        Disciplina d = new Disciplina(nome, creditos, departamentoId);
         d.create();
         
         abrePrincipal();
         
-        
-     //   Disciplina d = new Disciplina(nome, creditos, departamento);
      
     }
     
