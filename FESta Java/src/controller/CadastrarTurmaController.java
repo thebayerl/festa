@@ -10,6 +10,7 @@ import model.Departamento;
 import model.Disciplina;
 import model.Professor;
 import model.Read;
+import model.Sala;
 import model.Turma;
 import java.math.BigInteger;
 import java.net.URL;
@@ -53,14 +54,11 @@ public class CadastrarTurmaController implements Initializable {
     @FXML private RadioButton radioBt2;
     @FXML private ComboBox<Disciplina> comboBoxDisciplina;
     @FXML private ComboBox<Professor> comboBoxProfessor;
-    @FXML private ComboBox<?> comboBoxPredio;
-    @FXML private ComboBox<?> comboBoxSala;
+    @FXML private ComboBox<String> comboBoxPredio;
+    @FXML private ComboBox<Sala> comboBoxSala;
     
-    
-    
-    
-    
-    
+    private List<String> listPredios = new ArrayList<>();
+    private ObservableList<String> obsPredios;
     
     private List<Disciplina> listDisciplinas = new ArrayList<>();
     private ObservableList<Disciplina> obsDisciplinas;
@@ -75,6 +73,7 @@ public class CadastrarTurmaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     	
+    	carregarPredios();
     	carregarDisciplinas();
     	carregarProfessores();
     	
@@ -91,6 +90,12 @@ public class CadastrarTurmaController implements Initializable {
     
         
     } 
+    
+    public void carregarPredios() {
+    	listPredios = Read.getDistinctPredio();
+    	obsPredios = FXCollections.observableArrayList(listPredios);
+    	comboBoxPredio.setItems(obsPredios);
+    }
     
     public void carregarDisciplinas() {
     	listDisciplinas = Read.getDisciplina();

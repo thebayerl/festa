@@ -469,6 +469,52 @@ public class Read {
 		return resultado;
 		
 	}
+	
+public static List<String> getDistinctPredio() {
+		
+		
+		String query = "select distinct predio from Sala";
+		
+		List<String> resultado = null;
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
+
+		Session session = factory.getCurrentSession();
+		
+		try {		
+			session.beginTransaction();
+			resultado = session.createQuery(query).getResultList();
+			session.getTransaction().commit();
+		}
+		finally {
+			factory.close();
+		}
+	
+		return resultado;
+		
+	}
+
+public static List<String> getSalaPredio() {
+	
+	
+	String query = "select codigoSala from Sala where disponivel = 1 and predio = 'nce';";
+	
+	List<String> resultado = null;
+	SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
+
+	Session session = factory.getCurrentSession();
+	
+	try {		
+		session.beginTransaction();
+		resultado = session.createQuery(query).getResultList();
+		session.getTransaction().commit();
+	}
+	finally {
+		factory.close();
+	}
+
+	return resultado;
+	
+}
 
 	
 }
