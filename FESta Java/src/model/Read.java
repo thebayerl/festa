@@ -11,7 +11,7 @@ public class Read {
 		return "'" + string + "'";
 	}
 	
-	public String add(String atributo, String valor) {
+	public static String add(String atributo, String valor) {
 		
 		if(valor != null || valor == "-1") {
 			return  atributo + " = " + valor + " AND ";
@@ -82,7 +82,7 @@ public class Read {
 		
 	}
 	
-	public List<Curso> Curso(String codigoCurso, String nome) {
+	public static List<Curso> getCurso(String codigoCurso, String nome) {
 		
 		codigoCurso = aspas(codigoCurso);
 		nome = aspas(nome);
@@ -109,7 +109,7 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Disciplina> getDisciplina(String id, String nome, String creditos, String departamento) {
+	public static List<Disciplina> getDisciplina(String id, String nome, String creditos, String departamento) {
 
 		nome = aspas(nome);
 		id = aspas(id);
@@ -207,7 +207,7 @@ public class Read {
 	}
 	
 	
-	public List<DisciplinaCurso> getDisciplinaCurso(String codigoCurso, String disciplinaId) {
+	public static List<DisciplinaCurso> getDisciplinaCurso(String codigoCurso, String disciplinaId) {
 		
 		codigoCurso = aspas(codigoCurso);
 		disciplinaId = aspas(disciplinaId);
@@ -313,7 +313,7 @@ public class Read {
 	
 	}
 	
-	public List<Professor> Professor(String usuarioId, String nome, String matricula, String nivelFormacao,  String codigoCurso) {
+	public static List<Professor> getProfessor(String usuarioId, String nome, String matricula, String nivelFormacao,  String codigoCurso) {
 		
 		nome = aspas(nome);
 		matricula = aspas(matricula);
@@ -345,7 +345,7 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<ProfessorCapacidade> ProfessorCapacidade(String professorId, String disciplinaId) {
+	public static List<ProfessorCapacidade> getProfessorCapacidade(String professorId, String disciplinaId) {
 		
 		disciplinaId = aspas(disciplinaId);
 		String query = "from ProfessorCapacidade where ";
@@ -371,7 +371,7 @@ public class Read {
 		
 	}
 	
-	public List<Sala> Sala( String codigoSala, String capacidade, String predio) {
+	public static List<Sala> getSala( String codigoSala, String capacidade, String predio, String disponivel) {
 		
 		codigoSala = aspas(codigoSala);
 		predio = aspas(predio);
@@ -380,6 +380,7 @@ public class Read {
 		query += add("codigoCurso",codigoSala);
 		query += add("capacidade",capacidade);
 		query += add("predio",predio);
+		query += add("disponivel",disponivel);
 		query = query.substring(0, query.length() - 4);
 		
 		List<Sala> resultado = null;
@@ -492,29 +493,6 @@ public static List<String> getDistinctPredio() {
 		return resultado;
 		
 	}
-
-public static List<String> getSalaPredio() {
-	
-	
-	String query = "select codigoSala from Sala where disponivel = 1 and predio = 'nce';";
-	
-	List<String> resultado = null;
-	SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
-
-	Session session = factory.getCurrentSession();
-	
-	try {		
-		session.beginTransaction();
-		resultado = session.createQuery(query).getResultList();
-		session.getTransaction().commit();
-	}
-	finally {
-		factory.close();
-	}
-
-	return resultado;
-	
-}
 
 	
 }
