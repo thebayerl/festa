@@ -13,7 +13,8 @@ public class Read {
 	
 	public static String add(String atributo, String valor) {
 		
-		if(valor != null || valor == "-1") {
+		
+		if(valor != null && valor.compareTo("'null'") != 0) {
 			return  atributo + " = " + valor + " AND ";
 		}
 		return "";
@@ -142,6 +143,8 @@ public static List<Curso> getCurso() {
 		query += add("nome", nome);
 		query += add("departamento", departamento);
 		query = query.substring(0, query.length() - 4);
+		
+		System.out.println(query);
 		
 		List<Disciplina> resultado = null;
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
