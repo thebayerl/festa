@@ -37,10 +37,10 @@ public class Turma {
 	
 	public Turma(){}
 	
-	public Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, String disciplinaId,
+	public Turma(int maxAlunos, String ano, String semestre, int professorId, String disciplinaId,
 			String codigoSala) {
 		super();
-		this.codigoTurma = codigoTurma;
+		this.codigoTurma = "dsadsada";
 		this.maxAlunos = maxAlunos;
 		this.ano = ano;
 		this.semestre = semestre;

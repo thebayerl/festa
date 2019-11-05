@@ -8,26 +8,31 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarTurmaController">
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="709.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarTurmaController">
     <children>
       <Label layoutX="58.0" layoutY="180.0" text="Número de Alunos" />
       <Label layoutX="99.0" layoutY="260.0" prefHeight="17.0" prefWidth="62.0" text="Disciplina" />
       <Label layoutX="99.0" layoutY="220.0" prefHeight="17.0" prefWidth="62.0" text="Professor" />
       <TextField fx:id="txMaxAluno" layoutX="177.0" layoutY="176.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Número Máximo de Alunos..." />
       <Label layoutX="116.0" layoutY="301.0" prefHeight="17.0" prefWidth="28.0" text="Sala" />
-      <TextField fx:id="txIdSala" layoutX="177.0" layoutY="297.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o ID da Sala ..." />
-      <Button fx:id="btCadastrar" layoutX="402.0" layoutY="343.0" mnemonicParsing="false" text="Cadastrar" />
-      <Button fx:id="btCancelar" layoutX="225.0" layoutY="343.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="btCadastrar" layoutX="401.0" layoutY="412.0" mnemonicParsing="false" text="Cadastrar" />
+      <Button fx:id="btCancelar" layoutX="226.0" layoutY="412.0" mnemonicParsing="false" text="Cancelar" />
       <Label layoutX="119.0" layoutY="138.0" text="Ano" />
-      <Label layoutX="95.0" layoutY="53.0" text="Semestre" />
+      <Label layoutX="92.0" layoutY="26.0" text="Semestre" />
       <TextField fx:id="txAno" layoutX="177.0" layoutY="134.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Ano..." />
-      <RadioButton fx:id="radioBt1" layoutX="177.0" layoutY="53.0" mnemonicParsing="false" selected="true" text="1º">
+      <RadioButton fx:id="radioBt1" layoutX="177.0" layoutY="26.0" mnemonicParsing="false" selected="true" text="1º">
          <toggleGroup>
             <ToggleGroup fx:id="grupoSemestre" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="radioBt2" layoutX="271.0" layoutY="53.0" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
-      <ComboBox fx:id="comboBoxDisciplina" layoutX="181.0" layoutY="256.0" prefHeight="25.0" prefWidth="356.0" />
-      <ComboBox fx:id="comboBoxProfessor" layoutX="181.0" layoutY="216.0" prefHeight="25.0" prefWidth="356.0" />
+      <RadioButton fx:id="radioBt2" layoutX="271.0" layoutY="26.0" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
+      <ComboBox fx:id="comboBoxDisciplina" layoutX="181.0" layoutY="256.0" onAction="#SelecionarDisciplina" prefHeight="25.0" prefWidth="356.0" />
+      <ComboBox fx:id="comboBoxProfessor" layoutX="181.0" layoutY="216.0" onAction="#selecionarProfessor" prefHeight="25.0" prefWidth="356.0" />
+      <Label layoutX="113.0" layoutY="97.0" text="Prédio" />
+      <ComboBox fx:id="comboBoxPredio" layoutX="177.0" layoutY="93.0" onAction="#selecionarPredio" prefHeight="25.0" prefWidth="356.0" />
+      <ComboBox fx:id="comboBoxSala" layoutX="177.0" layoutY="297.0" onAction="#SelecionarSala" prefHeight="25.0" prefWidth="356.0" />
+      <Label layoutX="-371.0" layoutY="-135.0" text="Label" />
+      <Label layoutX="116.0" layoutY="59.0" text="Curso" />
+      <ComboBox fx:id="comboBoxCurso" layoutX="177.0" layoutY="55.0" onAction="#SelecionarCurso" prefHeight="25.0" prefWidth="356.0" />
    </children>
 </AnchorPane>

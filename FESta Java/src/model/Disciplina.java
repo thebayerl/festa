@@ -143,8 +143,7 @@ public class Disciplina {
 
 	@Override
 	public String toString() {
-		return "Disciplina [codigoDisciplina=" + codigoDisciplina + ", nome=" + nome + ", creditos=" + creditos + ", departamento =" + departamento
-				+ "]";
+		return this.nome;
 	}
 
 }

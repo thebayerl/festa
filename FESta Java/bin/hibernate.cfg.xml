@@ -31,6 +31,8 @@
 	    <mapping class="model.Professor"/>
 	    <mapping class="model.Turma"/>
 	    <mapping class="model.Disciplina"/>
+	    <mapping class="model.Departamento"/>
+	    <mapping class="model.Sala"/>
  
     </session-factory>
 

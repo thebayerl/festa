@@ -148,8 +148,7 @@ public class Professor {
 
 	@Override
 	public String toString() {
-		return "Professor [usuarioId=" + usuarioId + ", nome=" + nome + ", matricula=" + matricula + ", nivelFormacao="
-				+ nivelFormacao + ", codigoCurso=" + cursoId + "]";
+		return this.nome;
 	}
 	
 }
