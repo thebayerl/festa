@@ -109,6 +109,27 @@ public class Read {
 		return resultado;
 	}
 	
+public static List<Curso> getCurso() {
+		
+		String query = "from Curso ";
+
+		List<Curso> resultado = null;
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
+
+		Session session = factory.getCurrentSession();
+		
+		try {		
+			session.beginTransaction();
+			resultado = session.createQuery(query).getResultList();
+			session.getTransaction().commit();
+		}
+		finally {
+			factory.close();
+		}
+	
+		return resultado;
+	}
+	
 	public static List<Disciplina> getDisciplina(String id, String nome, String creditos, String departamento) {
 
 		nome = aspas(nome);

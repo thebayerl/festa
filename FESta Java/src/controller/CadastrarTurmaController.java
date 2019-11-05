@@ -145,7 +145,7 @@ public class CadastrarTurmaController implements Initializable {
     } 
     
     public void carregarCursos() {
-    	listCursos = Read.getCurso(null, null);
+    	listCursos = Read.getCurso();
     	obsCursos = FXCollections.observableArrayList(listCursos);
     	comboBoxCurso.setItems(obsCursos);
     }
@@ -158,14 +158,14 @@ public class CadastrarTurmaController implements Initializable {
     
     public void carregarDisciplinas() {
     	
-    	listDisciplinas = Read.getDisciplina(null, null, null, null);
+    	listDisciplinas = Read.getDisciplina();
         obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
         comboBoxDisciplina.setItems(obsDisciplinas);
     }
     
     public void carregarProfessores() {
     	
-    	listProfessores = Read.getProfessor(null, null, null, null, null);
+    	listProfessores = Read.getProfessor();
         obsProfessores = FXCollections.observableArrayList(listProfessores);
         comboBoxProfessor.setItems(obsProfessores);
         //professor = (Professor) comboBoxProfessor.getValue();
