@@ -97,6 +97,10 @@ public class Curso {
 		}
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+	
 	public String getcodigoCurso() {
 		return codigoCurso;
 	}

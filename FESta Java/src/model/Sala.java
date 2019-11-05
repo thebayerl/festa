@@ -23,16 +23,16 @@ public class Sala {
 	@Column(name="predio")
 	private String predio;
 	
-	@Column(name="disponivel")
-	private boolean disponivel;
-	
 
+	public Sala() {
+		
+	}
+	
 	public Sala(String codigoSala, int capacidade, String predio) {
 		super();
 		this.codigoSala = codigoSala;
 		this.capacidade = capacidade;
 		this.predio = predio;
-		this.disponivel = true;
 	}
 
 	public void create() {
@@ -122,14 +122,6 @@ public class Sala {
 
 	public void setPredio(String predio) {
 		this.predio = predio;
-	}
-	
-	public boolean getDisponivel() {
-		return disponivel;
-	}
-
-	public void setDisponivel(boolean disponivel) {
-		this.disponivel = disponivel;
 	}
 
 	@Override

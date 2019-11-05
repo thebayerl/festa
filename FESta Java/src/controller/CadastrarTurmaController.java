@@ -55,6 +55,26 @@ public class CadastrarTurmaController implements Initializable {
 	private String predio;
 	private Professor professor;
 	
+	String codigoCurso = null;
+	String nomeCurso = null;
+	
+	String disciplinaId = null;
+	String nomeDisciplina = null;
+	String creditos = null;
+	String departamento = null;
+	
+	String professorId = null; 
+	String nomeProfessor = null;
+	String matricula = null;
+	String nivelFormacao = null;
+	
+	String codigoSala = null;
+	String capacidade = null;
+	String predioCB = null;
+	
+	String cursoId = null;
+	
+	
 	
     @FXML private TextField txMaxAluno;
     @FXML private Button btCadastrar;
@@ -74,6 +94,10 @@ public class CadastrarTurmaController implements Initializable {
     void SelecionarCurso() {
     	
     	curso = comboBoxCurso.getSelectionModel().getSelectedItem();
+    	codigoCurso = curso.getcodigoCurso();
+    	nomeCurso = curso.getnome();
+    	carregarDisciplinas();
+    	//carregarProfessores();
     	
     }
 
@@ -81,14 +105,28 @@ public class CadastrarTurmaController implements Initializable {
     void SelecionarDisciplina() {
     	
     	disciplina = comboBoxDisciplina.getSelectionModel().getSelectedItem();
+    	disciplinaId = String.valueOf(disciplina.getId());
+    	nomeDisciplina = disciplina.getNome();
+    	creditos = String.valueOf(disciplina.getCreditos());
+    	departamento = disciplina.getDepartamento();
     	
+    	carregarCursos();
+    	carregarProfessores();
     	
     }
 
     @FXML
     void SelecionarSala() {
-    	
+
     	sala = comboBoxSala.getSelectionModel().getSelectedItem();
+    	codigoSala = sala.getCodigoSala();
+    	capacidade = String.valueOf(sala.getCapacidade());
+    	predio = sala.getPredio();
+    	
+    	//carregarPredios();
+    	
+    	
+    	
 
     }
     
@@ -96,12 +134,23 @@ public class CadastrarTurmaController implements Initializable {
     void selecionarPredio() {
     	
     	predio = comboBoxPredio.getSelectionModel().getSelectedItem();
+    	
+    	
+    	//carregarSalas();
     }
 
     @FXML
     void selecionarProfessor() {
     	
-    	professor = comboBoxProfessor.getSelectionModel().getSelectedItem();;
+    	professor = comboBoxProfessor.getSelectionModel().getSelectedItem();
+    	professorId = String.valueOf(professor.getUsuarioId());
+    	nomeProfessor = professor.getNome();
+    	cursoId = String.valueOf(professor.getCursoId());
+    	
+    	carregarCursos();
+    	carregarDisciplinas();
+    	
+    	
     }
 
     private List<Curso> listCursos = new ArrayList<>();
@@ -128,7 +177,7 @@ public class CadastrarTurmaController implements Initializable {
     	carregarPredios();
     	carregarDisciplinas();
     	carregarProfessores();
-    	//carregarSalas();
+    	carregarSalas();
     	
         btCancelar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
@@ -142,10 +191,10 @@ public class CadastrarTurmaController implements Initializable {
         
     
         
-    } 
+    }
     
     public void carregarCursos() {
-    	listCursos = Read.getCurso(null, null);
+    	listCursos = Read.getCurso(codigoCurso, nomeCurso);
     	obsCursos = FXCollections.observableArrayList(listCursos);
     	comboBoxCurso.setItems(obsCursos);
     }
@@ -158,14 +207,14 @@ public class CadastrarTurmaController implements Initializable {
     
     public void carregarDisciplinas() {
     	
-    	listDisciplinas = Read.getDisciplina(null, null, null, null);
+    	listDisciplinas = Read.getDisciplina(disciplinaId, nomeDisciplina, creditos, departamento);
         obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
         comboBoxDisciplina.setItems(obsDisciplinas);
     }
     
     public void carregarProfessores() {
     	
-    	listProfessores = Read.getProfessor(null, null, null, null, null);
+    	listProfessores = Read.getProfessor(professorId, nomeProfessor, matricula, nivelFormacao,  codigoCurso);
         obsProfessores = FXCollections.observableArrayList(listProfessores);
         comboBoxProfessor.setItems(obsProfessores);
         //professor = (Professor) comboBoxProfessor.getValue();
@@ -175,7 +224,7 @@ public class CadastrarTurmaController implements Initializable {
     	
     	//String disponibilidade = "true";
     	
-    	listSalas = Read.getSala(null, null, null, null);
+    	listSalas = Read.getSala( codigoSala, capacidade, predioCB);
     	obsSalas = FXCollections.observableArrayList(listSalas);
     	comboBoxSala.setItems(obsSalas);
     }

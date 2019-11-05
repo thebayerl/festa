@@ -109,6 +109,10 @@ public class Disciplina {
 		}
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+	
 	public String getcodigoDisciplina() {
 		return codigoDisciplina;
 	}

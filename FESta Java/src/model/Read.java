@@ -88,7 +88,7 @@ public class Read {
 		codigoCurso = aspas(codigoCurso);
 		nome = aspas(nome);
 		
-		String query = "from Curso where ";
+		String query = "from Curso where";
 		query += add("codigoCurso",codigoCurso);
 		query += add("nome",nome);
 		query = query.substring(0, query.length() - 4);
@@ -133,17 +133,22 @@ public static List<Curso> getCurso() {
 	
 	public static List<Disciplina> getDisciplina(String id, String nome, String creditos, String departamento) {
 
-		nome = aspas(nome);
-		id = aspas(id);
-		departamento = aspas(departamento);
-		
 		String query = "from Disciplina where ";
-		query += add("id",id);
-		query += add("creditos",creditos);
-		query += add("nome", nome);
-		query += add("departamento", departamento);
-		query = query.substring(0, query.length() - 4);
 		
+		if(id!= null ) {
+		
+			nome = aspas(nome);
+			id = aspas(id);
+			departamento = aspas(departamento);
+			
+			query += add("id",id);
+			query += add("creditos",creditos);
+			query += add("nome", nome);
+			query += add("departamento", departamento);
+			query = query.substring(0, query.length() - 4);
+		} else {
+			query = query.substring(0, query.length() - 6);
+		}
 		System.out.println(query);
 		
 		List<Disciplina> resultado = null;
@@ -184,28 +189,7 @@ public static List<Curso> getCurso() {
 		return resultado;
 	}
 	
-	public static List<Disciplina> getDisciplina() {
-
-		//nome = aspas(nome);
-		
-		String query = "from Disciplina ";
-		
-		List<Disciplina> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
-
-		Session session = factory.getCurrentSession();
-		
-		try {		
-			session.beginTransaction();
-			resultado = session.createQuery(query).getResultList();
-			session.getTransaction().commit();
-		}
-		finally {
-			factory.close();
-		}
 	
-		return resultado;
-	}
 	
 	public static List<Professor> getProfessor() {
 
@@ -231,14 +215,14 @@ public static List<Curso> getCurso() {
 	}
 	
 	
-	public static List<DisciplinaCurso> getDisciplinaCurso(String codigoCurso, String disciplinaId) {
+	public static List<DisciplinaCurso> getDisciplinaCurso(String cursoId, String disciplinaId) {
 		
-		codigoCurso = aspas(codigoCurso);
+		cursoId = aspas(cursoId);
 		disciplinaId = aspas(disciplinaId);
 		
 		String query = "from DisciplinaCurso where ";
 		query += add("disciplinaId",disciplinaId);
-		query += add("codigoCurso",codigoCurso);
+		query += add("codigoCurso",cursoId);
 		query = query.substring(0, query.length() - 4);
 		
 		List<DisciplinaCurso> resultado = null;
@@ -395,18 +379,21 @@ public static List<Curso> getCurso() {
 		
 	}
 	
-	public static List<Sala> getSala( String codigoSala, String capacidade, String predio, String disponivel) {
-		
-		codigoSala = aspas(codigoSala);
-		predio = aspas(predio);
+	public static List<Sala> getSala( String codigoSala, String capacidade, String predio) {
 		
 		String query = "from Sala where ";
-		query += add("codigoCurso",codigoSala);
-		query += add("capacidade",capacidade);
-		query += add("predio",predio);
-		query += add("disponivel",disponivel);
-		query = query.substring(0, query.length() - 4);
-		
+		if(codigoSala != null && capacidade != null && predio != null) {
+
+			codigoSala = aspas(codigoSala);
+			predio = aspas(predio);
+			query += add("codigoCurso",codigoSala);
+			query += add("capacidade",capacidade);
+			query += add("predio",predio);
+			query = query.substring(0, query.length() - 4);
+			
+		} else {
+			query = query.substring(0, query.length() - 6);
+		}
 		List<Sala> resultado = null;
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
 

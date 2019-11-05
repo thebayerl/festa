@@ -138,12 +138,12 @@ public class Professor {
 		this.usuarioId = usuarioId;
 	}
 
-	public int getcodigoCurso() {
+	public int getCursoId() {
 		return cursoId;
 	}
 
-	public void setcodigoCurso(int codigoCurso) {
-		this.cursoId = codigoCurso;
+	public void setcursoId(int cursoId) {
+		this.cursoId = cursoId;
 	}
 
 	@Override
