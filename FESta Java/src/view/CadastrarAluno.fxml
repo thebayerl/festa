@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,9 +16,9 @@
       <TextField fx:id="txNascimento" layoutX="196.0" layoutY="180.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Data de Nascimento" />
       <Label layoutX="121.0" layoutY="96.0" text="Matrícula" />
       <TextField fx:id="txMatricula" layoutX="196.0" layoutY="92.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
-      <Label layoutX="93.0" layoutY="275.0" text="Código do Curso" />
-      <TextField fx:id="txCodigoCurso" layoutX="196.0" layoutY="271.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código do Curso..." />
+      <Label layoutX="114.0" layoutY="275.0" text="Curso" />
       <Label layoutX="84.0" layoutY="232.0" text="Data de Ingresso" />
       <TextField fx:id="txIngresso" layoutX="196.0" layoutY="228.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a data de ingresso na Universidade..." />
+      <ComboBox fx:id="comboBoxCurso" layoutX="196.0" layoutY="271.0" prefHeight="25.0" prefWidth="356.0" />
    </children>
 </AnchorPane>

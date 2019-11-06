@@ -100,6 +100,11 @@ public class Sala {
 		}
 	}
 
+	
+	public int getId() {
+		return id;
+	}
+	
 	public String getCodigoSala() {
 		return codigoSala;
 	}

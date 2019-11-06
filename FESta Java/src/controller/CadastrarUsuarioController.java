@@ -8,7 +8,9 @@ package controller;
 import model.Aluno;
 import model.ComboBoxTipo;
 import model.Create;
+import model.Curso;
 import model.Professor;
+import model.Read;
 import model.Usuario;
 import java.net.URL;
 import java.util.ArrayList;
@@ -65,8 +67,10 @@ public class CadastrarUsuarioController implements Initializable {
     @FXML  private AnchorPane paneProfessor;
     @FXML  private AnchorPane paneAluno;
     @FXML  private ComboBox<ComboBoxTipo> comboBoxUsers;
+    @FXML private ComboBox<Curso> comboBoxCurso;
     
-    
+    private List<Curso> listCursos = new ArrayList<>();
+    private ObservableList<Curso> obsCursos;
     
     private List<ComboBoxTipo> tipos = new ArrayList<>();
     private ObservableList<ComboBoxTipo> obsTipos;
@@ -85,6 +89,7 @@ public class CadastrarUsuarioController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     	
     	carregarTipos();
+    	carregarCursos();
     	    	
         btCancelar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
@@ -101,7 +106,7 @@ public class CadastrarUsuarioController implements Initializable {
         	} else {	
         		cadastraAluno();
         	}
-        	abrePrincipal();
+        	//abrePrincipal();
             
         });
         
@@ -141,6 +146,22 @@ public class CadastrarUsuarioController implements Initializable {
 	}
     
     
+    public void carregarCursos() {
+    	listCursos.clear();
+    	comboBoxCurso.getItems().clear();
+    	//System.out.println(cursoId + " " + codigoCurso + " " + nomeCurso );
+    	listCursos = Read.getCurso(null, null, null);
+    	//for(Curso elemento: listCursos){
+    	//	   System.out.println(elemento.getnome());
+    	//}
+    	if(obsCursos != null) {
+    		obsCursos.clear();
+    	}
+    	obsCursos = FXCollections.observableArrayList(listCursos);
+    	//comboBoxCurso.getItems().clear();
+    	comboBoxCurso.setItems(obsCursos);
+    }
+    
     // método para cadastrar usuário
     public void cadastraUsuario(){
         
@@ -179,11 +200,14 @@ public class CadastrarUsuarioController implements Initializable {
     	String dataNascimento = txNascimento.getText();
     	String nome = txNomeAluno.getText();
     	String dataIngresso = txIngresso.getText();
-    	int cursoId = Integer.parseInt(txCodigoCursoAluno.getText());    	
+    	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
+    	int cursoId = curso.getId();
+    	//int cursoId = Integer.parseInt(txCodigoCursoAluno.getText());    	
     	
         a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, cursoId);
         a.create();
-        abrePrincipal();
+        System.out.println("cadastreiiiiiiiiiiiiiiii");
+        //abrePrincipal();
     }
     
     public void cadastraProfessor(){
@@ -191,15 +215,17 @@ public class CadastrarUsuarioController implements Initializable {
     	String nome = txNomeProfessor.getText();
     	String matricula = txMatriculaProfessor.getText();
     	String nivelFormacao = txFormacao.getText();
-    	int codigoCurso = Integer.parseInt(txCodigoCursoProfessor.getText());
+    	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
+    	int cursoId = curso.getId();
     	//final String sql = "SELECT max( p.id ) FROM Professor p";
     	//Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
     	        
     	//int usuarioId = (int) lastId;
     	System.out.println("usuario id: " + usuarioId);
-    	p = new Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
+    	p = new Professor(usuarioId, nome, matricula, nivelFormacao, cursoId);
         p.create();
-    	abrePrincipal();
+        System.out.println("cadastreiiiiiiiiiiiiiiii");
+    	//abrePrincipal();
     }
     
     public void abrePrincipal(){

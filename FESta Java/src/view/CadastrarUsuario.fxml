@@ -18,37 +18,35 @@
       <PasswordField fx:id="psSenha" layoutX="293.0" layoutY="153.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite sua Senha ..." />
       <Label layoutX="228.0" layoutY="302.0" prefHeight="17.0" prefWidth="28.0" text="CPF" />
       <TextField fx:id="txCPF" layoutX="293.0" layoutY="298.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite seu CPF ..." />
-      <Button fx:id="btCadastrar" layoutX="521.0" layoutY="561.0" mnemonicParsing="false" text="Cadastrar" />
-      <Button fx:id="btCancelar" layoutX="351.0" layoutY="561.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="btCadastrar" layoutX="513.0" layoutY="603.0" mnemonicParsing="false" text="Cadastrar" />
+      <Button fx:id="btCancelar" layoutX="333.0" layoutY="603.0" mnemonicParsing="false" text="Cancelar" />
       <Label layoutX="221.0" layoutY="205.0" text="Senha" />
       <PasswordField fx:id="psSenhaConf" layoutX="293.0" layoutY="201.0" prefHeight="25.0" prefWidth="356.0" promptText="Confirme sua Senha ..." />
       <Accordion layoutX="680.0" layoutY="110.0" />
-      <AnchorPane fx:id="paneProfessor" layoutX="174.0" layoutY="332.0" prefHeight="203.0" prefWidth="512.0">
+      <AnchorPane fx:id="paneProfessor" layoutX="187.0" layoutY="374.0" prefHeight="134.0" prefWidth="512.0">
          <children>
             <Label layoutX="54.0" layoutY="63.0" text="Nome" />
-            <TextField fx:id="txNomeProfessor" layoutX="121.0" layoutY="59.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Professor..." />
+            <TextField fx:id="txNomeProfessor" layoutX="111.0" layoutY="59.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Professor..." />
             <Label layoutY="106.0" text="Nivel de Formação" />
-            <TextField fx:id="txFormacao" layoutX="121.0" layoutY="102.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nivel de Formação..." />
+            <TextField fx:id="txFormacao" layoutX="111.0" layoutY="102.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nivel de Formação..." />
             <Label layoutX="46.0" layoutY="18.0" text="Matrícula" />
-            <TextField fx:id="txMatriculaProfessor" layoutX="121.0" layoutY="14.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
-            <Label layoutX="9.0" layoutY="154.0" text="Código do Curso" />
-            <TextField fx:id="txCodigoCursoProfessor" layoutX="121.0" layoutY="150.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código do Curso..." />
+            <TextField fx:id="txMatriculaProfessor" layoutX="111.0" layoutY="14.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="paneAluno" layoutX="139.0" layoutY="332.0" prefHeight="229.0" prefWidth="547.0" visible="false">
+      <AnchorPane fx:id="paneAluno" layoutX="141.0" layoutY="356.0" prefHeight="204.0" prefWidth="547.0" visible="false">
          <children>
-            <TextField fx:id="txMatriculaAluno" layoutX="156.0" layoutY="13.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
-            <Label layoutX="89.0" layoutY="62.0" text="Nome" />
-            <TextField fx:id="txNomeAluno" layoutX="156.0" layoutY="58.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Aluno..." />
-            <Label layoutX="35.0" layoutY="105.0" text="Data de Nascimento" />
-            <TextField fx:id="txNascimento" layoutX="156.0" layoutY="101.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Data de Nascimento" />
-            <Label layoutX="81.0" layoutY="17.0" text="Matrícula" />
-            <Label layoutX="53.0" layoutY="196.0" text="Código do Curso" />
-            <TextField fx:id="txCodigoCursoAluno" layoutX="156.0" layoutY="192.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Código do Curso..." />
-            <Label layoutX="44.0" layoutY="153.0" text="Data de Ingresso" />
-            <TextField fx:id="txIngresso" layoutX="156.0" layoutY="149.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a data de ingresso na Universidade..." />
+            <TextField fx:id="txMatriculaAluno" layoutX="156.0" layoutY="35.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
+            <Label layoutX="89.0" layoutY="84.0" text="Nome" />
+            <TextField fx:id="txNomeAluno" layoutX="156.0" layoutY="80.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Aluno..." />
+            <Label layoutX="35.0" layoutY="127.0" text="Data de Nascimento" />
+            <TextField fx:id="txNascimento" layoutX="156.0" layoutY="123.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Data de Nascimento" />
+            <Label layoutX="81.0" layoutY="39.0" text="Matrícula" />
+            <Label layoutX="44.0" layoutY="175.0" text="Data de Ingresso" />
+            <TextField fx:id="txIngresso" layoutX="156.0" layoutY="171.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a data de ingresso na Universidade..." />
          </children>
       </AnchorPane>
       <ComboBox fx:id="comboBoxUsers" layoutX="299.0" layoutY="43.0" onAction="#selecionarTipo" prefHeight="25.0" prefWidth="342.0" />
+      <ComboBox fx:id="comboBoxCurso" layoutX="299.0" layoutY="343.0" prefHeight="25.0" prefWidth="356.0" />
+      <Label layoutX="233.0" layoutY="347.0" text="Curso" />
    </children>
 </AnchorPane>

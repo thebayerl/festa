@@ -383,7 +383,10 @@ public static List<Curso> getCurso() {
 	public static List<Sala> getSala( String codigoSala, String capacidade, String predio) {
 		
 		String query = "from Sala where ";
-		if(codigoSala != null && capacidade != null && predio != null) {
+		System.out.println("PREDIO: " + predio);
+		
+		if(codigoSala != null || capacidade != null || predio != null) {
+			
 
 			codigoSala = aspas(codigoSala);
 			predio = aspas(predio);
@@ -395,6 +398,8 @@ public static List<Curso> getCurso() {
 		} else {
 			query = query.substring(0, query.length() - 6);
 		}
+		
+		System.out.println(query);
 		List<Sala> resultado = null;
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
 

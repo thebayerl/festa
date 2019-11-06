@@ -33,12 +33,12 @@ public class Turma {
 	private String disciplinaId;
 	
 	@Column(name="sala_id")
-	private String codigoSala;
+	private int salaId;
 	
 	public Turma(){}
 	
 	public Turma(int maxAlunos, String ano, String semestre, int professorId, String disciplinaId,
-			String codigoSala) {
+			int salaId) {
 		super();
 		this.codigoTurma = "dsadsada";
 		this.maxAlunos = maxAlunos;
@@ -46,7 +46,7 @@ public class Turma {
 		this.semestre = semestre;
 		this.professorId = professorId;
 		this.disciplinaId = disciplinaId;
-		this.codigoSala = codigoSala;
+		this.salaId = salaId;
 	}
 
 	public void create() {
@@ -179,12 +179,12 @@ public class Turma {
 		this.disciplinaId = disciplinaId;
 	}
 
-	public String getcodigoSala() {
-		return codigoSala;
+	public int getsalaId() {
+		return salaId;
 	}
 
-	public void setcodigoSala(String codigoSala) {
-		this.codigoSala = codigoSala;
+	public void setsalaId(int salaId) {
+		this.salaId = salaId;
 	}
 
 	@Override
