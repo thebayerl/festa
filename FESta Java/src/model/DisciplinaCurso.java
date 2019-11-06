@@ -1,6 +1,9 @@
 package model;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
@@ -9,11 +12,13 @@ import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name="disciplina_curso")
-public class DisciplinaCurso {
+public class DisciplinaCurso implements Serializable {
 	
-	@Column(name="codigo_curso")
-	private String codigoCurso;
+	@Id
+	@Column(name="curso_id")
+	private String cursoId;
 	
+	@Id
 	@Column(name="disciplina_id")
 	private String disciplinaId;
 	
@@ -37,8 +42,8 @@ public class DisciplinaCurso {
 				erro = true;
 			}
 			
-			if(session.get(Curso.class, codigoCurso) == null) {
-				System.out.println("Curso com codigoCurso = " + codigoCurso + " já existente\n");
+			if(session.get(Curso.class, cursoId) == null) {
+				System.out.println("Curso com codigoCurso = " + cursoId + " já existente\n");
 				erro = true;
 			}
 			
@@ -90,12 +95,12 @@ public class DisciplinaCurso {
 		}
 	}
 
-	public String getCodigoCurso() {
-		return codigoCurso;
+	public String getCursoId() {
+		return cursoId;
 	}
 
-	public void setCodigoCurso(String codigoCurso) {
-		this.codigoCurso = codigoCurso;
+	public void setCodigoCurso(String cursoId) {
+		this.cursoId = cursoId;
 	}
 
 	public String getDisciplinaId() {
@@ -108,7 +113,7 @@ public class DisciplinaCurso {
 
 	@Override
 	public String toString() {
-		return "DisciplinaCurso [codigoCurso=" + codigoCurso + ", disciplinaId=" + disciplinaId + "]";
+		return "DisciplinaCurso [codigoCurso=" + cursoId + ", disciplinaId=" + disciplinaId + "]";
 	}
 
 	
