@@ -149,7 +149,8 @@ public class CadastrarTurmaController implements Initializable {
     	professorId = String.valueOf(professor.getUsuarioId());
     	nomeProfessor = professor.getNome();
     	String cursoIdX = String.valueOf(professor.getCursoId());
-     	if(cursoId != null && cursoId.compareTo(cursoIdX) != 0 ) {
+     	if((cursoId != null && cursoId.compareTo(cursoIdX) != 0) || cursoId == null ) {
+     		System.out.println("cursoIdX: " + cursoIdX);
      		cursoId = cursoIdX;
     		carregarCursos();
     		
@@ -233,12 +234,17 @@ public class CadastrarTurmaController implements Initializable {
     
     public void carregarCursos() {
     	listCursos.clear();
+    	comboBoxCurso.getItems().clear();
+    	System.out.println(cursoId + " " + codigoCurso + " " + nomeCurso );
     	listCursos = Read.getCurso(cursoId, codigoCurso, nomeCurso);
+    	for(Curso elemento: listCursos){
+    		   System.out.println(elemento.getnome());
+    		}
     	if(obsCursos != null) {
     		obsCursos.clear();
     	}
     	obsCursos = FXCollections.observableArrayList(listCursos);
-    	comboBoxCurso.getItems().clear();
+    	//comboBoxCurso.getItems().clear();
     	comboBoxCurso.setItems(obsCursos);
     }
     

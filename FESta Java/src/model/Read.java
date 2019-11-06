@@ -88,8 +88,8 @@ public class Read {
 		codigoCurso = aspas(codigoCurso);
 		nome = aspas(nome);
 		
-		String query = "from Curso where";
-		query += add("cursoId",cursoId);
+		String query = "from Curso where ";
+		query += add("id",cursoId);
 		query += add("codigoCurso",codigoCurso);
 		query += add("nome",nome);
 		query = query.substring(0, query.length() - 4);
