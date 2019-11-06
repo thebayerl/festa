@@ -508,7 +508,7 @@ public class Create {
 	public void Turma(String codigoTurma, int maxAlunos, String ano, String semestre, int professorId, String codigoDisciplina,
 			String codigoSala) {
 		
-		Turma obj = new Turma(codigoSala, professorId, codigoSala, codigoSala, professorId, codigoSala, codigoSala);
+		//Turma obj = new Turma(codigoSala, professorId, codigoSala, codigoSala, professorId, codigoSala, codigoSala);
 		boolean erro = false;
 //		obj.setSemestre(semestre);
 //		obj.setcodigoSala(codigoSala);
@@ -554,7 +554,7 @@ public class Create {
 				
 				// salvando o objeto
 				System.out.println("Salvando a Turma...");
-				session.save(obj);
+				//session.save(obj);
 			}
 			
 			// finalizando transa��o

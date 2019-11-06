@@ -50,13 +50,6 @@ public class Disciplina {
 		try {
 			// iniciando a transação
 			session.beginTransaction();
-
-			// testando a valcodigoDisciplinaade dos dados recebcodigoDisciplinaos
-			/*if(session.get(Disciplina.class, codigoDisciplina) == null) {
-				System.out.println("Disciplina com codigoDisciplina = " + codigoDisciplina + " j� existente\n");
-				erro = true;
-				session.
-			}*/
 			
 			//inserir check do departamento depois
 			

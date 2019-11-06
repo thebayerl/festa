@@ -11,7 +11,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Session;
+
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent; 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -48,7 +52,31 @@ public class LoginController implements Initializable {
             // faz o login
             logar();
         });
-        
+    	
+    	this.txSenha.setOnKeyPressed(new EventHandler<KeyEvent>()
+        {
+            @Override
+            public void handle(KeyEvent ke)
+            {
+                if (ke.getCode().equals(KeyCode.ENTER))
+                {
+                    logar();
+                }
+            }
+        });
+    	
+    	this.txEmail.setOnKeyPressed(new EventHandler<KeyEvent>()
+        {
+            @Override
+            public void handle(KeyEvent ke)
+            {
+                if (ke.getCode().equals(KeyCode.ENTER))
+                {
+                    logar();
+                }
+            }
+        });
+  
         btSair.setOnMouseClicked((MouseEvent e)->{
         	// fecha a janela
             fecha();
@@ -87,7 +115,6 @@ public class LoginController implements Initializable {
     			
 	    			if (password.equals(user.getSenha())) {
 	    				
-	    				System.out.println("user e senha certos");
 	    				Principal p = new Principal(user);
 	    	            fecha();
 	    	            
@@ -101,7 +128,7 @@ public class LoginController implements Initializable {
     				this.erroLoginLabel.setVisible(true);
     			}
     		} catch (Exception exception) {
-    			System.out.println("Exception occred while reading user data: " + exception.getMessage());    			
+    			exception.printStackTrace();   			
 		   }
     	}     	    	
     }

@@ -5,8 +5,6 @@
  */
 package controller;
 
-import model.ComboBoxTipo;
-import model.Create;
 import model.Departamento;
 import model.Disciplina;
 import model.Read;
@@ -24,7 +22,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -63,12 +60,10 @@ public class CadastrarDisciplinaController implements Initializable {
     	carregarDepartametos();
     	
         btCancelar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
             abrePrincipal();
         });
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
             cadastraDisciplina();
         });
     }
@@ -94,6 +89,7 @@ public void carregarDepartametos() {
     }
     
     public void cadastraDisciplina(){
+
     	// TODO: verifica se todos os  campos estão selecionados
     	String nome = txNome.getText();
     	
@@ -101,13 +97,8 @@ public void carregarDepartametos() {
             	
     	departamento = (Departamento) comboBoxDepartamento.getValue();
         String departamentoId = departamento.getCodigoDepartamento();
-        //System.out.println(departamentoId);
         Disciplina d = new Disciplina(nome, creditos, departamentoId);
-        d.create();
-        
-        //abrePrincipal();
-        
-     
+        d.create();         
     }
     
     public void fecha(){

@@ -189,9 +189,7 @@ public class Turma {
 
 	@Override
 	public String toString() {
-		return "Turma [codigoTurma=" + codigoTurma + ", maxAlunos=" + maxAlunos + ", ano=" + ano
-				+ ", semestre=" + semestre + ", professorId=" + professorId + ", disciplinaId=" + disciplinaId
-				+ ", codigoSala=" + codigoSala + "]";
+		return this.getDisciplinaId() + " " + this.getProfessorId() + " " + this.getCodigoTurma();
 	}
 	
 }
