@@ -10,7 +10,9 @@ import model.Create;
 import model.Curso;
 import model.Departamento;
 import model.Disciplina;
+import model.DisciplinaCurso;
 import model.Professor;
+import model.ProfessorCapacidade;
 import model.Read;
 import model.Sala;
 import model.Turma;
@@ -96,8 +98,9 @@ public class CadastrarTurmaController implements Initializable {
     	curso = comboBoxCurso.getSelectionModel().getSelectedItem();
     	codigoCurso = curso.getcodigoCurso();
     	nomeCurso = curso.getnome();
-    	carregarDisciplinas();
-    	//carregarProfessores();
+    	cursoId = String.valueOf(curso.getId());
+    	carregarDisciplinaCursos();
+    	carregarProfessores();
     	
     }
 
@@ -133,7 +136,7 @@ public class CadastrarTurmaController implements Initializable {
     @FXML
     void selecionarPredio() {
     	
-    	predio = comboBoxPredio.getSelectionModel().getSelectedItem();
+    	predioCB = comboBoxPredio.getSelectionModel().getSelectedItem();
     	
     	
     	//carregarSalas();
@@ -145,13 +148,22 @@ public class CadastrarTurmaController implements Initializable {
     	professor = comboBoxProfessor.getSelectionModel().getSelectedItem();
     	professorId = String.valueOf(professor.getUsuarioId());
     	nomeProfessor = professor.getNome();
-    	cursoId = String.valueOf(professor.getCursoId());
-    	
-    	carregarCursos();
-    	carregarDisciplinas();
+    	String cursoIdX = String.valueOf(professor.getCursoId());
+     	if((cursoId != null && cursoId.compareTo(cursoIdX) != 0) || cursoId == null ) {
+     		System.out.println("cursoIdX: " + cursoIdX);
+     		cursoId = cursoIdX;
+    		carregarCursos();
+    		
+    	}
+     	carregarProfessorCapacidades();
+     	//carregarDisciplinaCursos();
     	
     	
     }
+    private List<ProfessorCapacidade> listProfessorCapacidades = new ArrayList<>();
+    
+    private List<DisciplinaCurso> listDisciplinaCursos = new ArrayList<>();
+    //private ObservableList<Disciplina> obsDisciplinaCursos;
 
     private List<Curso> listCursos = new ArrayList<>();
     private ObservableList<Curso> obsCursos;
@@ -188,44 +200,96 @@ public class CadastrarTurmaController implements Initializable {
             //System.out.println("Sai");
             cadastraTurma();
         });
-        
-    
+
         
     }
     
+    public void carregarProfessorCapacidades() {
+    	listProfessorCapacidades = Read.getProfessorCapacidade(professorId, disciplinaId);
+    	listProfessores.clear();
+    	for(ProfessorCapacidade elemento: listProfessorCapacidades){
+    		   disciplinaId = elemento.getDisciplinaId();
+    		   listDisciplinas.addAll(Read.getDisciplina(disciplinaId, nomeDisciplina, creditos, departamento));
+    		}
+    	obsDisciplinas.clear();
+    	obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
+    	comboBoxDisciplina.getItems().clear();
+    	comboBoxDisciplina.setItems(obsDisciplinas);
+    }
+    
+    
+    public void carregarDisciplinaCursos() {
+    	listDisciplinaCursos = Read.getDisciplinaCurso(cursoId, disciplinaId);
+    	listDisciplinas.clear();
+    	for(DisciplinaCurso elemento: listDisciplinaCursos){
+    		   disciplinaId = elemento.getDisciplinaId();
+    		   listDisciplinas.addAll(Read.getDisciplina(disciplinaId, nomeDisciplina, creditos, departamento));
+    		}
+    	obsDisciplinas.clear();
+    	obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
+    	comboBoxDisciplina.getItems().clear();
+    	comboBoxDisciplina.setItems(obsDisciplinas);
+    }
+    
+    
     public void carregarCursos() {
-    	listCursos = Read.getCurso(codigoCurso, nomeCurso);
+    	listCursos.clear();
+    	comboBoxCurso.getItems().clear();
+    	System.out.println(cursoId + " " + codigoCurso + " " + nomeCurso );
+    	listCursos = Read.getCurso(cursoId, codigoCurso, nomeCurso);
+    	for(Curso elemento: listCursos){
+    		   System.out.println(elemento.getnome());
+    		}
+    	if(obsCursos != null) {
+    		obsCursos.clear();
+    	}
     	obsCursos = FXCollections.observableArrayList(listCursos);
+    	//comboBoxCurso.getItems().clear();
     	comboBoxCurso.setItems(obsCursos);
     }
     
     public void carregarPredios() {
+    	listPredios.clear();
     	listPredios = Read.getDistinctPredio();
+    	if(obsPredios != null) {
+    		obsPredios.clear();
+    	}
     	obsPredios = FXCollections.observableArrayList(listPredios);
+    	comboBoxPredio.getItems().clear();
     	comboBoxPredio.setItems(obsPredios);
     }
     
     public void carregarDisciplinas() {
-    	
+    	listDisciplinas.clear();
     	listDisciplinas = Read.getDisciplina(disciplinaId, nomeDisciplina, creditos, departamento);
+    	if(obsDisciplinas != null) {
+    		obsDisciplinas.clear();
+    	}
         obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
+        comboBoxDisciplina.getItems().clear();
         comboBoxDisciplina.setItems(obsDisciplinas);
     }
     
     public void carregarProfessores() {
-    	
-    	listProfessores = Read.getProfessor(professorId, nomeProfessor, matricula, nivelFormacao,  codigoCurso);
+    	listProfessores.clear();
+    	listProfessores = Read.getProfessor(professorId, nomeProfessor, matricula, nivelFormacao,  cursoId);
+    	if(obsProfessores != null) {
+    		obsProfessores.clear();
+    	}
         obsProfessores = FXCollections.observableArrayList(listProfessores);
+        comboBoxProfessor.getItems().clear();
         comboBoxProfessor.setItems(obsProfessores);
         //professor = (Professor) comboBoxProfessor.getValue();
     }
     
     public void carregarSalas() {
-    	
-    	//String disponibilidade = "true";
-    	
+    	listSalas.clear();
     	listSalas = Read.getSala( codigoSala, capacidade, predioCB);
+    	if(obsSalas != null) {
+    		obsSalas.clear();
+    	}
     	obsSalas = FXCollections.observableArrayList(listSalas);
+    	comboBoxSala.getItems().clear();
     	comboBoxSala.setItems(obsSalas);
     }
     

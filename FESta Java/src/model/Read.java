@@ -83,12 +83,13 @@ public class Read {
 		
 	}
 	
-	public static List<Curso> getCurso(String codigoCurso, String nome) {
+	public static List<Curso> getCurso(String cursoId, String codigoCurso, String nome) {
 		
 		codigoCurso = aspas(codigoCurso);
 		nome = aspas(nome);
 		
-		String query = "from Curso where";
+		String query = "from Curso where ";
+		query += add("id",cursoId);
 		query += add("codigoCurso",codigoCurso);
 		query += add("nome",nome);
 		query = query.substring(0, query.length() - 4);
@@ -222,7 +223,7 @@ public static List<Curso> getCurso() {
 		
 		String query = "from DisciplinaCurso where ";
 		query += add("disciplinaId",disciplinaId);
-		query += add("codigoCurso",cursoId);
+		query += add("cursoId",cursoId);
 		query = query.substring(0, query.length() - 4);
 		
 		List<DisciplinaCurso> resultado = null;
@@ -321,19 +322,19 @@ public static List<Curso> getCurso() {
 	
 	}
 	
-	public static List<Professor> getProfessor(String usuarioId, String nome, String matricula, String nivelFormacao,  String codigoCurso) {
+	public static List<Professor> getProfessor(String usuarioId, String nome, String matricula, String nivelFormacao,  String cursoId) {
 		
 		nome = aspas(nome);
 		matricula = aspas(matricula);
 		nivelFormacao = aspas(nivelFormacao);
-		codigoCurso = aspas(codigoCurso);
+		//codigoCurso = aspas(cursoId);
 		
 		String query = "from Professor where ";
 		query += add("usuarioId",usuarioId);
 		query += add("matricula",matricula);
 		query += add("nome",nome);
 		query += add("nivelFormacao",nivelFormacao);
-		query += add("codigoCurso",codigoCurso);
+		query += add("cursoId",cursoId);
 		query = query.substring(0, query.length() - 4);
 		
 		List<Professor> resultado = null;
