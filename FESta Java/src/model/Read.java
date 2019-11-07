@@ -218,8 +218,8 @@ public static List<Curso> getCurso() {
 	
 	public static List<DisciplinaCurso> getDisciplinaCurso(String cursoId, String disciplinaId) {
 		
-		cursoId = aspas(cursoId);
-		disciplinaId = aspas(disciplinaId);
+//		cursoId = aspas(cursoId);
+//		disciplinaId = aspas(disciplinaId);
 		
 		String query = "from DisciplinaCurso where ";
 		query += add("disciplinaId",disciplinaId);

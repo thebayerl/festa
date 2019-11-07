@@ -16,11 +16,11 @@ public class DisciplinaCurso implements Serializable {
 	
 	@Id
 	@Column(name="curso_id")
-	private String cursoId;
+	private int cursoId;
 	
 	@Id
 	@Column(name="disciplina_id")
-	private String disciplinaId;
+	private int disciplinaId;
 	
 	public void create() {
 		boolean erro = false;
@@ -95,19 +95,19 @@ public class DisciplinaCurso implements Serializable {
 		}
 	}
 
-	public String getCursoId() {
+	public int getCursoId() {
 		return cursoId;
 	}
 
-	public void setCodigoCurso(String cursoId) {
+	public void setCodigoCurso(int cursoId) {
 		this.cursoId = cursoId;
 	}
 
-	public String getDisciplinaId() {
+	public int getDisciplinaId() {
 		return disciplinaId;
 	}
 
-	public void setDisciplinaId(String disciplinaId) {
+	public void setDisciplinaId(int disciplinaId) {
 		this.disciplinaId = disciplinaId;
 	}
 

@@ -27,7 +27,7 @@
       </RadioButton>
       <RadioButton fx:id="radioBt2" layoutX="271.0" layoutY="26.0" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
       <ComboBox fx:id="comboBoxDisciplina" disable="true" layoutX="181.0" layoutY="256.0" onAction="#SelecionarDisciplina" prefHeight="25.0" prefWidth="356.0" />
-      <ComboBox fx:id="comboBoxProfessor" disable="true" layoutX="181.0" layoutY="216.0" onAction="#selecionarProfessor" prefHeight="25.0" prefWidth="356.0" />
+      <ComboBox fx:id="comboBoxProfessor" disable="true" layoutX="181.0" layoutY="216.0" prefHeight="25.0" prefWidth="356.0" />
       <Label layoutX="113.0" layoutY="97.0" text="Prédio" />
       <ComboBox fx:id="comboBoxPredio" layoutX="177.0" layoutY="93.0" onAction="#selecionarPredio" prefHeight="25.0" prefWidth="356.0" />
       <ComboBox fx:id="comboBoxSala" disable="true" layoutX="181.0" layoutY="297.0" onAction="#SelecionarSala" prefHeight="25.0" prefWidth="356.0" />
