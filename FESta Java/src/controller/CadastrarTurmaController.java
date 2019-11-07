@@ -66,32 +66,10 @@ public class CadastrarTurmaController implements Initializable {
     private List<Professor> listProfessores = new ArrayList<>();
     private ObservableList<Professor> obsProfessores;
 	
-	private Curso curso;
-	private Disciplina disciplina;
-	private Sala sala;
-	private String predio;
-	private Professor professor;
-	
-	String codigoCurso = null;
-	String nomeCurso = null;
-	
 	String disciplinaId = null;
-	String nomeDisciplina = null;
-	String creditos = null;
-	String departamento = null;
-	
-	String professorId = null; 
-	String nomeProfessor = null;
-	String matricula = null;
-	String nivelFormacao = null;
-	
-	String codigoSala = null;
-	String capacidade = null;
+	String professorId = null;
 	String predioCB = null;
-	
 	String cursoId = null;
-	
-	
 	
     @FXML private TextField txMaxAluno;
     @FXML private Button btCadastrar;
@@ -115,76 +93,38 @@ public class CadastrarTurmaController implements Initializable {
     	if(!comboBoxProfessor.isDisable()) {
     		comboBoxProfessor.setDisable(true);
     	}
-    	curso = comboBoxCurso.getSelectionModel().getSelectedItem();
-    	codigoCurso = curso.getcodigoCurso();
-    	nomeCurso = curso.getnome();
-    	cursoId = String.valueOf(curso.getId());
-    	//comboBoxDisciplina.set
+    	cursoId = String.valueOf(comboBoxCurso.getSelectionModel().getSelectedItem().getId());
     	carregarDisciplinaCursos();
-    	
     }
 
     @FXML
     void SelecionarDisciplina() {
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA");
-    	disciplina = comboBoxDisciplina.getSelectionModel().getSelectedItem();
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA2");
-    	System.out.println("DISCIPLINA ID: "+String.valueOf(disciplina.getId()));
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA3");
-    	disciplinaId = String.valueOf(disciplina.getId());
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA4");
-    	nomeDisciplina = disciplina.getNome();
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA5");
-    	creditos = String.valueOf(disciplina.getCreditos());
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA6");
-    	departamento = disciplina.getDepartamento();
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA7");
-    	carregarProfessorCapacidades();
-    	System.out.println("ENTREI NO SELECIONAR DISCIPLINA8");
-    	
-    	
+    	Disciplina disciplina = comboBoxDisciplina.getSelectionModel().getSelectedItem();
+    	if(disciplina != null){
+			disciplinaId = String.valueOf(disciplina.getId());
+			carregarProfessorCapacidades();
+		}
     }
 
-    @FXML
-    void SelecionarSala() {
-
-    	sala = comboBoxSala.getSelectionModel().getSelectedItem();
-    	codigoSala = sala.getCodigoSala();
-    	capacidade = String.valueOf(sala.getCapacidade());
-    	predio = sala.getPredio();
-    	System.out.println("predioSelecionarSala: " + predio);
-    	System.out.println("predioCBSelecionarSala: " + predioCB);
-    	
-    	//carregarPredios();
-    }
-    
     @FXML
     void selecionarPredio() {
-    	
     	predioCB = comboBoxPredio.getSelectionModel().getSelectedItem();
     	carregarSalas();
-    	
-    	//carregarSalas();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    	
     	carregarCursos();
     	carregarPredios();
     	
         btCancelar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
             abrePrincipal();
         });
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
             cadastraTurma();
         });
-
-        
     }
     
     public void carregarProfessorCapacidades() {
@@ -230,15 +170,13 @@ public class CadastrarTurmaController implements Initializable {
     	comboBoxDisciplina.getItems().clear();
     	comboBoxDisciplina.setDisable(false);
     	comboBoxDisciplina.setItems(obsDisciplinas);
-    	
-    	
     }
     
     
     public void carregarCursos() {
     	listCursos.clear();
     	comboBoxCurso.getItems().clear();
-    	listCursos = Read.getCurso(cursoId, codigoCurso, nomeCurso);
+    	listCursos = Read.getCurso(cursoId, null, null);
     	if(obsCursos != null) {
     		obsCursos.clear();
     	}
@@ -257,24 +195,11 @@ public class CadastrarTurmaController implements Initializable {
     	comboBoxPredio.setItems(obsPredios);
     }
     
-    public void carregarDisciplinas() {
-    	listDisciplinas.clear();
-    	listDisciplinas = Read.getDisciplina(disciplinaId, nomeDisciplina, creditos, departamento);
-    	if(obsDisciplinas != null) {
-    		obsDisciplinas.clear();
-    	}
-        obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
-        comboBoxDisciplina.getItems().clear();
-        comboBoxDisciplina.setItems(obsDisciplinas);
-    }
-    
-    
     public void carregarSalas() {
     	if(!comboBoxSala.isDisable()) {
     		comboBoxSala.setDisable(true);
     	}
     	listSalas.clear();
-    	System.out.println("predioCB:" + predioCB);
     	listSalas = Read.getSala( null, null, predioCB);
     	if(obsSalas != null) {
     		obsSalas.clear();
@@ -302,13 +227,9 @@ public class CadastrarTurmaController implements Initializable {
         int disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
         int salaId = comboBoxSala.getSelectionModel().getSelectedItem().getId();
 
-        
-               
         Turma t = new Turma(maxAlunos, ano, semestre, professorId, disciplinaId, salaId);
         t.create();
         //abrePrincipal();
-        
-        
     }
     
     
