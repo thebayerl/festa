@@ -40,6 +40,7 @@ public class CadastrarDisciplinaController implements Initializable {
     @FXML private Button btCancelar;
     @FXML private ComboBox<Departamento> comboBoxDepartamento;
     @FXML private ComboBox<Integer> comboBoxCreditos;
+    @FXML private TextField txCodigoDisciplina;
     
     int maxCredito = 6;
     private List<Integer> listCreditos = new ArrayList<>();
@@ -79,7 +80,7 @@ public class CadastrarDisciplinaController implements Initializable {
     	
     }
     
-public void carregarDepartametos() {
+    public void carregarDepartametos() {
 	
 	listDepartamentos = Read.getDepartamento();
     obsDepartamentos = FXCollections.observableArrayList(listDepartamentos);
@@ -94,10 +95,14 @@ public void carregarDepartametos() {
     	String nome = txNome.getText();
     	
     	int creditos = comboBoxCreditos.getValue();
+    	
+    	String codigoDisciplina = txCodigoDisciplina.getText();
+    	
+    	
             	
     	departamento = (Departamento) comboBoxDepartamento.getValue();
         String departamentoId = departamento.getCodigoDepartamento();
-        Disciplina d = new Disciplina(nome, creditos, departamentoId);
+        Disciplina d = new Disciplina(nome, creditos, departamentoId, codigoDisciplina);
         d.create();         
     }
     
