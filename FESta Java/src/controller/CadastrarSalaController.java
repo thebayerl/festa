@@ -5,7 +5,6 @@
  */
 package controller;
 
-import model.Create;
 import model.Sala;
 import java.net.URL;
 import java.util.ResourceBundle;

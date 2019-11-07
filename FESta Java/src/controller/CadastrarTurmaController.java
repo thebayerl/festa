@@ -5,10 +5,7 @@
  */
 package controller;
 
-import model.ComboBoxTipo;
-import model.Create;
 import model.Curso;
-import model.Departamento;
 import model.Disciplina;
 import model.DisciplinaCurso;
 import model.Professor;
@@ -16,7 +13,7 @@ import model.ProfessorCapacidade;
 import model.Read;
 import model.Sala;
 import model.Turma;
-import java.math.BigInteger;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +23,10 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;

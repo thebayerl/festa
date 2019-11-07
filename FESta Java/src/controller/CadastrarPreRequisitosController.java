@@ -7,16 +7,22 @@ package controller;
 
 import java.math.BigInteger;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.Create;
+import model.*;
 import view.CadastrarPreRequisitos;
 import view.Principal;
 
@@ -31,15 +37,22 @@ public class CadastrarPreRequisitosController implements Initializable {
      * Initializes the controller class.
      */
     
-    @FXML private TextField txIdDisciplina;
-    @FXML private TextField txIdPrerequisito;
+    @FXML private ComboBox<Disciplina> comboDisciplina;
+    @FXML private ComboBox<Disciplina> comboPrerequisito;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
+
+    private List<Disciplina> listDisciplinas = new ArrayList<>();
+    private ObservableList<Disciplina> obsDisciplinas;
+
+    int disciplinaId;
+    int prerequisitoId;
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        carregarDisciplina();
+
         btCancelar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
             abrePrincipal();
@@ -49,19 +62,25 @@ public class CadastrarPreRequisitosController implements Initializable {
             //System.out.println("Sai");
             cadastraPreRequisito();
         });
-    } 
-    
-    public void cadastraPreRequisito(){
-        int disciplinaId = Integer.parseInt(txIdDisciplina.getText());
-        int prerequisitoId = Integer.parseInt(txIdPrerequisito.getText());
-        
-        Create pr = new Create();
-        System.out.println("Sai1");
-        //pr.PreRequisito(disciplinaId, prerequisitoId);
-        System.out.println("Sai2");
-        abrePrincipal();
+    }
+
+    public void carregarDisciplina() {
+        listDisciplinas = Read.getDisciplina(null, null, null, null);
+        obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
+        comboDisciplina.setItems(obsDisciplinas);
+        comboPrerequisito.setItems(obsDisciplinas);
     }
     
+    public void cadastraPreRequisito(){
+        Disciplina disciplina = comboDisciplina.getSelectionModel().getSelectedItem();
+        disciplinaId = disciplina.getId();
+        Disciplina disciplinaPrerequisito = comboPrerequisito.getSelectionModel().getSelectedItem();
+        prerequisitoId = disciplinaPrerequisito.getId();
+
+        PreRequisito preRequisito = new PreRequisito(disciplinaId, prerequisitoId);
+        preRequisito.create();
+    }
+
     public void fecha(){
         CadastrarPreRequisitos.getStage().close();
     }

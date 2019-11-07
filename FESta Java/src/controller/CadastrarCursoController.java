@@ -5,7 +5,6 @@
  */
 package controller;
 
-import model.Create;
 import model.Curso;
 import java.net.URL;
 import java.util.ResourceBundle;

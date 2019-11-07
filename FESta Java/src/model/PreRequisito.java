@@ -1,23 +1,33 @@
 package model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name="pre_requisito")
-public class PreRequisito {
-
+public class PreRequisito implements Serializable {
+	@Id
 	@Column(name="disciplina_id")
-	private String disciplinaId;
-	
+	private int disciplinaId;
+
+	@Id
 	@Column(name="prerequisito_id")
-	private String prerequisitoId;
-	
-	
+	private int prerequisitoId;
+
+	public PreRequisito() {	}
+
+	public PreRequisito(int disciplinaId, int prerequisitoId) {
+		this.disciplinaId = disciplinaId;
+		this.prerequisitoId = prerequisitoId;
+	}
+
 	public void create() {
 		boolean erro = false;
 		
@@ -88,22 +98,22 @@ public class PreRequisito {
 		}
 	}
 
-	public String getDisciplinaId() {
+	public int getDisciplinaId() {
 		return disciplinaId;
 	}
 
-	public void setDisciplinaId(String disciplinaId) {
+	public void setDisciplinaId(int disciplinaId) {
 		this.disciplinaId = disciplinaId;
 	}
 
-	public String getPrerequisitoId() {
+	public int getPrerequisitoId() {
 		return prerequisitoId;
 	}
 
-	public void setPrerequisitoId(String prerequisitoId) {
+	public void setPrerequisitoId(int prerequisitoId) {
 		this.prerequisitoId = prerequisitoId;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "PreRequisito [disciplinaId=" + disciplinaId + ", prerequisitoId=" + prerequisitoId + "]";

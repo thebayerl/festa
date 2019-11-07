@@ -295,10 +295,7 @@ public static List<Curso> getCurso() {
 	}
 	
 	public List<PreRequisito> PreRequisito(String disciplinaId, String prerequisitoId) {
-		
-		disciplinaId = aspas(disciplinaId);
-		disciplinaId = aspas(disciplinaId);
-		
+
 		String query = "from PreRequisito where ";
 		query += add("disciplinaId",disciplinaId);
 		query += add("prerequisitoId",prerequisitoId);

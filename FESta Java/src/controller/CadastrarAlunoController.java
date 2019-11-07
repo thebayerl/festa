@@ -6,9 +6,7 @@
 package controller;
 
 import model.Aluno;
-import model.Create;
 import model.Curso;
-import model.Disciplina;
 import model.Read;
 
 import java.net.URL;
@@ -24,12 +22,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarAluno;
-import view.CadastrarDisciplina;
 import view.Principal;
 
 /**

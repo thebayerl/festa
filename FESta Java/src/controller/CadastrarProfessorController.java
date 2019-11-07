@@ -5,9 +5,8 @@
  */
 package controller;
 
-import model.Create;
 import model.Professor;
-import model.Sala;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarProfessor;
-import view.CadastrarSala;
 import view.Principal;
 
 /**
