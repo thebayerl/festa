@@ -13,13 +13,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
@@ -38,19 +37,18 @@ public class CadastrarPreRequisitosController implements Initializable {
      */
     
     @FXML private ComboBox<Disciplina> comboDisciplina;
-    @FXML private ComboBox<Disciplina> comboPrerequisito;
+    @FXML private ListView<Disciplina> listViewPrerequisito;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
 
     private List<Disciplina> listDisciplinas = new ArrayList<>();
+    private List<Disciplina> selectedPrerequisitos = new ArrayList<>();
     private ObservableList<Disciplina> obsDisciplinas;
 
-    int disciplinaId;
-    int prerequisitoId;
-        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
         carregarDisciplina();
 
         btCancelar.setOnMouseClicked((MouseEvent e)->{
@@ -68,17 +66,18 @@ public class CadastrarPreRequisitosController implements Initializable {
         listDisciplinas = Read.getDisciplina(null, null, null, null);
         obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
         comboDisciplina.setItems(obsDisciplinas);
-        comboPrerequisito.setItems(obsDisciplinas);
+        listViewPrerequisito.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listViewPrerequisito.setItems(obsDisciplinas);
     }
     
     public void cadastraPreRequisito(){
-        Disciplina disciplina = comboDisciplina.getSelectionModel().getSelectedItem();
-        disciplinaId = disciplina.getId();
-        Disciplina disciplinaPrerequisito = comboPrerequisito.getSelectionModel().getSelectedItem();
-        prerequisitoId = disciplinaPrerequisito.getId();
+        int disciplinaId = comboDisciplina.getSelectionModel().getSelectedItem().getId();
+        selectedPrerequisitos = listViewPrerequisito.getSelectionModel().getSelectedItems();
 
-        PreRequisito preRequisito = new PreRequisito(disciplinaId, prerequisitoId);
-        preRequisito.create();
+        for(Disciplina d : selectedPrerequisitos){
+            PreRequisito preRequisito = new PreRequisito(disciplinaId, d.getId());
+            preRequisito.create();
+        }
     }
 
     public void fecha(){
