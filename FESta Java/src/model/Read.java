@@ -243,14 +243,14 @@ public static List<Curso> getCurso() {
 		return resultado;
 	}
 	
-	public List<Historico> Historico( String nota, String alunoId, String codigoTurma) {
+	public List<Historico> Historico( String nota, String alunoId, String turmaId) {
 		
-		codigoTurma = aspas(codigoTurma);
+		//codigoTurma = aspas(codigoTurma);
 		
 		String query = "from Historico where ";
 		query += add("nota",nota);
 		query += add("alunoId",alunoId);
-		query += add("codigoTurma",codigoTurma);
+		query += add("turmaId",turmaId);
 		query = query.substring(0, query.length() - 4);
 			
 		List<Historico> resultado = null;
@@ -270,11 +270,11 @@ public static List<Curso> getCurso() {
 		return resultado;
 	}
 	
-	public List<Matriculado> Matriculado(String alunoId, String codigoTurma) {
+	public List<Matriculado> Matriculado(String alunoId, String turmaId) {
 	
 		String query = "from Matriculado where ";
 		query += add("alunoId",alunoId);
-		query += add("codigoTurma",codigoTurma);
+		query += add("turmaId",turmaId);
 		query = query.substring(0, query.length() - 4);
 	
 		List<Matriculado> resultado = null;

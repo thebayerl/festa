@@ -1,6 +1,9 @@
 package model;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
@@ -9,13 +12,15 @@ import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name="matriculado")
-public class Matriculado {
+public class Matriculado implements Serializable {
 	
+	@Id
 	@Column(name="aluno_id")
 	private int alunoId;
 	
-	@Column(name="codigo_turma")
-	private String codigoTurma;
+	@Id
+	@Column(name="turma_id")
+	private int turmaId;
 
 	
 	public void create() {
@@ -33,8 +38,8 @@ public class Matriculado {
 			
 			//tratando os dados de entrada
 			
-			if(session.get(Turma.class, codigoTurma) == null) {
-				System.out.println("Turma com codigoTurma = " + codigoTurma + " não existente\n");
+			if(session.get(Turma.class, turmaId) == null) {
+				System.out.println("Turma com turmaId = " + turmaId + " não existente\n");
 				erro = true;
 			}
 			
@@ -98,17 +103,17 @@ public class Matriculado {
 		this.alunoId = alunoId;
 	}
 
-	public String getcodigoTurma() {
-		return codigoTurma;
+	public int getturmaId() {
+		return turmaId;
 	}
 
-	public void setcodigoTurma(String codigoTurma) {
-		this.codigoTurma = codigoTurma;
+	public void setturmaId(int turmaId) {
+		this.turmaId = turmaId;
 	}
 
 	@Override
 	public String toString() {
-		return "Matriculado [alunoId=" + alunoId + ", codigoTurma=" + codigoTurma + "]";
+		return "Matriculado [alunoId=" + alunoId + ", turmaId=" + turmaId + "]";
 	}
 	
 }

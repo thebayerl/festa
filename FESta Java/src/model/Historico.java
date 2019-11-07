@@ -1,6 +1,9 @@
 package model;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
@@ -9,16 +12,18 @@ import org.hibernate.cfg.Configuration;
 
 @Entity
 @Table(name="historico")
-public class Historico {
+public class Historico implements Serializable {
 	
 	@Column(name="nota")
 	private double nota;
 	
+	@Id
 	@Column(name="aluno_id")
 	private int alunoId;
 	
-	@Column(name="codigo_turma")
-	private String codigoTurma;
+	@Id
+	@Column(name="turma_id")
+	private int turmaId;
 
 
 	public void create() {
@@ -94,17 +99,17 @@ public class Historico {
 		this.alunoId = alunoId;
 	}
 
-	public String getcodigoTurma() {
-		return codigoTurma;
+	public int getturmaId() {
+		return turmaId;
 	}
 
-	public void setcodigoTurma(String codigoTurma) {
-		this.codigoTurma = codigoTurma;
+	public void setturmaId(int turmaId) {
+		this.turmaId = turmaId;
 	}
 
 	@Override
 	public String toString() {
-		return "Historico [nota=" + nota + ", alunoId=" + alunoId + ", codigoTurma=" + codigoTurma + "]";
+		return "Historico [nota=" + nota + ", alunoId=" + alunoId + ", turmaId=" + turmaId + "]";
 	}
 	
 }
