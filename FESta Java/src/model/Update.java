@@ -499,8 +499,8 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Turma(String codigoTurma, Integer maxAlunos, String ano, String semestre, Integer professorId, String disciplinaId,
-			String codigoSala) {
+	public boolean Turma(String codigoTurma, Integer maxAlunos, String ano, String semestre, Integer professorId, Integer disciplinaId,
+			Integer salaId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -531,8 +531,8 @@ public class Update {
 				if(semestre != null) {
 					obj.setSemestre(semestre);
 				}
-				if(codigoSala != null) {
-					obj.setcodigoSala(codigoSala);
+				if(salaId != null) {
+					obj.setSalaId(salaId);
 				}
 				if(professorId != null) {
 					obj.setProfessorId(professorId);

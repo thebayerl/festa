@@ -135,10 +135,6 @@ public class CadastrarTurmaController implements Initializable {
     	System.out.println("predioCBSelecionarSala: " + predioCB);
     	
     	//carregarPredios();
-    	
-    	
-    	
-
     }
     
     @FXML
@@ -305,7 +301,7 @@ public class CadastrarTurmaController implements Initializable {
     	}
     	listSalas.clear();
     	System.out.println("predioCB:" + predioCB);
-    	listSalas = Read.getSala( codigoSala, capacidade, predioCB);
+    	listSalas = Read.getSala( null, null, predioCB);
     	if(obsSalas != null) {
     		obsSalas.clear();
     	}
@@ -329,7 +325,7 @@ public class CadastrarTurmaController implements Initializable {
         String semestre = radio.getText();
         String ano = txAno.getText();
         int professorId = professor.getUsuarioId();
-        String disciplinaId = disciplina.getcodigoDisciplina();
+        int disciplinaId = disciplina.getId();
         int salaId = sala.getId();
         //String codigoSala = txIdSala.getText();
         //String codigoTurma = txCodigoTurma.getText();
@@ -338,7 +334,6 @@ public class CadastrarTurmaController implements Initializable {
         Turma t = new Turma(maxAlunos, ano, semestre, professorId, disciplinaId, salaId);
         t.create();
         //abrePrincipal();
-            
         
         
     }
