@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VizualizarTurmaController">
+   <children>
+      <VBox layoutX="55.0" layoutY="62.0" prefHeight="376.0" prefWidth="391.0" spacing="20.0">
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Vizualização de Turmas">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="16.0" />
+               </padding>
+            </HBox>
+            <ListView fx:id="listViewTurmas" prefHeight="200.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" spacing="30.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

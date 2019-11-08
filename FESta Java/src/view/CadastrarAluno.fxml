@@ -1,24 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarAlunoController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarAlunoController">
     <children>
-      <Label layoutX="129.0" layoutY="141.0" text="Nome" />
-      <TextField fx:id="txNome" layoutX="196.0" layoutY="137.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite o Nome do Aluno..." />
-      <Button fx:id="btCadastrar" layoutX="374.0" layoutY="332.0" mnemonicParsing="false" text="Cadastrar" />
-      <Button fx:id="btCancelar" layoutX="196.0" layoutY="332.0" mnemonicParsing="false" text="Cancelar" />
-      <Label layoutX="75.0" layoutY="184.0" text="Data de Nascimento" />
-      <TextField fx:id="txNascimento" layoutX="196.0" layoutY="180.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Data de Nascimento" />
-      <Label layoutX="121.0" layoutY="96.0" text="Matrícula" />
-      <TextField fx:id="txMatricula" layoutX="196.0" layoutY="92.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a Matrícula..." />
-      <Label layoutX="114.0" layoutY="275.0" text="Curso" />
-      <Label layoutX="84.0" layoutY="232.0" text="Data de Ingresso" />
-      <TextField fx:id="txIngresso" layoutX="196.0" layoutY="228.0" prefHeight="25.0" prefWidth="356.0" promptText="Digite a data de ingresso na Universidade..." />
-      <ComboBox fx:id="comboBoxCurso" layoutX="196.0" layoutY="271.0" prefHeight="25.0" prefWidth="356.0" />
+      <VBox layoutX="100.0" spacing="20.0">
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Cadastro de Aluno">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="6.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <TextField fx:id="txUserName" prefHeight="25.0" prefWidth="300.0" promptText="Digite seu Username ..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <PasswordField fx:id="psSenha" prefHeight="25.0" prefWidth="300.0" promptText="Digite sua Senha ..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <PasswordField fx:id="psSenhaConf" prefHeight="25.0" prefWidth="300.0" promptText="Confirme sua Senha ..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <TextField fx:id="txNome" prefHeight="25.0" prefWidth="300.0" promptText="Digite o Nome do Aluno..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <TextField fx:id="txRG" prefHeight="25.0" prefWidth="300.0" promptText="Digite seu RG ..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <TextField fx:id="txCPF" prefHeight="25.0" prefWidth="300.0" promptText="Digite seu CPF ..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="98.0" spacing="30.0">
+               <children>
+                  <TextField fx:id="txNascimento" prefHeight="25.0" prefWidth="300.0" promptText="Digite a Data de Nascimento" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="187.0" spacing="30.0">
+               <children>
+                  <TextField fx:id="txIngresso" prefHeight="25.0" prefWidth="300.0" promptText="Digite a data de ingresso na Universidade..." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="207.0" spacing="30.0">
+               <children>
+                  <ComboBox fx:id="comboBoxCurso" prefHeight="25.0" prefWidth="300.0" promptText="Selecionar Curso" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="150.0">
+               <children>
+                  <Button fx:id="btVoltar" mnemonicParsing="false" text="Voltar" />
+                  <Button fx:id="btEnviar" mnemonicParsing="false" text="Enviar" />
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

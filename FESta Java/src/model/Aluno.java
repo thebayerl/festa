@@ -38,10 +38,10 @@ public class Aluno {
 	
 	public Aluno() {}
 	
-	public Aluno(int usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, int cursoId) {
+	public Aluno(int usuarioId, String nome, String dataNascimento, String dataIngresso, int cursoId) {
 		super();
 		this.usuarioId = usuarioId;
-		this.matricula = matricula;
+		this.matricula = "";
 		this.nome = nome;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");				
 		try {
@@ -192,8 +192,7 @@ public class Aluno {
 
 	@Override
 	public String toString() {
-		return "Aluno [usuarioId=" + usuarioId + ", matricula=" + matricula + ", nome=" + nome + ", dataNascimento=" + dataNascimento
-				+ ", dataIngresso=" + dataIngresso + ", codigoCurso=" + cursoId + "]";
+		return nome;
 	}
 	
 }

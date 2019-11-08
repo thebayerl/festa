@@ -30,11 +30,11 @@ public class Professor {
 
 	public Professor(){}
 	
-	public Professor(int usuarioId, String nome, String matricula, String nivelFormacao, int cursoId) {
+	public Professor(int usuarioId, String nome, String nivelFormacao, int cursoId) {
 		super();
 		this.usuarioId = usuarioId;
 		this.nome = nome;
-		this.matricula = matricula;
+		this.matricula = "";
 		this.nivelFormacao = nivelFormacao;
 		this.cursoId = cursoId;
 	}

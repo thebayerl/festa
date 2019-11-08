@@ -410,7 +410,7 @@ public class Read {
 		
 	}
 	
-	// pegas as turmas de acordo com os parâmetros
+	// pegas as turmas de acordo com os parï¿½metros
 	public static List<Turma> getTurma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
 			String codigoSala) {
 		

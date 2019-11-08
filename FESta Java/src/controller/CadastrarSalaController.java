@@ -5,8 +5,14 @@
  */
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import model.Read;
 import model.Sala;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,18 +40,22 @@ public class CadastrarSalaController implements Initializable {
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
     @FXML private TextField txCodigoSala;
-    @FXML private TextField txPredio;
+    @FXML private ComboBox<String> comboBoxPredio;
+
+    private List<String> listPredios = new ArrayList<>();
+    private ObservableList<String> obsPredios;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
+        carregarPredios();
+
         btCancelar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
             abrePrincipal();
         });
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
             cadastraSala();
         });
         
@@ -53,15 +63,22 @@ public class CadastrarSalaController implements Initializable {
     
     public void cadastraSala(){
         int capacidade = Integer.parseInt(txCapacidade.getText());
-        String predio = txPredio.getText();
+        String predio = comboBoxPredio.getValue();
         String codigoSala = txCodigoSala.getText();
-        //Create s = new Create();
-        //s.Sala(codigoSala, capacidade, predio);
         Sala s = new Sala(codigoSala, capacidade, predio);
         s.create();
         abrePrincipal();
-        //Sala s = new Sala(capacidade);
-        
+    }
+
+    public void carregarPredios() {
+        listPredios.clear();
+        listPredios = Read.getDistinctPredio();
+        if(obsPredios != null) {
+            obsPredios.clear();
+        }
+        obsPredios = FXCollections.observableArrayList(listPredios);
+        comboBoxPredio.getItems().clear();
+        comboBoxPredio.setItems(obsPredios);
     }
     
     public void fecha(){
