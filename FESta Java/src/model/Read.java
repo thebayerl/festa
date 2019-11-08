@@ -415,7 +415,7 @@ public static List<Curso> getCurso() {
 		
 	}
 	
-	public List<Turma> Turma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
+	public static List<Turma> getTurma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
 			String codigoSala) {
 		
 		codigoTurma = aspas(codigoTurma);
@@ -453,7 +453,7 @@ public static List<Curso> getCurso() {
 		
 	}
 	
-	public List<Usuario> Usuario(String id, String username, String senha, String rg, String cpf) {
+	public static List<Usuario> getUsuario(String id, String username, String senha, String rg, String cpf) {
 		
 		username = aspas(username);
 		senha = aspas(senha);
