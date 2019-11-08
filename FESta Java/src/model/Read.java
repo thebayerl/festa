@@ -20,7 +20,7 @@ public class Read {
 		return "";
 	}
 	
-	public List<Aluno> Aluno(String usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
+	public static List<Aluno> getAluno(String usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
 			String codigoCurso) {
 		
 		matricula = aspas(matricula);

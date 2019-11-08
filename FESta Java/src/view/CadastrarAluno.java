@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Aluno;
 
 /**
  *
@@ -25,6 +26,14 @@ public class CadastrarAluno extends Application {
 
     public static void setStage(Stage stage) {
         CadastrarAluno.stage = stage;
+    }
+    
+    public void cadastrarAluno() {
+    	
+    }
+    
+    public void cadastrarAluno(Aluno aluno) {
+    	//aluno.getUsuarioId();
     }
     
     @Override

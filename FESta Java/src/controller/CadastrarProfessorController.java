@@ -110,7 +110,7 @@ public class CadastrarProfessorController implements Initializable {
     	
     	String nivelFormacao = txFormacao.getText();
     	
-    	String role = "Docente";
+    	String role = "docente";
     	//int cursoId = Integer.parseInt(txCodigoCurso.getText());
     	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
     	int cursoId = curso.getId();

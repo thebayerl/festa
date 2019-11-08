@@ -106,7 +106,7 @@ public class CadastrarAlunoController implements Initializable {
     	String dataNascimento = txNascimento.getText();
     	String dataIngresso = txIngresso.getText();
     	
-    	String role = "Discente";
+    	String role = "discente";
     	//int cursoId = Integer.parseInt(txCodigoCurso.getText());
     	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
     	int cursoId = curso.getId();
