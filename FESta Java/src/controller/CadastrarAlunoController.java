@@ -93,9 +93,7 @@ public class CadastrarAlunoController implements Initializable {
     	comboBoxCurso.setItems(obsCursos);
     }
     
-    public void cadastraAluno(){
-    	System.out.println("ENTREI no cadastra aluno cac");
-        
+    public void cadastraAluno(){        
     	
     	String username = txUserName.getText();
     	String senha = psSenha.getText();

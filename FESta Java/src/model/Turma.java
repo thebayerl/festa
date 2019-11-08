@@ -12,7 +12,7 @@ public class Turma {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private String id;
+	private int id;
 	
 	@Column(name="codigo_turma")
 	private String codigoTurma;
@@ -37,6 +37,7 @@ public class Turma {
 	
 	public Turma(){}
 	
+
 	public Turma(int maxAlunos, String ano, String semestre, int professorId, int disciplinaId,
 			int salaId) {
 		super();
@@ -109,6 +110,15 @@ public class Turma {
 		}
 	}
 
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getCodigoTurma() {
 		return codigoTurma;
 	}

@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import model.LoggedUser;
+import model.Matriculado;
 import model.Read;
 import model.Turma;
 import view.InscricaoTurma;
@@ -84,10 +85,18 @@ public class InscricaoDisciplinaController {
 
     @FXML
     void concluiInscricoes() {
+    	    	    	
+    	// impede o usuario de alterar a lista
+    	this.turmasSelecionadasListView.setDisable(true);
+    	// pega o id do usuario logado
+    	int userId = LoggedUser.getInstance().getId();    	
+    	// salva a matricula do aluno
+    	for (Turma turma : this.turmasSelecionadasListView.getItems()) {
+    		Matriculado novaMatricula = new Matriculado(userId, turma.getId());    		
+    		novaMatricula.create();
+    	}
     	
-    	LoggedUser user = LoggedUser.getInstance();
-    	
-    	System.out.print("user " + user.getUsername());
+    	InscricaoTurma.getStage().close();
     }
     
     @FXML
