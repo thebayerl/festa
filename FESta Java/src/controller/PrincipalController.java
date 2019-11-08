@@ -7,7 +7,6 @@ package controller;
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,13 +23,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarCurso;
 import view.CadastrarDisciplina;
-import view.CadastrarPreRequisitos;
 import view.CadastrarSala;
 import view.CadastrarTurma;
 import view.CadastrarUsuario;
@@ -208,15 +204,5 @@ public class PrincipalController implements Initializable {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-    
-    public void abreCadastroPreRequisitos(){
-        CadastrarPreRequisitos pr = new CadastrarPreRequisitos();
-            fecha();
-            try {
-                pr.start(new Stage());
-            } catch (Exception ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }    
     
 }
