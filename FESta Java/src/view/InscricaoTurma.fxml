@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="415.0" prefWidth="503.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controller.InscricaoDisciplinaController">
+<VBox prefHeight="415.0" prefWidth="503.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InscricaoDisciplinaController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="503.0" text="Inscrição em Disciplina">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="503.0" text="Inscrição em Turma">
          <font>
             <Font size="18.0" />
          </font>

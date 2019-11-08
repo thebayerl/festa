@@ -8,6 +8,7 @@ package controller;
 import model.Aluno;
 import model.Curso;
 import model.Read;
+import model.Usuario;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,9 +21,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarAluno;
@@ -34,16 +38,22 @@ import view.Principal;
  * @author denin
  */
 public class CadastrarAlunoController implements Initializable {
-    
-	 	@FXML private TextField txNome;
-	    @FXML private Button btCadastrar;
-	    @FXML private Button btCancelar;
-	    @FXML private TextField txNascimento;
-	    @FXML private TextField txMatricula;
+
 	    @FXML private TextField txCodigoCurso;
+	    @FXML private TextField txUserName;
+	    @FXML private PasswordField psSenha;
+	    @FXML private PasswordField psSenhaConf;
+	    @FXML private TextField txNome;
+	    @FXML private TextField txRG;
+	    @FXML private TextField txCPF;
+	    @FXML private TextField txNascimento;
 	    @FXML private TextField txIngresso;
 	    @FXML private ComboBox<Curso> comboBoxCurso;
-    
+	    @FXML private Button btVoltar;
+	    @FXML private Button btEnviar;
+	    
+	    
+	    
     /**
      * Initializes the controller class.
      */
@@ -56,12 +66,12 @@ public class CadastrarAlunoController implements Initializable {
         // TODO
         carregarCursos();
     	
-        btCancelar.setOnMouseClicked((MouseEvent e)->{
+        btVoltar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
             abrePrincipal();
         });
         
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
+        btEnviar.setOnMouseClicked((MouseEvent e)->{
             System.out.println("Apertei");
         	cadastraAluno();
         });
@@ -86,25 +96,40 @@ public class CadastrarAlunoController implements Initializable {
     public void cadastraAluno(){
     	System.out.println("ENTREI no cadastra aluno cac");
         
-    	String matricula = txMatricula.getText();
+    	
+    	String username = txUserName.getText();
+    	String senha = psSenha.getText();
+    	String senhaConf = psSenhaConf.getText();
+    	
+    	String rg = txRG.getText();
+    	String cpf= txCPF.getText();
+    	
     	String nome = txNome.getText();
     	String dataNascimento = txNascimento.getText();
     	String dataIngresso = txIngresso.getText();
+    	
+    	String role = "Discente";
     	//int cursoId = Integer.parseInt(txCodigoCurso.getText());
     	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
     	int cursoId = curso.getId();
-    	final String sql = "SELECT max( u.id ) FROM Usuario u";
-        Integer usuarioId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
     	
-        Aluno a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, cursoId);
-        a.create();
-        
-        //Create a = new Create();
-        //a.Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, codigoCurso);
-        //abrePrincipal();
-        
-        
-     //   Disciplina d = new Disciplina(nome, creditos, departamento);
+    	if(senha.compareTo(senhaConf) == 0) {
+    		
+    		Usuario u = new Usuario(username, senha, rg, cpf, role);
+        	u.create();
+    		int usuarioId = u.getId();
+    		
+    		System.out.println("usuarioId: "+ usuarioId);
+       
+    		Aluno a = new Aluno(usuarioId, nome, dataNascimento, dataIngresso, cursoId);
+    		a.create();
+    	}else {
+
+            Alert al = new Alert(AlertType.ERROR);
+            al.setHeaderText("As senhas não coincidem");
+            al.show();
+    	}
+    	
      
     }
     

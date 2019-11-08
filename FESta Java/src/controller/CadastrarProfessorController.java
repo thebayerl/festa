@@ -5,16 +5,29 @@
  */
 package controller;
 
+import model.Aluno;
+import model.Curso;
 import model.Professor;
+import model.Read;
+import model.Usuario;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarProfessor;
@@ -31,44 +44,98 @@ public class CadastrarProfessorController implements Initializable {
      * Initializes the controller class.
      */
     
-	@FXML private TextField txNome;
-    @FXML private Button btCadastrar;
-    @FXML private Button btCancelar;
+   
+    @FXML private TextField txUserName;
+    @FXML private PasswordField psSenha;
+    @FXML private PasswordField psSenhaConf;
+    @FXML private TextField txNome;
     @FXML private TextField txFormacao;
-    @FXML private TextField txMatricula;
-    @FXML private TextField txCodigoCurso;
+    @FXML private TextField txRG;
+    @FXML private TextField txCPF;
+    @FXML private ComboBox<Curso> comboBoxCurso;
+    @FXML private Button btVoltar;
+    @FXML private Button btEnviar;
+    
+    
+    
+    private List<Curso> listCursos = new ArrayList<>();
+    private ObservableList<Curso> obsCursos;
+    
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btCancelar.setOnMouseClicked((MouseEvent e)->{
+    	
+    	carregarCursos();
+    	
+    	btVoltar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
             abrePrincipal();
         });
         
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
+    	btEnviar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
         	cadastraProfessor();
         });
         
     }
     
+    public void carregarCursos() {
+    	listCursos.clear();
+    	comboBoxCurso.getItems().clear();
+    	//System.out.println(cursoId + " " + codigoCurso + " " + nomeCurso );
+    	listCursos = Read.getCurso(null, null, null);
+    	//for(Curso elemento: listCursos){
+    	//	   System.out.println(elemento.getnome());
+    	//}
+    	if(obsCursos != null) {
+    		obsCursos.clear();
+    	}
+    	obsCursos = FXCollections.observableArrayList(listCursos);
+    	//comboBoxCurso.getItems().clear();
+    	comboBoxCurso.setItems(obsCursos);
+    }
+    
     public void cadastraProfessor(){
     	
-    	String nome = txNome.getText();
-    	String matricula = txMatricula.getText();
-    	String nivelFormacao = txFormacao.getText();
-    	int codigoCurso = Integer.parseInt(txCodigoCurso.getText());
-
-    	final String sql = "SELECT max( u.id ) FROM Usuario u";
-        Integer usuarioId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
+    	String username = txUserName.getText();
+    	String senha = psSenha.getText();
+    	String senhaConf = psSenhaConf.getText();
     	
-        //Create p = new Create();
-        //p.Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
+    	String rg = txRG.getText();
+    	String cpf= txCPF.getText();
+    	
+    	String nome = txNome.getText();
+    	
+    	String nivelFormacao = txFormacao.getText();
+    	
+    	String role = "Docente";
+    	//int cursoId = Integer.parseInt(txCodigoCurso.getText());
+    	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
+    	int cursoId = curso.getId();
+    	
+    	
+    	if(senha.compareTo(senhaConf) == 0) {
+    		
+    		Usuario u = new Usuario(username, senha, rg, cpf, role);
+        	u.create();
+    		int usuarioId = u.getId();
+    		
+       
+    		Professor p = new Professor(usuarioId, nome, nivelFormacao, cursoId);
+    		p.create();
+    	}else {
+
+            Alert al = new Alert(AlertType.ERROR);
+            al.setHeaderText("As senhas não coincidem");
+            al.show();
+    	}
+    	
+    	
+    	
         
-        Professor p = new Professor(usuarioId, nome, matricula, nivelFormacao, codigoCurso);
-        p.create();
-        abrePrincipal();
+        //abrePrincipal();
         //Sala s = new Sala(capacidade);
         
     }

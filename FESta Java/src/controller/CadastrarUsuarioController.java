@@ -197,7 +197,7 @@ public class CadastrarUsuarioController implements Initializable {
     	int cursoId = curso.getId();
     	//int cursoId = Integer.parseInt(txCodigoCursoAluno.getText());    	
     	
-        a = new Aluno(usuarioId, matricula, nome, dataNascimento, dataIngresso, cursoId);
+        a = new Aluno(usuarioId, nome, dataNascimento, dataIngresso, cursoId);
         a.create();
         System.out.println("cadastreiiiiiiiiiiiiiiii");
         //abrePrincipal();
@@ -210,12 +210,9 @@ public class CadastrarUsuarioController implements Initializable {
     	String nivelFormacao = txFormacao.getText();
     	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
     	int cursoId = curso.getId();
-    	//final String sql = "SELECT max( p.id ) FROM Professor p";
-    	//Integer lastId = (Integer) HibernateUtil.getSession().createQuery( sql ).uniqueResult();
-    	        
-    	//int usuarioId = (int) lastId;
+
     	System.out.println("usuario id: " + usuarioId);
-    	p = new Professor(usuarioId, nome, matricula, nivelFormacao, cursoId);
+    	p = new Professor(usuarioId, nome, nivelFormacao, cursoId);
         p.create();
         System.out.println("cadastreiiiiiiiiiiiiiiii");
     	//abrePrincipal();
