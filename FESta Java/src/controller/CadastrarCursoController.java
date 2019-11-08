@@ -40,7 +40,7 @@ public class CadastrarCursoController implements Initializable {
         // TODO
         
         btCancelar.setOnMouseClicked((MouseEvent e)->{
-            abrePrincipal();
+            voltaTela();
         });
         
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
@@ -55,7 +55,7 @@ public class CadastrarCursoController implements Initializable {
         
         Curso c = new Curso(codigoCurso, nome);
         c.create();
-        abrePrincipal();
+        voltaTela();
         
         
     }
@@ -63,13 +63,15 @@ public class CadastrarCursoController implements Initializable {
         CadastrarCurso.getStage().close();
     }
     
-    public void abrePrincipal(){
-        Principal p = new Principal();
+    public void voltaTela(){
         fecha();
-        try {
-            p.start(new Stage());
-        } catch (Exception ex) {
-            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
+        //Principal p = new Principal();
+//        fecha();
+//        try {
+//            p.start(new Stage());
+//        } catch (Exception ex) {
+//            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }

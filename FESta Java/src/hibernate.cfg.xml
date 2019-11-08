@@ -35,6 +35,7 @@
 	    <mapping class="model.Sala"/>
 	    <mapping class="model.DisciplinaCurso"/>
 	    <mapping class="model.ProfessorCapacidade"/>
+        <mapping class="model.Matriculado"/>
  
     </session-factory>
 

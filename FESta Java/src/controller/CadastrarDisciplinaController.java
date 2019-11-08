@@ -132,12 +132,12 @@ public class CadastrarDisciplinaController implements Initializable {
     }
     
     public void abrePrincipal() {
-        Principal p = new Principal();
+        //Principal p = new Principal();
         fecha();
-        try {
-            p.start(new Stage());
-        } catch (Exception ex) {
-            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //try {
+        //    p.start(new Stage());
+        //} catch (Exception ex) {
+        //    Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        //}
     }
 }

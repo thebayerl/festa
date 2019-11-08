@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -68,7 +69,7 @@ public class CadastrarAlunoController implements Initializable {
     	
         btVoltar.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
-            abrePrincipal();
+            voltaTela();
         });
         
         btEnviar.setOnMouseClicked((MouseEvent e)->{
@@ -135,14 +136,17 @@ public class CadastrarAlunoController implements Initializable {
         CadastrarAluno.getStage().close();
     }
     
-    public void abrePrincipal(){
-        Principal p = new Principal();
-        fecha();
-        try {
-            p.start(new Stage());
-        } catch (Exception ex) {
-            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void voltaTela(){
+
+
+    	fecha();
+//        Principal p = new Principal(user);
+//        fecha();
+//        try {
+//            p.start(new Stage());
+//        } catch (Exception ex) {
+//            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
 

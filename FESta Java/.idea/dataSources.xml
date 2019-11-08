@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="0da8d42d-2133-482b-bbff-bd6ccb30eb64">
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="899558eb-a2d2-427b-8ba6-c72f7f9d101e">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <remarks>Hibernate
 
-D:/Arquivos/Documentos/Lucas/GitHub/festa/FESta Java/src/hibernate.cfg.xml</remarks>
+C:/Users/lucas/Documents/GitHub/festa/FESta Java/src/hibernate.cfg.xml</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://database-1.cttt6jzksrlr.us-east-2.rds.amazonaws.com:3306/controle_academico?useSSL=false&amp;serverTimezone=UTC</jdbc-url>
       <driver-properties>

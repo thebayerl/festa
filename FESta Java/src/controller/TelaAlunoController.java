@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import view.CadastrarAluno;
 import view.InscricaoTurma;
+import view.VisualizarTurma;
 
 public class TelaAlunoController {
 	 
@@ -27,6 +28,10 @@ public class TelaAlunoController {
 	    	this.btInscricaoTurma.setOnMouseClicked((MouseEvent e)->{    		
 	            this.exibeTelaInscricao();
 	        });
+
+			this.btVerMinhasTurmas.setOnMouseClicked((MouseEvent e)->{
+				this.exibeTelaTurmas();
+			});
 	    }
 	    
 	    private void exibeTelaInscricao() {	    		    
@@ -39,5 +44,16 @@ public class TelaAlunoController {
 				e.printStackTrace();
 			}
 	    }
+
+	private void exibeTelaTurmas() {
+
+		VisualizarTurma telaTurmas = new VisualizarTurma();
+
+		try {
+			telaTurmas.start(new Stage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

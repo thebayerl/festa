@@ -10,19 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import view.CadastrarAluno;
 import view.Principal;
 
-import javax.persistence.EntityManager;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +28,8 @@ import java.util.logging.Logger;
 public class VizualizarTurmaController implements Initializable {
 
     @FXML private ListView<String> listViewTurmas;
+
+    private List<Matriculado> listMatriculados = new ArrayList<>();
 
     private List<Turma> listTurmas = new ArrayList<>();
     private List<String> listTurmasStr = new ArrayList<>();
@@ -48,7 +45,22 @@ public class VizualizarTurmaController implements Initializable {
     }
 
     public void carregarTurmas() {
-        listTurmas = Read.getTurma(null, null, null, null, null, null, null);
+
+        Usuario user = LoggedUser.getInstance();
+        String alunoId = String.valueOf(user.getId());
+        listMatriculados = Read.getMatriculado(alunoId, null);
+        String turmaId;
+        for(Matriculado elemento: listMatriculados){
+            turmaId = String.valueOf(elemento.getturmaId());
+            Turma t = Read.getTurma(turmaId,  null,  null,  null,  null,  null,  null, null).get(0);
+            listTurmas.add(t);
+
+        }
+
+
+
+
+        //listTurmas = Read.getTurma(null, null, null, null, null, null, null, null);
         List<String> professores = new ArrayList<>();
 
         SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();

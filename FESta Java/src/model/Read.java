@@ -265,7 +265,7 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Matriculado> Matriculado(String alunoId, String turmaId) {
+	public static List<Matriculado> getMatriculado(String alunoId, String turmaId) {
 	
 		String query = "from Matriculado where ";
 		query += add("alunoId",alunoId);
@@ -411,8 +411,8 @@ public class Read {
 	}
 	
 	// pegas as turmas de acordo com os par�metros
-	public static List<Turma> getTurma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
-			String codigoSala) {
+	public static List<Turma> getTurma(String turmaId, String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
+									   String codigoSala) {
 		
 		codigoTurma = aspas(codigoTurma);
 		ano = aspas(ano);
@@ -422,6 +422,7 @@ public class Read {
 		
 		
 		String query = "from Turma where ";
+		query += add("id",turmaId);
 		query += add("codigoTurma",codigoTurma);
 		query += add("maxAlunos",maxAlunos);
 		query += add("ano",ano);
@@ -451,7 +452,7 @@ public class Read {
 	
 	// pega todas as tumas
 	public static List<Turma> getTurma() {		
-		return getTurma(null, null, null, null, null, null, null);
+		return getTurma(null, null, null, null, null, null, null, null);
 	}
 	
 	public List<Usuario> Usuario(String id, String username, String senha, String rg, String cpf) {

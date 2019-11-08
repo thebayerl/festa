@@ -7,7 +7,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -221,7 +220,7 @@ public class InscricaoDisciplinaController {
     	
     	String disciplinaId = String.valueOf(disciplina.getId());
     	// lê as turmas
-		this.turmasNaoSelecionadas = Read.getTurma(null, null, null, null, null, disciplinaId, null);
+		this.turmasNaoSelecionadas = Read.getTurma(null, null, null, null, null, null, disciplinaId, null);
 		this.turmasNaoSelecionadas.add(0, new Turma());
 		this.obsTurmas = FXCollections.observableArrayList(this.turmasNaoSelecionadas);
 		// popula a combobox
