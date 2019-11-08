@@ -12,20 +12,15 @@ import view.CadastrarAluno;
 import view.CadastrarDisciplina;
 import view.CadastrarProfessor;
 import view.CadastrarTurma;
+import view.VisualizarTurma;
 
 public class TelaSecretarioController {
 	
-	 @FXML
-    private Button btCadastrarProfessor;
-
-    @FXML
-    private Button btCadastrarAluno;
-
-    @FXML
-    private Button btCadastrarDisciplina;
-
-    @FXML
-    private Button btCadastrarTurma;
+	@FXML private Button btCadastrarProfessor;
+    @FXML private Button btCadastrarAluno;
+    @FXML private Button btCadastrarDisciplina;
+    @FXML private Button btCadastrarTurma;
+    @FXML private Button btVisualizarTurma;
     
     
     @FXML
@@ -45,6 +40,10 @@ public class TelaSecretarioController {
     	
     	this.btCadastrarTurma.setOnMouseClicked((MouseEvent e)->{
     		this.initializeNewScreen(new CadastrarTurma(), "Cadastrar Turma");
+        });
+    	
+    	this.btVisualizarTurma.setOnMouseClicked((MouseEvent e)->{
+    		this.initializeNewScreen(new VisualizarTurma(), "Visualizar Turma");
         });
     	    	
     }
