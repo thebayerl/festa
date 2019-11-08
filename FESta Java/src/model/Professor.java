@@ -50,12 +50,7 @@ public class Professor {
 		
 		try {			
 			// iniciando a transação
-			session.beginTransaction();
-			
-			/*if(session.get(Cordenador.class, codigoCurso) == null) {
-				System.out.println("\nERRO: Aluno com codigoCurso = " + codigoCurso + " já existente\n");
-				erro = true;
-			}*/
+			session.beginTransaction();			
 			
 			if(!erro) {
 				

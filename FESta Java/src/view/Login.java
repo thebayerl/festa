@@ -30,18 +30,15 @@ public class Login extends Application {
     @Override
     public void start(Stage stage) throws Exception {
     	 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));//Carrega FXML
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
         
-        Scene scene = new Scene(root);//Coloca o FXML em uma cena
+        Scene scene = new Scene(root);
         stage.setTitle("Login");
-        stage.setScene(scene);//Coloca a cena em uma janela
-        stage.show();//Abre a janela2
+        stage.setScene(scene);
+        stage.show();
         setStage(stage);
     }
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         launch(args);
     }

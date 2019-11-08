@@ -9,8 +9,10 @@ public class TelaAluno extends BorderPane{
 	
 	public TelaAluno () {
 		
+		
+		this.setCache(false);
 		FXMLLoader loader = new FXMLLoader( getClass().getResource( "/view/TelaAluno.fxml" ) );
-	    loader.setRoot( this );
+	    loader.setRoot( this );	    	    
 	    
 	    try {
 	        loader.load();

@@ -49,7 +49,6 @@ public class CadastrarTurmaController implements Initializable {
 	private List<ProfessorCapacidade> listProfessorCapacidades = new ArrayList<>();
     
     private List<DisciplinaCurso> listDisciplinaCursos = new ArrayList<>();
-    //private ObservableList<Disciplina> obsDisciplinaCursos;
 
     private List<Curso> listCursos = new ArrayList<>();
     private ObservableList<Curso> obsCursos;

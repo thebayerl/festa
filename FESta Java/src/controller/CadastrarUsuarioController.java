@@ -99,7 +99,6 @@ public class CadastrarUsuarioController implements Initializable {
         	} else {	
         		cadastraAluno();
         	}
-        	//abrePrincipal();
             
         });
         

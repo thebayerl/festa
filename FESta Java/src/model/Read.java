@@ -111,7 +111,7 @@ public class Read {
 		return resultado;
 	}
 	
-public static List<Curso> getCurso() {
+	public static List<Curso> getCurso() {
 		
 		String query = "from Curso ";
 
@@ -189,12 +189,8 @@ public static List<Curso> getCurso() {
 	
 		return resultado;
 	}
-	
-	
-	
+			
 	public static List<Professor> getProfessor() {
-
-		//nome = aspas(nome);
 		
 		String query = "from Professor ";
 		
@@ -214,7 +210,6 @@ public static List<Curso> getCurso() {
 	
 		return resultado;
 	}
-	
 	
 	public static List<DisciplinaCurso> getDisciplinaCurso(String cursoId, String disciplinaId) {
 		
@@ -415,7 +410,8 @@ public static List<Curso> getCurso() {
 		
 	}
 	
-	public List<Turma> Turma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
+	// pegas as turmas de acordo com os parâmetros
+	public static List<Turma> getTurma(String codigoTurma, String maxAlunos, String ano, String semestre, String professorId, String disciplinaId,
 			String codigoSala) {
 		
 		codigoTurma = aspas(codigoTurma);
@@ -453,6 +449,11 @@ public static List<Curso> getCurso() {
 		
 	}
 	
+	// pega todas as tumas
+	public static List<Turma> getTurma() {		
+		return getTurma(null, null, null, null, null, null, null);
+	}
+	
 	public List<Usuario> Usuario(String id, String username, String senha, String rg, String cpf) {
 		
 		username = aspas(username);
@@ -485,7 +486,7 @@ public static List<Curso> getCurso() {
 		
 	}
 	
-public static List<String> getDistinctPredio() {
+	public static List<String> getDistinctPredio() {
 		
 		
 		String query = "select distinct predio from Sala";

@@ -60,29 +60,7 @@ public class Turma {
 		
 		try {			
 			// iniciando a transação
-			session.beginTransaction();
-			
-			// testando a validade dos dados recebidos
-			
-			/*if(session.get(Turma.class, codigoTurma) == null) {
-				System.out.println("Turma com codigoTurma = " + codigoTurma + " não existente\n");
-				erro = true;
-			}
-			
-			if(session.get(Professor.class, professorId) == null) {
-				System.out.println("Professor com professorId = " + professorId + " não existente\n");
-				erro = true;
-			}
-			
-			if(session.get(Disciplina.class, disciplinaId) == null) {
-				System.out.println("Disciplina com disciplinaId = " + disciplinaId + " não existente\n");
-				erro = true;
-			}
-			
-			if(session.get(Sala.class, codigoSala) == null) {
-				System.out.println("Sala com codigoSala = " + codigoSala + " não existente\n");
-				erro = true;
-			}*/
+			session.beginTransaction();						
 			
 			if(!erro) {
 				
@@ -189,6 +167,7 @@ public class Turma {
 
 	@Override
 	public String toString() {
+		if (this.getCodigoTurma() == null) return "";
 		return this.getDisciplinaId() + " " + this.getProfessorId() + " " + this.getCodigoTurma();
 	}
 	

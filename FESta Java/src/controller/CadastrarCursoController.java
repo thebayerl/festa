@@ -40,7 +40,6 @@ public class CadastrarCursoController implements Initializable {
         // TODO
         
         btCancelar.setOnMouseClicked((MouseEvent e)->{
-            //System.out.println("Sai");
             abrePrincipal();
         });
         

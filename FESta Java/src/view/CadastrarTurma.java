@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class CadastrarTurma extends Application {
     
-    private static Stage stage;//é uma janela1
+    private static Stage stage;
 
     public static Stage getStage() {
         return stage;

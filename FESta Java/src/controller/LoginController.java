@@ -28,6 +28,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.Login;
 import view.Principal;
+import model.LoggedUser;
 import model.Usuario;
 
 /**
@@ -111,10 +112,11 @@ public class LoginController implements Initializable {
     				
     				System.out.println("results not empty");
     				// pega o usuario com username unico - a unicidade do username deve ser garantida na inseridos
-    				user = results.get(0);
+    				user = results.get(0);    				    				
     			
 	    			if (password.equals(user.getSenha())) {
 	    				
+	    				LoggedUser.setLoggedUser(user);
 	    				Principal p = new Principal(user);
 	    	            fecha();
 	    	            
