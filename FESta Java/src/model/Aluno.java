@@ -1,4 +1,8 @@
 package model;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,10 +28,10 @@ public class Aluno {
 	private String nome;
 
 	@Column(name="data_nascimento")
-	private String dataNascimento; 
+	private Date dataNascimento; 
 	
 	@Column(name="data_ingresso")
-	private String dataIngresso;
+	private Date dataIngresso;
 	
 	@Column(name="curso_id")
 	private int cursoId;
@@ -39,8 +43,14 @@ public class Aluno {
 		this.usuarioId = usuarioId;
 		this.matricula = matricula;
 		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.dataIngresso = dataIngresso;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");				
+		try {
+			this.dataIngresso = format.parse ( dataIngresso );
+			this.dataNascimento = format.parse ( dataNascimento );
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 		this.cursoId = cursoId;
 	}
 
@@ -135,20 +145,33 @@ public class Aluno {
 		this.nome = nome;
 	}
 
-	public String getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
 	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");				
+		try {			
+			this.dataNascimento = format.parse ( dataNascimento );
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 	}
 
-	public String getDataIngresso() {
+	public Date getDataIngresso() {
 		return dataIngresso;
 	}
 
 	public void setDataIngresso(String dataIngresso) {
-		this.dataIngresso = dataIngresso;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");				
+		try {			
+			this.dataIngresso = format.parse ( dataIngresso );
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 	}
 
 	public int getUsuarioId() {
