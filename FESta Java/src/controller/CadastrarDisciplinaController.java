@@ -96,7 +96,9 @@ public class CadastrarDisciplinaController implements Initializable {
         }
         listViewPrerequisito.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listDisciplinas = Read.getDisciplina(null, null, null, null);
+        Comparator<Disciplina> comparator = Comparator.comparing(Disciplina::getNome);
         ObservableList obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
+        FXCollections.sort(obsDisciplinas, comparator);
         listViewPrerequisito.setItems(obsDisciplinas);
     }
     
@@ -129,7 +131,7 @@ public class CadastrarDisciplinaController implements Initializable {
         CadastrarDisciplina.getStage().close();
     }
     
-    public void abrePrincipal(){
+    public void abrePrincipal() {
         Principal p = new Principal();
         fecha();
         try {
@@ -138,5 +140,4 @@ public class CadastrarDisciplinaController implements Initializable {
             Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }
