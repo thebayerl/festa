@@ -136,7 +136,7 @@ public class InscricaoDisciplinaController {
 //    		System.out.println("APERTEI O BOTÃO TD");
 //    		carregarTodasDisciplinas();
 //    		
-//        });
+//        });j
     	
     	btDisciplinasCurso.setOnMouseClicked((MouseEvent e)->{
             //System.out.println("Sai");
