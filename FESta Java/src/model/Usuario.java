@@ -10,6 +10,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Entity
 @Table(name="usuario")
 public class Usuario {
@@ -30,19 +34,40 @@ public class Usuario {
 	
 	@Column(name="cpf")
 	private String cpf;
-	
+
+	@Column(name="data_nascimento")
+	private Date dataNascimento;
+
+	@Column(name="tel_residencial")
+	private String telResidencial;
+
+	@Column(name="tel_celular")
+	private String telCelular;
+
+	@Column(name="email")
+	private String email;
+
 	@Column(name="role_user")
 	private String role;
 
 
 	public Usuario(){}
 
-	public Usuario(String username, String senha, String rg, String cpf, String role) {
-		super();
+	public Usuario(String username, String senha, String rg, String cpf, String dataNascimento, String telResidencial, String telCelular, String email, String role) {
 		this.username = username;
 		this.senha = senha;
 		this.rg = rg;
 		this.cpf = cpf;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			this.dataNascimento = format.parse ( dataNascimento );
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		this.telResidencial = telResidencial;
+		this.telCelular = telCelular;
+		this.email = email;
 		this.role = role;
 	}
 
@@ -146,12 +171,21 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", username=" + username + ", senha=" + senha + ", rg=" + rg + ", cpf=" + cpf
-				+ "]";
+	public Date getDataNascimento() {
+		return dataNascimento;
 	}
-	
+
+	public void setDataNascimento(String dataNascimento) {
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			this.dataNascimento = format.parse ( dataNascimento );
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+	}
+
 	public String getRole() {
 		return role;
 	}
@@ -161,5 +195,33 @@ public class Usuario {
 		this.role = role;
 	}
 
-	
+	public String getTelResidencial() {
+		return telResidencial;
+	}
+
+	public void setTelResidencial(String telResidencial) {
+		this.telResidencial = telResidencial;
+	}
+
+	public String getTelCelular() {
+		return telCelular;
+	}
+
+	public void setTelCelular(String telCelular) {
+		this.telCelular = telCelular;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", username=" + username + ", senha=" + senha + ", rg=" + rg + ", cpf=" + cpf + "]";
+	}
+
 }

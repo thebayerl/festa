@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 public class Update {
 
 	
-	public boolean Aluno(Integer id, String matricula, String nome, String dataNascimento, String dataIngresso, 
+	public boolean Aluno(Integer id, String matricula, String nome, String dataIngresso,
 			Integer codigoCurso) {
 		boolean sucesso = true;
 		
@@ -41,9 +41,6 @@ public class Update {
 				}
 				if(dataIngresso != null) {
 					obj.setDataIngresso(dataIngresso);
-				}
-				if(dataNascimento != null) {
-					obj.setDataNascimento(dataNascimento);
 				}
 				if(nome != null) {
 					obj.setNome(nome);

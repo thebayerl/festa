@@ -12,7 +12,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
-
 @Entity
 @Table(name="aluno")
 public class Aluno {
@@ -26,9 +25,6 @@ public class Aluno {
 	
 	@Column(name="nome")
 	private String nome;
-
-	@Column(name="data_nascimento")
-	private Date dataNascimento; 
 	
 	@Column(name="data_ingresso")
 	private Date dataIngresso;
@@ -38,7 +34,7 @@ public class Aluno {
 	
 	public Aluno() {}
 	
-	public Aluno(int usuarioId, String nome, String dataNascimento, String dataIngresso, int cursoId) {
+	public Aluno(int usuarioId, String nome, String dataIngresso, int cursoId) {
 		super();
 		this.usuarioId = usuarioId;
 		this.matricula = "";
@@ -46,7 +42,6 @@ public class Aluno {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");				
 		try {
 			this.dataIngresso = format.parse ( dataIngresso );
-			this.dataNascimento = format.parse ( dataNascimento );
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,20 +140,7 @@ public class Aluno {
 		this.nome = nome;
 	}
 
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
 
-	public void setDataNascimento(String dataNascimento) {
-		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");				
-		try {			
-			this.dataNascimento = format.parse ( dataNascimento );
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-	}
 
 	public Date getDataIngresso() {
 		return dataIngresso;

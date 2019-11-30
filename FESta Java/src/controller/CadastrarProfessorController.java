@@ -5,6 +5,7 @@
  */
 package controller;
 
+import javafx.scene.control.*;
 import model.Aluno;
 import model.Curso;
 import model.Professor;
@@ -22,11 +23,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -40,11 +36,6 @@ import view.Principal;
  */
 public class CadastrarProfessorController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
-    
-   
     @FXML private TextField txUserName;
     @FXML private PasswordField psSenha;
     @FXML private PasswordField psSenhaConf;
@@ -52,17 +43,17 @@ public class CadastrarProfessorController implements Initializable {
     @FXML private TextField txFormacao;
     @FXML private TextField txRG;
     @FXML private TextField txCPF;
+    @FXML private DatePicker dtNascimento;
+    @FXML private TextField txTelResidencial;
+    @FXML private TextField txTelCelular;
+    @FXML private TextField txEmail;
     @FXML private ComboBox<Curso> comboBoxCurso;
     @FXML private Button btVoltar;
     @FXML private Button btEnviar;
-    
-    
-    
+
     private List<Curso> listCursos = new ArrayList<>();
     private ObservableList<Curso> obsCursos;
-    
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -102,27 +93,24 @@ public class CadastrarProfessorController implements Initializable {
     	String username = txUserName.getText();
     	String senha = psSenha.getText();
     	String senhaConf = psSenhaConf.getText();
-    	
     	String rg = txRG.getText();
     	String cpf= txCPF.getText();
-    	
+        String dataNascimento = dtNascimento.getValue().toString();
+        String telResidencial = txTelResidencial.getText();
+        String telCelular = txTelCelular.getText();
+        String email = txEmail.getText();
     	String nome = txNome.getText();
-    	
     	String nivelFormacao = txFormacao.getText();
-    	
     	String role = "docente";
-    	//int cursoId = Integer.parseInt(txCodigoCurso.getText());
     	Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
     	int cursoId = curso.getId();
     	
-    	
     	if(senha.compareTo(senhaConf) == 0) {
-    		
-    		Usuario u = new Usuario(username, senha, rg, cpf, role);
+
+            Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
         	u.create();
     		int usuarioId = u.getId();
-    		
-       
+
     		Professor p = new Professor(usuarioId, nome, nivelFormacao, cursoId);
     		p.create();
     	}else {
@@ -131,9 +119,6 @@ public class CadastrarProfessorController implements Initializable {
             al.setHeaderText("As senhas não coincidem");
             al.show();
     	}
-    	
-    	
-    	
         
         //abrePrincipal();
         //Sala s = new Sala(capacidade);
