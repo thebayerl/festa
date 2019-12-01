@@ -7,19 +7,12 @@ package controller;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Aluno;
-import model.Curso;
-import model.Read;
-import model.Usuario;
+import javafx.scene.layout.FlowPane;
+import model.*;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import java.util.*;
+import java.util.regex.Pattern;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,12 +20,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationMessage;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import view.CadastrarAluno;
-import view.Principal;
 
 /**
  * FXML Controller class
@@ -40,70 +35,6 @@ import view.Principal;
  * @author denin
  */
 public class CadastrarAlunoController implements Initializable {
-
-	public class UsuarioAluno{
-		private Integer id, cursoId;
-		private String  nome, cursoNome, email, telCel, telRes, cpf, rg, dataIngresso, dataNascimento;
-
-		public UsuarioAluno(Integer id, Integer cursoId, String nome, String cursoNome, String email, String telCel,
-							String telRes, String cpf, String rg, String dataIngresso, String dataNascimento) {
-			this.id = id;
-			this.cursoId = cursoId;
-			this.nome = nome;
-			this.cursoNome = cursoNome;
-			this.email = email;
-			this.telCel = telCel;
-			this.telRes = telRes;
-			this.cpf = cpf;
-			this.rg = rg;
-			this.dataIngresso = dataIngresso;
-			this.dataNascimento = dataNascimento;
-		}
-
-		public Integer getId() {
-			return id;
-		}
-
-		public Integer getCursoId() {
-			return cursoId;
-		}
-
-		public String getNome() {
-			return nome;
-		}
-
-		public String getCursoNome() {
-			return cursoNome;
-		}
-
-		public String getEmail() {
-			return email;
-		}
-
-		public String getTelCel() {
-			return telCel;
-		}
-
-		public String getTelRes() {
-			return telRes;
-		}
-
-		public String getCpf() {
-			return cpf;
-		}
-
-		public String getRg() {
-			return rg;
-		}
-
-		public String getDataIngresso() {
-			return dataIngresso;
-		}
-
-		public String getDataNascimento() {
-			return dataNascimento;
-		}
-	}
 
 	@FXML private TextField txUserName;
 	@FXML private PasswordField psSenha;
@@ -117,6 +48,7 @@ public class CadastrarAlunoController implements Initializable {
 	@FXML private DatePicker dtNascimento;
 	@FXML private DatePicker dtIngresso;
 	@FXML private ComboBox<Curso> comboBoxCurso;
+	@FXML private FlowPane flowPaneForm;
 	@FXML private Button btCadastrar;
 	@FXML private Button btAlterar;
 	@FXML private Button btRemover;
@@ -126,12 +58,19 @@ public class CadastrarAlunoController implements Initializable {
 	@FXML private TableColumn<UsuarioAluno, String> columnCurso;
 	@FXML private TableColumn<UsuarioAluno, String> columnEmail;
 	@FXML private TableColumn<UsuarioAluno, String> columnTelCel;
+	@FXML private TableColumn<UsuarioAluno, String> columnTelRes;
 	@FXML private TableColumn<UsuarioAluno, String> columnCpf;
+	@FXML private TableColumn<UsuarioAluno, String> columnRg;
+	@FXML private TableColumn<UsuarioAluno, Date> columnDataIngresso;
+	@FXML private TableColumn<UsuarioAluno, Date> columnDataNascimento;
 
 	private TextFieldFormatter tffCpf = new TextFieldFormatter();
 	private	TextFieldFormatter tffRg = new TextFieldFormatter();
 	private	TextFieldFormatter tffTelRes = new TextFieldFormatter();
 	private	TextFieldFormatter tffTelCel = new TextFieldFormatter();
+
+	private ValidationSupport emptyValidator = new ValidationSupport();
+	private ValidationSupport regexValidator = new ValidationSupport();
 
 	private List<Curso> listCursos = new ArrayList<>();
 	private ObservableList<Curso> obsCursos;
@@ -143,24 +82,104 @@ public class CadastrarAlunoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+		inicializarTextMasks();
+		inicializarEmptyValidator();
+		inicializarRegexValidator();
+		inicializarTableColumns();
         carregarCursos();
 		carregarTableAlunos();
 
+        btCadastrar.setOnMouseClicked((MouseEvent e)->{
+			errorsDialog();
+        	cadastraAluno();
+        });
+    }
+
+	private void inicializarTableColumns(){
+		columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		columnCurso.setCellValueFactory(new PropertyValueFactory<>("cursoNome"));
+		columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		columnTelCel.setCellValueFactory(new PropertyValueFactory<>("telCel"));
+		columnTelRes.setCellValueFactory(new PropertyValueFactory<>("telRes"));
+		columnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		columnRg.setCellValueFactory(new PropertyValueFactory<>("rg"));
+		columnDataIngresso.setCellValueFactory(new PropertyValueFactory<>("dataIngresso"));
+		columnDataNascimento.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
+	}
+
+	private void inicializarTextMasks(){
 		tffCpf.setMask("###.###.###-##");
 		tffCpf.setCaracteresValidos("0123456789");
 		tffRg.setMask("##.###.###-#");
 		tffRg.setCaracteresValidos("0123456789");
-		tffTelRes.setMask("(##) ####-####");
+		tffTelRes.setMask("(##)####-####");
 		tffTelRes.setCaracteresValidos("0123456789");
-		tffTelCel.setMask("(##) #####-####");
+		tffTelCel.setMask("(##)#####-####");
 		tffTelCel.setCaracteresValidos("0123456789");
+	}
 
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
-        	cadastraAluno();
-        });
+	private void inicializarEmptyValidator(){
+		//Campos obrigatórios
+		emptyValidator.registerValidator(txUserName, Validator.createEmptyValidator(txUserName.getPromptText()));
+		emptyValidator.registerValidator(psSenha, Validator.createEmptyValidator(psSenha.getPromptText()));
+		emptyValidator.registerValidator(psSenhaConf, Validator.createEmptyValidator(psSenhaConf.getPromptText()));
+		emptyValidator.registerValidator(txEmail, Validator.createEmptyValidator(txEmail.getPromptText()));
+		emptyValidator.registerValidator(txNome, Validator.createEmptyValidator(txNome.getPromptText()));
+		emptyValidator.registerValidator(txRG, Validator.createEmptyValidator(txRG.getPromptText()));
+		emptyValidator.registerValidator(txCPF, Validator.createEmptyValidator(txCPF.getPromptText()));
+		emptyValidator.registerValidator(txTelCelular, Validator.createEmptyValidator(txTelCelular.getPromptText()));
+		emptyValidator.registerValidator(dtNascimento, Validator.createEmptyValidator(dtNascimento.getPromptText()));
+		emptyValidator.registerValidator(dtIngresso, Validator.createEmptyValidator(dtIngresso.getPromptText()));
+		emptyValidator.registerValidator(comboBoxCurso, Validator.createEmptyValidator(comboBoxCurso.getPromptText()));
+	}
+
+	private void inicializarRegexValidator(){
+    	regexValidator.registerValidator(txRG, Validator.createRegexValidator(txRG.getPromptText(), "\\S{12}", Severity.ERROR));
+    	regexValidator.registerValidator(txCPF, Validator.createRegexValidator(txCPF.getPromptText(), "\\S{14}", Severity.ERROR));
+    	regexValidator.registerValidator(txTelCelular, Validator.createRegexValidator(txTelCelular.getPromptText(), "\\S{14}", Severity.ERROR));
+    	regexValidator.registerValidator(txTelResidencial, Validator.createRegexValidator(txTelResidencial.getPromptText(), "\\S{13}", Severity.ERROR));
+	}
+
+	private void errorsDialog(){
+    	Collection<ValidationMessage> emptyFieldsError = emptyValidator.getValidationResult().getErrors();
+    	Collection<ValidationMessage> regexFieldsError = regexValidator.getValidationResult().getErrors();
+		String emptyFieldsMessage = "Campos obrigatórios vazios:";
+		String regexFieldsMessage = "Campos não preenchidos corretamente:";
+		String passFieldsMessage = "Senhas não coincidem\n\n";
+		String dialogMessage = "";
+		boolean emptyFieldsErrorBool = false, passFieldsErrorBool = false, regexFieldsErrorBool = false;
+
+    	if(!emptyFieldsError.isEmpty()) {
+    		emptyFieldsErrorBool = true;
+			for(ValidationMessage erro : emptyFieldsError)	emptyFieldsMessage += "\n  - " + erro.getText();
+			emptyFieldsMessage += "\n\n";
+		}
+    	else emptyFieldsMessage = "";
+
+		if(!regexFieldsError.isEmpty()) {
+			regexFieldsErrorBool = true;
+			for(ValidationMessage erro : regexFieldsError)	regexFieldsMessage += "\n  - " + erro.getText();
+		}
+		else regexFieldsMessage = "";
+
+    	if(!psSenhaConf.getText().equals(psSenha.getText())){
+    		passFieldsErrorBool = true;
+		}
+    	else passFieldsMessage = "";
+
+    	if(emptyFieldsErrorBool || passFieldsErrorBool || regexFieldsErrorBool){
+			dialogMessage = passFieldsMessage + emptyFieldsMessage + regexFieldsMessage;
+
+			Alert alert = new Alert(AlertType.ERROR,
+					dialogMessage,
+					ButtonType.OK);
+			alert.setTitle("Não foi possível efetuar o cadastro");
+			alert.show();
+		}
     }
-    
-    public void carregarCursos() {
+
+	private void carregarCursos() {
     	listCursos.clear();
     	comboBoxCurso.getItems().clear();
 
@@ -176,53 +195,29 @@ public class CadastrarAlunoController implements Initializable {
     	comboBoxCurso.setItems(obsCursos);
     }
 
-    public void carregarTableAlunos(){
-    	columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		columnCurso.setCellValueFactory(new PropertyValueFactory<>("cursoNome"));
-		columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		columnTelCel.setCellValueFactory(new PropertyValueFactory<>("telCel"));
-		columnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-
+	private void carregarTableAlunos(){
+		listUsuariosAluno.clear();
 		Session session = factory.getCurrentSession();
 		session.beginTransaction();
-		List<Object> objs = session.createQuery("select u.id, c.id, a.nome, c.nome, u.email, u.telCelular, u.telResidencial, u.cpf, u.rg, a.dataIngresso, u.dataNascimento from Usuario u, Aluno a, Curso c where u.id = a.id and a.cursoId = c.id").getResultList();
+		listUsuariosAluno = session.createQuery("select new model.UsuarioAluno(u.id, c.id, a.nome, c.nome, u.email, " +
+													"u.telCelular, u.telResidencial, u.cpf, u.rg, a.dataIngresso, u.dataNascimento) " +
+													"from Usuario as u, Aluno as a, Curso as c " +
+													"where u.id = a.id and a.cursoId = c.id").getResultList();
 		session.close();
 
-		for (Object obj : objs) {
-			Object[] o = (Object[]) obj;
-			UsuarioAluno usuarioAluno = new UsuarioAluno(Integer.valueOf(String.valueOf(o[0])),
-														Integer.valueOf(String.valueOf(o[1])),
-														String.valueOf(o[2]),
-														String.valueOf(o[3]),
-														String.valueOf(o[4]),
-														String.valueOf(o[5]),
-														String.valueOf(o[6]),
-														String.valueOf(o[7]),
-														String.valueOf(o[8]),
-														String.valueOf(o[9]),
-														String.valueOf(o[10]));
-			listUsuariosAluno.add(usuarioAluno);
+		if(obsListUsuariosAluno != null) {
+			obsListUsuariosAluno.clear();
 		}
     	obsListUsuariosAluno = FXCollections.observableArrayList(listUsuariosAluno);
     	tableAlunos.setItems(obsListUsuariosAluno);
 	}
-    
-    public void cadastraAluno(){
-    	Alert alert =	new Alert(AlertType.NONE,
-						"Tem certeza que deseja cadastrar?",
-						ButtonType.OK,
-						ButtonType.CANCEL);
-		alert.setTitle("Date format warning");
-		Optional<ButtonType> result = alert.showAndWait();
 
-		if (result.get() == ButtonType.OK) {
+	private void cadastraAluno(){
+    	try {
 			String username = txUserName.getText();
 			String senha = psSenha.getText();
-			String senhaConf = psSenhaConf.getText();
-
 			String rg = txRG.getText();
-			String cpf= txCPF.getText();
+			String cpf = txCPF.getText();
 			String telResidencial = txTelResidencial.getText();
 			String telCelular = txTelCelular.getText();
 			String email = txEmail.getText();
@@ -235,22 +230,26 @@ public class CadastrarAlunoController implements Initializable {
 			Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
 			int cursoId = curso.getId();
 
-			if(senha.compareTo(senhaConf) == 0) {
+			Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
+			u.create();
+			int usuarioId = u.getId();
 
-				Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
-				u.create();
-				int usuarioId = u.getId();
+			System.out.println("usuarioId: " + usuarioId);
 
-				System.out.println("usuarioId: "+ usuarioId);
+			Aluno a = new Aluno(usuarioId, nome, dataIngresso, cursoId);
+			a.create();
 
-				Aluno a = new Aluno(usuarioId, nome, dataIngresso, cursoId);
-				a.create();
-			}else {
+			Alert alert = new Alert(AlertType.CONFIRMATION,
+					"Aluno cadastrado com sucesso!",
+					ButtonType.OK);
+			alert.show();
 
-				Alert al = new Alert(AlertType.ERROR);
-				al.setHeaderText("As senhas não coincidem");
-				al.show();
-			}
+			carregarTableAlunos();
+		} catch (Exception e){
+			Alert alert = new Alert(AlertType.ERROR,
+					e.getMessage(),
+					ButtonType.OK);
+			alert.show();
 		}
     }
 

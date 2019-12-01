@@ -215,5 +215,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="com.jfoenix:jfoenix:9.0.9" level="project" />
+    <orderEntry type="library" name="org.controlsfx:controlsfx:8.40.14" level="application" />
   </component>
 </module>
