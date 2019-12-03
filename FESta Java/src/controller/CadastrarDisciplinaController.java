@@ -101,8 +101,30 @@ public class CadastrarDisciplinaController implements Initializable {
         FXCollections.sort(obsDisciplinas, comparator);
         listViewPrerequisito.setItems(obsDisciplinas);
     }
-    
-    public void cadastraDisciplina(){
+
+    private boolean testaDados(){
+        boolean erro = false;
+        String alertmsg = "";
+
+        if(!Read.Query("from Disciplina where codigoDisciplina = '" + txCodigoDisciplina.getText() + "'").isEmpty()) {
+            alertmsg += "-Disciplina com codigoDisciplina já existente\n";
+            erro = true;
+        }
+
+        if(erro){
+            Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
+    }
+
+        public void cadastraDisciplina(){
+
+        if(testaDados()){
+            return;
+        }
 
     	// TODO: verifica se todos os  campos estão selecionados
     	String nome = txNome.getText();

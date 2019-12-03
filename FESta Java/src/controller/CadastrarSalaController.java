@@ -7,6 +7,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import model.Read;
 import model.Sala;
@@ -60,8 +61,31 @@ public class CadastrarSalaController implements Initializable {
         });
         
     }
+
+    private boolean testaDados() {
+        boolean erro = false;
+        String alertmsg = "";
+
+        if (!Read.Query("from Sala where codigoSala = '" + txCodigoSala.getText() + "'").isEmpty()) {
+            alertmsg += "-Sala com codigoSala já existente\n";
+            erro = true;
+        }
+
+        if (erro) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
+    }
     
     public void cadastraSala(){
+
+        if(testaDados()){
+            return;
+        }
+
         int capacidade = Integer.parseInt(txCapacidade.getText());
         String predio = comboBoxPredio.getValue();
         String codigoSala = txCodigoSala.getText();

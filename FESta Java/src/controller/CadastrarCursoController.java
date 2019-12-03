@@ -5,6 +5,7 @@
  */
 package controller;
 
+import javafx.scene.control.Alert;
 import model.Curso;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.Read;
 import view.CadastrarCurso;
 import view.Principal;
 
@@ -48,8 +50,30 @@ public class CadastrarCursoController implements Initializable {
             cadastraCurso();
         });
     }
+    private boolean testaDados() {
+        boolean erro = false;
+        String alertmsg = "";
+
+        if (!Read.Query("from Curso where codigoCurso = '" + txCodigoCurso.getText() + "'").isEmpty()) {
+            alertmsg += "-Curso com codigoCurso já existente\n";
+            erro = true;
+        }
+
+        if (erro) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
+    }
 
     public void cadastraCurso(){
+
+        if(testaDados()){
+            return;
+        }
+
         String nome = txNome.getText();
         String codigoCurso = txCodigoCurso.getText();
         int departamentoId = 0;
