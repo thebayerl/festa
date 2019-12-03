@@ -266,8 +266,35 @@ public class CadastrarTurmaController implements Initializable {
 		}
 		return false;
 	}
-    
+
+
+	private boolean testaDados(){
+		boolean erro = false;
+		String alertmsg = "";
+		List<Sala> sala = Read.Query("from Sala where codigoSala = '" + comboBoxSala.getSelectionModel().getSelectedItem() + "'");
+
+		int tam = sala.get(0).getCapacidade();
+
+		if(Integer.parseInt(txMaxAluno.getText()) > tam) {
+			alertmsg += "-A sala suporta no máximo " + tam + " alunos\n";
+			erro = true;
+		}
+
+		if(erro){
+			Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+			alert.setHeaderText("Dados inválidos!");
+			alert.show();
+		}
+
+		return erro;
+	}
+
     public void cadastraTurma(){
+
+		if(testaDados()){
+			return;
+		}
+
     	try {
 			RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
 			int maxAlunos = Integer.parseInt(txMaxAluno.getText());
