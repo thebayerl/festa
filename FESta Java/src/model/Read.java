@@ -454,7 +454,7 @@ public class Read {
 		return getTurma(null, null, null, null, null, null, null, null);
 	}
 	
-	public static List<Usuario> Usuario(String id, String username, String senha, String rg, String cpf) {
+	public static List<Usuario> getUsuario(String id, String username, String senha, String rg, String cpf) {
 		
 		username = aspas(username);
 		senha = aspas(senha);

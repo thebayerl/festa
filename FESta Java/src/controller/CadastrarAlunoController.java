@@ -201,6 +201,21 @@ public class CadastrarAlunoController implements Initializable {
     	obsCursos = FXCollections.observableArrayList(listCursos);
     	comboBoxCurso.setItems(obsCursos);
     }
+	
+	private void removerAluno() {
+		
+		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
+		
+		//a = Read.Query("from Aluno where usuarioId = " + aluno.getId()).get(0);
+		//Read.Query("from Usuario where id = " + aluno.getId());
+		
+		Aluno a = Read.getAluno(aluno.getId().toString(), null, null, null, null, null).get(0);
+		Usuario u = Read.getUsuario(aluno.getId().toString(), null, null, null, null).get(0);
+		
+		a.delete();
+		u.delete();
+		
+	}
 
 	private void carregarTableView(){
 		listAlunoView.clear();
@@ -249,7 +264,8 @@ public class CadastrarAlunoController implements Initializable {
 
     	return erro;
 	}
-
+	
+	
 	private void cadastraAluno(){
 
     	if(testaDados()){
