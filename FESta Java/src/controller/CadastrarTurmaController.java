@@ -185,7 +185,7 @@ public class CadastrarTurmaController implements Initializable {
     public void carregarCursos() {
     	listCursos.clear();
     	comboBoxCurso.getItems().clear();
-    	listCursos = Read.getCurso(cursoId, null, null);
+    	listCursos = Read.getCurso(cursoId, null, null, null);
     	if(obsCursos != null) {
     		obsCursos.clear();
     	}

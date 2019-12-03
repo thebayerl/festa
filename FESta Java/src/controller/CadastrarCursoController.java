@@ -52,8 +52,8 @@ public class CadastrarCursoController implements Initializable {
     public void cadastraCurso(){
         String nome = txNome.getText();
         String codigoCurso = txCodigoCurso.getText();
-        
-        Curso c = new Curso(codigoCurso, nome);
+        int departamentoId = 0;
+        Curso c = new Curso(codigoCurso, nome, departamentoId);
         c.create();
         voltaTela();
         

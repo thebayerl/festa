@@ -175,7 +175,7 @@ public class InscricaoDisciplinaController {
 	
 			d = Read.getDisciplina(disciplinaId, null, null, null).get(0);
 			cursoIdX = String.valueOf(elemento.getCursoId());
-			c = Read.getCurso(cursoIdX, null, null).get(0);
+			c = Read.getCurso(cursoIdX, null, null, null).get(0);
 			
 			
 			listDisciplinas.add(d);
