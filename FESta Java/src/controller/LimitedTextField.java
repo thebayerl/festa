@@ -6,15 +6,20 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 
+import java.io.IOException;
+
 public class LimitedTextField extends TextField {
+
     private IntegerProperty maxLength = new SimpleIntegerProperty(this,
             "maxLength", -1);
     private StringProperty restrict = new SimpleStringProperty(this, "restrict");
 
     public LimitedTextField() {
+        
         textProperty().addListener(new ChangeListener<String>() {
             private boolean ignore;
 

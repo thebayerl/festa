@@ -32,15 +32,15 @@ import view.CadastrarAluno;
  */
 public class CadastrarAlunoController implements Initializable {
 
-	@FXML private LimitedTextField txUserName;
+	@FXML private TextField txUserName;
 	@FXML private PasswordField psSenha;
 	@FXML private PasswordField psSenhaConf;
-	@FXML private LimitedTextField txNome;
-	@FXML private LimitedTextField txRG;
-	@FXML private LimitedTextField txCPF;
-	@FXML private LimitedTextField txTelResidencial;
-	@FXML private LimitedTextField txTelCelular;
-	@FXML private LimitedTextField txEmail;
+	@FXML private TextField txNome;
+	@FXML private TextField txRG;
+	@FXML private TextField txCPF;
+	@FXML private TextField txTelResidencial;
+	@FXML private TextField txTelCelular;
+	@FXML private TextField txEmail;
 	@FXML private DatePicker dtNascimento;
 	@FXML private DatePicker dtIngresso;
 	@FXML private ComboBox<Curso> comboBoxCurso;
@@ -113,11 +113,11 @@ public class CadastrarAlunoController implements Initializable {
 	}
 
 	private void inicializarTextFieldLimitations(){
-		txUserName.setStandardField();
+		/*txUserName.setStandardField();
 		txUserName.setMaxLength(20);
 		txEmail.setMaxLength(40);
 		txNome.setCharsOnlyFieldwSpace();
-		txNome.setMaxLength(100);
+		txNome.setMaxLength(100);*/
 	}
 
 	private void inicializarEmptyValidator(){
@@ -297,7 +297,4 @@ public class CadastrarAlunoController implements Initializable {
 //            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
     }
-    
-
-    
 }

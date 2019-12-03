@@ -13,8 +13,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import controller.LimitedTextField?>
 
+<?import javafx.scene.control.TextField?>
 <AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarAlunoController">
     <children>
       <VBox layoutX="20.0" layoutY="11.0" prefHeight="489.0" prefWidth="810.0" spacing="20.0">
@@ -33,15 +33,15 @@
             </HBox>
             <FlowPane fx:id="flowPaneForm" hgap="15.0" prefHeight="118.0" prefWidth="645.0" vgap="15.0">
                <children>
-                  <LimitedTextField fx:id="txUserName" prefHeight="25.0" prefWidth="150.0" promptText="Nome de Usuário" />
+                  <TextField fx:id="txUserName" prefHeight="25.0" prefWidth="150.0" promptText="Nome de Usuário" />
                   <PasswordField fx:id="psSenha" prefHeight="25.0" prefWidth="150.0" promptText="Senha" />
                   <PasswordField fx:id="psSenhaConf" prefHeight="25.0" prefWidth="150.0" promptText="Confirmar Senha" />
-                  <LimitedTextField fx:id="txEmail" layoutX="340.0" layoutY="50.0" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="315.0" promptText="Email" />
-                  <LimitedTextField fx:id="txNome" prefHeight="25.0" prefWidth="315.0" promptText="Nome Completo" />
-                  <LimitedTextField fx:id="txRG" onKeyReleased="#txRgKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="RG" />
-                  <LimitedTextField fx:id="txCPF" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="CPF" />
-                  <LimitedTextField fx:id="txTelResidencial" layoutX="10.0" layoutY="130.0" onKeyReleased="#txTelResReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Residencial" />
-                  <LimitedTextField fx:id="txTelCelular" layoutX="175.0" layoutY="130.0" onKeyReleased="#txTelCelReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Celular" />
+                  <TextField fx:id="txEmail" layoutX="340.0" layoutY="50.0" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="315.0" promptText="Email" />
+                  <TextField fx:id="txNome" prefHeight="25.0" prefWidth="315.0" promptText="Nome Completo" />
+                  <TextField fx:id="txRG" onKeyReleased="#txRgKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="RG" />
+                  <TextField fx:id="txCPF" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="CPF" />
+                  <TextField fx:id="txTelResidencial" layoutX="10.0" layoutY="130.0" onKeyReleased="#txTelResReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Residencial" />
+                  <TextField fx:id="txTelCelular" layoutX="175.0" layoutY="130.0" onKeyReleased="#txTelCelReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Celular" />
                   <DatePicker fx:id="dtNascimento" prefHeight="25.0" prefWidth="150.0" promptText="Data de Nascimento" />
                   <DatePicker fx:id="dtIngresso" prefHeight="25.0" prefWidth="150.0" promptText="Data de Ingresso" />
                   <ComboBox fx:id="comboBoxCurso" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Curso" />
