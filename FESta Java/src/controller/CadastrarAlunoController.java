@@ -217,7 +217,45 @@ public class CadastrarAlunoController implements Initializable {
     	tableView.setItems(obsListAlunoView);
 	}
 
+	private boolean testaDados(){
+		boolean erro = false;
+    	String alertmsg = "";
+
+		if(!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
+			alertmsg += "-Usuario com username já existente\n";
+			erro = true;
+		}
+
+		if(!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty()) {
+			alertmsg += "-Usuario com rg já existente\n";
+			erro = true;
+		}
+
+		if(!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty()) {
+			alertmsg +="-Usuario com cpf já existente\n";
+			erro = true;
+		}
+
+		if(!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty()) {
+			alertmsg +="-Usuario com email já existente\n";
+			erro = true;
+		}
+
+		if(erro){
+			Alert alert = new Alert(AlertType.ERROR, alertmsg);
+			alert.setHeaderText("Dados inválidos!");
+			alert.show();
+		}
+
+    	return erro;
+	}
+
 	private void cadastraAluno(){
+
+    	if(testaDados()){
+    		return;
+		}
+
     	try {
 			String username = txUserName.getText();
 			String senha = psSenha.getText();

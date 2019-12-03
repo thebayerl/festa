@@ -22,10 +22,16 @@ public class Read {
 	}
 
 	public static <T> List<T> Query(String query){
+		List<T> listObj = null;
 		Session session = factory.getCurrentSession();
-		session.beginTransaction();
-		List<T> listObj = session.createQuery(query).getResultList();
-		session.close();
+
+		try {
+			session.beginTransaction();
+			listObj = session.createQuery(query).getResultList();
+
+		}finally {
+			session.close();
+		}
 		return listObj;
 	}
 	
