@@ -2,13 +2,13 @@ package model;
 
 import java.util.Date;
 
-public class UsuarioAluno {
+public class AlunoView {
     private Integer id, cursoId;
     private String  nome, cursoNome, email, telCel, telRes, cpf, rg;
     private Date dataIngresso, dataNascimento;
 
-    public UsuarioAluno(Integer id, Integer cursoId, String nome, String cursoNome, String email, String telCel,
-                        String telRes, String cpf, String rg, Date dataIngresso, Date dataNascimento) {
+    public AlunoView(Integer id, Integer cursoId, String nome, String cursoNome, String email, String telCel,
+                     String telRes, String cpf, String rg, Date dataIngresso, Date dataNascimento) {
         this.id = id;
         this.cursoId = cursoId;
         this.nome = nome;

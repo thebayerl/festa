@@ -5,35 +5,26 @@
  */
 package controller;
 
-import model.Curso;
-import model.Disciplina;
-import model.DisciplinaCurso;
-import model.Professor;
-import model.ProfessorCapacidade;
-import model.Read;
-import model.Sala;
-import model.Turma;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.*;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationMessage;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import view.CadastrarTurma;
-import view.Principal;
 
 /**
  * FXML Controller class
@@ -41,93 +32,112 @@ import view.Principal;
  * @author denin
  */
 public class CadastrarTurmaController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
-    
-	private List<ProfessorCapacidade> listProfessorCapacidades = new ArrayList<>();
-    
-    private List<DisciplinaCurso> listDisciplinaCursos = new ArrayList<>();
-
-    private List<Curso> listCursos = new ArrayList<>();
-    private ObservableList<Curso> obsCursos;
-    
-    private List<Sala> listSalas = new ArrayList<>();
-    private ObservableList<Sala> obsSalas;
-    
-    private List<String> listPredios = new ArrayList<>();
-    private ObservableList<String> obsPredios;
-    
-    private List<Disciplina> listDisciplinas = new ArrayList<>();
-    private ObservableList<Disciplina> obsDisciplinas;
-    
-    private List<Professor> listProfessores = new ArrayList<>();
-    private ObservableList<Professor> obsProfessores;
-	
-	String disciplinaId = null;
-	String professorId = null;
-	String predioCB = null;
-	String cursoId = null;
-	
-    @FXML private TextField txMaxAluno;
-    @FXML private Button btCadastrar;
-    @FXML private Button btCancelar;
-    @FXML private TextField txAno;
+    @FXML private LimitedTextField txMaxAluno;
+    @FXML private LimitedTextField txAno;
     @FXML private ToggleGroup grupoSemestre;
-    @FXML private RadioButton radioBt1;
-    @FXML private RadioButton radioBt2;
     @FXML private ComboBox<Disciplina> comboBoxDisciplina;
     @FXML private ComboBox<Professor> comboBoxProfessor;
     @FXML private ComboBox<String> comboBoxPredio;
     @FXML private ComboBox<Sala> comboBoxSala;
     @FXML private ComboBox<Curso> comboBoxCurso;
-    
-    
-    @FXML
-    void SelecionarCurso() {
-    	if(!comboBoxDisciplina.isDisable()) {
-    		comboBoxDisciplina.setDisable(true);
-    	}
-    	if(!comboBoxProfessor.isDisable()) {
-    		comboBoxProfessor.setDisable(true);
-    	}
-    	cursoId = String.valueOf(comboBoxCurso.getSelectionModel().getSelectedItem().getId());
-    	carregarDisciplinaCursos();
-    }
+	@FXML private Button btCadastrar;
+	@FXML private Button btAlterar;
+	@FXML private Button btRemover;
+	@FXML private TableView<TurmaView> tableView;
+	@FXML private TableColumn<TurmaView, Integer> columnId;
+	@FXML private TableColumn<TurmaView, String> columnDisciplina;
+	@FXML private TableColumn<TurmaView, String> columnProfessor;
+	@FXML private TableColumn<TurmaView, String> columnSala;
+	@FXML private TableColumn<TurmaView, String> columnAno;
+	@FXML private TableColumn<TurmaView, String> columnSemestre;
+	@FXML private TableColumn<TurmaView, Integer> columnMaxAlunos;
 
-    @FXML
-    void SelecionarDisciplina() {
-    	Disciplina disciplina = comboBoxDisciplina.getSelectionModel().getSelectedItem();
-    	if(disciplina != null){
-			disciplinaId = String.valueOf(disciplina.getId());
-			carregarProfessorCapacidades();
+	private List<ProfessorCapacidade> listProfessorCapacidades = new ArrayList<>();
+	private List<DisciplinaCurso> listDisciplinaCursos = new ArrayList<>();
+	private List<Curso> listCursos = new ArrayList<>();
+	private List<Sala> listSalas = new ArrayList<>();
+	private List<String> listPredios = new ArrayList<>();
+	private List<Disciplina> listDisciplinas = new ArrayList<>();
+	private List<Professor> listProfessores = new ArrayList<>();
+	private List<TurmaView> listTurmaView = new ArrayList<>();
+
+	private ObservableList<Curso> obsCursos;
+	private ObservableList<Sala> obsSalas;
+	private ObservableList<String> obsPredios;
+	private ObservableList<Disciplina> obsDisciplinas;
+	private ObservableList<Professor> obsProfessores;
+	private ObservableList<TurmaView> obsListTurmaView;
+
+	private ValidationSupport emptyValidator = new ValidationSupport();
+	private ValidationSupport regexValidator = new ValidationSupport();
+
+	String disciplinaId = null;
+	String professorId = null;
+	String predioCB = null;
+	String cursoId = null;
+
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		// TODO
+		inicializarValidators();
+		inicializarTextFieldLimitations();
+		inicializarTableColumns();
+		carregarTableView();
+		carregarCursos();
+		carregarPredios();
+
+		btCadastrar.setOnMouseClicked((MouseEvent e)->{
+			if(!errorsDialog()) cadastraTurma();
+		});
+	}
+
+	private void inicializarValidators(){
+		//Campos obrigatórios
+		emptyValidator.registerValidator(comboBoxCurso, Validator.createEmptyValidator(comboBoxCurso.getPromptText()));
+		emptyValidator.registerValidator(txMaxAluno, Validator.createEmptyValidator(txMaxAluno.getPromptText()));
+		emptyValidator.registerValidator(txAno, Validator.createEmptyValidator(txAno.getPromptText()));
+		emptyValidator.registerValidator(comboBoxDisciplina, Validator.createEmptyValidator(comboBoxDisciplina.getPromptText()));
+		emptyValidator.registerValidator(comboBoxProfessor, Validator.createEmptyValidator(comboBoxProfessor.getPromptText()));
+		emptyValidator.registerValidator(comboBoxPredio, Validator.createEmptyValidator(comboBoxPredio.getPromptText()));
+		emptyValidator.registerValidator(comboBoxSala, Validator.createEmptyValidator(comboBoxSala.getPromptText()));
+		emptyValidator.registerValidator(comboBoxCurso, Validator.createEmptyValidator(comboBoxCurso.getPromptText()));
+
+		regexValidator.registerValidator(txAno, Validator.createRegexValidator(txAno.getPromptText(), "[0-9]{4}", Severity.ERROR));
+	}
+
+	private void inicializarTextFieldLimitations(){
+		txAno.setIntegerField();
+		txAno.setMaxLength(4);
+		txMaxAluno.setIntegerField();
+		txMaxAluno.setMaxLength(3);
+	}
+
+	private void inicializarTableColumns(){
+		columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		columnDisciplina.setCellValueFactory(new PropertyValueFactory<>("disciplinaNome"));
+		columnProfessor.setCellValueFactory(new PropertyValueFactory<>("professorNome"));
+		columnSala.setCellValueFactory(new PropertyValueFactory<>("codigoSala"));
+		columnAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
+		columnSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
+		columnMaxAlunos.setCellValueFactory(new PropertyValueFactory<>("maxAlunos"));
+	}
+
+	private void carregarTableView(){
+		listTurmaView.clear();
+
+		listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre) " +
+									"from Turma t, Professor p, Sala s, Disciplina d " +
+									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id");
+
+		if(obsListTurmaView != null) {
+			obsListTurmaView.clear();
 		}
-    }
-
-    @FXML
-    void selecionarPredio() {
-    	predioCB = comboBoxPredio.getSelectionModel().getSelectedItem();
-    	carregarSalas();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    	carregarCursos();
-    	carregarPredios();
-    	
-        btCancelar.setOnMouseClicked((MouseEvent e)->{
-            abrePrincipal();
-        });
-        
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            cadastraTurma();
-        });
-    }
+		obsListTurmaView = FXCollections.observableArrayList(listTurmaView);
+		tableView.setItems(obsListTurmaView);
+	}
     
     public void carregarProfessorCapacidades() {
-    	
     	comboBoxProfessor.getSelectionModel().clearSelection();
     	
     	listProfessorCapacidades.clear();
@@ -215,20 +225,72 @@ public class CadastrarTurmaController implements Initializable {
     	System.out.println();
     	comboBoxSala.setDisable(false);
     }
+
+	private Boolean errorsDialog(){
+		List<ValidationMessage> emptyFieldsError = new ArrayList<>(emptyValidator.getValidationResult().getErrors());
+		List<ValidationMessage> regexFieldsError = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+		List<ValidationMessage> regexFieldsErrorCopy = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+
+		String emptyFieldsMessage = "Campos obrigatórios vazios:";
+		String regexFieldsMessage = "Campos não preenchidos corretamente:";
+		String dialogMessage = "";
+		boolean emptyFieldsErrorBool = false, regexFieldsErrorBool = false;
+
+		for(ValidationMessage o : regexFieldsErrorCopy){
+			if(emptyFieldsError.contains(o)) regexFieldsError.remove(o);
+		}
+
+		if(!emptyFieldsError.isEmpty()) {
+			emptyFieldsErrorBool = true;
+			for(ValidationMessage erro : emptyFieldsError)	emptyFieldsMessage += "\n  - " + erro.getText();
+			emptyFieldsMessage += "\n\n";
+		}
+		else emptyFieldsMessage = "";
+
+		if(!regexFieldsError.isEmpty()) {
+			regexFieldsErrorBool = true;
+			for(ValidationMessage erro : regexFieldsError)	regexFieldsMessage += "\n  - " + erro.getText();
+		}
+		else regexFieldsMessage = "";
+
+		if(emptyFieldsErrorBool || regexFieldsErrorBool){
+			dialogMessage = emptyFieldsMessage + regexFieldsMessage;
+
+			Alert alert = new Alert(Alert.AlertType.ERROR,
+					dialogMessage,
+					ButtonType.OK);
+			alert.setTitle("Erro");
+			alert.setHeaderText("Não foi possível efetuar o cadastro");
+			alert.show();
+			return true;
+		}
+		return false;
+	}
     
     public void cadastraTurma(){
-    	
-        RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
-        int maxAlunos = Integer.parseInt(txMaxAluno.getText());
-        String semestre = radio.getText();
-        String ano = txAno.getText();
-        int professorId = comboBoxProfessor.getSelectionModel().getSelectedItem().getUsuarioId();
-        int disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
-        int salaId = comboBoxSala.getSelectionModel().getSelectedItem().getId();
+    	try {
+			RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
+			int maxAlunos = Integer.parseInt(txMaxAluno.getText());
+			String semestre = radio.getText();
+			String ano = txAno.getText();
+			int professorId = comboBoxProfessor.getSelectionModel().getSelectedItem().getUsuarioId();
+			int disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
+			int salaId = comboBoxSala.getSelectionModel().getSelectedItem().getId();
 
-        Turma t = new Turma(maxAlunos, ano, semestre, professorId, disciplinaId, salaId);
-        t.create();
-        //abrePrincipal();
+			Turma t = new Turma(maxAlunos, ano, semestre, professorId, disciplinaId, salaId);
+			t.create();
+
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText("Turma cadastrada com sucesso!");
+			alert.show();
+
+			carregarTableView();
+		} catch (Exception e){
+			Alert alert = new Alert(Alert.AlertType.ERROR,
+					e.getMessage(),
+					ButtonType.OK);
+			alert.show();
+		}
     }
     
     
@@ -245,4 +307,31 @@ public class CadastrarTurmaController implements Initializable {
 //			Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
 //		}
     }
+
+	@FXML
+	void SelecionarCurso() {
+		if(!comboBoxDisciplina.isDisable()) {
+			comboBoxDisciplina.setDisable(true);
+		}
+		if(!comboBoxProfessor.isDisable()) {
+			comboBoxProfessor.setDisable(true);
+		}
+		cursoId = String.valueOf(comboBoxCurso.getSelectionModel().getSelectedItem().getId());
+		carregarDisciplinaCursos();
+	}
+
+	@FXML
+	void SelecionarDisciplina() {
+		Disciplina disciplina = comboBoxDisciplina.getSelectionModel().getSelectedItem();
+		if(disciplina != null){
+			disciplinaId = String.valueOf(disciplina.getId());
+			carregarProfessorCapacidades();
+		}
+	}
+
+	@FXML
+	void selecionarPredio() {
+		predioCB = comboBoxPredio.getSelectionModel().getSelectedItem();
+		carregarSalas();
+	}
 }

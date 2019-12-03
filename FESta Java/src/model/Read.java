@@ -6,7 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class Read {
-	
+	private static final SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+
 	public static String aspas(String string) {
 		return "'" + string + "'";
 	}
@@ -18,6 +19,14 @@ public class Read {
 			return  atributo + " = " + valor + " AND ";
 		}
 		return "";
+	}
+
+	public static <T> List<T> Query(String query){
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		List<T> listObj = session.createQuery(query).getResultList();
+		session.close();
+		return listObj;
 	}
 	
 	public static List<Aluno> getAluno(String usuarioId, String matricula, String nome, String dataNascimento, String dataIngresso, 
@@ -40,17 +49,15 @@ public class Read {
 		System.out.println(query);
 		
 		List<Aluno> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
-		
-		try {		
+		try {
 			session.beginTransaction();
 			resultado = session.createQuery(query).getResultList();
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -66,7 +73,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		
 		List<Cordenador> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Cordenador.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -76,7 +82,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -95,7 +101,7 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 
 		List<Curso> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
+
 
 		Session session = factory.getCurrentSession();
 		
@@ -105,7 +111,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -116,7 +122,6 @@ public class Read {
 		String query = "from Curso ";
 
 		List<Curso> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -126,7 +131,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -153,7 +158,6 @@ public class Read {
 		System.out.println(query);
 		
 		List<Disciplina> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -163,7 +167,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -174,7 +178,6 @@ public class Read {
 		String query = "from Departamento ";
 		
 		List<Departamento> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -184,7 +187,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -195,7 +198,6 @@ public class Read {
 		String query = "from Professor ";
 		
 		List<Professor> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -205,7 +207,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -222,7 +224,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		
 		List<DisciplinaCurso> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DisciplinaCurso.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -232,7 +233,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -249,7 +250,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 			
 		List<Historico> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Historico.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -259,7 +259,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -273,7 +273,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 	
 		List<Matriculado> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Matriculado.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -283,7 +282,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -297,7 +296,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		
 		List<PreRequisito> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(PreRequisito.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -307,7 +305,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -330,7 +328,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		
 		List<Professor> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Professor.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -340,7 +337,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -355,7 +352,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		
 		List<ProfessorCapacidade> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ProfessorCapacidade.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -365,7 +361,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -393,7 +389,6 @@ public class Read {
 		
 		System.out.println(query);
 		List<Sala> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -403,7 +398,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -433,7 +428,6 @@ public class Read {
 		query = query.substring(0, query.length() - 4);
 		
 		List<Turma> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Turma.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -443,7 +437,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -470,7 +464,6 @@ public class Read {
 		System.out.println(query);
 		
 		List<Usuario> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -480,7 +473,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;
@@ -493,7 +486,6 @@ public class Read {
 		String query = "select distinct predio from Sala";
 		
 		List<String> resultado = null;
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
 
 		Session session = factory.getCurrentSession();
 		
@@ -503,7 +495,7 @@ public class Read {
 			session.getTransaction().commit();
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	
 		return resultado;

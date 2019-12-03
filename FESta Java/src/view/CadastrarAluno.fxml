@@ -8,12 +8,12 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import controller.LimitedTextField?>
 
 <AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarAlunoController">
     <children>
@@ -33,15 +33,15 @@
             </HBox>
             <FlowPane fx:id="flowPaneForm" hgap="15.0" prefHeight="118.0" prefWidth="645.0" vgap="15.0">
                <children>
-                  <TextField fx:id="txUserName" prefHeight="25.0" prefWidth="150.0" promptText="Nome de Usuário" />
+                  <LimitedTextField fx:id="txUserName" prefHeight="25.0" prefWidth="150.0" promptText="Nome de Usuário" />
                   <PasswordField fx:id="psSenha" prefHeight="25.0" prefWidth="150.0" promptText="Senha" />
                   <PasswordField fx:id="psSenhaConf" prefHeight="25.0" prefWidth="150.0" promptText="Confirmar Senha" />
-                  <TextField fx:id="txEmail" layoutX="340.0" layoutY="50.0" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="315.0" promptText="Email" />
-                  <TextField fx:id="txNome" prefHeight="25.0" prefWidth="315.0" promptText="Nome Completo" />
-                  <TextField fx:id="txRG" onKeyReleased="#txRgKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="RG" />
-                  <TextField fx:id="txCPF" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="CPF" />
-                  <TextField fx:id="txTelResidencial" layoutX="10.0" layoutY="130.0" onKeyReleased="#txTelResReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Residencial" />
-                  <TextField fx:id="txTelCelular" layoutX="175.0" layoutY="130.0" onKeyReleased="#txTelCelReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Celular" />
+                  <LimitedTextField fx:id="txEmail" layoutX="340.0" layoutY="50.0" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="315.0" promptText="Email" />
+                  <LimitedTextField fx:id="txNome" prefHeight="25.0" prefWidth="315.0" promptText="Nome Completo" />
+                  <LimitedTextField fx:id="txRG" onKeyReleased="#txRgKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="RG" />
+                  <LimitedTextField fx:id="txCPF" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="CPF" />
+                  <LimitedTextField fx:id="txTelResidencial" layoutX="10.0" layoutY="130.0" onKeyReleased="#txTelResReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Residencial" />
+                  <LimitedTextField fx:id="txTelCelular" layoutX="175.0" layoutY="130.0" onKeyReleased="#txTelCelReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Celular" />
                   <DatePicker fx:id="dtNascimento" prefHeight="25.0" prefWidth="150.0" promptText="Data de Nascimento" />
                   <DatePicker fx:id="dtIngresso" prefHeight="25.0" prefWidth="150.0" promptText="Data de Ingresso" />
                   <ComboBox fx:id="comboBoxCurso" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Curso" />
@@ -65,7 +65,7 @@
                         <Button fx:id="btCadastrar" mnemonicParsing="false" prefWidth="95.0" text="Cadastrar" />
                      </children>
                   </HBox>
-                  <TableView fx:id="tableAlunos" prefHeight="261.0" prefWidth="810.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="tableView" prefHeight="261.0" prefWidth="810.0" tableMenuButtonVisible="true">
                     <columns>
                       <TableColumn fx:id="columnId" prefWidth="40.0" text="ID" />
                       <TableColumn fx:id="columnNome" prefWidth="162.0" text="Nome" />
