@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import controller.LimitedTextField?>
 
 <AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarTurmaController">
     <children>
@@ -39,12 +38,12 @@
                   <ComboBox fx:id="comboBoxProfessor" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Professor" />
                   <ComboBox fx:id="comboBoxPredio" onAction="#selecionarPredio" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Prédio" />
                   <ComboBox fx:id="comboBoxSala" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Sala" />
-                  <LimitedTextField fx:id="txMaxAluno" prefHeight="25.0" prefWidth="150.0" promptText="Número Máximo de Alunos">
+                  <TextField fx:id="txMaxAluno" prefHeight="25.0" prefWidth="150.0" promptText="Número Máximo de Alunos">
                      <font>
                         <Font size="11.0" />
                      </font>
-                  </LimitedTextField>
-                  <LimitedTextField fx:id="txAno" prefHeight="25.0" prefWidth="150.0" promptText="Ano" />
+                  </TextField>
+                  <TextField fx:id="txAno" prefHeight="25.0" prefWidth="150.0" promptText="Ano" />
                   <HBox alignment="CENTER" prefWidth="150.0" spacing="10.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="63.0" text="Semestre" />

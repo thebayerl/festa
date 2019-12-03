@@ -62,6 +62,7 @@ public class CadastrarProfessorController implements Initializable {
     @FXML private TableColumn<ProfessorView, String> columnRg;
     @FXML private TableColumn<ProfessorView, String> columnFormacao;
     @FXML private TableColumn<ProfessorView, Date> columnDataNascimento;
+    @FXML private ListView<Disciplina> listViewCapacidades;
 
     private TextFieldFormatter tffCpf = new TextFieldFormatter();
     private	TextFieldFormatter tffRg = new TextFieldFormatter();
@@ -74,9 +75,12 @@ public class CadastrarProfessorController implements Initializable {
     private List<String> listFormacao = Arrays.asList("Graduação", "Mestrado", "Doutorado", "Pós-doutorado");
     private List<Curso> listCursos = new ArrayList<>();
     private List<ProfessorView> listProfessorView = new ArrayList<>();
+    private List<Disciplina> listCapacidades = new ArrayList<>();
+
     private ObservableList<Curso> obsCursos;
     private ObservableList<ProfessorView> obsListProfessorView;
     private ObservableList<String> obsListFormacao;
+    private ObservableList<Disciplina> obsListCapacidades;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -88,6 +92,7 @@ public class CadastrarProfessorController implements Initializable {
         inicializarTableColumns();
         carregarCursos();
         carregarFormacao();
+        carregarCapacidades();
         carregarTableView();
 
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
@@ -214,6 +219,19 @@ public class CadastrarProfessorController implements Initializable {
         comboBoxFormacao.setItems(obsListFormacao);
     }
 
+    public void carregarCapacidades() {
+        if(listViewCapacidades != null){
+            listViewCapacidades.getSelectionModel().clearSelection();
+            listViewCapacidades.getItems().clear();
+        }
+        listViewCapacidades.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listCapacidades = Read.getDisciplina(null, null, null, null);
+        Comparator<Disciplina> comparator = Comparator.comparing(Disciplina::getNome);
+        obsListCapacidades = FXCollections.observableArrayList(listCapacidades);
+        FXCollections.sort(obsListCapacidades, comparator);
+        listViewCapacidades.setItems(obsListCapacidades);
+    }
+
     private void carregarTableView(){
         listProfessorView.clear();
 
@@ -301,6 +319,17 @@ public class CadastrarProfessorController implements Initializable {
                     e.getMessage(),
                     ButtonType.OK);
             alert.show();
+        }
+    }
+
+    public void cadastrarPreRequisito(int professorId){
+        ObservableList<Disciplina> selectedCapacidades = listViewCapacidades.getSelectionModel().getSelectedItems();
+        if(selectedCapacidades != null){
+            for(Disciplina d : selectedCapacidades){
+                System.out.println(d.getNome());
+                ProfessorCapacidade pCapacidade = new ProfessorCapacidade(professorId, d.getId());
+                pCapacidade.create();
+            }
         }
     }
 

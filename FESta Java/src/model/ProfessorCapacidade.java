@@ -20,8 +20,15 @@ public class ProfessorCapacidade  implements Serializable {
 	
 	@Id
 	@Column(name="disciplina_id")
-	private String disciplinaId;
-	
+	private int disciplinaId;
+
+	public ProfessorCapacidade(int professorId, int disciplinaId) {
+		this.professorId = professorId;
+		this.disciplinaId = disciplinaId;
+	}
+
+	public ProfessorCapacidade() {}
+
 	public void create() {
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
@@ -100,11 +107,11 @@ public class ProfessorCapacidade  implements Serializable {
 		this.professorId = professorId;
 	}
 
-	public String getDisciplinaId() {
+	public int getDisciplinaId() {
 		return disciplinaId;
 	}
 
-	public void setDisciplinaId(String disciplinaId) {
+	public void setDisciplinaId(int disciplinaId) {
 		this.disciplinaId = disciplinaId;
 	}
 

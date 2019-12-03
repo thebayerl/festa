@@ -162,8 +162,6 @@ public class Read {
 		} else {
 			query = query.substring(0, query.length() - 6);
 		}
-		System.out.println(query);
-		
 		List<Disciplina> resultado = null;
 
 		Session session = factory.getCurrentSession();

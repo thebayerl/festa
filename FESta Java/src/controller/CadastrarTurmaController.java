@@ -32,8 +32,8 @@ import view.CadastrarTurma;
  * @author denin
  */
 public class CadastrarTurmaController implements Initializable {
-    @FXML private LimitedTextField txMaxAluno;
-    @FXML private LimitedTextField txAno;
+    @FXML private TextField txMaxAluno;
+    @FXML private TextField txAno;
     @FXML private ToggleGroup grupoSemestre;
     @FXML private ComboBox<Disciplina> comboBoxDisciplina;
     @FXML private ComboBox<Professor> comboBoxProfessor;
@@ -106,10 +106,10 @@ public class CadastrarTurmaController implements Initializable {
 	}
 
 	private void inicializarTextFieldLimitations(){
-		txAno.setIntegerField();
+		/*txAno.setIntegerField();
 		txAno.setMaxLength(4);
 		txMaxAluno.setIntegerField();
-		txMaxAluno.setMaxLength(3);
+		txMaxAluno.setMaxLength(3);*/
 	}
 
 	private void inicializarTableColumns(){
