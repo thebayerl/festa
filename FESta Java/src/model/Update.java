@@ -105,7 +105,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Curso(String codigoCurso, String nome) {
+	public boolean Curso(String codigoCurso, String nome, Integer departamentoId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -129,6 +129,9 @@ public class Update {
 			if(sucesso) {
 				if(nome != null) {
 					obj.setnome(nome);
+				}
+				if(departamentoId != null) {
+					obj.setdepartamentoId(departamentoId);
 				}
 			}
 			

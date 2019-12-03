@@ -21,14 +21,18 @@ public class Curso {
 	@Column(name="nome")
 	private String nome;
 
+	@Column(name="departamento_id")
+	private int departamentoId;
+
 	public Curso() {
 		
 	}
 	
-	public Curso(String codigoCurso, String nome) {
+	public Curso(String codigoCurso, String nome, int departamentoId) {
 		super();
 		this.codigoCurso = codigoCurso;
 		this.nome = nome;
+		this.departamentoId= departamentoId;
 	}
 
 	public void create() {
@@ -43,19 +47,11 @@ public class Curso {
 		try {
 			// iniciando a transação
 			session.beginTransaction();
-			
-			/*if(session.get(Curso.class, codigoCurso) == null) {
-				System.out.println("Curso com codigoCurso = " + codigoCurso + " já existente\n");
-				erro = true;
-			}*/
-			
-			if(!erro) {
-				
-				// salvando o objeto
-				System.out.println("Salvando o Curso...");
-				session.save(this);
-			}
-			
+
+			// salvando o objeto
+			System.out.println("Salvando o Curso...");
+			session.save(this);
+
 			// finalizando transação
 			session.getTransaction().commit();
 			
@@ -116,7 +112,15 @@ public class Curso {
 	public void setnome(String nome) {
 		this.nome = nome;
 	}
-	
+
+	public int getDepartamentoId() {
+		return this.departamentoId;
+	}
+
+	public void setdepartamentoId(int departamentoId) {
+		this.departamentoId = departamentoId;
+	}
+
 	@Override
 	public String toString() {
 		return this.nome;

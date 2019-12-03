@@ -89,7 +89,7 @@ public class Read {
 		
 	}
 	
-	public static List<Curso> getCurso(String cursoId, String codigoCurso, String nome) {
+	public static List<Curso> getCurso(String cursoId, String codigoCurso, String nome, String departamentoId) {
 		
 		codigoCurso = aspas(codigoCurso);
 		nome = aspas(nome);
@@ -98,6 +98,7 @@ public class Read {
 		query += add("id",cursoId);
 		query += add("codigoCurso",codigoCurso);
 		query += add("nome",nome);
+		query += add("departamentoId",departamentoId);
 		query = query.substring(0, query.length() - 4);
 
 		List<Curso> resultado = null;
