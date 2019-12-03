@@ -86,6 +86,13 @@ public class CadastrarAlunoController implements Initializable {
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
 			if(!errorsDialog()) cadastraAluno();
         });
+        
+        btRemover.setOnMouseClicked((MouseEvent e)->{
+			
+        	if(!tableView.getSelectionModel().getSelectedItem().equals(null)) {
+        		removeAluno();
+        	}
+        });
     }
 
 	private void inicializarTableColumns(){
@@ -202,19 +209,15 @@ public class CadastrarAlunoController implements Initializable {
     	comboBoxCurso.setItems(obsCursos);
     }
 	
-	private void removerAluno() {
+	private void removeAluno() {
 		
 		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
 		
-		//a = Read.Query("from Aluno where usuarioId = " + aluno.getId()).get(0);
-		//Read.Query("from Usuario where id = " + aluno.getId());
-		
-		Aluno a = Read.getAluno(aluno.getId().toString(), null, null, null, null, null).get(0);
 		Usuario u = Read.getUsuario(aluno.getId().toString(), null, null, null, null).get(0);
 		
-		a.delete();
 		u.delete();
 		
+		carregarTableView();
 	}
 
 	private void carregarTableView(){
