@@ -60,7 +60,7 @@
             </HBox>
             <FlowPane hgap="15.0" prefHeight="334.0" prefWidth="810.0" vgap="5.0">
                <children>
-                  <HBox alignment="BOTTOM_LEFT" prefWidth="480.0">
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="25.0" prefWidth="178.0">
                      <children>
                         <Label alignment="BASELINE_LEFT" text="Professores Cadastrados">
                            <font>
@@ -69,11 +69,18 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="315.0" spacing="15.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="617.0" spacing="10.0">
                      <children>
-                        <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefWidth="95.0" text="Remover" />
-                        <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefWidth="95.0" text="Alterar" />
-                        <Button fx:id="btCadastrar" mnemonicParsing="false" prefWidth="95.0" text="Cadastrar" />
+                        <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="192.0" promptText="Pesquisar (Nome, CPF ou Email)">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btCadastrar" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cadastrar" />
+                        <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Alterar" />
+                        <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Remover" />
+                        <Button fx:id="btCancelar" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancelar" />
+                        <Button fx:id="btConfirmar" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="70.0" text="Confirmar" />
                      </children>
                   </HBox>
                   <TableView fx:id="tableView" prefHeight="261.0" prefWidth="810.0" tableMenuButtonVisible="true">

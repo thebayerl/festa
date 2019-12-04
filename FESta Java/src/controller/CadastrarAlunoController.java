@@ -32,11 +32,6 @@ import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.ValidationDecoration;
 import view.CadastrarAluno;
 
-/**
- * FXML Controller class
- *
- * @author denin
- */
 public class CadastrarAlunoController implements Initializable {
 
 	@FXML private TextField txUserName;
@@ -299,7 +294,7 @@ public class CadastrarAlunoController implements Initializable {
 		if (acao.equalsIgnoreCase("Alterar")) {
 			alterar();
 		} else if (acao.equalsIgnoreCase("Cadastrar")) {
-			cadastraAluno();
+			cadastrar();
 		}
 	}
 
@@ -463,6 +458,7 @@ public class CadastrarAlunoController implements Initializable {
 
 		try {
 			String username = txUserName.getText();
+			String senha = psSenha.getText();
 			String rg = txRG.getText();
 			String cpf = txCPF.getText();
 			String telResidencial = txTelResidencial.getText();
@@ -481,7 +477,7 @@ public class CadastrarAlunoController implements Initializable {
 			Usuario usuario = Read.getUsuario(a.getId().toString(), null, null, null, null).get(0);
 
 			Update.Aluno(aluno.getUsuarioId(), null, nome, dataIngresso.toString(), cursoId);
-			Update.Usuario(usuario.getId(), username, null, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
+			Update.Usuario(usuario.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
 
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Aluno alterado com sucesso!");
@@ -498,7 +494,7 @@ public class CadastrarAlunoController implements Initializable {
 		carregarTableView();
 	}
 
-	private void cadastraAluno() {
+	private void cadastrar() {
 		if (errorsDialog()) return;
 		if (testaDados()) return;
 

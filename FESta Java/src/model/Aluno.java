@@ -62,19 +62,6 @@ public class Aluno {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			
-			// testando a validade dos dados recebidos
-			
-			//if(session.get(Aluno.class, usuarioId) == null) {
-			//	System.out.println("\nERRO: Aluno com Matricula = " + usuarioId + " já existente\n");
-			//	erro = true;
-			//}
-			
-			//if(session.get(Curso.class, codigoCurso) == null) {
-			//	System.out.println("\nERRO: Curso com codigoCurso = " + codigoCurso + " não encontrado\n");
-			//	erro = true;
-			//}
-			
 			if(!erro) {
 			
 				// salvando o objeto

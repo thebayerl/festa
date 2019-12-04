@@ -365,7 +365,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Professor( Integer usuarioId, String nome, String matricula, String nivelFormacao, Integer codigoCurso) {
+	public static boolean Professor(Integer usuarioId, String nome, String nivelFormacao, Integer cursoId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -390,11 +390,11 @@ public class Update {
 				if(nome != null) {
 					obj.setNome(nome);
 				}
-				if(matricula != null) {
-					obj.setMatricula(matricula);
-				}
 				if(nivelFormacao != null) {
 					obj.setNivelFormacao(nivelFormacao);
+				}
+				if(cursoId != null) {
+					obj.setcursoId(cursoId);
 				}
 			}
 			

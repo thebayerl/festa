@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +53,8 @@ public class CadastrarProfessorController implements Initializable {
     @FXML private Button btCadastrar;
     @FXML private Button btAlterar;
     @FXML private Button btRemover;
+    @FXML private Button btConfirmar;
+    @FXML private Button btCancelar;
     @FXML private TableView<ProfessorView> tableView;
     @FXML private TableColumn<ProfessorView, Integer> columnId;
     @FXML private TableColumn<ProfessorView, String> columnNome;
@@ -82,6 +86,8 @@ public class CadastrarProfessorController implements Initializable {
     private ObservableList<String> obsListFormacao;
     private ObservableList<Disciplina> obsListCapacidades;
 
+    private String acao = null;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -95,8 +101,34 @@ public class CadastrarProfessorController implements Initializable {
         carregarCapacidades();
         carregarTableView();
 
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            if(!errorsDialog()) cadastrar();
+        btCancelar.setOnMouseClicked((MouseEvent e) -> {
+            limpaCampos();
+            desabilitaCampos();
+            habilitaTableView();
+        });
+
+        btConfirmar.setOnMouseClicked((MouseEvent e) -> {
+            realizaAcao();
+        });
+
+        btCadastrar.setOnMouseClicked((MouseEvent e) -> {
+            acao = "Cadastrar";
+            limpaCampos();
+            desabilitaTableView();
+            habilitaTodosCampos();
+        });
+
+        btRemover.setOnMouseClicked((MouseEvent e) -> {
+            if (!tableView.getSelectionModel().isEmpty()) {
+                remover();
+            }
+        });
+
+        btAlterar.setOnMouseClicked((MouseEvent e) -> {
+            acao = "Alterar";
+            if (!tableView.getSelectionModel().isEmpty()) {
+                habilitaCamposAlteracao();
+            }
         });
     }
 
@@ -201,6 +233,130 @@ public class CadastrarProfessorController implements Initializable {
         return false;
     }
 
+    private void habilitaTodosCampos() {
+        txNome.setDisable(false);
+        psSenha.setDisable(false);
+        psSenhaConf.setDisable(false);
+        txEmail.setDisable(false);
+        txUserName.setDisable(false);
+        txRG.setDisable(false);
+        txCPF.setDisable(false);
+        txTelResidencial.setDisable(false);
+        txTelCelular.setDisable(false);
+        txEmail.setDisable(false);
+        dtNascimento.setDisable(false);
+        comboBoxCurso.setDisable(false);
+
+        btCancelar.setDisable(false);
+        btConfirmar.setDisable(false);
+        btAlterar.setDisable(true);
+        btRemover.setDisable(true);
+        btCadastrar.setDisable(true);
+    }
+
+    private void desabilitaTableView() {
+        tableView.setDisable(true);
+    }
+
+    private void habilitaTableView() {
+        tableView.setDisable(false);
+    }
+
+    private void limpaCampos() {
+        txNome.clear();
+        psSenha.clear();
+        psSenhaConf.clear();
+        txEmail.clear();
+        txUserName.clear();
+        txRG.clear();
+        txCPF.clear();
+        txTelResidencial.clear();
+        txTelCelular.clear();
+        dtNascimento.setValue(null);
+        comboBoxCurso.setValue(null);
+        comboBoxFormacao.setValue(null);
+    }
+
+    private void desabilitaCampos() {
+
+        txNome.setDisable(true);
+        psSenha.setDisable(true);
+        psSenhaConf.setDisable(true);
+        txEmail.setDisable(true);
+        txUserName.setDisable(true);
+        txRG.setDisable(true);
+        txCPF.setDisable(true);
+        txTelResidencial.setDisable(true);
+        txTelCelular.setDisable(true);
+        dtNascimento.setDisable(true);
+        comboBoxCurso.setDisable(true);
+        comboBoxFormacao.setDisable(true);
+
+        btCancelar.setDisable(true);
+        btConfirmar.setDisable(true);
+
+        btAlterar.setDisable(false);
+        btRemover.setDisable(false);
+        btCadastrar.setDisable(false);
+
+    }
+
+    private void realizaAcao() {
+        if (acao.equalsIgnoreCase("Alterar")) {
+            alterar();
+        } else if (acao.equalsIgnoreCase("Cadastrar")) {
+            cadastrar();
+        }
+    }
+
+    private void habilitaCamposAlteracao() {
+        ProfessorView professor = tableView.getSelectionModel().getSelectedItem();
+        Usuario u = Read.getUsuario(professor.getId().toString(), null, null, null, null).get(0);
+
+        txNome.setDisable(false);
+        txEmail.setDisable(false);
+        txUserName.setDisable(false);
+        txRG.setDisable(false);
+        txCPF.setDisable(false);
+        txTelResidencial.setDisable(false);
+        txTelCelular.setDisable(false);
+        txEmail.setDisable(false);
+        dtNascimento.setDisable(false);
+        comboBoxCurso.setDisable(false);
+        comboBoxFormacao.setDisable(false);
+
+        psSenha.setDisable(false);
+        psSenhaConf.setDisable(false);
+
+        btCadastrar.setDisable(true);
+        btAlterar.setDisable(true);
+        btRemover.setDisable(true);
+
+        btConfirmar.setDisable(false);
+        btCancelar.setDisable(false);
+
+        txUserName.setText(u.getUsername());
+        txNome.setText(professor.getNome());
+        txRG.setText(professor.getRg());
+        txCPF.setText(professor.getCpf());
+        txTelResidencial.setText(professor.getTelRes());
+        txTelCelular.setText(professor.getTelCel());
+        txEmail.setText(professor.getEmail());
+
+        Curso c = Read.getCurso(professor.getCursoId().toString(), null, null, null).get(0);
+
+        comboBoxCurso.setValue(c);
+        comboBoxFormacao.setValue(tableView.getSelectionModel().getSelectedItem().getFormacao());
+
+        LocalDate dataNascimento = stringToLocalDate(professor.getDataNascimento());
+        dtNascimento.setValue(dataNascimento);
+    }
+
+    private LocalDate stringToLocalDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(date, formatter);
+    }
+
     private void carregarCursos() {
         listCursos.clear();
         comboBoxCurso.getItems().clear();
@@ -280,6 +436,63 @@ public class CadastrarProfessorController implements Initializable {
         return erro;
     }
 
+    private void remover() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Remover");
+        alert.setHeaderText("Tem certeza que deseja remover?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            ProfessorView professorView = tableView.getSelectionModel().getSelectedItem();
+            Usuario u = Read.getUsuario(professorView.getId().toString(), null, null, null, null).get(0);
+            u.delete();
+            carregarTableView();
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
+
+    private void alterar() {
+        if (errorsDialog()) return;
+        if (testaDados()) return;
+
+        try {
+            String username = txUserName.getText();
+            String senha = psSenha.getText();
+            String rg = txRG.getText();
+            String cpf = txCPF.getText();
+            String telResidencial = txTelResidencial.getText();
+            String telCelular = txTelCelular.getText();
+            String email = txEmail.getText();
+            String nome = txNome.getText();
+            String dataNascimento = dtNascimento.getValue().toString();
+            String formacao = comboBoxFormacao.getSelectionModel().getSelectedItem();
+            Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
+            int cursoId = curso.getId();
+
+            ProfessorView p = tableView.getSelectionModel().getSelectedItem();
+
+            Professor professor = Read.getProfessor(p.getId().toString(), null, null, null, null).get(0);
+            Usuario usuario = Read.getUsuario(p.getId().toString(), null, null, null, null).get(0);
+
+            Update.Professor(professor.getUsuarioId(), nome, formacao, cursoId);
+            Update.Usuario(usuario.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento);
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setHeaderText("Professor alterado com sucesso!");
+            alert.show();
+
+            limpaCampos();
+            desabilitaCampos();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR,
+                    e.getMessage(),
+                    ButtonType.OK);
+            alert.show();
+        }
+        carregarTableView();
+    }
+
     private void cadastrar(){
 
         if(testaDados()){
@@ -296,7 +509,6 @@ public class CadastrarProfessorController implements Initializable {
             String email = txEmail.getText();
             String nome = txNome.getText();
             String dataNascimento = dtNascimento.getValue().toString();
-            System.out.println(dataNascimento);
             String formacao = comboBoxFormacao.getSelectionModel().getSelectedItem();
             Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
             String role = "docente";

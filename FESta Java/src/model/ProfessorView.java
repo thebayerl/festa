@@ -1,5 +1,7 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ProfessorView {
@@ -102,8 +104,9 @@ public class ProfessorView {
         this.formacao = formacao;
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
+    public String getDataNascimento() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(this.dataNascimento);
     }
 
     public void setDataNascimento(Date dataNascimento) {
