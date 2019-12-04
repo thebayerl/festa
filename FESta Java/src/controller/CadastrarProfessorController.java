@@ -397,7 +397,7 @@ public class CadastrarProfessorController implements Initializable {
         if(!comboBoxCurso.getSelectionModel().isEmpty()) {
             Curso c = Read.getCurso(comboBoxCurso.getId(), null, null, null).get(0);
             int deptId = c.getDepartamentoId();
-            listCapacidades = Read.getDisciplina(null, null, null, deptId);
+            listCapacidades = Read.getDisciplina(null, null, null, Integer.toString(deptId));
 
             if (listViewCapacidades != null) {
                 listViewCapacidades.getSelectionModel().clearSelection();

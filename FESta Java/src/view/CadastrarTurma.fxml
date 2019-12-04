@@ -33,7 +33,7 @@
             </HBox>
             <FlowPane hgap="15.0" prefHeight="299.0" prefWidth="675.0" vgap="15.0">
                <children>
-                  <ComboBox fx:id="comboBoxCurso" disable="true" onAction="#SelecionarCurso" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Curso" />
+                  <ComboBox fx:id="comboBoxDept" disable="true" onAction="#SelecionarDepartamento" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Departamento" />
                   <ComboBox fx:id="comboBoxDisciplina" disable="true" onAction="#SelecionarDisciplina" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Disciplina" />
                   <ComboBox fx:id="comboBoxProfessor" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Professor" />
                   <ComboBox fx:id="comboBoxPredio" disable="true" onAction="#selecionarPredio" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Prédio" />

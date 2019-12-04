@@ -42,7 +42,7 @@ public class CadastrarTurmaController implements Initializable {
     @FXML private ComboBox<Professor> comboBoxProfessor;
     @FXML private ComboBox<String> comboBoxPredio;
     @FXML private ComboBox<Sala> comboBoxSala;
-    @FXML private ComboBox<Curso> comboBoxCurso;
+    @FXML private ComboBox<Departamento> comboBoxDept;
 	@FXML private Button btCadastrar;
 	@FXML private Button btAlterar;
 	@FXML private Button btRemover;
@@ -61,14 +61,14 @@ public class CadastrarTurmaController implements Initializable {
 
 	private List<ProfessorCapacidade> listProfessorCapacidades = new ArrayList<>();
 	private List<DisciplinaCurso> listDisciplinaCursos = new ArrayList<>();
-	private List<Curso> listCursos = new ArrayList<>();
+	private List<Departamento> listDepartamento = new ArrayList<>();
 	private List<Sala> listSalas = new ArrayList<>();
 	private List<String> listPredios = new ArrayList<>();
 	private List<Disciplina> listDisciplinas = new ArrayList<>();
 	private List<Professor> listProfessores = new ArrayList<>();
 	private List<TurmaView> listTurmaView = new ArrayList<>();
 
-	private ObservableList<Curso> obsCursos;
+	private ObservableList<Departamento> obsDepartamento;
 	private ObservableList<Sala> obsSalas;
 	private ObservableList<String> obsPredios;
 	private ObservableList<Disciplina> obsDisciplinas;
@@ -92,7 +92,7 @@ public class CadastrarTurmaController implements Initializable {
 		inicializarTextFieldLimitations();
 		inicializarTableColumns();
 		carregarTableView();
-		carregarCursos();
+		carregarDepartamentos();
 		carregarPredios();
 
 		
@@ -128,14 +128,14 @@ public class CadastrarTurmaController implements Initializable {
 
 	private void inicializarValidators(){
 		//Campos obrigatórios
-		emptyValidator.registerValidator(comboBoxCurso, Validator.createEmptyValidator(comboBoxCurso.getPromptText()));
+		emptyValidator.registerValidator(comboBoxDept, Validator.createEmptyValidator(comboBoxDept.getPromptText()));
 		emptyValidator.registerValidator(txMaxAluno, Validator.createEmptyValidator(txMaxAluno.getPromptText()));
 		emptyValidator.registerValidator(txAno, Validator.createEmptyValidator(txAno.getPromptText()));
 		emptyValidator.registerValidator(comboBoxDisciplina, Validator.createEmptyValidator(comboBoxDisciplina.getPromptText()));
 		emptyValidator.registerValidator(comboBoxProfessor, Validator.createEmptyValidator(comboBoxProfessor.getPromptText()));
 		emptyValidator.registerValidator(comboBoxPredio, Validator.createEmptyValidator(comboBoxPredio.getPromptText()));
 		emptyValidator.registerValidator(comboBoxSala, Validator.createEmptyValidator(comboBoxSala.getPromptText()));
-		emptyValidator.registerValidator(comboBoxCurso, Validator.createEmptyValidator(comboBoxCurso.getPromptText()));
+		emptyValidator.registerValidator(comboBoxDept, Validator.createEmptyValidator(comboBoxDept.getPromptText()));
 
 		regexValidator.registerValidator(txAno, Validator.createRegexValidator(txAno.getPromptText(), "[0-9]{4}", Severity.ERROR));
 	}
@@ -164,7 +164,7 @@ public class CadastrarTurmaController implements Initializable {
 	
 	private void habilitaTodosCampos() {
 		
-		comboBoxCurso.setDisable(false);
+		comboBoxDept.setDisable(false);
 		comboBoxPredio.setDisable(false);
 		radioBt1.setDisable(false);
 		radioBt2.setDisable(false);
@@ -184,7 +184,7 @@ public class CadastrarTurmaController implements Initializable {
 	
 	private void limpaCampos() {
 		
-		comboBoxCurso.setValue(null);
+		comboBoxDept.setValue(null);
 		comboBoxDisciplina.setValue(null);
 		comboBoxProfessor.setValue(null);
 		comboBoxPredio.setValue(null);
@@ -198,7 +198,7 @@ public class CadastrarTurmaController implements Initializable {
 	
 	private void desabilitaCampos() {
 
-		comboBoxCurso.setDisable(true);
+		comboBoxDept.setDisable(true);
 		comboBoxDisciplina.setDisable(true);
 		comboBoxProfessor.setDisable(true);
 		comboBoxPredio.setDisable(true);
@@ -266,13 +266,12 @@ public class CadastrarTurmaController implements Initializable {
 	private void habilitaCamposAlteracao() {
 		
 		TurmaView turma = tableView.getSelectionModel().getSelectedItem();
-		Curso c = Read.getCurso(turma.getCursoId().toString(), null, null, null).get(0);
+		Departamento dept = (Departamento) Read.Query("from Departamento where id = " + turma.getDepartamentoId().toString()).get(0);
 		Professor p = Read.getProfessor(turma.getProfessorId().toString(), null, null, null, null).get(0);
 		Disciplina d = Read.getDisciplina(turma.getDisciplinaId().toString(), null, null, null).get(0);
-		Sala s = Read.getSala( turma.getCodigoSala(), null, null).get(0);
-		
-		
-		comboBoxCurso.setDisable(false);
+		Sala s = Read.getSala(turma.getCodigoSala(), null, null).get(0);
+
+		comboBoxDept.setDisable(false);
 		comboBoxDisciplina.setDisable(false);
 		comboBoxProfessor.setDisable(false);
 		comboBoxPredio.setDisable(false);
@@ -290,23 +289,19 @@ public class CadastrarTurmaController implements Initializable {
 		btCancelar.setDisable(false);
 		
 		
-		comboBoxCurso.setValue(c);
+		comboBoxDept.setValue(dept);
 		comboBoxDisciplina.setValue(d);
 		comboBoxProfessor.setValue(p);
 		comboBoxPredio.setValue(s.getPredio());
 		comboBoxSala.setValue(s);
 		txMaxAluno.setText(turma.getMaxAlunos().toString());
-		txAno.setText(turma.getAno().toString());
-		
-		System.out.println(turma.getSemestre());
-		
+		txAno.setText(turma.getAno());
+
 		if(turma.getSemestre().equalsIgnoreCase("1º")) {
 			radioBt1.setSelected(true);
 		}else {
 			radioBt2.setSelected(true);
 		}
-		
-		
 	}
 	
 	private void remover() {
@@ -332,9 +327,9 @@ public class CadastrarTurmaController implements Initializable {
 		listTurmaView.clear();
 
 		listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, c.id) " +
-									"from Curso c, Turma t, Professor p, Sala s, Disciplina d " +
-									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and c.id = p.cursoId");
+									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, d.id) " +
+									"from Departamento d, Turma t, Professor p, Sala s, Disciplina d " +
+									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = d.id");
 
 		if(obsListTurmaView != null) {
 			obsListTurmaView.clear();
@@ -364,8 +359,6 @@ public class CadastrarTurmaController implements Initializable {
     	comboBoxProfessor.getItems().clear();
     	comboBoxProfessor.setDisable(false);
     	comboBoxProfessor.setItems(obsProfessores);
-    	
-    	//comboBoxProfessor.setDisable(false);
     }
     
     
@@ -395,15 +388,15 @@ public class CadastrarTurmaController implements Initializable {
     }
     
     
-    public void carregarCursos() {
-    	listCursos.clear();
-    	comboBoxCurso.getItems().clear();
-    	listCursos = Read.getCurso(cursoId, null, null, null);
-    	if(obsCursos != null) {
-    		obsCursos.clear();
+    public void carregarDepartamentos() {
+    	listDepartamento.clear();
+    	comboBoxDept.getItems().clear();
+    	//listDepartamento = Read.getCurso(cursoId, null, null, null);
+    	if(obsDepartamento != null) {
+    		obsDepartamento.clear();
     	}
-    	obsCursos = FXCollections.observableArrayList(listCursos);
-    	comboBoxCurso.setItems(obsCursos);
+    	obsDepartamento = FXCollections.observableArrayList(listDepartamento);
+    	comboBoxDept.setItems(obsDepartamento);
     }
     
     public void carregarPredios() {
@@ -557,7 +550,7 @@ public class CadastrarTurmaController implements Initializable {
     }
 
 	@FXML
-	void SelecionarCurso() {
+	void SelecionarDepartamento() {
 		if(!comboBoxDisciplina.isDisable()) {
 			comboBoxDisciplina.setDisable(true);
 		}
@@ -565,7 +558,7 @@ public class CadastrarTurmaController implements Initializable {
 			comboBoxProfessor.setDisable(true);
 		}
 		
-		Curso c = comboBoxCurso.getSelectionModel().getSelectedItem(); 
+		Departamento c = comboBoxDept.getSelectionModel().getSelectedItem();
 		
 		if(c != null) {
 			cursoId = String.valueOf(c.getId());
