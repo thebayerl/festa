@@ -103,7 +103,6 @@ public class CadastrarAlunoController implements Initializable {
 
 		btConfirmar.setOnMouseClicked((MouseEvent e) -> {
 			realizaAcao();
-			habilitaTableView();
 		});
 
 		btCadastrar.setOnMouseClicked((MouseEvent e) -> {
@@ -123,7 +122,6 @@ public class CadastrarAlunoController implements Initializable {
 			acao = "Alterar";
 			if (!tableView.getSelectionModel().isEmpty()) {
 				habilitaCamposAlteracao();
-
 			}
 		});
 	}
@@ -300,11 +298,8 @@ public class CadastrarAlunoController implements Initializable {
 	private void realizaAcao() {
 		if (acao.equalsIgnoreCase("Alterar")) {
 			alterar();
-			limpaCampos();
-			desabilitaCampos();
 		} else if (acao.equalsIgnoreCase("Cadastrar")) {
 			cadastraAluno();
-
 		}
 	}
 
@@ -487,6 +482,13 @@ public class CadastrarAlunoController implements Initializable {
 
 			Update.Aluno(aluno.getUsuarioId(), null, nome, dataIngresso.toString(), cursoId);
 			Update.Usuario(usuario.getId(), username, null, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Aluno alterado com sucesso!");
+			alert.show();
+
+			limpaCampos();
+			desabilitaCampos();
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR,
 					e.getMessage(),
@@ -533,6 +535,7 @@ public class CadastrarAlunoController implements Initializable {
 			alert.show();
 			limpaCampos();
 			desabilitaCampos();
+			habilitaTableView();
 
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR,

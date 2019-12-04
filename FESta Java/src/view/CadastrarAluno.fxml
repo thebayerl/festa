@@ -60,7 +60,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="650.0" spacing="15.0">
                      <children>
-                        <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="192.0" promptText="Pesquisar">
+                        <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="192.0" promptText="Pesquisar (Nome, CPF ou Email)">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
