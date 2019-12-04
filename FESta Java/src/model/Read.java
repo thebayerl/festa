@@ -349,7 +349,6 @@ public class Read {
 	
 	public static List<ProfessorCapacidade> getProfessorCapacidade(String professorId, String disciplinaId) {
 		
-		disciplinaId = aspas(disciplinaId);
 		String query = "from ProfessorCapacidade where ";
 		query += add("disciplinaId",disciplinaId);
 		query += add("professorId",professorId);
