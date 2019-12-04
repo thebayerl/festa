@@ -389,7 +389,7 @@ public class CadastrarAlunoController implements Initializable {
 		listAlunoView.clear();
 
 		listAlunoView = Read.Query("select new model.AlunoView(u.id, c.id, a.nome, c.nome, u.email, u.telCelular, " +
-				"u.telResidencial, u.cpf, u.rg, a.dataIngresso, u.dataNascimento) " +
+				"u.telResidencial, u.cpf, u.rg, a.dataIngresso, u.dataNascimento, u.username) " +
 				"from Usuario as u, Aluno as a, Curso as c " +
 				"where u.id = a.id and a.cursoId = c.id");
 
@@ -424,23 +424,24 @@ public class CadastrarAlunoController implements Initializable {
 	private boolean testaDados() {
 		boolean erro = false;
 		String alertmsg = "";
+		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
 
-		if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
+		if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !aluno.getUsername().equals(txUserName.getText()) ) {
 			alertmsg += "-Usuario com username já existente\n";
 			erro = true;
 		}
 
-		if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty()) {
+		if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty() && !aluno.getRg().equals(txRG.getText()) ) {
 			alertmsg += "-Usuario com rg já existente\n";
 			erro = true;
 		}
 
-		if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty()) {
+		if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty() && !aluno.getCpf().equals(txCPF.getText())) {
 			alertmsg += "-Usuario com cpf já existente\n";
 			erro = true;
 		}
 
-		if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty()) {
+		if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty() && !aluno.getEmail().equals(txEmail.getText())) {
 			alertmsg += "-Usuario com email já existente\n";
 			erro = true;
 		}

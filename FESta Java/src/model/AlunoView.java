@@ -7,11 +7,11 @@ import java.util.Date;
 
 public class AlunoView {
     private Integer id, cursoId;
-    private String  nome, cursoNome, email, telCel, telRes, cpf, rg;
+    private String  nome, username, cursoNome, email, telCel, telRes, cpf, rg;
     private Date dataIngresso, dataNascimento;
 
     public AlunoView(Integer id, Integer cursoId, String nome, String cursoNome, String email, String telCel,
-                     String telRes, String cpf, String rg, Date dataIngresso, Date dataNascimento) {
+                     String telRes, String cpf, String rg, Date dataIngresso, Date dataNascimento, String username) {
         this.id = id;
         this.cursoId = cursoId;
         this.nome = nome;
@@ -23,6 +23,7 @@ public class AlunoView {
         this.rg = rg;
         this.dataIngresso = dataIngresso;
         this.dataNascimento = dataNascimento;
+        this.username = username;
     }
 
     private Date stringToDate(String data){
@@ -48,6 +49,8 @@ public class AlunoView {
     public String getNome() {
         return nome;
     }
+
+    public String getUsername() { return username; }
 
     public String getCursoNome() {
         return cursoNome;
