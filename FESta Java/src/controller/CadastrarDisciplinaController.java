@@ -5,13 +5,14 @@
  */
 package controller;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
-import model.Departamento;
-import model.Disciplina;
-import model.PreRequisito;
-import model.Read;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.*;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -37,12 +38,21 @@ public class CadastrarDisciplinaController implements Initializable {
     
 	@FXML private TextField txNome;
     @FXML private TextField txCodigoDisciplina;
-    @FXML private Button btAtualizar;
+    @FXML private TextField txPesquisar;
     @FXML private Button btCadastrar;
     @FXML private Button btCancelar;
     @FXML private ComboBox<Departamento> comboBoxDepartamento;
     @FXML private ComboBox<Integer> comboBoxCreditos;
     @FXML private ListView<Disciplina> listViewPrerequisito;
+    @FXML private Button btAlterar;
+    @FXML private Button btRemover;
+    @FXML private Button btConfirmar;
+    @FXML private TableView<DisciplinaView> tableView;
+    @FXML private TableColumn<DisciplinaView, Integer> columnId;
+    @FXML private TableColumn<DisciplinaView, String> columnCodigo;
+    @FXML private TableColumn<DisciplinaView, String> columnNome;
+    @FXML private TableColumn<DisciplinaView, Integer> columnCreditos;
+    @FXML private TableColumn<DisciplinaView, String> columnDepartamento;
     
     int maxCredito = 6;
     private List<Integer> listCreditos = new ArrayList<>();
@@ -51,6 +61,10 @@ public class CadastrarDisciplinaController implements Initializable {
     private List<Disciplina> listDisciplinas = new ArrayList<>();
     private ObservableList<Integer> obsCreditos;
     private ObservableList<Departamento> obsDepartamentos;
+    private List<DisciplinaView> listDisciplinaView = new ArrayList<>();
+    private ObservableList<DisciplinaView> obsListDisciplinaView;
+
+    private String acao = null;
 
     /**
      * Initializes the controller class.
@@ -58,23 +72,126 @@ public class CadastrarDisciplinaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        limpaCampos();
+        desabilitaCampos();
+        habilitaTableView();
     	carregarCreditos();
     	carregarDepartametos();
     	carregarPrerequisitos();
+    	inicializarTableColumns();
+        carregarTableView();
 
-        btAtualizar.setOnMouseClicked((MouseEvent e)->{
-            carregarPrerequisitos();
+        btCancelar.setOnMouseClicked((MouseEvent e) -> {
+            limpaCampos();
+            desabilitaCampos();
+            habilitaTableView();
         });
-    	
-        btCancelar.setOnMouseClicked((MouseEvent e)->{
-            abrePrincipal();
+
+        btConfirmar.setOnMouseClicked((MouseEvent e) -> {
+            realizaAcao();
         });
-        
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
-            cadastraDisciplina();
+
+        btCadastrar.setOnMouseClicked((MouseEvent e) -> {
+            acao = "Cadastrar";
+            limpaCampos();
+            habilitaTodosCampos();
+        });
+
+        btRemover.setOnMouseClicked((MouseEvent e) -> {
+            if (!tableView.getSelectionModel().isEmpty()) {
+                //remover();
+            }
+        });
+
+        btAlterar.setOnMouseClicked((MouseEvent e) -> {
+            acao = "Alterar";
+            if (!tableView.getSelectionModel().isEmpty()) {
+                habilitaCamposAlteracao();
+                desabilitaTableView();
+            }
         });
     }
-    
+
+    private void habilitaTableView() {
+        txPesquisar.setDisable(false);
+        tableView.setDisable(false);
+    }
+
+    private void limpaCampos() {
+        txNome.clear();
+        txCodigoDisciplina.clear();
+        txPesquisar.clear();
+        comboBoxCreditos.setValue(null);
+        comboBoxDepartamento.setValue(null);
+    }
+
+    private void desabilitaCampos() {
+
+        txNome.setDisable(true);
+        txCodigoDisciplina.setDisable(true);
+        listViewPrerequisito.setDisable(true);
+        comboBoxCreditos.setDisable(true);
+        comboBoxDepartamento.setDisable(true);
+
+        btCancelar.setDisable(true);
+        btConfirmar.setDisable(true);
+        btAlterar.setDisable(false);
+        btRemover.setDisable(false);
+        btCadastrar.setDisable(false);
+
+    }
+
+    private void habilitaTodosCampos() {
+        txNome.setDisable(false);
+        txCodigoDisciplina.setDisable(false);
+        comboBoxCreditos.setDisable(false);
+        comboBoxDepartamento.setDisable(false);
+        listViewPrerequisito.setDisable(false);
+        btCancelar.setDisable(false);
+        btConfirmar.setDisable(false);
+        btAlterar.setDisable(true);
+        btRemover.setDisable(true);
+        btCadastrar.setDisable(true);
+    }
+
+    private void desabilitaTableView() {
+        txPesquisar.setDisable(true);
+        tableView.setDisable(true);
+    }
+
+    private void habilitaCamposAlteracao() {
+
+        DisciplinaView disciplina = tableView.getSelectionModel().getSelectedItem();
+
+        txNome.setDisable(false);
+        txCodigoDisciplina.setDisable(false);
+        listViewPrerequisito.setDisable(false);
+        comboBoxCreditos.setDisable(false);
+        comboBoxDepartamento.setDisable(false);
+
+        btCadastrar.setDisable(true);
+        btAlterar.setDisable(true);
+        btRemover.setDisable(true);
+        btConfirmar.setDisable(false);
+        btCancelar.setDisable(false);
+
+        txNome.setText(disciplina.getNome());
+        txCodigoDisciplina.setText(disciplina.getcodigoDisciplina());
+
+
+        Departamento d = (Departamento) Read.Query("from Departamento where id = " + disciplina.getDepartamentoId()).get(0);
+        comboBoxDepartamento.setValue(d);
+        comboBoxCreditos.setValue(disciplina.getCreditos());
+    }
+
+    private void realizaAcao() {
+        if (acao.equalsIgnoreCase("Alterar")) {
+           // alterar();
+        } else if (acao.equalsIgnoreCase("Cadastrar")) {
+            cadastraDisciplina();
+        }
+    }
+
     public void carregarCreditos() {
     	for(int i = 1 ;  i <= maxCredito ; i++) {
     		listCreditos.add(i);
@@ -102,6 +219,49 @@ public class CadastrarDisciplinaController implements Initializable {
         listViewPrerequisito.setItems(obsDisciplinas);
     }
 
+    private void inicializarTableColumns() {
+        columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        columnCodigo.setCellValueFactory(new PropertyValueFactory<>("codigoDisciplina"));
+        columnCreditos.setCellValueFactory(new PropertyValueFactory<>("creditos"));
+        columnDepartamento.setCellValueFactory(new PropertyValueFactory<>("departamentoNome"));
+    }
+
+    private void carregarTableView() {
+        listDisciplinaView.clear();
+
+        listDisciplinaView = Read.Query("select new model.DisciplinaView(dis.nome, dis.creditos ,dis.id, dep.id, dis.codigoDisciplina ,dep.codigoDepartamento) " +
+                "from Departamento as dep, Disciplina as dis " +
+                "where dep.id = dis.departamentoId");
+
+        if (obsListDisciplinaView != null) {
+            obsListDisciplinaView.clear();
+        }
+        obsListDisciplinaView = FXCollections.observableArrayList(listDisciplinaView);
+
+        FilteredList<DisciplinaView> filteredData = new FilteredList<>(obsListDisciplinaView, b -> true);
+
+        txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(objView -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (objView.getNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getcodigoDisciplina().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getDepartamentoNome().toLowerCase().indexOf(lowerCaseFilter) != -1)
+                    return true;
+                else
+                    return false; // Does not match.
+            });
+        });
+
+        SortedList<DisciplinaView> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+    }
+
     private boolean testaDados(){
         boolean erro = false;
         String alertmsg = "";
@@ -120,7 +280,7 @@ public class CadastrarDisciplinaController implements Initializable {
         return erro;
     }
 
-        public void cadastraDisciplina(){
+    public void cadastraDisciplina(){
 
         if(testaDados()){
             return;

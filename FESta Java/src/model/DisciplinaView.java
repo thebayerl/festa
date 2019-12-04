@@ -9,8 +9,9 @@ public class DisciplinaView {
 
 	public DisciplinaView() {}
 
-	public DisciplinaView(String nome, int creditos, int departamentoId, String codigoDisciplina, String departamentoNome) {
+	public DisciplinaView(String nome, int creditos,int id, int departamentoId, String codigoDisciplina, String departamentoNome) {
 		super();
+		this.id= id;
 		this.codigoDisciplina = codigoDisciplina;
 		this.nome = nome;
 		this.creditos = creditos;

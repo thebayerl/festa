@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarDisciplinaController">
+<AnchorPane id="AnchorPane" prefHeight="529.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarDisciplinaController">
     <children>
-      <VBox layoutX="100.0" layoutY="36.0" spacing="20.0">
+      <VBox layoutX="57.0" layoutY="73.0" prefHeight="180.0" prefWidth="267.0" spacing="20.0">
          <children>
-            <HBox alignment="CENTER">
-               <children>
-                  <Label text="Cadastro de Disciplina">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets bottom="16.0" />
-               </padding>
-            </HBox>
             <HBox alignment="CENTER" spacing="30.0">
                <children>
                   <TextField fx:id="txNome" prefHeight="25.0" prefWidth="300.0" promptText="Digite o Nome da Disciplina" />
@@ -34,7 +23,7 @@
             </HBox>
             <HBox alignment="CENTER" spacing="30.0">
                <children>
-                  <TextField fx:id="txCodigoDisciplina" prefHeight="25.0" prefWidth="300.0" promptText="Digite o código da Disciplina" />
+                  <TextField fx:id="txCodigoDisciplina" prefHeight="25.0" prefWidth="297.0" promptText="Digite o código da Disciplina" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="187.0" spacing="30.0">
@@ -47,28 +36,34 @@
                   <ComboBox fx:id="comboBoxCreditos" prefHeight="25.0" prefWidth="300.0" promptText="Selecionar o Número de Créditos" />
                </children>
             </HBox>
-            <VBox spacing="6.0">
-               <children>
-                  <HBox alignment="BOTTOM_CENTER" spacing="30.0">
-                     <children>
-                        <Label text="Selecionar as Disciplinas Pré-requisitos" textAlignment="CENTER">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Button fx:id="btAtualizar" mnemonicParsing="false" text="Atualizar" />
-                     </children>
-                  </HBox>
-                  <ListView fx:id="listViewPrerequisito" prefHeight="105.0" prefWidth="300.0" />
-               </children>
-            </VBox>
-            <HBox alignment="CENTER" spacing="150.0">
-               <children>
-                  <Button fx:id="btCancelar" mnemonicParsing="false" text="Voltar" />
-                  <Button fx:id="btCadastrar" mnemonicParsing="false" text="Enviar" />
-               </children>
-            </HBox>
+            <HBox alignment="CENTER" spacing="150.0" />
          </children>
       </VBox>
+      <ListView fx:id="listViewPrerequisito" layoutX="337.0" layoutY="94.0" prefHeight="139.0" prefWidth="216.0" />
+      <Label layoutX="343.0" layoutY="65.0" text="Selecionar as Disciplinas Pré-requisitos" textAlignment="CENTER" />
+      <Label layoutX="216.0" layoutY="23.0" text="Cadastro de Disciplina">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <HBox alignment="TOP_CENTER" layoutX="57.0" layoutY="241.0" prefHeight="25.0" prefWidth="495.0" spacing="10.0">
+         <children>
+            <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="123.0" promptText="Digite o código da Disciplina" text="Pesquisar" />
+            <Button fx:id="btCadastrar" mnemonicParsing="false" text="Cadastrar" />
+            <Button fx:id="btAlterar" mnemonicParsing="false" text="Alterar" />
+            <Button fx:id="btRemover" mnemonicParsing="false" text="Remover" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="btConfirmar" mnemonicParsing="false" text="Confirmar" />
+         </children>
+      </HBox>
+      <TableView fx:id="tableView" layoutX="58.0" layoutY="273.0" prefHeight="224.0" prefWidth="495.0">
+        <columns>
+          <TableColumn fx:id="columnId" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="columnCodigo" prefWidth="84.0" text="Código" />
+            <TableColumn fx:id="columnNome" prefWidth="154.0" text="Nome" />
+            <TableColumn fx:id="columnCreditos" prefWidth="76.0" text="Créditos" />
+            <TableColumn fx:id="columnDepartamento" prefWidth="105.0" text="Departamento" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
