@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class Read {
-	public static final SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+	public static final SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 
 	public static String aspas(String string) {
 		return "'" + string + "'";
@@ -144,7 +144,7 @@ public class Read {
 		return resultado;
 	}
 	
-	public static List<Disciplina> getDisciplina(String id, String nome, String creditos, String departamento) {
+	public static List<Disciplina> getDisciplina(String id, String nome, String creditos, Integer departamento_id) {
 
 		String query = "from Disciplina where ";
 		
@@ -156,7 +156,7 @@ public class Read {
 			query += add("id",id);
 			query += add("creditos",creditos);
 			query += add("nome", nome);
-			query += add("departamento", departamento);
+			query += add("departamento_id", departamento_id.toString());
 			query = query.substring(0, query.length() - 4);
 		} else {
 			query = query.substring(0, query.length() - 6);

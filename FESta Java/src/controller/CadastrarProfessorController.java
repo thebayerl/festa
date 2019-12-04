@@ -249,6 +249,7 @@ public class CadastrarProfessorController implements Initializable {
         txEmail.setDisable(false);
         dtNascimento.setDisable(false);
         comboBoxCurso.setDisable(false);
+        listViewCapacidades.setDisable(false);
 
         btCancelar.setDisable(false);
         btConfirmar.setDisable(false);
@@ -280,10 +281,10 @@ public class CadastrarProfessorController implements Initializable {
         dtNascimento.setValue(null);
         comboBoxCurso.setValue(null);
         comboBoxFormacao.setValue(null);
+        listViewCapacidades.getSelectionModel().clearSelection();
     }
 
     private void desabilitaCampos() {
-
         txNome.setDisable(true);
         psSenha.setDisable(true);
         psSenhaConf.setDisable(true);
@@ -296,6 +297,7 @@ public class CadastrarProfessorController implements Initializable {
         dtNascimento.setDisable(true);
         comboBoxCurso.setDisable(true);
         comboBoxFormacao.setDisable(true);
+        listViewCapacidades.setDisable(true);
 
         btCancelar.setDisable(true);
         btConfirmar.setDisable(true);
@@ -328,6 +330,7 @@ public class CadastrarProfessorController implements Initializable {
         dtNascimento.setDisable(false);
         comboBoxCurso.setDisable(false);
         comboBoxFormacao.setDisable(false);
+        listViewCapacidades.setDisable(false);
 
         psSenha.setDisable(false);
         psSenhaConf.setDisable(false);
@@ -391,16 +394,21 @@ public class CadastrarProfessorController implements Initializable {
     }
 
     public void carregarCapacidades() {
-        if(listViewCapacidades != null){
-            listViewCapacidades.getSelectionModel().clearSelection();
-            listViewCapacidades.getItems().clear();
+        if(!comboBoxCurso.getSelectionModel().isEmpty()) {
+            Curso c = Read.getCurso(comboBoxCurso.getId(), null, null, null).get(0);
+            int deptId = c.getDepartamentoId();
+            listCapacidades = Read.getDisciplina(null, null, null, deptId);
+
+            if (listViewCapacidades != null) {
+                listViewCapacidades.getSelectionModel().clearSelection();
+                listViewCapacidades.getItems().clear();
+            }
+            listViewCapacidades.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            Comparator<Disciplina> comparator = Comparator.comparing(Disciplina::getNome);
+            obsListCapacidades = FXCollections.observableArrayList(listCapacidades);
+            FXCollections.sort(obsListCapacidades, comparator);
+            listViewCapacidades.setItems(obsListCapacidades);
         }
-        listViewCapacidades.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listCapacidades = Read.getDisciplina(null, null, null, null);
-        Comparator<Disciplina> comparator = Comparator.comparing(Disciplina::getNome);
-        obsListCapacidades = FXCollections.observableArrayList(listCapacidades);
-        FXCollections.sort(obsListCapacidades, comparator);
-        listViewCapacidades.setItems(obsListCapacidades);
     }
 
     private void carregarTableView(){
@@ -493,7 +501,7 @@ public class CadastrarProfessorController implements Initializable {
         if (errorsDialog()) return;
         if (testaDados()) return;
 
-        //try {
+        try {
             String username = txUserName.getText();
             String senha = psSenha.getText();
             String rg = txRG.getText();
@@ -517,8 +525,10 @@ public class CadastrarProfessorController implements Initializable {
 
             Session session = Read.factory.getCurrentSession();
             session.beginTransaction();
-            session.createQuery("delete from ProfessorCapacidade where professorId = " + p.getId());
-            
+            session.createQuery("delete ProfessorCapacidade where professorId = " + p.getId()).executeUpdate();
+            session.getTransaction().commit();
+            session.close();
+
             cadastrarCapacidades(p.getId());
 
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -529,12 +539,12 @@ public class CadastrarProfessorController implements Initializable {
             desabilitaCampos();
             habilitaTableView();
             carregarTableView();
-      //  } catch (Exception e) {
-            /*Alert alert = new Alert(AlertType.ERROR,
-                    e.getMessage(),
-                    ButtonType.OK);
-            alert.show();*/
-       // }
+      } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR,
+                                    e.getMessage(),
+                                    ButtonType.OK);
+            alert.show();
+       }
     }
 
     private void cadastrar(){
