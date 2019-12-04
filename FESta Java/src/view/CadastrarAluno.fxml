@@ -60,18 +60,22 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="650.0" spacing="15.0">
                      <children>
-                        <Button fx:id="btPesquisar" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Pesquisar" />
-                        <Button fx:id="btCancelar" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Cancelar" />
-                        <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Remover" />
-                        <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Alterar" />
-                        <Button fx:id="btCadastrar" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Cadastrar" />
-                        <Button fx:id="btConfirmar" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="100.0" text="Confirmar" />
+                        <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="192.0" promptText="Pesquisar">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btCadastrar" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cadastrar" />
+                        <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Alterar" />
+                        <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Remover" />
+                        <Button fx:id="btCancelar" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancelar" />
+                        <Button fx:id="btConfirmar" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="70.0" text="Confirmar" />
                      </children>
                   </HBox>
                   <TableView fx:id="tableView" prefHeight="261.0" prefWidth="810.0" tableMenuButtonVisible="true">
                     <columns>
                       <TableColumn fx:id="columnId" prefWidth="40.0" text="ID" />
-                      <TableColumn fx:id="columnNome" prefWidth="162.0" text="Nome" />
+                      <TableColumn fx:id="columnNome" prefWidth="191.0" text="Nome" />
                         <TableColumn fx:id="columnCurso" prefWidth="171.0" text="Curso" />
                         <TableColumn fx:id="columnEmail" prefWidth="143.0" text="Email" />
                         <TableColumn fx:id="columnTelCel" prefWidth="124.0" text="Tel. Celular" />

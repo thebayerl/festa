@@ -53,22 +53,29 @@ public class Usuario {
 
 	public Usuario(){}
 
-	public Usuario(String username, String senha, String rg, String cpf, String dataNascimento, String telResidencial, String telCelular, String email, String role) {
+	public Usuario(String username, String senha, String rg, String cpf, String dataNascimento, String telResidencial,
+				   String telCelular, String email, String role) {
 		this.username = username;
 		this.senha = senha;
 		this.rg = rg;
 		this.cpf = cpf;
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			this.dataNascimento = format.parse ( dataNascimento );
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
+		this.dataNascimento = stringToDate(dataNascimento);
 		this.telResidencial = telResidencial;
 		this.telCelular = telCelular;
 		this.email = email;
 		this.role = role;
+	}
+
+	private Date stringToDate(String data){
+		Date formatData = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			formatData = format.parse ( data );
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		return formatData;
 	}
 
 	public void create() {

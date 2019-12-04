@@ -1,5 +1,8 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AlunoView {
@@ -20,6 +23,18 @@ public class AlunoView {
         this.rg = rg;
         this.dataIngresso = dataIngresso;
         this.dataNascimento = dataNascimento;
+    }
+
+    private Date stringToDate(String data){
+        Date formatData = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            formatData = format.parse ( data );
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        };
+        return formatData;
     }
 
     public Integer getId() {
@@ -58,11 +73,13 @@ public class AlunoView {
         return rg;
     }
 
-    public Date getDataIngresso() {
-        return dataIngresso;
+    public String getDataIngresso() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(dataIngresso);
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
+    public String getDataNascimento() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(dataNascimento);
     }
 }
