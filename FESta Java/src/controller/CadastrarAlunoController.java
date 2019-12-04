@@ -476,11 +476,11 @@ public class CadastrarAlunoController implements Initializable {
 
 			AlunoView a = tableView.getSelectionModel().getSelectedItem();
 
-			Aluno aluno = Read.getAluno(a.getId().toString(), null, null, null, null, null).get(0);
-			Usuario usuario = Read.getUsuario(a.getId().toString(), null, null, null, null).get(0);
+			//Aluno aluno = Read.getAluno(a.getId().toString(), null, null, null, null, null).get(0);
+			//Usuario usuario = Read.getUsuario(a.getId().toString(), null, null, null, null).get(0);
 
-			Update.Aluno(aluno.getUsuarioId(), null, nome, dataIngresso.toString(), cursoId);
-			Update.Usuario(usuario.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
+			Update.Aluno(a.getId(), null, nome, dataIngresso.toString(), cursoId);
+			Update.Usuario(a.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
 
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Aluno alterado com sucesso!");
