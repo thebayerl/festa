@@ -310,14 +310,14 @@ public class CadastrarAlunoController implements Initializable {
 		if(acao.equalsIgnoreCase("Pesquisar")) {
 			pesquisaAluno();
 		}else if(acao.equalsIgnoreCase("Alterar")){
+			alteraAluno();
 			limpaCampos();
 			desabilitaCampos();
-			alteraAluno();
 		}else if(acao.equalsIgnoreCase("Cadastrar")) {
 			if(!errorsDialog()) {
+				cadastraAluno();
 				limpaCampos();
 				desabilitaCampos();
-				cadastraAluno();
 			} 
 		}
 	}
