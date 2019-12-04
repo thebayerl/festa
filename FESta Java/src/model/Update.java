@@ -7,9 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class Update {
-	private static final SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
+import static model.Read.factory;
 
+public class Update {
 	public static boolean Aluno(Integer id, String matricula, String nome, String dataIngresso,
 			Integer cursoId) {
 		boolean sucesso = true;
@@ -18,8 +18,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			Aluno obj = session.get(Aluno.class, id);
@@ -51,10 +49,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		
@@ -67,8 +64,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			Cordenador obj = session.get(Cordenador.class, usuarioId);
@@ -89,10 +84,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		
@@ -105,8 +99,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			Curso obj = session.get(Curso.class, codigoCurso);
@@ -130,10 +122,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		return sucesso;
@@ -145,8 +136,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			Disciplina obj = session.get(Disciplina.class, id);
@@ -174,10 +163,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		return sucesso;
@@ -189,8 +177,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			List<DisciplinaCurso> obj = session.createQuery("from DisciplinaCurso where codigo_curso = " + codigoCurso + "disciplinaId = " + disciplinaId).getResultList();
@@ -212,7 +198,7 @@ public class Update {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		return sucesso;
@@ -224,8 +210,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			List<Historico> obj = session.createQuery("from Historico where alunoId = " + alunoId + "codigoTurma = " + codigoTurma).getResultList();
@@ -249,10 +233,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		return sucesso;
@@ -264,8 +247,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			List<Matriculado> obj = session.createQuery("from Matriculado where alunoId = " + alunoId + "codigoTurma = " + codigoTurma).getResultList();
@@ -287,10 +268,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		return sucesso;
@@ -302,8 +282,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			List<PreRequisito> obj = session.createQuery("from PreRequisito where disciplinaId = " + disciplinaId + "prerequisitoId = " + prerequisitoId).getResultList();
@@ -325,10 +303,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		return sucesso;
@@ -340,8 +317,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			Professor obj = session.get(Professor.class, usuarioId);
@@ -368,10 +343,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		
@@ -384,8 +358,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			List<ProfessorCapacidade> obj = session.createQuery("from ProfessorCapacidade where professorId = " + professorId + "disciplinaId = " + disciplinaId).getResultList();
@@ -407,10 +379,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		return sucesso;
@@ -422,8 +393,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			Sala obj = session.get(Sala.class, codigoSala);
@@ -450,7 +419,7 @@ public class Update {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 		
 		
@@ -464,8 +433,6 @@ public class Update {
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			Turma obj = session.get(Turma.class, codigoTurma);
@@ -502,13 +469,9 @@ public class Update {
 			
 			System.out.println("Pronto!");
 			
-		} catch(Exception exc){
 		}
-		finally {
-			factory.close();
-		}
-		
-		
+		finally {session.close();}
+
 		return sucesso;
 	}
 
@@ -516,59 +479,54 @@ public class Update {
 			                      String email, String telCel, String telRes, String dataNascimento) {
 		boolean sucesso = true;
 
-		Session session = factory.getCurrentSession();
+		Session session = factory.getCurrentSession();;
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
-			
+
 			Usuario obj = session.get(Usuario.class, id);
-			
+
 			// testando a validade dos dados recebidos
-			if(obj == null) {
+			if (obj == null) {
 				sucesso = false;
 			}
-			
-			if(sucesso) {
-				if(cpf != null) {
+
+			if (sucesso) {
+				if (cpf != null) {
 					obj.setCpf(cpf);
 				}
-				if(rg != null) {
+				if (rg != null) {
 					obj.setRg(rg);
 				}
-				if(senha != null) {
+				if (senha != null) {
 					obj.setSenha(senha);
 				}
-				if(telCel != null) {
+				if (telCel != null) {
 					obj.setTelCelular(telCel);
 				}
-				if(telRes != null) {
+				if (telRes != null) {
 					obj.setTelResidencial(telRes);
 				}
-				if(email != null) {
+				if (email != null) {
 					obj.setEmail(email);
 				}
-				if(username != null) {
+				if (username != null) {
 					obj.setUsername(username);
 				}
-				if(dataNascimento != null) {
+				if (dataNascimento != null) {
 					obj.setDataNascimento(dataNascimento);
 				}
-				
+
 			}
-			
+
 			// finalizando transação
 			session.getTransaction().commit();
-			
+
 			System.out.println("Pronto!");
-			
-		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
-		
 		
 		return sucesso;
 	}

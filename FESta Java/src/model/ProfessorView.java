@@ -6,11 +6,11 @@ import java.util.Date;
 
 public class ProfessorView {
     private Integer id, cursoId;
-    private String  nome, cursoNome, email, telCel, telRes, cpf, rg, formacao;
+    private String  nome, cursoNome, username, email, telCel, telRes, cpf, rg, formacao;
     private Date dataNascimento;
 
     public ProfessorView(Integer id, Integer cursoId, String nome, String cursoNome, String email, String telCel,
-                         String telRes, String cpf, String rg, String formacao, Date dataNascimento) {
+                         String telRes, String cpf, String rg, String formacao, Date dataNascimento, String username) {
         this.id = id;
         this.cursoId = cursoId;
         this.nome = nome;
@@ -42,6 +42,10 @@ public class ProfessorView {
 
     public String getNome() {
         return nome;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setNome(String nome) {

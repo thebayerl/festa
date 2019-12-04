@@ -29,6 +29,7 @@ import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationMessage;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
+import org.hibernate.Session;
 import view.CadastrarAluno;
 import view.CadastrarProfessor;
 import view.Principal;
@@ -116,8 +117,6 @@ public class CadastrarProfessorController implements Initializable {
 
         btCadastrar.setOnMouseClicked((MouseEvent e) -> {
             acao = "Cadastrar";
-            limpaCampos();
-            desabilitaTableView();
             habilitaTodosCampos();
         });
 
@@ -131,6 +130,7 @@ public class CadastrarProfessorController implements Initializable {
             acao = "Alterar";
             if (!tableView.getSelectionModel().isEmpty()) {
                 habilitaCamposAlteracao();
+                desabilitaTableView();
             }
         });
     }
@@ -258,10 +258,12 @@ public class CadastrarProfessorController implements Initializable {
     }
 
     private void desabilitaTableView() {
+        txPesquisar.setDisable(true);
         tableView.setDisable(true);
     }
 
     private void habilitaTableView() {
+        txPesquisar.setDisable(false);
         tableView.setDisable(false);
     }
 
@@ -301,7 +303,6 @@ public class CadastrarProfessorController implements Initializable {
         btAlterar.setDisable(false);
         btRemover.setDisable(false);
         btCadastrar.setDisable(false);
-
     }
 
     private void realizaAcao() {
@@ -406,7 +407,7 @@ public class CadastrarProfessorController implements Initializable {
         listProfessorView.clear();
 
         listProfessorView = Read.Query("select new model.ProfessorView(u.id, c.id, p.nome, c.nome, u.email, u.telCelular, " +
-                "u.telResidencial, u.cpf, u.rg, p.nivelFormacao, u.dataNascimento) " +
+                "u.telResidencial, u.cpf, u.rg, p.nivelFormacao, u.dataNascimento, u.username) " +
                 "from Usuario as u, Professor as p, Curso as c " +
                 "where u.id = p.id and p.cursoId = c.id");
 
@@ -438,31 +439,32 @@ public class CadastrarProfessorController implements Initializable {
         tableView.setItems(sortedData);
     }
 
-    private boolean testaDados(){
+    private boolean testaDados() {
         boolean erro = false;
         String alertmsg = "";
+        ProfessorView professor = tableView.getSelectionModel().getSelectedItem();
 
-        if(!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
+        if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !professor.getUsername().equals(txUserName.getText()) ) {
             alertmsg += "-Usuario com username já existente\n";
             erro = true;
         }
 
-        if(!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty()) {
+        if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty() && !professor.getRg().equals(txRG.getText()) ) {
             alertmsg += "-Usuario com rg já existente\n";
             erro = true;
         }
 
-        if(!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty()) {
-            alertmsg +="-Usuario com cpf já existente\n";
+        if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty() && !professor.getCpf().equals(txCPF.getText())) {
+            alertmsg += "-Usuario com cpf já existente\n";
             erro = true;
         }
 
-        if(!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty()) {
-            alertmsg +="-Usuario com email já existente\n";
+        if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty() && !professor.getEmail().equals(txEmail.getText())) {
+            alertmsg += "-Usuario com email já existente\n";
             erro = true;
         }
 
-        if(erro){
+        if (erro) {
             Alert alert = new Alert(AlertType.ERROR, alertmsg);
             alert.setHeaderText("Dados inválidos!");
             alert.show();
@@ -491,7 +493,7 @@ public class CadastrarProfessorController implements Initializable {
         if (errorsDialog()) return;
         if (testaDados()) return;
 
-        try {
+        //try {
             String username = txUserName.getText();
             String senha = psSenha.getText();
             String rg = txRG.getText();
@@ -513,7 +515,10 @@ public class CadastrarProfessorController implements Initializable {
             Update.Professor(professor.getUsuarioId(), nome, formacao, cursoId);
             Update.Usuario(usuario.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento);
 
-            Read.Query("delete from ProfessorCapacidade where professorId = " + p.getId());
+            Session session = Read.factory.getCurrentSession();
+            session.beginTransaction();
+            session.createQuery("delete from ProfessorCapacidade where professorId = " + p.getId());
+            
             cadastrarCapacidades(p.getId());
 
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -522,20 +527,19 @@ public class CadastrarProfessorController implements Initializable {
 
             limpaCampos();
             desabilitaCampos();
-        } catch (Exception e) {
-            Alert alert = new Alert(AlertType.ERROR,
+            habilitaTableView();
+            carregarTableView();
+      //  } catch (Exception e) {
+            /*Alert alert = new Alert(AlertType.ERROR,
                     e.getMessage(),
                     ButtonType.OK);
-            alert.show();
-        }
-        carregarTableView();
+            alert.show();*/
+       // }
     }
 
     private void cadastrar(){
-
-        if(testaDados()){
-            return;
-        }
+        if (errorsDialog()) return;
+        if (testaDados()) return;
 
         try {
             String username = txUserName.getText();
@@ -564,6 +568,8 @@ public class CadastrarProfessorController implements Initializable {
             alert.setHeaderText("Professor cadastrado com sucesso!");
             alert.show();
 
+            limpaCampos();
+            desabilitaCampos();
             carregarTableView();
         } catch (Exception e){
             Alert alert = new Alert(AlertType.ERROR,

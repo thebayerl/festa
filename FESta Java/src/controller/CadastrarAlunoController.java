@@ -103,7 +103,6 @@ public class CadastrarAlunoController implements Initializable {
 		btCadastrar.setOnMouseClicked((MouseEvent e) -> {
 			acao = "Cadastrar";
 			limpaCampos();
-			desabilitaTableView();
 			habilitaTodosCampos();
 		});
 
@@ -117,6 +116,7 @@ public class CadastrarAlunoController implements Initializable {
 			acao = "Alterar";
 			if (!tableView.getSelectionModel().isEmpty()) {
 				habilitaCamposAlteracao();
+				desabilitaTableView();
 			}
 		});
 	}
@@ -488,13 +488,14 @@ public class CadastrarAlunoController implements Initializable {
 
 			limpaCampos();
 			desabilitaCampos();
+			habilitaTableView();
+			carregarTableView();
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR,
 					e.getMessage(),
 					ButtonType.OK);
 			alert.show();
 		}
-		carregarTableView();
 	}
 
 	private void cadastrar() {
@@ -518,32 +519,25 @@ public class CadastrarAlunoController implements Initializable {
 
 			int cursoId = curso.getId();
 
-			System.out.println("acao: " + acao);
-
-
 			Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
 			u.create();
 			int usuarioId = u.getId();
-
-			System.out.println("usuarioId: " + usuarioId);
 
 			Aluno a = new Aluno(usuarioId, nome, dataIngresso, cursoId);
 			a.create();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Aluno cadastrado com sucesso!");
 			alert.show();
+
 			limpaCampos();
 			desabilitaCampos();
-			habilitaTableView();
-
+			carregarTableView();
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR,
 					e.getMessage(),
 					ButtonType.OK);
 			alert.show();
 		}
-
-		carregarTableView();
 	}
 
 	@FXML
