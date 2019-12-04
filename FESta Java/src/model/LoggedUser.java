@@ -11,6 +11,7 @@ public class LoggedUser extends Usuario {
     	usuarioLogado.setId(usuario.getId());
     	usuarioLogado.setUsername(usuario.getUsername());
     	usuarioLogado.setCpf(usuario.getCpf());
+    	usuarioLogado.setRole(usuario.getRole());
     }
   
     // static method to create instance of Singleton class 
