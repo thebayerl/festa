@@ -5,6 +5,8 @@
  */
 package controller;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
@@ -47,6 +49,7 @@ public class CadastrarProfessorController implements Initializable {
     @FXML private TextField txTelResidencial;
     @FXML private TextField txTelCelular;
     @FXML private TextField txEmail;
+    @FXML private TextField txPesquisar;
     @FXML private DatePicker dtNascimento;
     @FXML private ComboBox<String> comboBoxFormacao;
     @FXML private ComboBox<Curso> comboBoxCurso;
@@ -336,6 +339,8 @@ public class CadastrarProfessorController implements Initializable {
         btCancelar.setDisable(false);
 
         txUserName.setText(u.getUsername());
+        psSenha.setText(u.getSenha());
+        psSenhaConf.setText(u.getSenha());
         txNome.setText(professor.getNome());
         txRG.setText(professor.getRg());
         txCPF.setText(professor.getCpf());
@@ -347,6 +352,15 @@ public class CadastrarProfessorController implements Initializable {
 
         comboBoxCurso.setValue(c);
         comboBoxFormacao.setValue(tableView.getSelectionModel().getSelectedItem().getFormacao());
+
+        List<ProfessorCapacidade> capacidadesExistentes = Read.Query("from ProfessorCapacidade c where c.professorId = " + professor.getId().toString());
+        listViewCapacidades.getSelectionModel().clearSelection();
+        for(ProfessorCapacidade p : capacidadesExistentes){
+            for (Disciplina d : listViewCapacidades.getItems()){
+                if(d.getId() == p.getDisciplinaId())
+                    listViewCapacidades.getSelectionModel().select(d);
+            }
+        }
 
         LocalDate dataNascimento = stringToLocalDate(professor.getDataNascimento());
         dtNascimento.setValue(dataNascimento);
@@ -400,7 +414,28 @@ public class CadastrarProfessorController implements Initializable {
             obsListProfessorView.clear();
         }
         obsListProfessorView = FXCollections.observableArrayList(listProfessorView);
-        tableView.setItems(obsListProfessorView);
+
+        FilteredList<ProfessorView> filteredData = new FilteredList<>(obsListProfessorView, b -> true);
+
+        txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(objView -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (objView.getNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                    objView.getCpf().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                    objView.getEmail().toLowerCase().indexOf(lowerCaseFilter) != -1)
+                    return true;
+                else
+                    return false; // Does not match.
+            });
+        });
+
+        SortedList<ProfessorView> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
     }
 
     private boolean testaDados(){
@@ -520,6 +555,7 @@ public class CadastrarProfessorController implements Initializable {
 
             Professor p = new Professor(usuarioId, nome, formacao, cursoId);
             p.create();
+            cadastrarCapacidades(usuarioId);
 
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setHeaderText("Professor cadastrado com sucesso!");
@@ -534,11 +570,10 @@ public class CadastrarProfessorController implements Initializable {
         }
     }
 
-    public void cadastrarPreRequisito(int professorId){
+    public void cadastrarCapacidades(int professorId){
         ObservableList<Disciplina> selectedCapacidades = listViewCapacidades.getSelectionModel().getSelectedItems();
         if(selectedCapacidades != null){
             for(Disciplina d : selectedCapacidades){
-                System.out.println(d.getNome());
                 ProfessorCapacidade pCapacidade = new ProfessorCapacidade(professorId, d.getId());
                 pCapacidade.create();
             }
