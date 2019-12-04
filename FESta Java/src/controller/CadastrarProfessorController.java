@@ -513,6 +513,9 @@ public class CadastrarProfessorController implements Initializable {
             Update.Professor(professor.getUsuarioId(), nome, formacao, cursoId);
             Update.Usuario(usuario.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento);
 
+            Read.Query("delete from ProfessorCapacidade where professorId = " + p.getId());
+            cadastrarCapacidades(p.getId());
+
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setHeaderText("Professor alterado com sucesso!");
             alert.show();

@@ -349,8 +349,8 @@ public class CadastrarAlunoController implements Initializable {
 		dtIngresso.setDisable(false);
 		comboBoxCurso.setDisable(false);
 
-		psSenha.setDisable(true);
-		psSenhaConf.setDisable(true);
+		psSenha.setDisable(false);
+		psSenhaConf.setDisable(false);
 
 		btCadastrar.setDisable(true);
 		btAlterar.setDisable(true);
@@ -360,6 +360,8 @@ public class CadastrarAlunoController implements Initializable {
 		btCancelar.setDisable(false);
 
 		txUserName.setText(u.getUsername());
+		psSenha.setText(u.getSenha());
+		psSenhaConf.setText(u.getSenha());
 		txNome.setText(aluno.getNome());
 		txRG.setText(aluno.getRg());
 		txCPF.setText(aluno.getCpf());
