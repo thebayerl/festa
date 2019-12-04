@@ -380,7 +380,7 @@ public class Read {
 
 			codigoSala = aspas(codigoSala);
 			predio = aspas(predio);
-			query += add("codigoCurso",codigoSala);
+			query += add("codigoSala",codigoSala);
 			query += add("capacidade",capacidade);
 			query += add("predio",predio);
 			query = query.substring(0, query.length() - 4);

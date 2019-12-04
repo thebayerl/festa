@@ -1,11 +1,11 @@
 package model;
 
 public class TurmaView {
-    private Integer id, professorId, disciplinaId, salaId, maxAlunos;
+    private Integer id, professorId, disciplinaId, salaId, maxAlunos, cursoId;
     private String professorNome, disciplinaNome, codigoSala, ano, semestre;
 
     public TurmaView(Integer id, Integer professorId, Integer disciplinaId, Integer salaId, Integer maxAlunos,
-                     String professorNome, String disciplinaNome, String codigoSala, String ano, String semestre) {
+                     String professorNome, String disciplinaNome, String codigoSala, String ano, String semestre, Integer cursoId) {
         this.id = id;
         this.professorId = professorId;
         this.disciplinaId = disciplinaId;
@@ -16,6 +16,15 @@ public class TurmaView {
         this.codigoSala = codigoSala;
         this.ano = ano;
         this.semestre = semestre;
+        this.cursoId = cursoId;
+    }
+    
+    public Integer getCursoId() {
+        return cursoId;
+    }
+
+    public void setCursoId(Integer cursoId) {
+        this.cursoId = cursoId;
     }
 
     public Integer getId() {

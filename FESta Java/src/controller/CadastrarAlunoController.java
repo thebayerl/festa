@@ -292,9 +292,9 @@ public class CadastrarAlunoController implements Initializable {
 
 	private void realizaAcao() {
 		if (acao.equalsIgnoreCase("Alterar")) {
-			alterar();
+			alteraAluno();
 		} else if (acao.equalsIgnoreCase("Cadastrar")) {
-			cadastrar();
+			cadastraAluno();
 		}
 	}
 
@@ -455,7 +455,7 @@ public class CadastrarAlunoController implements Initializable {
 		return erro;
 	}
 
-	private void alterar() {
+	private void alteraAluno() {
 		if (errorsDialog()) return;
 		if (testaDados()) return;
 
@@ -498,7 +498,7 @@ public class CadastrarAlunoController implements Initializable {
 		}
 	}
 
-	private void cadastrar() {
+	private void cadastraAluno() {
 		if (errorsDialog()) return;
 		if (testaDados()) return;
 

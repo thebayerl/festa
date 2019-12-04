@@ -241,7 +241,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Matriculado(Integer alunoId, String codigoTurma) {
+	public boolean Matriculado(Integer alunoId, Integer turmaId) {
 		boolean sucesso = true;
 
 		Session session = factory.getCurrentSession();
@@ -249,7 +249,7 @@ public class Update {
 		try {
 			session.beginTransaction();
 
-			List<Matriculado> obj = session.createQuery("from Matriculado where alunoId = " + alunoId + "codigoTurma = " + codigoTurma).getResultList();
+			List<Matriculado> obj = session.createQuery("from Matriculado where alunoId = " + alunoId + "codigoTurma = " + turmaId).getResultList();
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -426,7 +426,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Turma(String codigoTurma, Integer maxAlunos, String ano, String semestre, Integer professorId, Integer disciplinaId,
+	public static boolean Turma(Integer turmaId, Integer maxAlunos, String ano, String semestre, Integer professorId, Integer disciplinaId,
 			Integer salaId) {
 		boolean sucesso = true;
 
@@ -435,7 +435,7 @@ public class Update {
 		try {
 			session.beginTransaction();
 			
-			Turma obj = session.get(Turma.class, codigoTurma);
+			Turma obj = session.get(Turma.class, turmaId);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {

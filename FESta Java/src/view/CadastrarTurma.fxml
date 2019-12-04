@@ -33,33 +33,33 @@
             </HBox>
             <FlowPane hgap="15.0" prefHeight="299.0" prefWidth="675.0" vgap="15.0">
                <children>
-                  <ComboBox fx:id="comboBoxCurso" onAction="#SelecionarCurso" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Curso" />
+                  <ComboBox fx:id="comboBoxCurso" disable="true" onAction="#SelecionarCurso" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Curso" />
                   <ComboBox fx:id="comboBoxDisciplina" disable="true" onAction="#SelecionarDisciplina" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Disciplina" />
                   <ComboBox fx:id="comboBoxProfessor" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Professor" />
-                  <ComboBox fx:id="comboBoxPredio" onAction="#selecionarPredio" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Prédio" />
+                  <ComboBox fx:id="comboBoxPredio" disable="true" onAction="#selecionarPredio" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Prédio" />
                   <ComboBox fx:id="comboBoxSala" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Sala" />
-                  <TextField fx:id="txMaxAluno" prefHeight="25.0" prefWidth="150.0" promptText="Número Máximo de Alunos">
+                  <TextField fx:id="txMaxAluno" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Número Máximo de Alunos">
                      <font>
                         <Font size="11.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txAno" prefHeight="25.0" prefWidth="150.0" promptText="Ano" />
+                  <TextField fx:id="txAno" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Ano" />
                   <HBox alignment="CENTER" prefWidth="150.0" spacing="10.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="63.0" text="Semestre" />
-                        <RadioButton fx:id="radioBt1" mnemonicParsing="false" selected="true" text="1º">
+                        <Label disable="true" prefHeight="17.0" prefWidth="63.0" text="Semestre" />
+                        <RadioButton fx:id="radioBt1" disable="true" mnemonicParsing="false" selected="true" text="1º">
                            <toggleGroup>
                               <ToggleGroup fx:id="grupoSemestre" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="radioBt2" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
+                        <RadioButton fx:id="radioBt2" disable="true" mnemonicParsing="false" text="2º" toggleGroup="$grupoSemestre" />
                      </children>
                   </HBox>
                </children>
             </FlowPane>
             <FlowPane hgap="15.0" prefHeight="334.0" prefWidth="810.0" vgap="5.0">
                <children>
-                  <HBox alignment="BOTTOM_LEFT" prefWidth="480.0">
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="25.0" prefWidth="296.0">
                      <children>
                         <Label alignment="BASELINE_LEFT" text="Turmas Cadastradas">
                            <font>
@@ -68,11 +68,13 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="315.0" spacing="15.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="10.0" prefWidth="504.0" spacing="15.0">
                      <children>
                         <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefWidth="95.0" text="Remover" />
                         <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefWidth="95.0" text="Alterar" />
                         <Button fx:id="btCadastrar" mnemonicParsing="false" prefWidth="95.0" text="Cadastrar" />
+                        <Button fx:id="btCancelar" disable="true" layoutX="230.0" layoutY="10.0" mnemonicParsing="false" prefWidth="95.0" text="Cancelar" />
+                        <Button fx:id="btConfirmar" disable="true" layoutX="257.0" layoutY="10.0" mnemonicParsing="false" prefWidth="95.0" text="Confirmar" />
                      </children>
                   </HBox>
                   <TableView fx:id="tableView" prefHeight="261.0" prefWidth="810.0" tableMenuButtonVisible="true">

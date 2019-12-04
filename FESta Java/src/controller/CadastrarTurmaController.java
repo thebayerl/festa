@@ -6,13 +6,16 @@
 package controller;
 
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -43,6 +46,8 @@ public class CadastrarTurmaController implements Initializable {
 	@FXML private Button btCadastrar;
 	@FXML private Button btAlterar;
 	@FXML private Button btRemover;
+	@FXML private Button btConfirmar;
+	@FXML private Button btCancelar;
 	@FXML private TableView<TurmaView> tableView;
 	@FXML private TableColumn<TurmaView, Integer> columnId;
 	@FXML private TableColumn<TurmaView, String> columnDisciplina;
@@ -75,6 +80,8 @@ public class CadastrarTurmaController implements Initializable {
 	String professorId = null;
 	String predioCB = null;
 	String cursoId = null;
+	
+	String acao = null;
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -86,8 +93,33 @@ public class CadastrarTurmaController implements Initializable {
 		carregarCursos();
 		carregarPredios();
 
+		
+		btCancelar.setOnMouseClicked((MouseEvent e) -> {
+			limpaCampos();
+			desabilitaCampos();
+			habilitaTableView();
+		});
+		
+		btConfirmar.setOnMouseClicked((MouseEvent e) -> {
+			realizaAcao();
+		});
+		
 		btCadastrar.setOnMouseClicked((MouseEvent e)->{
 			if(!errorsDialog()) cadastraTurma();
+		});
+		
+		btRemover.setOnMouseClicked((MouseEvent e)->{
+			if (!tableView.getSelectionModel().isEmpty()) {
+				remover();
+			}
+		});
+		
+		btAlterar.setOnMouseClicked((MouseEvent e)->{
+			acao = "Alterar";
+			if (!tableView.getSelectionModel().isEmpty()) {
+				habilitaCamposAlteracao();
+				
+			}
 		});
 	}
 
@@ -121,14 +153,150 @@ public class CadastrarTurmaController implements Initializable {
 		columnSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
 		columnMaxAlunos.setCellValueFactory(new PropertyValueFactory<>("maxAlunos"));
 	}
+	
+	private void habilitaTableView() {
+		//txPesquisar.setDisable(false);
+		tableView.setDisable(false);
+	}
+	
+	private void limpaCampos() {
+		
+		comboBoxCurso.setValue(null);
+		comboBoxDisciplina.setValue(null);
+		comboBoxProfessor.setValue(null);
+		comboBoxPredio.setValue(null);
+		comboBoxSala.setValue(null);
+		txMaxAluno.clear();;
+		txAno.clear();
+		
+	}
+	
+	private void desabilitaCampos() {
+
+		comboBoxCurso.setDisable(true);
+		comboBoxDisciplina.setDisable(true);
+		comboBoxProfessor.setDisable(true);
+		comboBoxPredio.setDisable(true);
+		comboBoxSala.setDisable(true);
+		txMaxAluno.setDisable(true);
+		txAno.setDisable(true);
+		//grupoSemestre.setDisable(true);
+
+		btCancelar.setDisable(true);
+		btConfirmar.setDisable(true);
+
+		btAlterar.setDisable(false);
+		btRemover.setDisable(false);
+		btCadastrar.setDisable(false);
+
+	}
+	
+	private void realizaAcao() {
+		if (acao.equalsIgnoreCase("Alterar")) {
+			alteraTurma();
+		} else if (acao.equalsIgnoreCase("Cadastrar")) {
+			cadastraTurma();
+		}
+	}
+	
+	
+	private void alteraTurma() {
+		if (errorsDialog()) return;
+		if (testaDados()) return;
+
+		try {
+			
+			
+			TurmaView t = tableView.getSelectionModel().getSelectedItem();
+			
+			String maxAlunos = txMaxAluno.getText();
+			String ano = txAno.getText();
+
+			RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
+			
+			String semestre = radio.getText();
+			Update.Turma(t.getId(),Integer.parseInt(maxAlunos) , ano, semestre, t.getProfessorId(), t.getDisciplinaId(),
+					t.getSalaId());
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Turma alterado com sucesso!");
+			alert.show();
+
+			//limpaCampos();
+			//desabilitaCampos();
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR,
+					e.getMessage(),
+					ButtonType.OK);
+			alert.show();
+		}
+		carregarTableView();
+		
+		
+	}
+	
+	private void habilitaCamposAlteracao() {
+		
+		TurmaView turma = tableView.getSelectionModel().getSelectedItem();
+		Curso c = Read.getCurso(turma.getCursoId().toString(), null, null, null).get(0);
+		Professor p = Read.getProfessor(turma.getProfessorId().toString(), null, null, null, null).get(0);
+		Disciplina d = Read.getDisciplina(turma.getDisciplinaId().toString(), null, null, null).get(0);
+		Sala s = Read.getSala( turma.getCodigoSala(), null, null).get(0);
+		
+		
+		comboBoxCurso.setDisable(false);
+		comboBoxDisciplina.setDisable(false);
+		comboBoxProfessor.setDisable(false);
+		comboBoxPredio.setDisable(false);
+		comboBoxSala.setDisable(false);
+		txMaxAluno.setDisable(false);
+		txAno.setDisable(false);
+		
+		btCadastrar.setDisable(true);
+		btAlterar.setDisable(true);
+		btRemover.setDisable(true);
+		
+		btConfirmar.setDisable(false);
+		btCancelar.setDisable(false);
+		
+		
+		comboBoxCurso.setValue(c);
+		comboBoxDisciplina.setValue(d);
+		comboBoxProfessor.setValue(p);
+		comboBoxPredio.setValue(comboBoxPredio.getValue());
+		comboBoxSala.setValue(s);
+		txMaxAluno.setText(turma.getMaxAlunos().toString());
+		txAno.setText(turma.getAno().toString());
+		
+		
+	}
+	
+	private void remover() {
+
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Remover");
+		alert.setHeaderText("Tem certeza que deseja remover?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			TurmaView t = tableView.getSelectionModel().getSelectedItem();
+			
+			Turma turma = Read.getTurma(t.getId().toString(), null, null, null, null, null, null,
+					null).get(0);
+			turma.delete();
+			carregarTableView();
+		} else {
+			// ... user chose CANCEL or closed the dialog
+		}
+	}
 
 	private void carregarTableView(){
 		listTurmaView.clear();
 
 		listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre) " +
-									"from Turma t, Professor p, Sala s, Disciplina d " +
-									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id");
+									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, c.id) " +
+									"from Curso c, Turma t, Professor p, Sala s, Disciplina d " +
+									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and c.id = p.cursoId");
 
 		if(obsListTurmaView != null) {
 			obsListTurmaView.clear();
