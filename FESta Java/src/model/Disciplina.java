@@ -26,17 +26,17 @@ public class Disciplina {
 	@Column(name="creditos")
 	private int creditos;
 	
-	@Column(name="departamento")
-	private String departamento;
+	@Column(name="departamento_id")
+	private int departamentoId;
 
 	public Disciplina() {}
 	
-	public Disciplina(String nome, int creditos, String departamento, String codigoDisciplina) {
+	public Disciplina(String nome, int creditos, int departamentoId, String codigoDisciplina) {
 		super();
 		this.codigoDisciplina = codigoDisciplina;
 		this.nome = nome;
 		this.creditos = creditos;
-		this.departamento = departamento;
+		this.departamentoId = departamentoId;
 	}
 
 	public void create() {
@@ -130,12 +130,12 @@ public class Disciplina {
 		this.creditos = creditos;
 	}
 
-	public String getDepartamento() {
-		return departamento;
+	public int getDepartamentoId() {
+		return departamentoId;
 	}
 
-	public void setDepartamento(String departamento) {
-		this.departamento = departamento;
+	public void setDepartamentoId(int departamento) {
+		this.departamentoId = departamentoId;
 	}
 
 	@Override

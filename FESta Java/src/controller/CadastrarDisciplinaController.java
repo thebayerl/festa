@@ -132,7 +132,7 @@ public class CadastrarDisciplinaController implements Initializable {
     	String codigoDisciplina = txCodigoDisciplina.getText();
 
     	Departamento departamento = comboBoxDepartamento.getSelectionModel().getSelectedItem();
-        String departamentoId = departamento.getCodigoDepartamento();
+        int departamentoId = departamento.getId();
         Disciplina d = new Disciplina(nome, creditos, departamentoId, codigoDisciplina);
         d.create();
         cadastraPreRequisito(d.getId());

@@ -152,7 +152,6 @@ public class Read {
 		
 			nome = aspas(nome);
 			id = aspas(id);
-			departamento = aspas(departamento);
 			
 			query += add("id",id);
 			query += add("creditos",creditos);
