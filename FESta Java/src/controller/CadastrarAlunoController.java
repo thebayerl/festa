@@ -10,6 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import javafx.collections.FXCollections;
@@ -47,6 +51,9 @@ public class CadastrarAlunoController implements Initializable {
 	@FXML private Button btCadastrar;
 	@FXML private Button btAlterar;
 	@FXML private Button btRemover;
+	@FXML private Button btConfirmar;
+	@FXML private Button btCancelar;
+    @FXML private Button btPesquisar;
 	@FXML private TableView<AlunoView> tableView;
 	@FXML private TableColumn<AlunoView, Integer> columnId;
 	@FXML private TableColumn<AlunoView, String> columnNome;
@@ -72,6 +79,8 @@ public class CadastrarAlunoController implements Initializable {
 	private List<AlunoView> listAlunoView = new ArrayList<>();
 	private ObservableList<AlunoView> obsListAlunoView;
 	    
+	private String acao = null;
+	
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -83,14 +92,44 @@ public class CadastrarAlunoController implements Initializable {
         carregarCursos();
 		carregarTableView();
 
+		btCancelar.setOnMouseClicked((MouseEvent e)->{
+			limpaCampos();
+			desabilitaCampos();
+			habilitaTableView();
+        });
+		
+		btConfirmar.setOnMouseClicked((MouseEvent e)->{
+			realizaAcao();
+			habilitaTableView();
+        });
+		
+		
+		btPesquisar.setOnMouseClicked((MouseEvent e)->{
+			acao = "Pesquisar";
+			limpaCampos();
+			habilitaCamposPesquisa();
+        });
+		
+		
         btCadastrar.setOnMouseClicked((MouseEvent e)->{
-			if(!errorsDialog()) cadastraAluno();
+        	acao = "Cadastrar";
+        	limpaCampos();
+        	desabilitaTableView();
+        	habilitaTodosCampos();
+			
         });
         
         btRemover.setOnMouseClicked((MouseEvent e)->{
-			
-        	if(!tableView.getSelectionModel().getSelectedItem().equals(null)) {
+        	if(!tableView.getSelectionModel().isEmpty()) {
         		removeAluno();
+        	}
+        });
+        
+        btAlterar.setOnMouseClicked((MouseEvent e)->{
+    		acao = "Alterar";
+        	if(!tableView.getSelectionModel().isEmpty()) {
+        		habilitaCamposAlteracao();
+
         	}
         });
     }
@@ -195,6 +234,116 @@ public class CadastrarAlunoController implements Initializable {
 		}
     	return false;
     }
+	
+	private void habilitaTodosCampos() {
+		txNome.setDisable(false);
+		psSenha.setDisable(false);
+		psSenhaConf.setDisable(false);
+		txEmail.setDisable(false);
+		txUserName.setDisable(false);
+		txRG.setDisable(false);
+		txCPF.setDisable(false);
+		txTelResidencial.setDisable(false);
+		txTelCelular.setDisable(false);
+		txEmail.setDisable(false);
+		dtNascimento.setDisable(false);
+		dtIngresso.setDisable(false);
+		comboBoxCurso.setDisable(false);
+		
+		btCancelar.setDisable(false);
+		btConfirmar.setDisable(false);
+		
+		btPesquisar.setDisable(true);
+		btAlterar.setDisable(true);
+		btRemover.setDisable(true);
+		btCadastrar.setDisable(true);
+	}
+	
+	private void desabilitaTableView() {
+		tableView.setDisable(true);
+	}
+	private void habilitaTableView() {
+		tableView.setDisable(false);
+	}
+	
+	private void limpaCampos() {
+		txNome.clear();
+		psSenha.clear();
+		psSenhaConf.clear();
+		txEmail.clear();
+		txUserName.clear();
+		txRG.clear();
+		txCPF.clear();
+		txTelResidencial.clear();
+		txTelCelular.clear();
+		dtNascimento.setValue(null);
+		dtIngresso.setValue(null);
+		comboBoxCurso.setValue(null);
+	}
+	
+	private void desabilitaCampos() {
+		
+		txNome.setDisable(true);
+		psSenha.setDisable(true);
+		psSenhaConf.setDisable(true);
+		txEmail.setDisable(true);
+		txUserName.setDisable(true);
+		txRG.setDisable(true);
+		txCPF.setDisable(true);
+		txTelResidencial.setDisable(true);
+		txTelCelular.setDisable(true);
+		dtNascimento.setDisable(true);
+		dtIngresso.setDisable(true);
+		comboBoxCurso.setDisable(true);
+		
+		btCancelar.setDisable(true);
+		btConfirmar.setDisable(true);
+		
+		btAlterar.setDisable(false);
+		btRemover.setDisable(false);
+		btCadastrar.setDisable(false);
+		btPesquisar.setDisable(false);
+
+	}
+	
+	private void realizaAcao(){
+		if(acao.equalsIgnoreCase("Pesquisar")) {
+			pesquisaAluno();
+		}else if(acao.equalsIgnoreCase("Alterar")){
+			limpaCampos();
+			desabilitaCampos();
+			alteraAluno();
+		}else if(acao.equalsIgnoreCase("Cadastrar")) {
+			if(!errorsDialog()) {
+				limpaCampos();
+				desabilitaCampos();
+				cadastraAluno();
+			} 
+		}
+	}
+	
+	private void habilitaCamposPesquisa() {
+		
+		txNome.setDisable(false);
+		txEmail.setDisable(false);
+		txUserName.setDisable(false);
+		txRG.setDisable(false);
+		txCPF.setDisable(false);
+		txTelResidencial.setDisable(false);
+		txTelCelular.setDisable(false);
+		txEmail.setDisable(false);
+		dtNascimento.setDisable(false);
+		dtIngresso.setDisable(false);
+		comboBoxCurso.setDisable(false);
+		
+		btCancelar.setDisable(false);
+		btConfirmar.setDisable(false);
+		
+		btAlterar.setDisable(true);
+		btRemover.setDisable(true);
+		btCadastrar.setDisable(true);
+		
+	}
 
 	private void carregarCursos() {
     	listCursos.clear();
@@ -209,6 +358,10 @@ public class CadastrarAlunoController implements Initializable {
     	comboBoxCurso.setItems(obsCursos);
     }
 	
+	private void pesquisaAluno() {
+		//query pra retornar os alunos pesquisados
+	}
+	
 	private void removeAluno() {
 		
 		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
@@ -219,6 +372,61 @@ public class CadastrarAlunoController implements Initializable {
 		
 		carregarTableView();
 	}
+	
+	private void habilitaCamposAlteracao() {
+		
+		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
+		Usuario u = Read.getUsuario(aluno.getId().toString(), null, null, null, null).get(0);
+		
+		txNome.setDisable(false);
+		txEmail.setDisable(false);
+		txUserName.setDisable(false);
+		txRG.setDisable(false);
+		txCPF.setDisable(false);
+		txTelResidencial.setDisable(false);
+		txTelCelular.setDisable(false);
+		txEmail.setDisable(false);
+		dtNascimento.setDisable(false);
+		dtIngresso.setDisable(false);
+		comboBoxCurso.setDisable(false);
+		
+		psSenha.setDisable(true);
+		psSenhaConf.setDisable(true);
+		
+		btPesquisar.setDisable(true);
+		btCadastrar.setDisable(true);
+		btAlterar.setDisable(true);
+		btRemover.setDisable(true);
+		
+		btConfirmar.setDisable(false);
+		btCancelar.setDisable(false);
+		
+		txUserName.setText(u.getUsername());
+		txNome.setText(aluno.getNome());
+		txRG.setText(aluno.getRg());
+		txCPF.setText(aluno.getCpf());
+		txTelResidencial.setText(aluno.getTelRes());
+		txTelCelular.setText(aluno.getTelCel());
+		txEmail.setText(aluno.getEmail());
+		
+		Curso c = Read.getCurso(aluno.getCursoId().toString(), null, null, null).get(0);
+		
+		comboBoxCurso.setValue(c);
+		
+		LocalDate dataNascimento = toLocalDate(aluno.getDataNascimento());   
+		dtNascimento.setValue(dataNascimento);
+		
+		LocalDate dataIngresso = toLocalDate(aluno.getDataIngresso());
+		dtIngresso.setValue(dataIngresso);
+		
+		//carregarTableView();
+	}
+	
+	public static LocalDate toLocalDate(Date d) {
+        Instant instant = Instant.ofEpochMilli(d.getTime());
+        LocalDate localDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+        return localDate;
+    }
 
 	private void carregarTableView(){
 		listAlunoView.clear();
@@ -264,17 +472,41 @@ public class CadastrarAlunoController implements Initializable {
 			alert.setHeaderText("Dados inválidos!");
 			alert.show();
 		}
-
+		
     	return erro;
 	}
 	
+	private void alteraAluno() {
+		String username = txUserName.getText();
+		String rg = txRG.getText();
+		String cpf = txCPF.getText();
+		String telResidencial = txTelResidencial.getText();
+		String telCelular = txTelCelular.getText();
+		String email = txEmail.getText();
+		String nome = txNome.getText();
+		LocalDate dataNascimento = dtNascimento.getValue();
+		LocalDate dataIngresso = dtIngresso.getValue();
+		Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
+
+		int cursoId = curso.getId();
+			
+		AlunoView a = tableView.getSelectionModel().getSelectedItem();
+			
+		Aluno aluno = Read.getAluno(a.getId().toString(), null, null, null, null, null).get(0);
+		Usuario usuario = Read.getUsuario(a.getId().toString(), null, null, null, null).get(0);
+			
+		Update.Aluno(aluno.getUsuarioId(), null, nome, dataIngresso.toString(), cursoId);
+		Update.Usuario(usuario.getId(), username ,null, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
 	
+		carregarTableView();
+	
+	}
+		
 	private void cadastraAluno(){
 
     	if(testaDados()){
     		return;
 		}
-
     	try {
 			String username = txUserName.getText();
 			String senha = psSenha.getText();
@@ -287,31 +519,34 @@ public class CadastrarAlunoController implements Initializable {
 			String dataNascimento = dtNascimento.getValue().toString();
 			System.out.println(dataNascimento);
 			String dataIngresso = dtIngresso.getValue().toString();
-
 			String role = "discente";
 			Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
+
 			int cursoId = curso.getId();
 
+			System.out.println("acao: " + acao);
+			
+			
 			Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
 			u.create();
 			int usuarioId = u.getId();
-
+			
 			System.out.println("usuarioId: " + usuarioId);
-
+			
 			Aluno a = new Aluno(usuarioId, nome, dataIngresso, cursoId);
 			a.create();
-
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Aluno cadastrado com sucesso!");
 			alert.show();
 
-			carregarTableView();
 		} catch (Exception e){
 			Alert alert = new Alert(AlertType.ERROR,
 					e.getMessage(),
 					ButtonType.OK);
 			alert.show();
 		}
+    	
+    	carregarTableView();
     }
 
     @FXML

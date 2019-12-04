@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,8 +10,8 @@ import org.hibernate.cfg.Configuration;
 public class Update {
 
 	
-	public boolean Aluno(Integer id, String matricula, String nome, String dataIngresso,
-			Integer codigoCurso) {
+	public static boolean Aluno(Integer id, String matricula, String nome, String dataIngresso,
+			Integer cursoId) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -36,8 +37,8 @@ public class Update {
 				if(matricula != null) {
 					obj.setMatricula(matricula);
 				}
-				if(codigoCurso != null) {
-					obj.setCursoId(codigoCurso);
+				if(cursoId != null) {
+					obj.setCursoId(cursoId);
 				}
 				if(dataIngresso != null) {
 					obj.setDataIngresso(dataIngresso);
@@ -558,7 +559,8 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Usuario(Integer id, String username, String senha, Integer rg, Integer cpf) {
+	public static boolean Usuario(Integer id, String username, String senha, String rg, String cpf,
+			                      String email, String telCel, String telRes, String dataNascimento) {
 		boolean sucesso = true;
 		
 		// create session factory
@@ -581,17 +583,30 @@ public class Update {
 			
 			if(sucesso) {
 				if(cpf != null) {
-					//obj.setCpf(cpf);
+					obj.setCpf(cpf);
 				}
 				if(rg != null) {
-					//obj.setRg(rg);
+					obj.setRg(rg);
 				}
 				if(senha != null) {
 					obj.setSenha(senha);
 				}
+				if(telCel != null) {
+					obj.setTelCelular(telCel);
+				}
+				if(telRes != null) {
+					obj.setTelResidencial(telRes);
+				}
+				if(email != null) {
+					obj.setEmail(email);
+				}
 				if(username != null) {
 					obj.setUsername(username);
 				}
+				if(dataNascimento != null) {
+					obj.setDataNascimento(dataNascimento);
+				}
+				
 			}
 			
 			// finalizando transação
