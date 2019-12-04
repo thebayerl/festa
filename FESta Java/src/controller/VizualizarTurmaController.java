@@ -48,6 +48,7 @@ public class VizualizarTurmaController implements Initializable {
 
         Usuario user = LoggedUser.getInstance();
         String alunoId = String.valueOf(user.getId());
+        //String role = user.getRole();
         listMatriculados = Read.getMatriculado(alunoId, null);
         String turmaId;
         for(Matriculado elemento: listMatriculados){
@@ -56,9 +57,6 @@ public class VizualizarTurmaController implements Initializable {
             listTurmas.add(t);
 
         }
-
-
-
 
         //listTurmas = Read.getTurma(null, null, null, null, null, null, null, null);
         List<String> professores = new ArrayList<>();
