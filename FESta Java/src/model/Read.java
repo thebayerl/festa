@@ -144,7 +144,7 @@ public class Read {
 		return resultado;
 	}
 	
-	public static List<Disciplina> getDisciplina(String id, String nome, String creditos, Integer departamento_id) {
+	public static List<Disciplina> getDisciplina(String id, String nome, String creditos, String departamento_id) {
 
 		String query = "from Disciplina where ";
 		
@@ -156,7 +156,7 @@ public class Read {
 			query += add("id",id);
 			query += add("creditos",creditos);
 			query += add("nome", nome);
-			query += add("departamento_id", departamento_id.toString());
+			query += add("departamento_id", departamento_id);
 			query = query.substring(0, query.length() - 4);
 		} else {
 			query = query.substring(0, query.length() - 6);

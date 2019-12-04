@@ -46,7 +46,7 @@
                   <TextField fx:id="txAno" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Ano" />
                   <HBox alignment="CENTER" prefWidth="150.0" spacing="10.0">
                      <children>
-                        <Label disable="true" prefHeight="17.0" prefWidth="63.0" text="Semestre" />
+                        <Label prefHeight="17.0" prefWidth="63.0" text="Semestre" />
                         <RadioButton fx:id="radioBt1" disable="true" mnemonicParsing="false" selected="true" text="1º">
                            <toggleGroup>
                               <ToggleGroup fx:id="grupoSemestre" />

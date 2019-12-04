@@ -48,6 +48,8 @@ public class CadastrarTurmaController implements Initializable {
 	@FXML private Button btRemover;
 	@FXML private Button btConfirmar;
 	@FXML private Button btCancelar;
+	@FXML private RadioButton radioBt1;
+	@FXML private RadioButton radioBt2;
 	@FXML private TableView<TurmaView> tableView;
 	@FXML private TableColumn<TurmaView, Integer> columnId;
 	@FXML private TableColumn<TurmaView, String> columnDisciplina;
@@ -105,7 +107,8 @@ public class CadastrarTurmaController implements Initializable {
 		});
 		
 		btCadastrar.setOnMouseClicked((MouseEvent e)->{
-			if(!errorsDialog()) cadastraTurma();
+			acao = "Cadastrar";
+			habilitaTodosCampos();
 		});
 		
 		btRemover.setOnMouseClicked((MouseEvent e)->{
@@ -159,6 +162,26 @@ public class CadastrarTurmaController implements Initializable {
 		tableView.setDisable(false);
 	}
 	
+	private void habilitaTodosCampos() {
+		
+		comboBoxCurso.setDisable(false);
+		comboBoxPredio.setDisable(false);
+		radioBt1.setDisable(false);
+		radioBt2.setDisable(false);
+		txMaxAluno.setDisable(false);
+	    txAno.setDisable(false);
+
+		btCancelar.setDisable(false);
+		btConfirmar.setDisable(false);
+		
+		btAlterar.setDisable(true);
+		btRemover.setDisable(true);
+		btCadastrar.setDisable(true);
+		
+		
+	}
+	
+	
 	private void limpaCampos() {
 		
 		comboBoxCurso.setValue(null);
@@ -166,7 +189,9 @@ public class CadastrarTurmaController implements Initializable {
 		comboBoxProfessor.setValue(null);
 		comboBoxPredio.setValue(null);
 		comboBoxSala.setValue(null);
-		txMaxAluno.clear();;
+		
+		
+		txMaxAluno.clear();
 		txAno.clear();
 		
 	}
@@ -180,7 +205,9 @@ public class CadastrarTurmaController implements Initializable {
 		comboBoxSala.setDisable(true);
 		txMaxAluno.setDisable(true);
 		txAno.setDisable(true);
-		//grupoSemestre.setDisable(true);
+		
+		radioBt1.setDisable(true);
+		radioBt2.setDisable(true);
 
 		btCancelar.setDisable(true);
 		btConfirmar.setDisable(true);
@@ -205,8 +232,7 @@ public class CadastrarTurmaController implements Initializable {
 		if (testaDados()) return;
 
 		try {
-			
-			
+
 			TurmaView t = tableView.getSelectionModel().getSelectedItem();
 			
 			String maxAlunos = txMaxAluno.getText();
@@ -221,9 +247,11 @@ public class CadastrarTurmaController implements Initializable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Turma alterado com sucesso!");
 			alert.show();
+			
+			limpaCampos();
+			carregarTableView();
+			desabilitaCampos();
 
-			//limpaCampos();
-			//desabilitaCampos();
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR,
 					e.getMessage(),
@@ -251,6 +279,8 @@ public class CadastrarTurmaController implements Initializable {
 		comboBoxSala.setDisable(false);
 		txMaxAluno.setDisable(false);
 		txAno.setDisable(false);
+		radioBt1.setDisable(false);
+		radioBt2.setDisable(false);
 		
 		btCadastrar.setDisable(true);
 		btAlterar.setDisable(true);
@@ -263,10 +293,18 @@ public class CadastrarTurmaController implements Initializable {
 		comboBoxCurso.setValue(c);
 		comboBoxDisciplina.setValue(d);
 		comboBoxProfessor.setValue(p);
-		comboBoxPredio.setValue(comboBoxPredio.getValue());
+		comboBoxPredio.setValue(s.getPredio());
 		comboBoxSala.setValue(s);
 		txMaxAluno.setText(turma.getMaxAlunos().toString());
 		txAno.setText(turma.getAno().toString());
+		
+		System.out.println(turma.getSemestre());
+		
+		if(turma.getSemestre().equalsIgnoreCase("1º")) {
+			radioBt1.setSelected(true);
+		}else {
+			radioBt2.setSelected(true);
+		}
 		
 		
 	}
@@ -313,16 +351,21 @@ public class CadastrarTurmaController implements Initializable {
     	listProfessores.clear();
     	for(ProfessorCapacidade elemento: listProfessorCapacidades){
     		   professorId = String.valueOf(elemento.getProfessorId());
-    		   
-    		   listProfessores.add(Read.getProfessor(professorId, null, null, null, cursoId).get(0));
+    		   System.out.println(professorId);
+    		   listProfessores.add(Read.getProfessor(professorId, null, null, null, null).get(0));
     		}
     	if(obsProfessores != null) {
     		obsProfessores.clear();
     	}
+    	
+    	comboBoxProfessor.setValue(null);
+    	
     	obsProfessores = FXCollections.observableArrayList(listProfessores);
     	comboBoxProfessor.getItems().clear();
     	comboBoxProfessor.setDisable(false);
     	comboBoxProfessor.setItems(obsProfessores);
+    	
+    	//comboBoxProfessor.setDisable(false);
     }
     
     
@@ -342,6 +385,8 @@ public class CadastrarTurmaController implements Initializable {
     	if(obsDisciplinas != null) {
     		obsDisciplinas.clear();
     	}
+    	
+    	comboBoxDisciplina.setValue(null);
 
     	obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
     	comboBoxDisciplina.getItems().clear();
@@ -386,6 +431,8 @@ public class CadastrarTurmaController implements Initializable {
  		   String predioX = elemento.getPredio();
  		   System.out.println("PREDIOOOO: " + predioX);
  		}
+    	
+    	comboBoxSala.setValue(null);
     	
     	obsSalas = FXCollections.observableArrayList(listSalas);
     	comboBoxSala.getItems().clear();
@@ -459,6 +506,10 @@ public class CadastrarTurmaController implements Initializable {
 
     public void cadastraTurma(){
 
+    	if(errorsDialog()) {
+    		return;
+    	}
+    	
 		if(testaDados()){
 			return;
 		}
@@ -479,7 +530,9 @@ public class CadastrarTurmaController implements Initializable {
 			alert.setHeaderText("Turma cadastrada com sucesso!");
 			alert.show();
 
+			limpaCampos();
 			carregarTableView();
+			desabilitaCampos();
 		} catch (Exception e){
 			Alert alert = new Alert(Alert.AlertType.ERROR,
 					e.getMessage(),
@@ -511,8 +564,15 @@ public class CadastrarTurmaController implements Initializable {
 		if(!comboBoxProfessor.isDisable()) {
 			comboBoxProfessor.setDisable(true);
 		}
-		cursoId = String.valueOf(comboBoxCurso.getSelectionModel().getSelectedItem().getId());
-		carregarDisciplinaCursos();
+		
+		Curso c = comboBoxCurso.getSelectionModel().getSelectedItem(); 
+		
+		if(c != null) {
+			cursoId = String.valueOf(c.getId());
+			System.out.println(cursoId);
+			carregarDisciplinaCursos();
+		}
+		
 	}
 
 	@FXML
