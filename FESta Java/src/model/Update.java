@@ -8,16 +8,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class Update {
+	private static final SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
 
-	
 	public static boolean Aluno(Integer id, String matricula, String nome, String dataIngresso,
 			Integer cursoId) {
 		boolean sucesso = true;
 		
 		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).addAnnotatedClass(Usuario.class).buildSessionFactory();
-		
-		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -66,11 +63,7 @@ public class Update {
 	
 	public boolean Cordenador(Integer usuarioId, String nome) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Cordenador.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -108,11 +101,7 @@ public class Update {
 
 	public boolean Curso(String codigoCurso, String nome, Integer departamentoId) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Curso.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -152,11 +141,7 @@ public class Update {
 
 	public boolean Disciplina(Integer id, String nome, Integer creditos, Integer departamentoId) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -200,11 +185,7 @@ public class Update {
 
 	public boolean DisciplinaCurso(String codigoCurso, String disciplinaId) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DisciplinaCurso.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -239,11 +220,7 @@ public class Update {
 
 	public boolean Historico(Integer alunoId, String codigoTurma, Double nota) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Historico.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -283,11 +260,7 @@ public class Update {
 
 	public boolean Matriculado(Integer alunoId, String codigoTurma) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Matriculado.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -325,11 +298,7 @@ public class Update {
 
 	public boolean PreRequisito(String disciplinaId, String prerequisitoId) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(PreRequisito.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -367,11 +336,7 @@ public class Update {
 
 	public static boolean Professor(Integer usuarioId, String nome, String nivelFormacao, Integer cursoId) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Professor.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -415,11 +380,7 @@ public class Update {
 
 	public boolean ProfessorCapacidade(Integer professorId, String disciplinaId) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ProfessorCapacidade.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -457,11 +418,7 @@ public class Update {
 
 	public boolean Sala(String codigoSala, Integer capacidade, String predio) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -503,11 +460,7 @@ public class Update {
 	public boolean Turma(String codigoTurma, Integer maxAlunos, String ano, String semestre, Integer professorId, Integer disciplinaId,
 			Integer salaId) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Turma.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
@@ -562,11 +515,7 @@ public class Update {
 	public static boolean Usuario(Integer id, String username, String senha, String rg, String cpf,
 			                      String email, String telCel, String telRes, String dataNascimento) {
 		boolean sucesso = true;
-		
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).buildSessionFactory();
-		
-		//create session
+
 		Session session = factory.getCurrentSession();
 		
 		try {
