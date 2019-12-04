@@ -13,10 +13,7 @@ import model.*;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 import view.CadastrarDisciplina;
 import view.Principal;
 
@@ -99,7 +97,7 @@ public class CadastrarDisciplinaController implements Initializable {
 
         btRemover.setOnMouseClicked((MouseEvent e) -> {
             if (!tableView.getSelectionModel().isEmpty()) {
-                //remover();
+                remover();
             }
         });
 
@@ -162,31 +160,37 @@ public class CadastrarDisciplinaController implements Initializable {
     private void habilitaCamposAlteracao() {
 
         DisciplinaView disciplina = tableView.getSelectionModel().getSelectedItem();
-
         txNome.setDisable(false);
         txCodigoDisciplina.setDisable(false);
         listViewPrerequisito.setDisable(false);
         comboBoxCreditos.setDisable(false);
         comboBoxDepartamento.setDisable(false);
-
         btCadastrar.setDisable(true);
         btAlterar.setDisable(true);
         btRemover.setDisable(true);
         btConfirmar.setDisable(false);
         btCancelar.setDisable(false);
-
         txNome.setText(disciplina.getNome());
-        txCodigoDisciplina.setText(disciplina.getcodigoDisciplina());
+        txCodigoDisciplina.setText(disciplina.getCodigoDisciplina());
 
 
         Departamento d = (Departamento) Read.Query("from Departamento where id = " + disciplina.getDepartamentoId()).get(0);
         comboBoxDepartamento.setValue(d);
         comboBoxCreditos.setValue(disciplina.getCreditos());
+
+        List<PreRequisito> preReqexistentes = Read.Query("from PreRequisito where disciplinaId = " + disciplina.getId());
+        listViewPrerequisito.getSelectionModel().clearSelection();
+        for(PreRequisito p : preReqexistentes){
+            for (Disciplina g : listViewPrerequisito.getItems()){
+                if(g.getId() == p.getPrerequisitoId())
+                    listViewPrerequisito.getSelectionModel().select(g);
+            }
+        }
     }
 
     private void realizaAcao() {
         if (acao.equalsIgnoreCase("Alterar")) {
-           // alterar();
+           altera();
         } else if (acao.equalsIgnoreCase("Cadastrar")) {
             cadastraDisciplina();
         }
@@ -217,6 +221,7 @@ public class CadastrarDisciplinaController implements Initializable {
         ObservableList obsDisciplinas = FXCollections.observableArrayList(listDisciplinas);
         FXCollections.sort(obsDisciplinas, comparator);
         listViewPrerequisito.setItems(obsDisciplinas);
+
     }
 
     private void inicializarTableColumns() {
@@ -249,7 +254,7 @@ public class CadastrarDisciplinaController implements Initializable {
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 if (objView.getNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
-                        objView.getcodigoDisciplina().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getCodigoDisciplina().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
                         objView.getDepartamentoNome().toLowerCase().indexOf(lowerCaseFilter) != -1)
                     return true;
                 else
@@ -266,7 +271,9 @@ public class CadastrarDisciplinaController implements Initializable {
         boolean erro = false;
         String alertmsg = "";
 
-        if(!Read.Query("from Disciplina where codigoDisciplina = '" + txCodigoDisciplina.getText() + "'").isEmpty()) {
+        DisciplinaView d = tableView.getSelectionModel().getSelectedItem();
+
+        if(!Read.Query("from Disciplina where codigoDisciplina = '" + txCodigoDisciplina.getText() + "'").isEmpty() && !d.getCodigoDisciplina().equals(txCodigoDisciplina.getText())) {
             alertmsg += "-Disciplina com codigoDisciplina já existente\n";
             erro = true;
         }
@@ -278,6 +285,62 @@ public class CadastrarDisciplinaController implements Initializable {
         }
 
         return erro;
+    }
+
+    private void remover() {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remover");
+        alert.setHeaderText("Tem certeza que deseja remover?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            DisciplinaView disciplina = tableView.getSelectionModel().getSelectedItem();
+
+            if(!Read.Query("from Turma where disciplinaId =" + disciplina.getId()).isEmpty()) {
+                Alert aler = new Alert(Alert.AlertType.ERROR, "Existem Turmas cadastradas nessa Disciplina\n");
+                aler.setHeaderText("Erro de dependencia!");
+                aler.show();
+                return;
+            }
+
+            Disciplina d = (Disciplina) Read.Query("from Disciplina where id =" + disciplina.getId()).get(0);
+            d.delete();
+            carregarTableView();
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
+
+    private void altera() {
+
+        if (testaDados()) return;
+
+        try {
+            String codigoDisciplina = txCodigoDisciplina.getText();
+            String nome = txNome.getText();
+            Departamento dep = comboBoxDepartamento.getSelectionModel().getSelectedItem();
+            int creditos = comboBoxCreditos.getSelectionModel().getSelectedItem();
+
+            DisciplinaView a = tableView.getSelectionModel().getSelectedItem();
+
+            Update.Disciplina(a.getId(), a.getCodigoDisciplina(), a.getNome(), a.getCreditos(), dep.getId());
+            cadastraPreRequisito(a.getId());
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Disciplina alterada com sucesso!");
+            alert.show();
+
+            limpaCampos();
+            desabilitaCampos();
+            habilitaTableView();
+            carregarTableView();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    e.getMessage(),
+                    ButtonType.OK);
+            alert.show();
+        }
     }
 
     public void cadastraDisciplina(){
@@ -299,6 +362,11 @@ public class CadastrarDisciplinaController implements Initializable {
     }
 
     public void cadastraPreRequisito(int disciplinaId){
+        Session session = Read.factory.getCurrentSession();
+        session.beginTransaction();
+        session.createQuery("delete PreRequisito where disciplinaId= " + disciplinaId).executeUpdate();
+        session.getTransaction().commit();
+        session.close();
         selectedPrerequisitos = listViewPrerequisito.getSelectionModel().getSelectedItems();
         if(selectedPrerequisitos != null){
             for(Disciplina d : selectedPrerequisitos){

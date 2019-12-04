@@ -22,7 +22,7 @@ public class DisciplinaView {
 
 	public int getId() { return this.id; }
 	
-	public String getcodigoDisciplina() {
+	public String getCodigoDisciplina() {
 		return this.codigoDisciplina;
 	}
 

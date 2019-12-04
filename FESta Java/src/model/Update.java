@@ -130,7 +130,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Disciplina(Integer id, String nome, Integer creditos, Integer departamentoId) {
+	public static boolean Disciplina(Integer id, String codigoDisciplina , String nome, Integer creditos, Integer departamentoId) {
 		boolean sucesso = true;
 
 		Session session = factory.getCurrentSession();
@@ -155,6 +155,9 @@ public class Update {
 				}
 				if(creditos != null) {
 					obj.setCreditos(creditos);
+				}
+				if(codigoDisciplina != null){
+					obj.setcodigoDisciplina(codigoDisciplina);
 				}
 			}
 			
