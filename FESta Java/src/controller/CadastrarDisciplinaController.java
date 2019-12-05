@@ -205,7 +205,7 @@ public class CadastrarDisciplinaController implements Initializable {
     }
     
     public void carregarDepartametos() {
-	listDepartamentos = Read.getDepartamento();
+	listDepartamentos = Read.Query("from Departamento");
     obsDepartamentos = FXCollections.observableArrayList(listDepartamentos);
     comboBoxDepartamento.setItems(obsDepartamentos);
     }

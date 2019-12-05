@@ -177,9 +177,9 @@ public class Read {
 		return resultado;
 	}
 	
-	public static List<Departamento> getDepartamento() {
+	public static List<Departamento> getDepartamento(Integer id) {
 		
-		String query = "from Departamento ";
+		String query = "from Departamento where id = " + id.toString();
 		
 		List<Departamento> resultado = null;
 

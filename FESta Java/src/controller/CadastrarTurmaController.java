@@ -5,6 +5,8 @@
  */
 package controller;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,6 +31,8 @@ import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import view.CadastrarTurma;
 
+import javax.management.Query;
+
 /**
  * FXML Controller class
  *
@@ -37,6 +41,7 @@ import view.CadastrarTurma;
 public class CadastrarTurmaController implements Initializable {
     @FXML private TextField txMaxAluno;
     @FXML private TextField txAno;
+	@FXML private TextField txPesquisar;
     @FXML private ToggleGroup grupoSemestre;
     @FXML private ComboBox<Disciplina> comboBoxDisciplina;
     @FXML private ComboBox<Professor> comboBoxProfessor;
@@ -81,7 +86,7 @@ public class CadastrarTurmaController implements Initializable {
 	String disciplinaId = null;
 	String professorId = null;
 	String predioCB = null;
-	String cursoId = null;
+	Integer deptId = null;
 	
 	String acao = null;
 
@@ -121,7 +126,7 @@ public class CadastrarTurmaController implements Initializable {
 			acao = "Alterar";
 			if (!tableView.getSelectionModel().isEmpty()) {
 				habilitaCamposAlteracao();
-				
+				desabilitaTableView();
 			}
 		});
 	}
@@ -158,8 +163,13 @@ public class CadastrarTurmaController implements Initializable {
 	}
 	
 	private void habilitaTableView() {
-		//txPesquisar.setDisable(false);
+		txPesquisar.setDisable(false);
 		tableView.setDisable(false);
+	}
+
+	private void desabilitaTableView() {
+		txPesquisar.setDisable(true);
+		tableView.setDisable(true);
 	}
 	
 	private void habilitaTodosCampos() {
@@ -177,8 +187,6 @@ public class CadastrarTurmaController implements Initializable {
 		btAlterar.setDisable(true);
 		btRemover.setDisable(true);
 		btCadastrar.setDisable(true);
-		
-		
 	}
 	
 	
@@ -226,43 +234,6 @@ public class CadastrarTurmaController implements Initializable {
 		}
 	}
 	
-	
-	private void alteraTurma() {
-		if (errorsDialog()) return;
-		if (testaDados()) return;
-
-		try {
-
-			TurmaView t = tableView.getSelectionModel().getSelectedItem();
-			
-			String maxAlunos = txMaxAluno.getText();
-			String ano = txAno.getText();
-
-			RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
-			
-			String semestre = radio.getText();
-			Update.Turma(t.getId(),Integer.parseInt(maxAlunos) , ano, semestre, t.getProfessorId(), t.getDisciplinaId(),
-					t.getSalaId());
-
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Turma alterado com sucesso!");
-			alert.show();
-			
-			limpaCampos();
-			carregarTableView();
-			desabilitaCampos();
-
-		} catch (Exception e) {
-			Alert alert = new Alert(AlertType.ERROR,
-					e.getMessage(),
-					ButtonType.OK);
-			alert.show();
-		}
-		carregarTableView();
-		
-		
-	}
-	
 	private void habilitaCamposAlteracao() {
 		
 		TurmaView turma = tableView.getSelectionModel().getSelectedItem();
@@ -303,39 +274,41 @@ public class CadastrarTurmaController implements Initializable {
 			radioBt2.setSelected(true);
 		}
 	}
-	
-	private void remover() {
-
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Remover");
-		alert.setHeaderText("Tem certeza que deseja remover?");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
-			TurmaView t = tableView.getSelectionModel().getSelectedItem();
-			
-			Turma turma = Read.getTurma(t.getId().toString(), null, null, null, null, null, null,
-					null).get(0);
-			turma.delete();
-			carregarTableView();
-		} else {
-			// ... user chose CANCEL or closed the dialog
-		}
-	}
 
 	private void carregarTableView(){
 		listTurmaView.clear();
 
 		listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, d.id) " +
-									"from Departamento d, Turma t, Professor p, Sala s, Disciplina d " +
-									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = d.id");
+									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, dept.id) " +
+									"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
+									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
 
 		if(obsListTurmaView != null) {
 			obsListTurmaView.clear();
 		}
 		obsListTurmaView = FXCollections.observableArrayList(listTurmaView);
-		tableView.setItems(obsListTurmaView);
+
+		FilteredList<TurmaView> filteredData = new FilteredList<>(obsListTurmaView, b -> true);
+
+		txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(objView -> {
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				String lowerCaseFilter = newValue.toLowerCase();
+
+				if (objView.getDisciplinaNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+						objView.getProfessorNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+						objView.getCodigoSala().toLowerCase().indexOf(lowerCaseFilter) != -1)
+					return true;
+				else
+					return false; // Does not match.
+			});
+		});
+
+		SortedList<TurmaView> sortedData = new SortedList<>(filteredData);
+		sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+		tableView.setItems(sortedData);
 	}
     
     public void carregarProfessorCapacidades() {
@@ -362,18 +335,10 @@ public class CadastrarTurmaController implements Initializable {
     }
     
     
-    public void carregarDisciplinaCursos() {
-    	
+    public void carregarDisciplinas() {
     	comboBoxDisciplina.getSelectionModel().clearSelection();
-    	
-    	listDisciplinaCursos.clear();
-    	listDisciplinaCursos = Read.getDisciplinaCurso(cursoId, null);
     	listDisciplinas.clear();
-    	for(DisciplinaCurso elemento: listDisciplinaCursos){
-    		   disciplinaId = String.valueOf(elemento.getDisciplinaId());
-    		   Disciplina d = Read.getDisciplina(disciplinaId, null, null, null).get(0);
-    		   listDisciplinas.add(d);
-    		}
+    	listDisciplinas = Read.Query("from Disciplina where departamentoId = " + deptId.toString());
     	
     	if(obsDisciplinas != null) {
     		obsDisciplinas.clear();
@@ -391,7 +356,7 @@ public class CadastrarTurmaController implements Initializable {
     public void carregarDepartamentos() {
     	listDepartamento.clear();
     	comboBoxDept.getItems().clear();
-    	//listDepartamento = Read.getCurso(cursoId, null, null, null);
+    	listDepartamento = Read.Query("from Departamento");
     	if(obsDepartamento != null) {
     		obsDepartamento.clear();
     	}
@@ -533,21 +498,69 @@ public class CadastrarTurmaController implements Initializable {
 			alert.show();
 		}
     }
-    
-    
-    public void fecha(){
-        CadastrarTurma.getStage().close();
-    }
-    
-    public void abrePrincipal(){
-        //Principal p = new Principal();
-        fecha();
-//        try {
-//			p.start(new Stage());
-//		} catch (Exception ex) {
-//			Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-//		}
-    }
+
+	private void alteraTurma() {
+		if (errorsDialog()) return;
+		if (testaDados()) return;
+
+		try {
+			RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
+			int maxAlunos = Integer.parseInt(txMaxAluno.getText());
+			String semestre = radio.getText();
+			String ano = txAno.getText();
+			int professorId = comboBoxProfessor.getSelectionModel().getSelectedItem().getUsuarioId();
+			int disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
+			int salaId = comboBoxSala.getSelectionModel().getSelectedItem().getId();
+			int turmaId = tableView.getSelectionModel().getSelectedItem().getId();
+
+			Update.Turma(turmaId, maxAlunos, ano, semestre, professorId, disciplinaId, salaId);
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText("Turma alterado com sucesso!");
+			alert.show();
+
+			limpaCampos();
+			habilitaTableView();
+			carregarTableView();
+			desabilitaCampos();
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR,
+					e.getMessage(),
+					ButtonType.OK);
+			alert.show();
+		}
+		carregarTableView();
+	}
+
+	private void remover() {
+
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Remover");
+		alert.setHeaderText("Tem certeza que deseja remover?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			try {
+				TurmaView t = tableView.getSelectionModel().getSelectedItem();
+
+				Turma turma = Read.getTurma(t.getId().toString(), null, null, null, null, null, null,
+						null).get(0);
+				turma.delete();
+
+				Alert alert2 = new Alert(AlertType.INFORMATION);
+				alert2.setTitle("Remover");
+				alert2.setHeaderText("Removido com sucesso");
+				alert2.show();
+
+				carregarTableView();
+			} catch (Exception e) {
+				Alert alert2 = new Alert(AlertType.ERROR,
+						e.getMessage(),
+						ButtonType.OK);
+				alert2.show();
+			}
+		}
+	}
 
 	@FXML
 	void SelecionarDepartamento() {
@@ -558,14 +571,12 @@ public class CadastrarTurmaController implements Initializable {
 			comboBoxProfessor.setDisable(true);
 		}
 		
-		Departamento c = comboBoxDept.getSelectionModel().getSelectedItem();
+		Departamento d = comboBoxDept.getSelectionModel().getSelectedItem();
 		
-		if(c != null) {
-			cursoId = String.valueOf(c.getId());
-			System.out.println(cursoId);
-			carregarDisciplinaCursos();
+		if(d != null) {
+			deptId = d.getId();
+			carregarDisciplinas();
 		}
-		
 	}
 
 	@FXML

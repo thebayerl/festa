@@ -59,7 +59,7 @@
             </FlowPane>
             <FlowPane hgap="15.0" prefHeight="334.0" prefWidth="810.0" vgap="5.0">
                <children>
-                  <HBox alignment="BOTTOM_LEFT" prefHeight="25.0" prefWidth="296.0">
+                  <HBox alignment="BOTTOM_LEFT">
                      <children>
                         <Label alignment="BASELINE_LEFT" text="Turmas Cadastradas">
                            <font>
@@ -68,16 +68,21 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="10.0" prefWidth="504.0" spacing="15.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="658.0" spacing="15.0">
                      <children>
-                        <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefWidth="95.0" text="Remover" />
-                        <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefWidth="95.0" text="Alterar" />
-                        <Button fx:id="btCadastrar" mnemonicParsing="false" prefWidth="95.0" text="Cadastrar" />
-                        <Button fx:id="btCancelar" disable="true" layoutX="230.0" layoutY="10.0" mnemonicParsing="false" prefWidth="95.0" text="Cancelar" />
-                        <Button fx:id="btConfirmar" disable="true" layoutX="257.0" layoutY="10.0" mnemonicParsing="false" prefWidth="95.0" text="Confirmar" />
+                        <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="228.0" promptText="Pesquisar (Disciplina, Professor ou Sala)">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btCadastrar" mnemonicParsing="false" prefWidth="70.0" text="Cadastrar" />
+                        <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefWidth="70.0" text="Alterar" />
+                        <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefWidth="70.0" text="Remover" />
+                        <Button fx:id="btCancelar" disable="true" layoutX="230.0" layoutY="10.0" mnemonicParsing="false" prefWidth="70.0" text="Cancelar" />
+                        <Button fx:id="btConfirmar" disable="true" layoutX="257.0" layoutY="10.0" mnemonicParsing="false" prefWidth="70.0" text="Confirmar" />
                      </children>
                   </HBox>
-                  <TableView fx:id="tableView" prefHeight="261.0" prefWidth="810.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="tableView" prefHeight="298.0" prefWidth="815.0" tableMenuButtonVisible="true">
                      <columns>
                         <TableColumn fx:id="columnId" prefWidth="40.0" text="ID" />
                         <TableColumn fx:id="columnDisciplina" prefWidth="171.0" text="Disciplina" />
