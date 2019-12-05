@@ -447,7 +447,7 @@ public class CadastrarProfessorController implements Initializable {
         tableView.setItems(sortedData);
     }
 
-    private boolean testaDados() {
+    private boolean testaDadosAlterar() {
         boolean erro = false;
         String alertmsg = "";
         ProfessorView professor = tableView.getSelectionModel().getSelectedItem();
@@ -468,6 +468,40 @@ public class CadastrarProfessorController implements Initializable {
         }
 
         if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty() && !professor.getEmail().equals(txEmail.getText())) {
+            alertmsg += "-Usuario com email já existente\n";
+            erro = true;
+        }
+
+        if (erro) {
+            Alert alert = new Alert(AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
+    }
+
+    private boolean testaDadosCadastrar() {
+        boolean erro = false;
+        String alertmsg = "";
+        ProfessorView professor = tableView.getSelectionModel().getSelectedItem();
+
+        if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
+            alertmsg += "-Usuario com username já existente\n";
+            erro = true;
+        }
+
+        if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty()) {
+            alertmsg += "-Usuario com rg já existente\n";
+            erro = true;
+        }
+
+        if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty()) {
+            alertmsg += "-Usuario com cpf já existente\n";
+            erro = true;
+        }
+
+        if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty()) {
             alertmsg += "-Usuario com email já existente\n";
             erro = true;
         }
@@ -510,7 +544,7 @@ public class CadastrarProfessorController implements Initializable {
 
     private void alterar() {
         if (errorsDialog()) return;
-        if (testaDados()) return;
+        if (testaDadosAlterar()) return;
 
         try {
             String username = txUserName.getText();
@@ -560,7 +594,7 @@ public class CadastrarProfessorController implements Initializable {
 
     private void cadastrar(){
         if (errorsDialog()) return;
-        if (testaDados()) return;
+        if (testaDadosCadastrar()) return;
 
         try {
             String username = txUserName.getText();

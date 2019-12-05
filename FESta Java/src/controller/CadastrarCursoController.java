@@ -111,7 +111,7 @@ public class CadastrarCursoController implements Initializable {
         emptyValidator.registerValidator(txCodigoCurso, Validator.createEmptyValidator(txCodigoCurso.getPromptText()));
         emptyValidator.registerValidator(comboBoxDepartamento, Validator.createEmptyValidator(comboBoxDepartamento.getPromptText()));
 
-        regexValidator.registerValidator(txNome, Validator.createRegexValidator(txNome.getPromptText(), "[a-zA-Z]{0,50}", Severity.ERROR));
+        regexValidator.registerValidator(txNome, Validator.createRegexValidator(txNome.getPromptText(), "[a-z A-Z\\u00C0-\\u00FF]{0,50}", Severity.ERROR));
         regexValidator.registerValidator(txCodigoCurso, Validator.createRegexValidator(txCodigoCurso.getPromptText(), "\\S{5}", Severity.ERROR));
     }
 
@@ -315,9 +315,8 @@ public class CadastrarCursoController implements Initializable {
     }
 
     public void cadastraCurso(){
-
-        if(errorsDialog()){ return;}
-        if(testaDadosCadastrar()){ return;}
+        if(errorsDialog()) return;
+        if(testaDadosCadastrar()) return;
 
         try{
             String nome = txNome.getText();
@@ -343,8 +342,8 @@ public class CadastrarCursoController implements Initializable {
     }
 
     private void altera() {
-
-        if (testaDadosAlterar()) return;
+        if(errorsDialog()) return;
+        if(testaDadosAlterar()) return;
 
         try {
             String codigoCurso = txCodigoCurso.getText();

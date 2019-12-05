@@ -23,7 +23,7 @@
             <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="10.0" prefHeight="25.0" prefWidth="759.0">
                <children>
                   <TextField fx:id="txNome" prefHeight="25.0" prefWidth="304.0" promptText="Nome do Departamento" />
-                  <TextField fx:id="txCodigoDepartamento" prefHeight="25.0" prefWidth="304.0" promptText="Código do Departamento" />
+                  <TextField fx:id="txCodigoDepartamento" onKeyReleased="#txCodDeptKeyReleased" prefHeight="25.0" prefWidth="304.0" promptText="Código do Departamento (AAA)" />
                </children>
             </FlowPane>
             <FlowPane prefHeight="362.0" prefWidth="648.0" vgap="5.0">

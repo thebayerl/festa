@@ -432,7 +432,7 @@ public class CadastrarAlunoController implements Initializable {
 		tableView.setItems(sortedData);
 	}
 
-	private boolean testaDados() {
+	private boolean testaDadosAlterar() {
 		boolean erro = false;
 		String alertmsg = "";
 		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
@@ -466,9 +466,42 @@ public class CadastrarAlunoController implements Initializable {
 		return erro;
 	}
 
+	private boolean testaDadosCadastrar() {
+		boolean erro = false;
+		String alertmsg = "";
+
+		if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
+			alertmsg += "-Usuario com username já existente\n";
+			erro = true;
+		}
+
+		if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty()) {
+			alertmsg += "-Usuario com rg já existente\n";
+			erro = true;
+		}
+
+		if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty()) {
+			alertmsg += "-Usuario com cpf já existente\n";
+			erro = true;
+		}
+
+		if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty()) {
+			alertmsg += "-Usuario com email já existente\n";
+			erro = true;
+		}
+
+		if (erro) {
+			Alert alert = new Alert(AlertType.ERROR, alertmsg);
+			alert.setHeaderText("Dados inválidos!");
+			alert.show();
+		}
+
+		return erro;
+	}
+
 	private void alteraAluno() {
-		if (errorsDialog()) return;
-		if (testaDados()) return;
+		if(errorsDialog()) return;
+		if(testaDadosAlterar()) return;
 
 		try {
 			String username = txUserName.getText();
@@ -486,9 +519,6 @@ public class CadastrarAlunoController implements Initializable {
 			int cursoId = curso.getId();
 
 			AlunoView a = tableView.getSelectionModel().getSelectedItem();
-
-			//Aluno aluno = Read.getAluno(a.getId().toString(), null, null, null, null, null).get(0);
-			//Usuario usuario = Read.getUsuario(a.getId().toString(), null, null, null, null).get(0);
 
 			Update.Aluno(a.getId(), null, nome, dataIngresso.toString(), cursoId);
 			Update.Usuario(a.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
@@ -510,8 +540,8 @@ public class CadastrarAlunoController implements Initializable {
 	}
 
 	private void cadastraAluno() {
-		if (errorsDialog()) return;
-		if (testaDados()) return;
+		if(errorsDialog()) return;
+		if(testaDadosCadastrar()) return;
 
 		try {
 			String username = txUserName.getText();

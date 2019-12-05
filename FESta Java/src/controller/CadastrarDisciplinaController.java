@@ -23,6 +23,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationMessage;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import org.hibernate.Session;
 import view.CadastrarDisciplina;
 import view.Principal;
@@ -51,6 +55,11 @@ public class CadastrarDisciplinaController implements Initializable {
     @FXML private TableColumn<DisciplinaView, String> columnNome;
     @FXML private TableColumn<DisciplinaView, Integer> columnCreditos;
     @FXML private TableColumn<DisciplinaView, String> columnDepartamento;
+
+    private ValidationSupport emptyValidator = new ValidationSupport();
+    private ValidationSupport regexValidator = new ValidationSupport();
+
+    private TextFieldFormatter tffCodDisciplina = new TextFieldFormatter();
     
     int maxCredito = 6;
     private List<Integer> listCreditos = new ArrayList<>();
@@ -64,12 +73,11 @@ public class CadastrarDisciplinaController implements Initializable {
 
     private String acao = null;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        inicializarTextMasks();
+        inicializarValidators();
         limpaCampos();
         desabilitaCampos();
         habilitaTableView();
@@ -110,6 +118,21 @@ public class CadastrarDisciplinaController implements Initializable {
         });
     }
 
+    private void inicializarValidators(){
+        //Campos obrigatórios
+        emptyValidator.registerValidator(txNome, Validator.createEmptyValidator(txNome.getPromptText()));
+        emptyValidator.registerValidator(txCodigoDisciplina, Validator.createEmptyValidator(txCodigoDisciplina.getPromptText()));
+        emptyValidator.registerValidator(comboBoxDepartamento, Validator.createEmptyValidator(comboBoxDepartamento.getPromptText()));
+        emptyValidator.registerValidator(comboBoxCreditos, Validator.createEmptyValidator(comboBoxCreditos.getPromptText()));
+
+        regexValidator.registerValidator(txNome, Validator.createRegexValidator(txNome.getPromptText(), "[a-z A-Z\\u00C0-\\u00FF]{0,50}", Severity.ERROR));
+        regexValidator.registerValidator(txCodigoDisciplina, Validator.createRegexValidator(txCodigoDisciplina.getPromptText(), "\\S{6}", Severity.ERROR));
+    }
+
+    private void inicializarTextMasks() {
+        tffCodDisciplina.setMask("UUU###");
+    }
+
     private void habilitaTableView() {
         txPesquisar.setDisable(false);
         tableView.setDisable(false);
@@ -124,7 +147,6 @@ public class CadastrarDisciplinaController implements Initializable {
     }
 
     private void desabilitaCampos() {
-
         txNome.setDisable(true);
         txCodigoDisciplina.setDisable(true);
         listViewPrerequisito.setDisable(true);
@@ -136,7 +158,6 @@ public class CadastrarDisciplinaController implements Initializable {
         btAlterar.setDisable(false);
         btRemover.setDisable(false);
         btCadastrar.setDisable(false);
-
     }
 
     private void habilitaTodosCampos() {
@@ -235,9 +256,9 @@ public class CadastrarDisciplinaController implements Initializable {
     private void carregarTableView() {
         listDisciplinaView.clear();
 
-        listDisciplinaView = Read.Query("select new model.DisciplinaView(dis.nome, dis.creditos ,dis.id, dep.id, dis.codigoDisciplina ,dep.codigoDepartamento) " +
-                "from Departamento as dep, Disciplina as dis " +
-                "where dep.id = dis.departamentoId");
+        listDisciplinaView = Read.Query("select new model.DisciplinaView(dis.nome, dis.creditos ,dis.id, dep.id, dis.codigoDisciplina ,dep.nome) " +
+                                        "from Departamento as dep, Disciplina as dis " +
+                                        "where dep.id = dis.departamentoId");
 
         if (obsListDisciplinaView != null) {
             obsListDisciplinaView.clear();
@@ -267,14 +288,14 @@ public class CadastrarDisciplinaController implements Initializable {
         tableView.setItems(sortedData);
     }
 
-    private boolean testaDados(){
+    private boolean testaDadosAlterar(){
         boolean erro = false;
         String alertmsg = "";
 
         DisciplinaView d = tableView.getSelectionModel().getSelectedItem();
 
         if(!Read.Query("from Disciplina where codigoDisciplina = '" + txCodigoDisciplina.getText() + "'").isEmpty() && !d.getCodigoDisciplina().equals(txCodigoDisciplina.getText())) {
-            alertmsg += "-Disciplina com codigoDisciplina já existente\n";
+            alertmsg += "-Disciplina com código já existente\n";
             erro = true;
         }
 
@@ -287,8 +308,68 @@ public class CadastrarDisciplinaController implements Initializable {
         return erro;
     }
 
-    private void remover() {
+    private boolean testaDadosCadastrar(){
+        boolean erro = false;
+        String alertmsg = "";
 
+        DisciplinaView d = tableView.getSelectionModel().getSelectedItem();
+
+        if(!Read.Query("from Disciplina where codigoDisciplina = '" + txCodigoDisciplina.getText() + "'").isEmpty()) {
+            alertmsg += "-Disciplina com código já existente\n";
+            erro = true;
+        }
+
+        if(erro){
+            Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
+    }
+
+    private Boolean errorsDialog(){
+        List<ValidationMessage> emptyFieldsError = new ArrayList<>(emptyValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsError = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsErrorCopy = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+
+        String emptyFieldsMessage = "Campos obrigatórios vazios:";
+        String regexFieldsMessage = "Campos não preenchidos corretamente:";
+        String dialogMessage = "";
+        boolean emptyFieldsErrorBool = false, regexFieldsErrorBool = false;
+
+        for(ValidationMessage o : regexFieldsErrorCopy){
+            if(emptyFieldsError.contains(o)) regexFieldsError.remove(o);
+        }
+
+        if(!emptyFieldsError.isEmpty()) {
+            emptyFieldsErrorBool = true;
+            for(ValidationMessage erro : emptyFieldsError)	emptyFieldsMessage += "\n  - " + erro.getText();
+            emptyFieldsMessage += "\n\n";
+        }
+        else emptyFieldsMessage = "";
+
+        if(!regexFieldsError.isEmpty()) {
+            regexFieldsErrorBool = true;
+            for(ValidationMessage erro : regexFieldsError)	regexFieldsMessage += "\n  - " + erro.getText();
+        }
+        else regexFieldsMessage = "";
+
+        if(emptyFieldsErrorBool || regexFieldsErrorBool){
+            dialogMessage = emptyFieldsMessage + regexFieldsMessage;
+
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    dialogMessage,
+                    ButtonType.OK);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Não foi possível efetuar o cadastro");
+            alert.show();
+            return true;
+        }
+        return false;
+    }
+
+    private void remover() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Remover");
         alert.setHeaderText("Tem certeza que deseja remover?");
@@ -304,17 +385,28 @@ public class CadastrarDisciplinaController implements Initializable {
                 return;
             }
 
-            Disciplina d = (Disciplina) Read.Query("from Disciplina where id =" + disciplina.getId()).get(0);
-            d.delete();
-            carregarTableView();
-        } else {
-            // ... user chose CANCEL or closed the dialog
+            try {
+                Disciplina d = (Disciplina) Read.Query("from Disciplina where id =" + disciplina.getId()).get(0);
+                d.delete();
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Remover");
+                alert2.setHeaderText("Removido com sucesso");
+                alert2.show();
+
+                carregarTableView();
+            } catch (Exception e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR,
+                        e.getMessage(),
+                        ButtonType.OK);
+                alert2.show();
+            }
         }
     }
 
     private void altera() {
-
-        if (testaDados()) return;
+        if(errorsDialog()) return;
+        if(testaDadosAlterar()) return;
 
         try {
             String codigoDisciplina = txCodigoDisciplina.getText();
@@ -344,25 +436,33 @@ public class CadastrarDisciplinaController implements Initializable {
     }
 
     public void cadastraDisciplina(){
+        if(errorsDialog()) return;
+        if(testaDadosCadastrar()) return;
 
-        if(testaDados()){
-            return;
+        try{
+            String nome = txNome.getText();
+            int creditos = comboBoxCreditos.getValue();
+            String codigoDisciplina = txCodigoDisciplina.getText();
+
+            Departamento departamento = comboBoxDepartamento.getSelectionModel().getSelectedItem();
+            int departamentoId = departamento.getId();
+            Disciplina d = new Disciplina(nome, creditos, departamentoId, codigoDisciplina);
+            d.create();
+            cadastraPreRequisito(d.getId());
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Disciplina cadastrada com sucesso!");
+            alert.show();
+
+            limpaCampos();
+            desabilitaCampos();
+            carregarTableView();
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    e.getMessage(),
+                    ButtonType.OK);
+            alert.show();
         }
-
-    	// TODO: verifica se todos os  campos estão selecionados
-    	String nome = txNome.getText();
-    	int creditos = comboBoxCreditos.getValue();
-    	String codigoDisciplina = txCodigoDisciplina.getText();
-
-    	Departamento departamento = comboBoxDepartamento.getSelectionModel().getSelectedItem();
-        int departamentoId = departamento.getId();
-        Disciplina d = new Disciplina(nome, creditos, departamentoId, codigoDisciplina);
-        d.create();
-        cadastraPreRequisito(d.getId());
-
-        limpaCampos();
-        desabilitaCampos();
-        carregarTableView();
     }
 
     public void cadastraPreRequisito(int disciplinaId){
@@ -380,18 +480,10 @@ public class CadastrarDisciplinaController implements Initializable {
             }
         }
     }
-    
-    public void fecha(){
-        CadastrarDisciplina.getStage().close();
-    }
-    
-    public void abrePrincipal() {
-        //Principal p = new Principal();
-        fecha();
-        //try {
-        //    p.start(new Stage());
-        //} catch (Exception ex) {
-        //    Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-        //}
+
+    @FXML
+    private void txCodDisciplinaKeyReleased() {
+        tffCodDisciplina.setTf(txCodigoDisciplina);
+        tffCodDisciplina.formatter();
     }
 }

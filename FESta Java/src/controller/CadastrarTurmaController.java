@@ -446,7 +446,6 @@ public class CadastrarTurmaController implements Initializable {
 		return false;
 	}
 
-
 	private boolean testaDados(){
 		boolean erro = false;
 		String alertmsg = "";

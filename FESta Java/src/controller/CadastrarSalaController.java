@@ -175,7 +175,7 @@ public class CadastrarSalaController implements Initializable {
 
     private void realizaAcao() {
         if (acao.equalsIgnoreCase("Alterar")) {
-            altera();
+            alterar();
         } else if (acao.equalsIgnoreCase("Cadastrar")) {
             cadastraSala();
         }
@@ -266,9 +266,8 @@ public class CadastrarSalaController implements Initializable {
     }
     
     public void cadastraSala(){
-
-        if(errorsDialog()){ return;}
-        if(testaDadosCadastrar()){ return;}
+        if(errorsDialog()) return;
+        if(testaDadosCadastrar()) return;
 
         try{
             int capacidade = Integer.parseInt(txCapacidade.getText());
@@ -292,10 +291,9 @@ public class CadastrarSalaController implements Initializable {
         }
     }
 
-    private void altera() {
-
-        if(errorsDialog()){ return;}
-        if(testaDadosCadastrar()){ return;}
+    private void alterar() {
+        if(errorsDialog()) return;
+        if(testaDadosAlterar()) return;
 
         try {
             String codigoSala = txCodigoSala.getText();

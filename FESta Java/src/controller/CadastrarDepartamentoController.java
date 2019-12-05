@@ -14,11 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import model.*;
 import model.Departamento;
-import model.Read;
-import model.Departamento;
-import model.Update;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationMessage;
 import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import view.CadastrarDepartamento;
 
 import java.net.URL;
@@ -47,6 +48,8 @@ public class CadastrarDepartamentoController implements Initializable {
     private ValidationSupport emptyValidator = new ValidationSupport();
     private ValidationSupport regexValidator = new ValidationSupport();
 
+    private TextFieldFormatter tffCodDept = new TextFieldFormatter();
+
     private List<Departamento> listDepartamento = new ArrayList<>();
     private ObservableList<Departamento> obsListDepartamento;
     private String acao = null;
@@ -54,6 +57,8 @@ public class CadastrarDepartamentoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        inicializarValidators();
+        inicializarTextMasks();
         limpaCampos();
         desabilitaCampos();
         habilitaTableView();
@@ -90,6 +95,19 @@ public class CadastrarDepartamentoController implements Initializable {
                 desabilitaTableView();
             }
         });
+    }
+
+    private void inicializarValidators(){
+        //Campos obrigatórios
+        emptyValidator.registerValidator(txNome, Validator.createEmptyValidator(txNome.getPromptText()));
+        emptyValidator.registerValidator(txCodigoDepartamento, Validator.createEmptyValidator(txCodigoDepartamento.getPromptText()));
+
+        regexValidator.registerValidator(txNome, Validator.createRegexValidator(txNome.getPromptText(), "[a-z A-Z\\u00C0-\\u00FF]{0,50}", Severity.ERROR));
+        regexValidator.registerValidator(txCodigoDepartamento, Validator.createRegexValidator(txCodigoDepartamento.getPromptText(), "\\S{3}", Severity.ERROR));
+    }
+
+    private void inicializarTextMasks() {
+        tffCodDept.setMask("UUU");
     }
 
     private void habilitaTableView() {
@@ -192,7 +210,7 @@ public class CadastrarDepartamentoController implements Initializable {
         tableView.setItems(sortedData);
     }
 
-    private boolean testaDados() {
+    private boolean testaDadosAlterar() {
         boolean erro = false;
         String alertmsg = "";
         Departamento s = tableView.getSelectionModel().getSelectedItem();
@@ -209,26 +227,95 @@ public class CadastrarDepartamentoController implements Initializable {
 
         return erro;
     }
-    
-    public void cadastraDepartamento(){
 
-        if(testaDados()){
-            return;
+    private boolean testaDadosCadastrar() {
+        boolean erro = false;
+        String alertmsg = "";
+
+        if (!Read.Query("from Departamento where codigoDepartamento = '" + txCodigoDepartamento.getText() + "'").isEmpty()) {
+            alertmsg += "-Departamento com codigoDepartamento já existente\n";
+            erro = true;
         }
 
-        String nome = txNome.getText();
-        String codigoDepartamento = txCodigoDepartamento.getText();
-        Departamento d = new Departamento(codigoDepartamento, nome);
-        d.create();
+        if (erro) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
 
-        limpaCampos();
-        desabilitaCampos();
-        carregarTableView();
+        return erro;
+    }
+
+    private Boolean errorsDialog(){
+        List<ValidationMessage> emptyFieldsError = new ArrayList<>(emptyValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsError = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsErrorCopy = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+
+        String emptyFieldsMessage = "Campos obrigatórios vazios:";
+        String regexFieldsMessage = "Campos não preenchidos corretamente:";
+        String dialogMessage = "";
+        boolean emptyFieldsErrorBool = false, regexFieldsErrorBool = false;
+
+        for(ValidationMessage o : regexFieldsErrorCopy){
+            if(emptyFieldsError.contains(o)) regexFieldsError.remove(o);
+        }
+
+        if(!emptyFieldsError.isEmpty()) {
+            emptyFieldsErrorBool = true;
+            for(ValidationMessage erro : emptyFieldsError)	emptyFieldsMessage += "\n  - " + erro.getText();
+            emptyFieldsMessage += "\n\n";
+        }
+        else emptyFieldsMessage = "";
+
+        if(!regexFieldsError.isEmpty()) {
+            regexFieldsErrorBool = true;
+            for(ValidationMessage erro : regexFieldsError)	regexFieldsMessage += "\n  - " + erro.getText();
+        }
+        else regexFieldsMessage = "";
+
+        if(emptyFieldsErrorBool || regexFieldsErrorBool){
+            dialogMessage = emptyFieldsMessage + regexFieldsMessage;
+
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    dialogMessage,
+                    ButtonType.OK);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Não foi possível efetuar o cadastro");
+            alert.show();
+            return true;
+        }
+        return false;
+    }
+    
+    public void cadastraDepartamento(){
+        if(errorsDialog()) return;
+        if(testaDadosCadastrar()) return;
+
+        try{
+            String nome = txNome.getText();
+            String codigoDepartamento = txCodigoDepartamento.getText();
+            Departamento d = new Departamento(codigoDepartamento, nome);
+            d.create();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Departamento cadastrado com sucesso!");
+            alert.show();
+
+            limpaCampos();
+            desabilitaCampos();
+            habilitaTableView();
+            carregarTableView();
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    e.getMessage(),
+                    ButtonType.OK);
+            alert.show();
+        }
     }
 
     private void altera() {
-
-        if (testaDados()) return;
+        if(errorsDialog()) return;
+        if(testaDadosAlterar()) return;
 
         try {
             String codigoDepartamento = txCodigoDepartamento.getText();
@@ -239,7 +326,7 @@ public class CadastrarDepartamentoController implements Initializable {
             Update.getDepartamento(d.getId(), codigoDepartamento, nome );
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Disciplina alterada com sucesso!");
+            alert.setHeaderText("Departamento alterado com sucesso!");
             alert.show();
 
             limpaCampos();
@@ -282,25 +369,28 @@ public class CadastrarDepartamentoController implements Initializable {
                 return;
             }
 
-            Departamento s = (Departamento) Read.Query("from Departamento where id =" + departamento.getId()).get(0);
-            s.delete();
-            carregarTableView();
-        } else {
-            // ... user chose CANCEL or closed the dialog
+            try {
+                Departamento s = (Departamento) Read.Query("from Departamento where id =" + departamento.getId()).get(0);
+                s.delete();
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Remover");
+                alert2.setHeaderText("Removido com sucesso");
+                alert2.show();
+
+                carregarTableView();
+            } catch (Exception e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR,
+                        e.getMessage(),
+                        ButtonType.OK);
+                alert2.show();
+            }
         }
     }
-    
-    public void fecha(){
-        CadastrarDepartamento.getStage().close();
-    }
-    
-    public void abrePrincipal(){
-        //Principal p = new Principal();
-        fecha();
-//        try {
-//            p.start(new Stage());
-//        } catch (Exception ex) {
-//            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
+    @FXML
+    private void txCodDeptKeyReleased() {
+        tffCodDept.setTf(txCodigoDepartamento);
+        tffCodDept.formatter();
     }
 }
