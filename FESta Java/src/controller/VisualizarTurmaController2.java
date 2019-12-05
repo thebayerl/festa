@@ -28,7 +28,6 @@ import javafx.scene.shape.Rectangle;
 
 import javax.persistence.Column;
 import java.net.URL;
-import java.util.ResourceBundle;
 
 public class VisualizarTurmaController2 implements Initializable {
 
@@ -150,8 +149,11 @@ public class VisualizarTurmaController2 implements Initializable {
     @FXML private Rectangle rec11;
 
     @FXML void selecionarDisciplina() {
-       this.disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
-       carregarTableView();
+    	
+    	if(comboBoxDisciplina.getSelectionModel().getSelectedItem()!=null) {
+    		this.disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
+    		carregarTableView();
+    		}
     }
 
     @FXML void select00(MouseEvent event) {
@@ -450,6 +452,8 @@ public class VisualizarTurmaController2 implements Initializable {
     String[][] C = new String[5][5];
     String[][] S = new String[5][5];
     Boolean[][] R = new Boolean[5][5];
+    
+    String acao = null;
 
 
     @Override
@@ -461,12 +465,26 @@ public class VisualizarTurmaController2 implements Initializable {
         inicializarTableColumns();
         carregarTableView();
 
+        btConfirmar.setOnMouseClicked((MouseEvent e) -> {
+        	realizaAcao();
+            //cadastraMatriculado();
+        });
+        
+        btCancelar.setOnMouseClicked((MouseEvent e) -> {
+        	desabilitaCampos();
+            //cadastraMatriculado();
+        });
+        
 
         btInscrever.setOnMouseClicked((MouseEvent e) -> {
-            cadastraMatriculado();
+        	acao = "Inscrever";
+            //cadastraMatriculado();
+        	habilitaCampos();
         });
 
         btRemover.setOnMouseClicked((MouseEvent e) -> {
+        	acao = "Remover";
+        	
             if(a!=-1 && b!=-1)
                 return;
             if(D[a][b].equals(""))
@@ -481,9 +499,48 @@ public class VisualizarTurmaController2 implements Initializable {
         columnProfessor.setCellValueFactory(new PropertyValueFactory<>("professorNome"));
         columnSala.setCellValueFactory(new PropertyValueFactory<>("codigoSala"));
         columnCodigo.setCellValueFactory(new PropertyValueFactory<>("codigoDisciplina"));
-        //columnCreditos.setCellValueFactory(new PropertyValueFactory<>("semestre"));
-        //columnMaxAlunos.setCellValueFactory(new PropertyValueFactory<>("maxAlunos"));
+        columnDias.setCellValueFactory(new PropertyValueFactory<>("dias"));
+        columnHora.setCellValueFactory(new PropertyValueFactory<>("horarios"));
         columnProfessor.setCellValueFactory(new PropertyValueFactory<>("professorNome"));
+    }
+    
+    private void limpaCampos(){
+    	comboBoxDisciplina.setValue(null);
+    	disciplinaId = 0;
+    	carregarTableView();
+    }
+    
+    private void desabilitaCampos() {
+    	
+    	comboBoxDisciplina.setDisable(true);
+    	tableView.setDisable(true);
+    	
+    	btInscrever.setDisable(false);
+    	//btRemover.setDisable(false);
+    	
+    	btConfirmar.setDisable(true);
+    	btCancelar.setDisable(true);
+    	
+    }
+    
+    private void habilitaCampos() {
+    	
+    	comboBoxDisciplina.setDisable(false);
+    	tableView.setDisable(false);
+    	
+    	btInscrever.setDisable(true);
+    	//btRemover.setDisable(true);
+    	
+    	btConfirmar.setDisable(false);
+    	btCancelar.setDisable(false);
+    }
+    
+    private void realizaAcao() {
+		if (acao.equalsIgnoreCase("Inscrever")) {
+			cadastraMatriculado();
+		} else if (acao.equalsIgnoreCase("Remover")) {
+			
+		}
     }
 
     private void habilitaTableView() {
@@ -499,15 +556,17 @@ public class VisualizarTurmaController2 implements Initializable {
     private void carregarTableView(){
         listTurmaView.clear();
         if (this.disciplinaId == 0) {
-            listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, dept.id) " +
-                    "from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
-                    "where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
+        	listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+					"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+					"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
+					"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
         }else {
-            listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, dept.id) " +
-                    "from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
-                    "where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.disciplinaId = " + this.disciplinaId);
+        	
+        	listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+					"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+					"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
+					"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.disciplinaId = " + this.disciplinaId);
+        	
         }
         if(obsListTurmaView != null) {
             obsListTurmaView.clear();
@@ -548,20 +607,58 @@ public class VisualizarTurmaController2 implements Initializable {
 
         try {
 
+        	//private List<String> listHorarios = Arrays.asList("08h-10h","10h-12h","13h-15h","15h-17h","17h-19h");
+        	//private List<String> listDias = Arrays.asList("Segunda e Quarta", "Terça e Quinta", "Quarta e Sexta");
+        	
             TurmaView t= tableView.getSelectionModel().getSelectedItem();
-
+            
+            int h = -1;
             Matriculado m = new Matriculado(2,t.getId());
             m.create();
-            addTurma(t, 0 , 3);
+            
+            switch(t.getHorarios()) {
+            case "08h-10h":
+            	h = 0;
+              break;
+            case "10h-12h":
+            	h = 1;
+              break;
+            case "13h-15h":
+            	h = 2;
+              break;
+            case "15h-17h":
+            	h = 3;
+              break;
+            case "17h-19h":
+            	h = 4;
+              break;
+            default:
+          }
+
+            switch(t.getDias()) {
+            case "Segunda e Quarta":
+            	addTurma(t, h , 1);
+              break;
+            case "Quarta e Sexta":
+            	addTurma(t, h , 2);
+              break;
+            case "Terça e Quinta":
+            	addTurma(t, h , 3);
+              break;
+            default:
+
+          }
+            
+           
             geraDCS();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Inscrição concluida com sucesso seu filho da puta!");
+            alert.setHeaderText("Inscrição concluida com sucesso!");
             alert.show();
 
-            //limpaCampos();
+            limpaCampos();
             carregarTableView();
-            //desabilitaCampos();
+            desabilitaCampos();
         } catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     e.getMessage(),
