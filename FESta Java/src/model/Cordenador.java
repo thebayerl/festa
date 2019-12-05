@@ -9,7 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 @Entity
-@Table(name="cordenador")
+@Table(name="coordenador")
 public class Cordenador {
 	
 	@Id

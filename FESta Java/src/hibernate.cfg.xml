@@ -29,6 +29,7 @@
 	    <mapping class="model.Curso"/>
 	    <mapping class="model.Aluno"/>
 	    <mapping class="model.Professor"/>
+        <mapping class="model.Cordenador"/>
 	    <mapping class="model.Turma"/>
 	    <mapping class="model.Disciplina"/>
 	    <mapping class="model.Departamento"/>
