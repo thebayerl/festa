@@ -21,6 +21,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationMessage;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import view.CadastrarCurso;
 import view.Principal;
 
@@ -47,21 +51,23 @@ public class CadastrarCursoController implements Initializable {
     @FXML private TextField txPesquisar;
     @FXML private ComboBox<Departamento> comboBoxDepartamento;
 
+    private ValidationSupport emptyValidator = new ValidationSupport();
+    private ValidationSupport regexValidator = new ValidationSupport();
+
+    private TextFieldFormatter tffCodCurso = new TextFieldFormatter();
+
     private List<Departamento> listDepartamentos = new ArrayList<>();
     private ObservableList<Departamento> obsDepartamentos;
     private List<CursoView> listCursoView = new ArrayList<>();
     private ObservableList<CursoView> obsListCursoView;
     private String acao = null;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        limpaCampos();
+        inicializarTextMasks();
+        inicializarValidators();
         desabilitaCampos();
-        habilitaTableView();
         carregarDepartametos();
         inicializarTableColumns();
         carregarTableView();
@@ -96,6 +102,20 @@ public class CadastrarCursoController implements Initializable {
                 desabilitaTableView();
             }
         });
+    }
+
+    private void inicializarValidators(){
+        //Campos obrigatórios
+        emptyValidator.registerValidator(txNome, Validator.createEmptyValidator(txNome.getPromptText()));
+        emptyValidator.registerValidator(txCodigoCurso, Validator.createEmptyValidator(txCodigoCurso.getPromptText()));
+        emptyValidator.registerValidator(comboBoxDepartamento, Validator.createEmptyValidator(comboBoxDepartamento.getPromptText()));
+
+        regexValidator.registerValidator(txNome, Validator.createRegexValidator(txNome.getPromptText(), "[a-zA-Z]{0,50}", Severity.ERROR));
+        regexValidator.registerValidator(txCodigoCurso, Validator.createRegexValidator(txCodigoCurso.getPromptText(), "\\S{5}", Severity.ERROR));
+    }
+
+    private void inicializarTextMasks() {
+        tffCodCurso.setMask("UUU##");
     }
 
     private void habilitaTableView() {
@@ -232,22 +252,72 @@ public class CadastrarCursoController implements Initializable {
         return erro;
     }
 
-    public void cadastraCurso(){
+    private Boolean errorsDialog(){
+        List<ValidationMessage> emptyFieldsError = new ArrayList<>(emptyValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsError = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsErrorCopy = new ArrayList<>(regexValidator.getValidationResult().getErrors());
 
-        if(testaDados()){
-            return;
+        String emptyFieldsMessage = "Campos obrigatórios vazios:";
+        String regexFieldsMessage = "Campos não preenchidos corretamente:";
+        String dialogMessage = "";
+        boolean emptyFieldsErrorBool = false, regexFieldsErrorBool = false;
+
+        for(ValidationMessage o : regexFieldsErrorCopy){
+            if(emptyFieldsError.contains(o)) regexFieldsError.remove(o);
         }
 
-        String nome = txNome.getText();
-        String codigoCurso = txCodigoCurso.getText();
-        Departamento d = comboBoxDepartamento.getSelectionModel().getSelectedItem() ;
-        Curso c = new Curso(codigoCurso, nome, d.getId());
-        c.create();
-        limpaCampos();
-        desabilitaCampos();
-        carregarTableView();
-        
-        
+        if(!emptyFieldsError.isEmpty()) {
+            emptyFieldsErrorBool = true;
+            for(ValidationMessage erro : emptyFieldsError)	emptyFieldsMessage += "\n  - " + erro.getText();
+            emptyFieldsMessage += "\n\n";
+        }
+        else emptyFieldsMessage = "";
+
+        if(!regexFieldsError.isEmpty()) {
+            regexFieldsErrorBool = true;
+            for(ValidationMessage erro : regexFieldsError)	regexFieldsMessage += "\n  - " + erro.getText();
+        }
+        else regexFieldsMessage = "";
+
+        if(emptyFieldsErrorBool || regexFieldsErrorBool){
+            dialogMessage = emptyFieldsMessage + regexFieldsMessage;
+
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    dialogMessage,
+                    ButtonType.OK);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Não foi possível efetuar o cadastro");
+            alert.show();
+            return true;
+        }
+        return false;
+    }
+
+    public void cadastraCurso(){
+
+        if(errorsDialog()){ return;}
+        if(testaDados()){ return;}
+
+        try{
+            String nome = txNome.getText();
+            String codigoCurso = txCodigoCurso.getText();
+            Departamento d = comboBoxDepartamento.getSelectionModel().getSelectedItem() ;
+            Curso c = new Curso(codigoCurso, nome, d.getId());
+            c.create();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Curso cadastrado com sucesso!");
+            alert.show();
+
+            limpaCampos();
+            desabilitaCampos();
+            carregarTableView();
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    e.getMessage(),
+                    ButtonType.OK);
+            alert.show();
+        }
     }
 
     private void altera() {
@@ -313,19 +383,9 @@ public class CadastrarCursoController implements Initializable {
         }
     }
 
-    public void fecha(){
-        CadastrarCurso.getStage().close();
+    @FXML
+    private void txCodCursoKeyReleased() {
+        tffCodCurso.setTf(txCodigoCurso);
+        tffCodCurso.formatter();
     }
-    
-    public void voltaTela(){
-        fecha();
-    }
-        //Principal p = new Principal();
-//        fecha();
-//        try {
-//            p.start(new Stage());
-//        } catch (Exception ex) {
-//            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 }
