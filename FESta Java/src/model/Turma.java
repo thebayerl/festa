@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="turma")
 public class Turma {
@@ -22,6 +24,12 @@ public class Turma {
 	
 	@Column(name="ano")
 	private String ano;
+
+	@Column(name="dias")
+	private String dias;
+
+	@Column(name="horarios")
+	private String horarios;
 	
 	@Column(name="semestre")
 	private String semestre;
@@ -38,37 +46,30 @@ public class Turma {
 	public Turma(){}
 	
 
-	public Turma(int maxAlunos, String ano, String semestre, int professorId, int disciplinaId,
-			int salaId) {
+	public Turma(int maxAlunos, String ano, String semestre, String dias, String horarios, int professorId, int disciplinaId, int salaId) {
 		super();
 		this.codigoTurma = "dsadsada";
 		this.maxAlunos = maxAlunos;
 		this.ano = ano;
 		this.semestre = semestre;
+		this.dias = dias;
+		this.horarios = horarios;
 		this.professorId = professorId;
 		this.disciplinaId = disciplinaId;
 		this.salaId = salaId;
 	}
 
 	public void create() {
-		boolean erro = false;
-		
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Turma.class).addAnnotatedClass(Professor.class).addAnnotatedClass(Disciplina.class).addAnnotatedClass(Sala.class).buildSessionFactory();
-		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
 		try {			
 			// iniciando a transação
-			session.beginTransaction();						
-			
-			if(!erro) {
+			session.beginTransaction();
 				
-				// salvando o objeto
-				System.out.println("Salvando a Turma...");
-				session.save(this);
-			}
+			// salvando o objeto
+			System.out.println("Salvando a Turma...");
+			session.save(this);
 			
 			// finalizando transação
 			session.getTransaction().commit();
@@ -83,30 +84,25 @@ public class Turma {
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Turma.class).buildSessionFactory();
-		
 		//create session
-		Session session = factory.getCurrentSession();
-		
-		try {
-			// começando a transação
-			session = factory.getCurrentSession();
-			session.beginTransaction();
-			
-			// deletando o objeto
-			System.out.println("Deletando a Turma...");
-			session.delete(this);
-			
-			// commit transaction
-			session.getTransaction().commit();
-			
-			System.out.println("Pronto!");
-			
-		} catch(Exception exc){
-		}
-		finally {
-			factory.close();
+		try (Session session = factory.getCurrentSession()) {
+
+			try {
+				session.beginTransaction();
+
+				// deletando o objeto
+				System.out.println("Deletando a Turma...");
+				session.delete(this);
+
+				// commit transaction
+				session.getTransaction().commit();
+
+				System.out.println("Pronto!");
+
+			} catch (Exception exc) {
+			} finally {
+				factory.close();
+			}
 		}
 	}
 
@@ -149,6 +145,22 @@ public class Turma {
 
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
+	}
+
+	public String getDias() {
+		return dias;
+	}
+
+	public void setDias(String dias) {
+		this.dias = dias;
+	}
+
+	public String getHorarios() {
+		return horarios;
+	}
+
+	public void setHorarios(String horarios) {
+		this.horarios = horarios;
 	}
 
 	public int getProfessorId() {

@@ -2,10 +2,11 @@ package model;
 
 public class TurmaView {
     private Integer id, professorId, disciplinaId, salaId, maxAlunos, departamentoId;
-    private String professorNome, disciplinaNome, codigoSala, ano, semestre;
+    private String professorNome, disciplinaNome, codigoSala, ano, semestre, dias, horarios;
 
     public TurmaView(Integer id, Integer professorId, Integer disciplinaId, Integer salaId, Integer maxAlunos,
-                     String professorNome, String disciplinaNome, String codigoSala, String ano, String semestre, Integer departamentoId) {
+                     String professorNome, String disciplinaNome, String codigoSala, String ano, String semestre,
+                     String dias, String horarios, Integer departamentoId) {
         this.id = id;
         this.professorId = professorId;
         this.disciplinaId = disciplinaId;
@@ -16,6 +17,8 @@ public class TurmaView {
         this.codigoSala = codigoSala;
         this.ano = ano;
         this.semestre = semestre;
+        this.dias = dias;
+        this.horarios = horarios;
         this.departamentoId = departamentoId;
     }
     
@@ -105,5 +108,21 @@ public class TurmaView {
 
     public void setSemestre(String semestre) {
         this.semestre = semestre;
+    }
+
+    public String getDias() {
+        return dias;
+    }
+
+    public void setDias(String dias) {
+        this.dias = dias;
+    }
+
+    public String getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(String horarios) {
+        this.horarios = horarios;
     }
 }

@@ -435,8 +435,8 @@ public class Update {
 		return sucesso;
 	}
 
-	public static boolean Turma(Integer turmaId, Integer maxAlunos, String ano, String semestre, Integer professorId, Integer disciplinaId,
-			Integer salaId) {
+	public static boolean Turma(Integer turmaId, Integer maxAlunos, String ano, String semestre, String dias,
+								String horarios, Integer professorId, Integer disciplinaId, Integer salaId) {
 		boolean sucesso = true;
 
 		Session session = factory.getCurrentSession();
@@ -461,6 +461,12 @@ public class Update {
 				if(semestre != null) {
 					obj.setSemestre(semestre);
 				}
+				if(dias != null) {
+					obj.setDias(dias);
+				}
+				if(horarios != null) {
+					obj.setHorarios(horarios);
+				}
 				if(salaId != null) {
 					obj.setSalaId(salaId);
 				}
@@ -470,7 +476,6 @@ public class Update {
 				if(disciplinaId != null) {
 					obj.setDisciplinaId(disciplinaId);
 				}
-				
 			}
 			
 			// finalizando transação

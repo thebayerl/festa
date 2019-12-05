@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarTurmaController">
+<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarTurmaController">
     <children>
-      <VBox alignment="TOP_CENTER" layoutX="18.0" layoutY="14.0" prefHeight="432.0" prefWidth="815.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="5.0" prefHeight="450.0" prefWidth="977.0" spacing="15.0">
          <children>
             <HBox alignment="CENTER">
                <children>
@@ -27,17 +27,16 @@
                      </font>
                   </Label>
                </children>
-               <padding>
-                  <Insets bottom="16.0" />
-               </padding>
             </HBox>
-            <FlowPane hgap="15.0" prefHeight="299.0" prefWidth="675.0" vgap="15.0">
+            <FlowPane hgap="15.0" vgap="15.0">
                <children>
                   <ComboBox fx:id="comboBoxDept" disable="true" onAction="#SelecionarDepartamento" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Departamento" />
                   <ComboBox fx:id="comboBoxDisciplina" disable="true" onAction="#SelecionarDisciplina" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Disciplina" />
                   <ComboBox fx:id="comboBoxProfessor" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Professor" />
                   <ComboBox fx:id="comboBoxPredio" disable="true" onAction="#selecionarPredio" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Prédio" />
                   <ComboBox fx:id="comboBoxSala" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Sala" />
+                  <ComboBox fx:id="comboBoxDias" disable="true" layoutX="10.0" layoutY="90.0" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Dias" />
+                  <ComboBox fx:id="comboBoxHorarios" disable="true" layoutX="175.0" layoutY="50.0" prefHeight="25.0" prefWidth="150.0" promptText="Selecionar Horários" />
                   <TextField fx:id="txMaxAluno" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Número Máximo de Alunos">
                      <font>
                         <Font size="11.0" />
@@ -59,22 +58,22 @@
             </FlowPane>
             <FlowPane hgap="15.0" prefHeight="334.0" prefWidth="810.0" vgap="5.0">
                <children>
-                  <HBox alignment="BOTTOM_LEFT">
+                  <HBox alignment="BOTTOM_LEFT" spacing="15.0">
                      <children>
                         <Label alignment="BASELINE_LEFT" text="Turmas Cadastradas">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="658.0" spacing="15.0">
-                     <children>
                         <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="228.0" promptText="Pesquisar (Disciplina, Professor ou Sala)">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                         </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="567.0" spacing="15.0">
+                     <children>
                         <Button fx:id="btCadastrar" mnemonicParsing="false" prefWidth="70.0" text="Cadastrar" />
                         <Button fx:id="btAlterar" layoutX="299.0" layoutY="15.0" mnemonicParsing="false" prefWidth="70.0" text="Alterar" />
                         <Button fx:id="btRemover" layoutX="408.0" layoutY="15.0" mnemonicParsing="false" prefWidth="70.0" text="Remover" />
@@ -82,7 +81,7 @@
                         <Button fx:id="btConfirmar" disable="true" layoutX="257.0" layoutY="10.0" mnemonicParsing="false" prefWidth="70.0" text="Confirmar" />
                      </children>
                   </HBox>
-                  <TableView fx:id="tableView" prefHeight="298.0" prefWidth="815.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="tableView" prefHeight="289.0" prefWidth="977.0" tableMenuButtonVisible="true">
                      <columns>
                         <TableColumn fx:id="columnId" prefWidth="40.0" text="ID" />
                         <TableColumn fx:id="columnDisciplina" prefWidth="171.0" text="Disciplina" />
@@ -90,6 +89,8 @@
                         <TableColumn fx:id="columnSala" prefWidth="143.0" text="Sala" />
                         <TableColumn fx:id="columnAno" prefWidth="124.0" text="Ano" />
                         <TableColumn fx:id="columnSemestre" prefWidth="75.0" text="Semestre" />
+                        <TableColumn fx:id="columnDias" prefWidth="75.0" text="Dias" />
+                        <TableColumn fx:id="columnHorarios" prefWidth="75.0" text="Horário" />
                         <TableColumn fx:id="columnMaxAlunos" prefWidth="75.0" text="N. Máximo de Alunos" />
                      </columns>
                      <columnResizePolicy>

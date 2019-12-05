@@ -14,11 +14,7 @@ import model.*;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,11 +29,6 @@ import view.CadastrarTurma;
 
 import javax.management.Query;
 
-/**
- * FXML Controller class
- *
- * @author denin
- */
 public class CadastrarTurmaController implements Initializable {
     @FXML private TextField txMaxAluno;
     @FXML private TextField txAno;
@@ -48,6 +39,8 @@ public class CadastrarTurmaController implements Initializable {
     @FXML private ComboBox<String> comboBoxPredio;
     @FXML private ComboBox<Sala> comboBoxSala;
     @FXML private ComboBox<Departamento> comboBoxDept;
+    @FXML private ComboBox<String> comboBoxHorarios;
+    @FXML private ComboBox<String> comboBoxDias;
 	@FXML private Button btCadastrar;
 	@FXML private Button btAlterar;
 	@FXML private Button btRemover;
@@ -65,14 +58,17 @@ public class CadastrarTurmaController implements Initializable {
 	@FXML private TableColumn<TurmaView, Integer> columnMaxAlunos;
 
 	private List<ProfessorCapacidade> listProfessorCapacidades = new ArrayList<>();
-	private List<DisciplinaCurso> listDisciplinaCursos = new ArrayList<>();
 	private List<Departamento> listDepartamento = new ArrayList<>();
 	private List<Sala> listSalas = new ArrayList<>();
 	private List<String> listPredios = new ArrayList<>();
 	private List<Disciplina> listDisciplinas = new ArrayList<>();
 	private List<Professor> listProfessores = new ArrayList<>();
 	private List<TurmaView> listTurmaView = new ArrayList<>();
+	private List<String> listHorarios = Arrays.asList("8h-10h","10h-12h","13h-15h","15h-17h","17h-19h");
+	private List<String> listDias = Arrays.asList("Segunda e Quarta", "Terça e Quinta", "Quarta e Sexta");
 
+	private ObservableList<String> obslistHorarios = FXCollections.observableArrayList(listHorarios);
+	private ObservableList<String> obslistDias = FXCollections.observableArrayList(listDias);
 	private ObservableList<Departamento> obsDepartamento;
 	private ObservableList<Sala> obsSalas;
 	private ObservableList<String> obsPredios;
@@ -99,7 +95,7 @@ public class CadastrarTurmaController implements Initializable {
 		carregarTableView();
 		carregarDepartamentos();
 		carregarPredios();
-
+		carregarDiasHorarios();
 		
 		btCancelar.setOnMouseClicked((MouseEvent e) -> {
 			limpaCampos();
@@ -173,9 +169,10 @@ public class CadastrarTurmaController implements Initializable {
 	}
 	
 	private void habilitaTodosCampos() {
-		
 		comboBoxDept.setDisable(false);
 		comboBoxPredio.setDisable(false);
+		comboBoxHorarios.setDisable(false);
+		comboBoxDias.setDisable(false);
 		radioBt1.setDisable(false);
 		radioBt2.setDisable(false);
 		txMaxAluno.setDisable(false);
@@ -188,32 +185,18 @@ public class CadastrarTurmaController implements Initializable {
 		btRemover.setDisable(true);
 		btCadastrar.setDisable(true);
 	}
-	
-	
-	private void limpaCampos() {
-		
-		comboBoxDept.setValue(null);
-		comboBoxDisciplina.setValue(null);
-		comboBoxProfessor.setValue(null);
-		comboBoxPredio.setValue(null);
-		comboBoxSala.setValue(null);
-		
-		
-		txMaxAluno.clear();
-		txAno.clear();
-		
-	}
-	
-	private void desabilitaCampos() {
 
+	private void desabilitaCampos() {
 		comboBoxDept.setDisable(true);
 		comboBoxDisciplina.setDisable(true);
+		comboBoxHorarios.setDisable(true);
+		comboBoxDias.setDisable(true);
 		comboBoxProfessor.setDisable(true);
 		comboBoxPredio.setDisable(true);
 		comboBoxSala.setDisable(true);
 		txMaxAluno.setDisable(true);
 		txAno.setDisable(true);
-		
+
 		radioBt1.setDisable(true);
 		radioBt2.setDisable(true);
 
@@ -223,7 +206,19 @@ public class CadastrarTurmaController implements Initializable {
 		btAlterar.setDisable(false);
 		btRemover.setDisable(false);
 		btCadastrar.setDisable(false);
-
+	}
+	
+	private void limpaCampos() {
+		comboBoxDept.setValue(null);
+		comboBoxDisciplina.setValue(null);
+		comboBoxProfessor.setValue(null);
+		comboBoxPredio.setValue(null);
+		comboBoxSala.setValue(null);
+		comboBoxHorarios.setValue(null);
+		comboBoxDias.setValue(null);
+		
+		txMaxAluno.clear();
+		txAno.clear();
 	}
 	
 	private void realizaAcao() {
@@ -279,7 +274,7 @@ public class CadastrarTurmaController implements Initializable {
 		listTurmaView.clear();
 
 		listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, dept.id) " +
+									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
 									"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
 									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
 
@@ -399,6 +394,11 @@ public class CadastrarTurmaController implements Initializable {
     	comboBoxSala.setDisable(false);
     }
 
+	public void carregarDiasHorarios(){
+		comboBoxDias.setItems(obslistDias);
+		comboBoxHorarios.setItems(obslistHorarios);
+	}
+
 	private Boolean errorsDialog(){
 		List<ValidationMessage> emptyFieldsError = new ArrayList<>(emptyValidator.getValidationResult().getErrors());
 		List<ValidationMessage> regexFieldsError = new ArrayList<>(regexValidator.getValidationResult().getErrors());
@@ -477,11 +477,13 @@ public class CadastrarTurmaController implements Initializable {
 			int maxAlunos = Integer.parseInt(txMaxAluno.getText());
 			String semestre = radio.getText();
 			String ano = txAno.getText();
+			String dias = comboBoxDias.getSelectionModel().getSelectedItem();
+			String horarios = comboBoxHorarios.getSelectionModel().getSelectedItem();
 			int professorId = comboBoxProfessor.getSelectionModel().getSelectedItem().getUsuarioId();
 			int disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
 			int salaId = comboBoxSala.getSelectionModel().getSelectedItem().getId();
 
-			Turma t = new Turma(maxAlunos, ano, semestre, professorId, disciplinaId, salaId);
+			Turma t = new Turma(maxAlunos, ano, semestre, dias, horarios, professorId, disciplinaId, salaId);
 			t.create();
 
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -508,12 +510,14 @@ public class CadastrarTurmaController implements Initializable {
 			int maxAlunos = Integer.parseInt(txMaxAluno.getText());
 			String semestre = radio.getText();
 			String ano = txAno.getText();
+			String dias = comboBoxDias.getSelectionModel().getSelectedItem();
+			String horarios = comboBoxHorarios.getSelectionModel().getSelectedItem();
 			int professorId = comboBoxProfessor.getSelectionModel().getSelectedItem().getUsuarioId();
 			int disciplinaId = comboBoxDisciplina.getSelectionModel().getSelectedItem().getId();
 			int salaId = comboBoxSala.getSelectionModel().getSelectedItem().getId();
 			int turmaId = tableView.getSelectionModel().getSelectedItem().getId();
 
-			Update.Turma(turmaId, maxAlunos, ano, semestre, professorId, disciplinaId, salaId);
+			Update.Turma(turmaId, maxAlunos, ano, semestre, dias, horarios, professorId, disciplinaId, salaId);
 
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Turma alterado com sucesso!");
