@@ -268,7 +268,7 @@ public class CadastrarSalaController implements Initializable {
     public void cadastraSala(){
 
         if(errorsDialog()){ return;}
-        if(testaDados()){ return;}
+        if(testaDadosCadastrar()){ return;}
 
         try{
             int capacidade = Integer.parseInt(txCapacidade.getText());
@@ -295,7 +295,7 @@ public class CadastrarSalaController implements Initializable {
     private void altera() {
 
         if(errorsDialog()){ return;}
-        if(testaDados()){ return;}
+        if(testaDadosCadastrar()){ return;}
 
         try {
             String codigoSala = txCodigoSala.getText();
