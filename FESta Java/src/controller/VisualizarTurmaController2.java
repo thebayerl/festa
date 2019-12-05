@@ -106,7 +106,6 @@ public class VisualizarTurmaController2 implements Initializable {
     @FXML private Label lbD11;
     @FXML private Label lbC11;
     @FXML private Label lbS11;
-
     @FXML private Button btMinhasTurmas;
     @FXML private Button btCancelar;
     @FXML private Button btConfirmar;

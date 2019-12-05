@@ -15,9 +15,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" minHeight="415.0" minWidth="500.0" prefHeight="604.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VisualizarTurmaController2">
+<VBox alignment="TOP_CENTER" maxHeight="604.0" maxWidth="785.0" minHeight="415.0" minWidth="500.0" prefHeight="604.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VisualizarTurmaController2">
    <children>
-      <VBox alignment="CENTER" prefHeight="47.0" prefWidth="758.0">
+      <VBox alignment="CENTER" maxHeight="47.0" maxWidth="758.0" prefHeight="47.0" prefWidth="758.0">
          <children>
             <Label prefHeight="30.0" prefWidth="179.0" text="Inscrição em Turma">
                <font>
@@ -26,7 +26,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox prefHeight="146.0" prefWidth="758.0">
+      <VBox maxHeight="146.0" maxWidth="758.0" prefHeight="146.0" prefWidth="758.0">
          <children>
             <HBox prefHeight="137.0" prefWidth="765.0">
                <children>
@@ -65,7 +65,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox alignment="TOP_CENTER" prefHeight="399.0" prefWidth="758.0">
+      <VBox alignment="TOP_CENTER" maxHeight="399.0" maxWidth="758.0" prefHeight="399.0" prefWidth="758.0">
          <children>
             <GridPane fx:id="gripPane" alignment="TOP_CENTER" prefHeight="397.0" prefWidth="738.0">
               <columnConstraints>
