@@ -38,7 +38,6 @@ public class Matriculado implements Serializable {
 
 	
 	public void create() {
-		boolean erro = false;
 		// criando session factory
 		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).addAnnotatedClass(Turma.class).addAnnotatedClass(Matriculado.class).buildSessionFactory();
 		
@@ -46,28 +45,17 @@ public class Matriculado implements Serializable {
 		Session session = factory.getCurrentSession();
 		
 		
-		try {			
+		try {
 			// iniciando a transação
 			session.beginTransaction();
-			
+
 			//tratando os dados de entrada
-			
-			if(session.get(Turma.class, turmaId) == null) {
-				System.out.println("Turma com turmaId = " + turmaId + " não existente\n");
-				erro = true;
-			}
-			
-			if(session.get(Aluno.class, alunoId) == null) {
-				System.out.println("Aluno com alunoId = " + alunoId + " não existente\n");
-				erro = true;
-			}
-			
-			if(!erro) {
-				
-				// salvando o objeto
-				System.out.println("Salvando o Matriculado...");
-				session.save(this);
-			}
+
+
+			// salvando o objeto
+			System.out.println("Salvando o Matriculado...");
+			session.save(this);
+
 			
 			// finalizando transação
 			session.getTransaction().commit();

@@ -34,6 +34,7 @@ import view.CadastrarAluno;
 
 public class CadastrarAlunoController implements Initializable {
 
+
 	@FXML private TextField txUserName;
 	@FXML private PasswordField psSenha;
 	@FXML private PasswordField psSenhaConf;
@@ -76,7 +77,6 @@ public class CadastrarAlunoController implements Initializable {
 	private ObservableList<Curso> obsCursos;
 	private List<AlunoView> listAlunoView = new ArrayList<>();
 	private ObservableList<AlunoView> obsListAlunoView;
-
 	private String acao = null;
 
 	@Override

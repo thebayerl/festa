@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" minHeight="415.0" minWidth="500.0" prefHeight="595.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InscricaoDisciplinaController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="758.0" />
+      <VBox alignment="TOP_CENTER" prefHeight="392.0" prefWidth="738.0">
+         <children>
+            <GridPane fx:id="gripPane" alignment="TOP_CENTER" prefHeight="397.0" prefWidth="738.0">
+              <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="25.0" minWidth="5.0" prefWidth="5.0" />
+                <ColumnConstraints fx:id="c1" halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="25.0" minHeight="20.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="76.0" minHeight="50.0" prefHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="87.0" minHeight="50.0" prefHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="117.0" minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="117.0" minHeight="50.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="117.0" minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b9b9b9" height="26.0" stroke="#b9b9b9" strokeType="INSIDE" width="147.0" GridPane.columnIndex="1" />
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6a6a" height="37.0" stroke="#6a6a6a" strokeType="INSIDE" width="25.0" />
+                     </children>
+                  </VBox>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="147.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <Label text="Segunda" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6a6a" height="26.0" stroke="#6a6a6a" strokeType="INSIDE" width="147.0" GridPane.columnIndex="2" />
+                  <Label text="Terça" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="lbD00" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC00" text="CODIGO" />
+                        <Label fx:id="lbS00" text="SALA" />
+                     </children>
+                  </VBox>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="lbD02" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC02" text="CODIGO" />
+                        <Label fx:id="lbS02" text="SALA" />
+                     </children>
+                  </VBox>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="lbD01" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC01" text="CODIGO" />
+                        <Label fx:id="lbS01" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="lbD10" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC10" text="CODIGO" />
+                        <Label fx:id="lbS10" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="lbD12" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC12" text="CODIGO" />
+                        <Label fx:id="lbS12" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="lbD03" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC03" text="CODIGO" />
+                        <Label fx:id="lbS03" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="lbD13" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC13" text="CODIGO" />
+                        <Label fx:id="lbS13" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="lbD04" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC04" text="CODIGO" />
+                        <Label fx:id="lbS04" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="lbD14" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC14" text="CODIGO" />
+                        <Label fx:id="lbS14" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <Label fx:id="lbD20" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC20" text="CODIGO" />
+                        <Label fx:id="lbS20" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <children>
+                        <Label fx:id="lbD21" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC21" text="CODIGO" />
+                        <Label fx:id="lbS21" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <children>
+                        <Label fx:id="lbD22" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC22" text="CODIGO" />
+                        <Label fx:id="lbS22" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <children>
+                        <Label fx:id="lbD23" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC23" text="CODIGO" />
+                        <Label fx:id="lbS23" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                     <children>
+                        <Label fx:id="lbD24" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC24" text="CODIGO" />
+                        <Label fx:id="lbS24" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <Label fx:id="lbD30" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC30" text="CODIGO" />
+                        <Label fx:id="lbS30" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <children>
+                        <Label fx:id="lbD31" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC31" text="CODIGO" />
+                        <Label fx:id="lbS31" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <children>
+                        <Label fx:id="lbD32" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC32" text="CODIGO" />
+                        <Label fx:id="lbS32" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <children>
+                        <Label fx:id="lbD33" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC33" text="CODIGO" />
+                        <Label fx:id="lbS33" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                     <children>
+                        <Label fx:id="lbD34" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC34" text="CODIGO" />
+                        <Label fx:id="lbS34" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <children>
+                        <Label fx:id="lbD40" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC40" text="CODIGO" />
+                        <Label fx:id="lbS40" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                     <children>
+                        <Label fx:id="lbD41" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC41" text="CODIGO" />
+                        <Label fx:id="lbS41" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                     <children>
+                        <Label fx:id="lbD42" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC42" text="CODIGO" />
+                        <Label fx:id="lbS42" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                     <children>
+                        <Label fx:id="lbD43" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC43" text="CODIGO" />
+                        <Label fx:id="lbS43" text="SALA" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                     <children>
+                        <Label fx:id="lbD44" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC44" text="CODIGO" />
+                        <Label fx:id="lbS44" text="SALA" />
+                     </children>
+                  </VBox>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b9b9b9" height="26.0" stroke="#b9b9b9" strokeType="INSIDE" width="147.0" GridPane.columnIndex="3" />
+                  <Label text="Quarta" GridPane.columnIndex="3">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6a6a" height="26.0" stroke="#6a6a6a" strokeType="INSIDE" width="147.0" GridPane.columnIndex="4" />
+                  <Label text="Quinta" GridPane.columnIndex="4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b9b9b9" height="26.0" stroke="#b9b9b9" strokeType="INSIDE" width="147.0" GridPane.columnIndex="5" />
+                  <Label text="Sexta" GridPane.columnIndex="5">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6a6a" height="70.0" stroke="#6a6a6a" strokeType="INSIDE" width="25.0" GridPane.rowIndex="1" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6a6a6a" height="70.0" stroke="#6a6a6a" strokeType="INSIDE" width="25.0" GridPane.rowIndex="5" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b9b9b9" height="70.0" stroke="#b9b9b9" strokeType="INSIDE" width="25.0" GridPane.rowIndex="4" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b9b9b9" height="70.0" stroke="#b9b9b9" strokeType="INSIDE" width="25.0" GridPane.rowIndex="6" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b9b9b9" height="70.0" stroke="#b9b9b9" strokeType="INSIDE" width="25.0" GridPane.rowIndex="2" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="08" />
+                        <Label text="/" />
+                        <Label text="10" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="10" />
+                              <Label text="/" />
+                              <Label text="12" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="13" />
+                              <Label text="/" />
+                              <Label text="15" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="5">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="15" />
+                              <Label text="/" />
+                              <Label text="17" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="6">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="17" />
+                              <Label text="/" />
+                              <Label text="19" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="lbD11" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC11" text="CODIGO" />
+                        <Label fx:id="lbS11" text="SALA" />
+                     </children>
+                  </VBox>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets left="10.0" right="10.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</VBox>
