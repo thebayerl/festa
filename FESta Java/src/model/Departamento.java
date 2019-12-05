@@ -27,10 +27,66 @@ public class Departamento {
 	
 	public Departamento(){}
 
-	public Departamento(String nome) {
+	public Departamento(String nome, String codigoDepartamento) {
 		super();
 		this.nome = nome;
-		this.codigoDepartamento = "DASDSACAS";
+		this.codigoDepartamento = codigoDepartamento;
+	}
+
+	public void create() {
+
+		// criando session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
+
+		// criando session
+		Session session = factory.getCurrentSession();
+
+		try {
+			// iniciando a transação
+			session.beginTransaction();
+			
+			// salvando o objeto
+			System.out.println("Salvando o Departamento...");
+			session.save(this);
+
+			// finalizando transação
+			session.getTransaction().commit();
+
+			System.out.println("Pronto!");
+
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
+	}
+
+	public void delete() {
+		// create session factory
+		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
+
+		//create session
+		Session session = factory.getCurrentSession();
+
+		try {
+			// começando a transação
+			session = factory.getCurrentSession();
+			session.beginTransaction();
+
+			// deletando o objeto
+			System.out.println("Deletando o Departamento...");
+			session.delete(this);
+
+			// commit transaction
+			session.getTransaction().commit();
+
+			System.out.println("Pronto!");
+
+		} catch(Exception exc){
+		}
+		finally {
+			factory.close();
+		}
 	}
 
 	public int getId() {

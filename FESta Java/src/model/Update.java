@@ -540,5 +540,44 @@ public class Update {
 		return sucesso;
 	}
 	
-	
+	public static boolean getDepartamento(Integer id, String codigoDepartamento, String nome){
+		boolean sucesso = true;
+
+		Session session = factory.getCurrentSession();
+
+		try {
+			session.beginTransaction();
+
+			Departamento obj = session.get(Departamento.class, id);
+
+			// testando a validade dos dados recebidos
+			if(obj == null) {
+				sucesso = false;
+			}
+
+			if(sucesso) {
+				if(codigoDepartamento != null) {
+					obj.setCodigoDepartamento(codigoDepartamento);
+				}
+				if(nome != null) {
+					obj.setNome(nome);
+				}
+
+			}
+
+			// finalizando transação
+			session.getTransaction().commit();
+
+			System.out.println("Pronto!");
+
+		} catch(Exception exc){
+		}
+		finally {
+			session.close();
+		}
+
+
+		return sucesso;
+
+	}
 }
