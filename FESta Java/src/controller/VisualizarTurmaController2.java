@@ -167,7 +167,7 @@ public class VisualizarTurmaController2 implements Initializable {
     }
 
     @FXML void select01(MouseEvent event) {
-        int a = 0,b=0;
+        int a = 0,b=1;
         btRemover.setDisable(false);
         Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
@@ -401,13 +401,13 @@ public class VisualizarTurmaController2 implements Initializable {
         btRemover.setDisable(false);
         Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        if(this.a != a && this.b != b)
+        if(this.a != a && this.b != b || restringir)
             c = Color.color(1,1,1);
         rec44.setFill(c);
     }
 
     public void trataSelect(int a, int b){
-        if(this.a==a && this.b==b) {
+        if(this.a==a && this.b==b || restringir) {
             limpaR();
             this.a = -1;
             this.b = -1;
@@ -448,11 +448,11 @@ public class VisualizarTurmaController2 implements Initializable {
     private List<TurmaView> listTurmaView = new ArrayList<>();
     private ObservableList<TurmaView> obsListTurmaView;
 
+    Integer userid = LoggedUser.getInstance().getId();
     String[][] D = new String[5][5];
     String[][] C = new String[5][5];
     String[][] S = new String[5][5];
-    Boolean[][] R = new Boolean[5][5];
-    
+    Boolean restringir = false;
     String acao = null;
 
 
@@ -460,6 +460,7 @@ public class VisualizarTurmaController2 implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         limpaGrid();
+        carregaTurmas();
         geraDCS();
         carregarDisciplinas();
         inicializarTableColumns();
@@ -467,25 +468,41 @@ public class VisualizarTurmaController2 implements Initializable {
 
         btConfirmar.setOnMouseClicked((MouseEvent e) -> {
         	realizaAcao();
+            restringir = false;
             //cadastraMatriculado();
+        });
+
+        btMinhasTurmas.setOnMouseClicked((MouseEvent e) -> {
+            this.disciplinaId = 2;
+            limpaR();
+            restringir = true;
+            carregarTableView();
+            this.disciplinaId = 0;
+            tableView.setDisable(false);
+            btConfirmar.setDisable(true);
+            btInscrever.setDisable(true);
+            btRemover.setDisable(true);
+            btCancelar.setDisable(false);
         });
         
         btCancelar.setOnMouseClicked((MouseEvent e) -> {
         	desabilitaCampos();
-            //cadastraMatriculado();
+        	restringir = false;
+            carregarTableView();
         });
         
 
         btInscrever.setOnMouseClicked((MouseEvent e) -> {
         	acao = "Inscrever";
             //cadastraMatriculado();
+            limpaR();
+            restringir = true;
         	habilitaCampos();
         });
 
         btRemover.setOnMouseClicked((MouseEvent e) -> {
         	acao = "Remover";
-        	
-            if(a!=-1 && b!=-1)
+            if(a==-1 && b==-1)
                 return;
             if(D[a][b].equals(""))
                 return;
@@ -505,7 +522,7 @@ public class VisualizarTurmaController2 implements Initializable {
     }
     
     private void limpaCampos(){
-    	comboBoxDisciplina.setValue(null);
+    	comboBoxDisciplina.getSelectionModel().clearSelection();
     	disciplinaId = 0;
     	carregarTableView();
     }
@@ -555,6 +572,17 @@ public class VisualizarTurmaController2 implements Initializable {
         tableView.setDisable(true);
     }
 
+    private void carregaTurmas(){
+        List<Matriculado> m = Read.Query("from Matriculado where alunoId =" + "2");
+        if(m.isEmpty())
+            return;
+        for(Matriculado mat : m){
+            System.out.println(mat.getturmaId());
+            Turma t = (Turma) Read.Query("from Turma where id =" + mat.getturmaId()).get(0);
+            trataAddTurma(t);
+        }
+    }
+
     private void carregarTableView(){
         listTurmaView.clear();
         if (this.disciplinaId == 0) {
@@ -563,11 +591,7 @@ public class VisualizarTurmaController2 implements Initializable {
 					"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
 					"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
         }else {
-        	
-        	listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-					"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
-					"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
-					"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.disciplinaId = " + this.disciplinaId);
+            listTurmaView = carregaTurmaAluno();
         	
         }
         if(obsListTurmaView != null) {
@@ -598,8 +622,58 @@ public class VisualizarTurmaController2 implements Initializable {
         tableView.setItems(sortedData);
     }
 
+    private List<TurmaView> carregaTurmaAluno(){
+        List<TurmaView> tv = new ArrayList<TurmaView>();
+        tv.clear();
+        List<Matriculado> mat = Read.Query("from Matriculado where alunoId = " + "2");
+        for (Matriculado m :mat) {
+            TurmaView t = (TurmaView) Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+                    "from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
+                    "where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.id =" + m.getturmaId()).get(0);
+            tv.add(t);
+        }
+        return tv;
+    }
+
     private boolean testaDados(){
-        return false;
+        boolean erro = false;
+        String alertmsg = "";
+        TurmaView turma = tableView.getSelectionModel().getSelectedItem();
+        if (!Read.Query("from Matriculado where turmaId = " + turma.getId() + "and alunoId =" + "2").isEmpty()) {
+            alertmsg += "-Você já esta matriculado nesta turma!\n";
+            erro = true;
+
+        }else{
+            List<TurmaView> tv = carregaTurmaAluno();
+            if (turma.getDias().equals("Segunda e Quarta") || turma.getDias().equals("Quarta e Sexta")) {
+                for (TurmaView t : tv) {
+                    if(!Read.Query("from Turma where id = " + t.getId() + "and (dias = 'Segunda e Quarta' or dias = 'Quarta e Sexta') and horarios = '" + turma.getHorarios() + "'").isEmpty()) {
+                        alertmsg += "-Você Já está inscrito em uma turma nesse horário!\n";
+                        erro = true;
+                        break;
+                    }
+                }
+            } else {
+                for (TurmaView t : tv) {
+                    if (t.getDias().equals("Terça e Quinta"))
+                        if(!Read.Query("from Turma where id = " + t.getId() + "and dias = 'Terça e Quinta' and horarios = '" + turma.getHorarios() + "'").isEmpty()) {
+                            alertmsg += "-Você Já está inscrito em uma turma nesse horário!\n";
+                            erro = true;
+                            break;
+                        }
+                }
+
+            }
+        }
+
+        if (erro) {
+            Alert alert = new Alert(AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
     }
 
     private void cadastraMatriculado(){
@@ -612,46 +686,10 @@ public class VisualizarTurmaController2 implements Initializable {
         	//private List<String> listHorarios = Arrays.asList("08h-10h","10h-12h","13h-15h","15h-17h","17h-19h");
         	//private List<String> listDias = Arrays.asList("Segunda e Quarta", "Terça e Quinta", "Quarta e Sexta");
         	
-            TurmaView t= tableView.getSelectionModel().getSelectedItem();
-            
-            int h = -1;
-            Matriculado m = new Matriculado(2,t.getId());
-            m.create();
-            
-            switch(t.getHorarios()) {
-            case "08h-10h":
-            	h = 0;
-              break;
-            case "10h-12h":
-            	h = 1;
-              break;
-            case "13h-15h":
-            	h = 2;
-              break;
-            case "15h-17h":
-            	h = 3;
-              break;
-            case "17h-19h":
-            	h = 4;
-              break;
-            default:
-          }
+            TurmaView t = tableView.getSelectionModel().getSelectedItem();
+            Turma tu = (Turma) Read.Query("from Turma where id = " + t.getId()).get(0);
+            trataAddTurma(tu);
 
-            switch(t.getDias()) {
-            case "Segunda e Quarta":
-            	addTurma(t, h , 1);
-              break;
-            case "Quarta e Sexta":
-            	addTurma(t, h , 2);
-              break;
-            case "Terça e Quinta":
-            	addTurma(t, h , 3);
-              break;
-            default:
-
-          }
-            
-           
             geraDCS();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -669,7 +707,7 @@ public class VisualizarTurmaController2 implements Initializable {
         }
     }
 
-    private void remover() {
+    /*private void remover() {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Remover");
@@ -697,7 +735,7 @@ public class VisualizarTurmaController2 implements Initializable {
             }
         }
     }
-
+*/
     public void geraDCS(){
         geraD();
         geraC();
@@ -851,7 +889,48 @@ public class VisualizarTurmaController2 implements Initializable {
         comboBoxDisciplina.setItems(obsDisciplinas);
     }
 
-    public void addTurma(TurmaView t, int hora, int dia){
+    public void trataAddTurma(Turma t){
+
+        int h = -1;
+        Matriculado m = new Matriculado(2,t.getId());
+        m.create();
+
+        switch(t.getHorarios()) {
+            case "08h-10h":
+                h = 0;
+                break;
+            case "10h-12h":
+                h = 1;
+                break;
+            case "13h-15h":
+                h = 2;
+                break;
+            case "15h-17h":
+                h = 3;
+                break;
+            case "17h-19h":
+                h = 4;
+                break;
+            default:
+        }
+
+        switch(t.getDias()) {
+            case "Segunda e Quarta":
+                addTurma(t, h , 1);
+                break;
+            case "Quarta e Sexta":
+                addTurma(t, h , 2);
+                break;
+            case "Terça e Quinta":
+                addTurma(t, h , 3);
+                break;
+            default:
+
+        }
+    }
+
+    public void addTurma(Turma t,int hora,int dia){
+
 
         Disciplina d = (Disciplina) Read.Query("from Disciplina where id = " + t.getDisciplinaId()).get(0);
         Sala s = (Sala) Read.Query("from Sala where id = " + t.getSalaId()).get(0);
