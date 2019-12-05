@@ -190,6 +190,12 @@ public class VisualizarTurmaController2 implements Initializable {
         rec10.setFill(Color.color(0.7,0.7,0.7));
     }
 
+    @FXML void select11(MouseEvent event) {
+        int a = 1,b=1;
+        trataSelect(a,b);
+        rec11.setFill(Color.color(0.7,0.7,0.7));
+    }
+
     @FXML void select12(MouseEvent event) {
         int a = 1,b=2;
         trataSelect(a,b);
@@ -217,59 +223,85 @@ public class VisualizarTurmaController2 implements Initializable {
     @FXML void select21(MouseEvent event) {
         int a =2, b=1;
         trataSelect(a,b);
-        rec00.setFill(Color.color(0.7,0.7,0.7));
+        rec21.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select22(MouseEvent event) {
-
+        int a =2, b=2;
+        trataSelect(a,b);
+        rec22.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select23(MouseEvent event) {
-
+        int a =2, b=3;
+        trataSelect(a,b);
+        rec23.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select24(MouseEvent event) {
-
+        int a =2, b=4;
+        trataSelect(a,b);
+        rec24.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select30(MouseEvent event) {
-
+        int a =3, b=0;
+        trataSelect(a,b);
+        rec30.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select31(MouseEvent event) {
-
+        int a =3, b=1;
+        trataSelect(a,b);
+        rec31.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select32(MouseEvent event) {
-
+        int a =3, b=2;
+        trataSelect(a,b);
+        rec32.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select33(MouseEvent event) {
-
+        int a =3, b=3;
+        trataSelect(a,b);
+        rec33.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select34(MouseEvent event) {
-
+        int a =3, b=4;
+        trataSelect(a,b);
+        rec34.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select40(MouseEvent event) {
-
+        int a =4, b=0;
+        trataSelect(a,b);
+        rec40.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select41(MouseEvent event) {
-
+        int a =4, b=1;
+        trataSelect(a,b);
+        rec41.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select42(MouseEvent event) {
-
+        int a =4, b=2;
+        trataSelect(a,b);
+        rec42.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select43(MouseEvent event) {
-
+        int a =4, b=3;
+        trataSelect(a,b);
+        rec43.setFill(Color.color(0.7,0.7,0.7));
     }
 
     @FXML void select44(MouseEvent event) {
-
+        int a =4, b=4;
+        trataSelect(a,b);
+        rec44.setFill(Color.color(0.7,0.7,0.7));
     }
 
     public void trataSelect(int a, int b){
@@ -327,6 +359,7 @@ public class VisualizarTurmaController2 implements Initializable {
         carregarDisciplinas();
         inicializarTableColumns();
         carregarTableView();
+
 
         btInscrever.setOnMouseClicked((MouseEvent e) -> {
             cadastraMatriculado();

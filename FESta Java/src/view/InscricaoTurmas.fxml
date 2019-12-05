@@ -32,25 +32,25 @@
                <children>
                   <VBox prefHeight="137.0" prefWidth="174.0">
                      <children>
-                        <ComboBox fx:id="comboBoxDisciplina" onAction="#selecionarDisciplina" prefHeight="29.0" prefWidth="174.0" promptText="Selecionar Disciplina" />
+                        <ComboBox fx:id="comboBoxDisciplina" disable="true" onAction="#selecionarDisciplina" prefHeight="29.0" prefWidth="174.0" promptText="Selecionar Disciplina" />
                         <Button fx:id="btMinhasTurmas" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="Minhas Turmas" />
                         <TextField fx:id="txPesquisar" promptText="Pesquisar..." />
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="21.0" prefWidth="174.0" spacing="10.0">
                            <children>
-                              <Button fx:id="btCancelar" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Cancelar" />
-                              <Button fx:id="btConfirmar" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Confirmar" />
+                              <Button fx:id="btCancelar" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Cancelar" />
+                              <Button fx:id="btConfirmar" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Confirmar" />
                            </children>
                         </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="34.0" prefWidth="174.0" spacing="10.0">
                            <children>
-                              <Button fx:id="btRemover" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Remover" />
+                              <Button fx:id="btRemover" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Remover" />
                               <Button fx:id="btInscrever" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Inscrever" />
                            </children>
                         </HBox>
                      </children>
                   </VBox>
                   <VBox prefHeight="143.0" prefWidth="10.0" />
-                  <TableView fx:id="tableView" prefHeight="143.0" prefWidth="579.0">
+                  <TableView fx:id="tableView" disable="true" prefHeight="143.0" prefWidth="579.0">
                     <columns>
                         <TableColumn fx:id="columnDisciplina" prefWidth="117.0" text="Disciplina" />
                       <TableColumn fx:id="columnCodigo" prefWidth="75.0" text="Codigo" />
@@ -373,7 +373,7 @@
                      </children>
                   </VBox>
                   <Rectangle fx:id="rec11" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <VBox alignment="CENTER" onMouseClicked="#select11" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
                         <Label fx:id="lbD11" text="NOME DA DISCIPLINA" />
                         <Label fx:id="lbC11" text="CODIGO" />
@@ -385,6 +385,13 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <VBox alignment="CENTER" layoutX="183.0" layoutY="103.0" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="lbD111" text="NOME DA DISCIPLINA" />
+                        <Label fx:id="lbC111" text="CODIGO" />
+                        <Label fx:id="lbS111" text="SALA" />
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
          </children>
