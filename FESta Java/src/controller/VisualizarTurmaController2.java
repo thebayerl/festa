@@ -514,6 +514,7 @@ public class VisualizarTurmaController2 implements Initializable {
     	
     	comboBoxDisciplina.setDisable(true);
     	tableView.setDisable(true);
+    	txPesquisar.setDisable(true);
     	
     	btInscrever.setDisable(false);
     	//btRemover.setDisable(false);
@@ -527,6 +528,7 @@ public class VisualizarTurmaController2 implements Initializable {
     	
     	comboBoxDisciplina.setDisable(false);
     	tableView.setDisable(false);
+    	txPesquisar.setDisable(false);
     	
     	btInscrever.setDisable(true);
     	//btRemover.setDisable(true);
