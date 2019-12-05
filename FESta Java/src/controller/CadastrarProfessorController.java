@@ -452,7 +452,7 @@ public class CadastrarProfessorController implements Initializable {
         String alertmsg = "";
         ProfessorView professor = tableView.getSelectionModel().getSelectedItem();
 
-        if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !professor.getUsername().equals(txUserName.getText()) ) {
+        if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !professor.getUsername().equals(txUserName.getText()) ) {
             alertmsg += "-Usuario com username já existente\n";
             erro = true;
         }
@@ -486,7 +486,7 @@ public class CadastrarProfessorController implements Initializable {
         String alertmsg = "";
         ProfessorView professor = tableView.getSelectionModel().getSelectedItem();
 
-        if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
+        if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
             alertmsg += "-Usuario com username já existente\n";
             erro = true;
         }

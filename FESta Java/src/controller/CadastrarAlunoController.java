@@ -437,7 +437,7 @@ public class CadastrarAlunoController implements Initializable {
 		String alertmsg = "";
 		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
 
-		if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !aluno.getUsername().equals(txUserName.getText()) ) {
+		if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !aluno.getUsername().equals(txUserName.getText()) ) {
 			alertmsg += "-Usuario com username já existente\n";
 			erro = true;
 		}
@@ -470,7 +470,7 @@ public class CadastrarAlunoController implements Initializable {
 		boolean erro = false;
 		String alertmsg = "";
 
-		if (Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
+		if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
 			alertmsg += "-Usuario com username já existente\n";
 			erro = true;
 		}

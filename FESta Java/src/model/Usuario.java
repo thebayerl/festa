@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -169,8 +170,9 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 
-	public Date getDataNascimento() {
-		return dataNascimento;
+	public String getDataNascimento() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.format(dataNascimento);
 	}
 
 	public void setDataNascimento(String dataNascimento) {
