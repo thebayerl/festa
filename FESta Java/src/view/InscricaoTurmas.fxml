@@ -385,13 +385,7 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5f5f5" height="35.0" stroke="BLACK" strokeType="INSIDE" width="148.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <VBox alignment="CENTER" layoutX="183.0" layoutY="103.0" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label fx:id="lbD111" text="NOME DA DISCIPLINA" />
-                        <Label fx:id="lbC111" text="CODIGO" />
-                        <Label fx:id="lbS111" text="SALA" />
-                     </children>
-                  </VBox>
+                  <VBox alignment="CENTER" layoutX="183.0" layoutY="103.0" prefHeight="200.0" prefWidth="100.0" />
                </children>
             </GridPane>
          </children>
