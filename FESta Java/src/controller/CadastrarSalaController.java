@@ -21,19 +21,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationMessage;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import view.CadastrarSala;
 import view.Principal;
 
-/**
- * FXML Controller class
- *
- * @author denin
- */
 public class CadastrarSalaController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
 
     @FXML private Button btCadastrar;
     @FXML private Button btRemover;
@@ -50,17 +45,22 @@ public class CadastrarSalaController implements Initializable {
     @FXML private ComboBox<String> comboBoxPredio;
     @FXML private TextField txPesquisar;
 
-    private List<String> listPredios = new ArrayList<>(Arrays.asList("DCC", "NCE", "Letras", "CCS", "CT"));
+    private ValidationSupport emptyValidator = new ValidationSupport();
+    private ValidationSupport regexValidator = new ValidationSupport();
+
+    private TextFieldFormatter tffCodSala = new TextFieldFormatter();
+
+    private List<String> listPredios = new ArrayList<>(Arrays.asList("CCMN", "DCC", "NCE", "Letras", "CCS", "CT"));
     private ObservableList<String> obsListPredios;
     private List<Sala> listSala = new ArrayList<>();
     private ObservableList<Sala> obsListSala;
     private String acao = null;
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        inicializarValidators();
+        inicializarTextMasks();
         limpaCampos();
         desabilitaCampos();
         habilitaTableView();
@@ -98,6 +98,20 @@ public class CadastrarSalaController implements Initializable {
                 desabilitaTableView();
             }
         });
+    }
+
+    private void inicializarValidators(){
+        //Campos obrigatórios
+        emptyValidator.registerValidator(txCapacidade, Validator.createEmptyValidator(txCapacidade.getPromptText()));
+        emptyValidator.registerValidator(txCodigoSala, Validator.createEmptyValidator(txCodigoSala.getPromptText()));
+        emptyValidator.registerValidator(comboBoxPredio, Validator.createEmptyValidator(comboBoxPredio.getPromptText()));
+
+        regexValidator.registerValidator(txCapacidade, Validator.createRegexValidator(txCapacidade.getPromptText(), "[0-9]{1,3}", Severity.ERROR));
+        regexValidator.registerValidator(txCodigoSala, Validator.createRegexValidator(txCodigoSala.getPromptText(), "\\S{5}", Severity.ERROR));
+    }
+
+    private void inicializarTextMasks() {
+        tffCodSala.setMask("U####");
     }
 
     private void habilitaTableView() {
@@ -174,6 +188,11 @@ public class CadastrarSalaController implements Initializable {
         columnPredio.setCellValueFactory(new PropertyValueFactory<>("predio"));
     }
 
+    public void carregaPredios() {
+        obsListPredios = FXCollections.observableArrayList(listPredios);
+        comboBoxPredio.setItems(obsListPredios);
+    }
+
     private void carregarTableView() {
         listSala.clear();
 
@@ -206,12 +225,34 @@ public class CadastrarSalaController implements Initializable {
         tableView.setItems(sortedData);
     }
 
-    private boolean testaDados() {
+    private boolean testaDadosAlterar() {
         boolean erro = false;
         String alertmsg = "";
         Sala s = tableView.getSelectionModel().getSelectedItem();
-        if (!Read.Query("from Sala where codigoSala = '" + txCodigoSala.getText() + "'").isEmpty() && !s.getCodigoSala().equals(txCodigoSala.getText())) {
-            alertmsg += "-Sala com codigoSala já existente\n";
+        String predio = comboBoxPredio.getSelectionModel().getSelectedItem();
+
+        if (!Read.Query("from Sala where codigoSala = '" + txCodigoSala.getText() + "'" + " and predio = '" + predio + "'").isEmpty() && !s.getCodigoSala().equals(txCodigoSala.getText())) {
+            alertmsg += "Sala com código já existente no prédio " + predio;
+            erro = true;
+        }
+
+        if (erro) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
+    }
+
+    private boolean testaDadosCadastrar() {
+        boolean erro = false;
+        String alertmsg = "";
+        Sala s = tableView.getSelectionModel().getSelectedItem();
+        String predio = comboBoxPredio.getSelectionModel().getSelectedItem();
+
+        if (!Read.Query("from Sala where codigoSala = '" + txCodigoSala.getText() + "'" + " and predio = '" + predio + "'").isEmpty()) {
+            alertmsg += "Sala com código já existente no prédio " + predio;
             erro = true;
         }
 
@@ -226,24 +267,35 @@ public class CadastrarSalaController implements Initializable {
     
     public void cadastraSala(){
 
-        if(testaDados()){
-            return;
+        if(errorsDialog()){ return;}
+        if(testaDados()){ return;}
+
+        try{
+            int capacidade = Integer.parseInt(txCapacidade.getText());
+            String predio = comboBoxPredio.getValue();
+            String codigoSala = txCodigoSala.getText();
+            Sala s = new Sala(codigoSala, capacidade, predio);
+            s.create();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Sala cadastrada com sucesso!");
+            alert.show();
+
+            limpaCampos();
+            desabilitaCampos();
+            carregarTableView();
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    e.getMessage(),
+                    ButtonType.OK);
+            alert.show();
         }
-
-        int capacidade = Integer.parseInt(txCapacidade.getText());
-        String predio = comboBoxPredio.getValue();
-        String codigoSala = txCodigoSala.getText();
-        Sala s = new Sala(codigoSala, capacidade, predio);
-        s.create();
-
-        limpaCampos();
-        desabilitaCampos();
-        carregarTableView();
     }
 
     private void altera() {
 
-        if (testaDados()) return;
+        if(errorsDialog()){ return;}
+        if(testaDados()){ return;}
 
         try {
             String codigoSala = txCodigoSala.getText();
@@ -255,7 +307,7 @@ public class CadastrarSalaController implements Initializable {
             Update.Sala(s.getId(), codigoSala,capacidade, predio);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Disciplina alterada com sucesso!");
+            alert.setHeaderText("Sala alterada com sucesso!");
             alert.show();
 
             limpaCampos();
@@ -286,30 +338,69 @@ public class CadastrarSalaController implements Initializable {
                 return;
             }
 
-            Sala s = (Sala) Read.Query("from Sala where id =" + sala.getId()).get(0);
-            s.delete();
-            carregarTableView();
-        } else {
-            // ... user chose CANCEL or closed the dialog
+            try {
+                Sala s = (Sala) Read.Query("from Sala where id =" + sala.getId()).get(0);
+                s.delete();
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Remover");
+                alert2.setHeaderText("Removido com sucesso");
+                alert2.show();
+
+                carregarTableView();
+            } catch (Exception e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR,
+                        e.getMessage(),
+                        ButtonType.OK);
+                alert2.show();
+            }
         }
     }
 
-    public void carregaPredios() {
-        obsListPredios = FXCollections.observableArrayList(listPredios);
-        comboBoxPredio.setItems(obsListPredios);
+    private Boolean errorsDialog(){
+        List<ValidationMessage> emptyFieldsError = new ArrayList<>(emptyValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsError = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+        List<ValidationMessage> regexFieldsErrorCopy = new ArrayList<>(regexValidator.getValidationResult().getErrors());
+
+        String emptyFieldsMessage = "Campos obrigatórios vazios:";
+        String regexFieldsMessage = "Campos não preenchidos corretamente:";
+        String dialogMessage = "";
+        boolean emptyFieldsErrorBool = false, regexFieldsErrorBool = false;
+
+        for(ValidationMessage o : regexFieldsErrorCopy){
+            if(emptyFieldsError.contains(o)) regexFieldsError.remove(o);
+        }
+
+        if(!emptyFieldsError.isEmpty()) {
+            emptyFieldsErrorBool = true;
+            for(ValidationMessage erro : emptyFieldsError)	emptyFieldsMessage += "\n  - " + erro.getText();
+            emptyFieldsMessage += "\n\n";
+        }
+        else emptyFieldsMessage = "";
+
+        if(!regexFieldsError.isEmpty()) {
+            regexFieldsErrorBool = true;
+            for(ValidationMessage erro : regexFieldsError)	regexFieldsMessage += "\n  - " + erro.getText();
+        }
+        else regexFieldsMessage = "";
+
+        if(emptyFieldsErrorBool || regexFieldsErrorBool){
+            dialogMessage = emptyFieldsMessage + regexFieldsMessage;
+
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    dialogMessage,
+                    ButtonType.OK);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Não foi possível efetuar o cadastro");
+            alert.show();
+            return true;
+        }
+        return false;
     }
-    
-    public void fecha(){
-        CadastrarSala.getStage().close();
-    }
-    
-    public void abrePrincipal(){
-        //Principal p = new Principal();
-        fecha();
-//        try {
-//            p.start(new Stage());
-//        } catch (Exception ex) {
-//            Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
+    @FXML
+    private void txCodSalaKeyReleased() {
+        tffCodSala.setTf(txCodigoSala);
+        tffCodSala.formatter();
     }
 }

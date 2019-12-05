@@ -18,6 +18,7 @@ import model.Departamento;
 import model.Read;
 import model.Departamento;
 import model.Update;
+import org.controlsfx.validation.ValidationSupport;
 import view.CadastrarDepartamento;
 
 import java.net.URL;
@@ -29,10 +30,6 @@ import java.util.*;
  * @author denin
  */
 public class CadastrarDepartamentoController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
 
     @FXML private Button btCadastrar;
     @FXML private Button btRemover;
@@ -47,11 +44,12 @@ public class CadastrarDepartamentoController implements Initializable {
     @FXML private TextField txCodigoDepartamento;
     @FXML private TextField txPesquisar;
 
+    private ValidationSupport emptyValidator = new ValidationSupport();
+    private ValidationSupport regexValidator = new ValidationSupport();
+
     private List<Departamento> listDepartamento = new ArrayList<>();
     private ObservableList<Departamento> obsListDepartamento;
     private String acao = null;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -76,7 +74,7 @@ public class CadastrarDepartamentoController implements Initializable {
             acao = "Cadastrar";
             limpaCampos();
             habilitaTodosCampos();
-            txPesquisar.setDisable(true);
+            desabilitaTableView();
         });
 
         btRemover.setOnMouseClicked((MouseEvent e) -> {

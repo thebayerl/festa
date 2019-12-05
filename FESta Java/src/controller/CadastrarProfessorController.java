@@ -487,13 +487,24 @@ public class CadastrarProfessorController implements Initializable {
         alert.setHeaderText("Tem certeza que deseja remover?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            ProfessorView professorView = tableView.getSelectionModel().getSelectedItem();
-            Usuario u = Read.getUsuario(professorView.getId().toString(), null, null, null, null).get(0);
-            u.delete();
-            carregarTableView();
-        } else {
-            // ... user chose CANCEL or closed the dialog
+        if (result.get() == ButtonType.OK) {
+            try {
+                ProfessorView professorView = tableView.getSelectionModel().getSelectedItem();
+                Usuario u = Read.getUsuario(professorView.getId().toString(), null, null, null, null).get(0);
+                u.delete();
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Remover");
+                alert2.setHeaderText("Removido com sucesso");
+                alert2.show();
+
+                carregarTableView();
+            } catch (Exception e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR,
+                        e.getMessage(),
+                        ButtonType.OK);
+                alert2.show();
+            }
         }
     }
 

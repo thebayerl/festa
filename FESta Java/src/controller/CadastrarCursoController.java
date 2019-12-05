@@ -85,8 +85,9 @@ public class CadastrarCursoController implements Initializable {
         btCadastrar.setOnMouseClicked((MouseEvent e) -> {
             acao = "Cadastrar";
             limpaCampos();
+            tableView.getSelectionModel().clearSelection();
             habilitaTodosCampos();
-            txPesquisar.setDisable(true);
+            desabilitaTableView();
         });
 
         btRemover.setOnMouseClicked((MouseEvent e) -> {
@@ -234,11 +235,31 @@ public class CadastrarCursoController implements Initializable {
         tableView.setItems(sortedData);
     }
 
-    private boolean testaDados() {
+    private boolean testaDadosAlterar() {
         boolean erro = false;
         String alertmsg = "";
+
         CursoView c = tableView.getSelectionModel().getSelectedItem();
+
         if (!Read.Query("from Curso where codigoCurso = '" + txCodigoCurso.getText() + "'").isEmpty() && !c.getCodigoCurso().equals(txCodigoCurso.getText())) {
+            alertmsg += "-Curso com codigoCurso já existente\n";
+            erro = true;
+        }
+
+        if (erro) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
+            alert.setHeaderText("Dados inválidos!");
+            alert.show();
+        }
+
+        return erro;
+    }
+
+    private boolean testaDadosCadastrar() {
+        boolean erro = false;
+        String alertmsg = "";
+
+        if (!Read.Query("from Curso where codigoCurso = '" + txCodigoCurso.getText() + "'").isEmpty()) {
             alertmsg += "-Curso com codigoCurso já existente\n";
             erro = true;
         }
@@ -296,7 +317,7 @@ public class CadastrarCursoController implements Initializable {
     public void cadastraCurso(){
 
         if(errorsDialog()){ return;}
-        if(testaDados()){ return;}
+        if(testaDadosCadastrar()){ return;}
 
         try{
             String nome = txNome.getText();
@@ -311,6 +332,7 @@ public class CadastrarCursoController implements Initializable {
 
             limpaCampos();
             desabilitaCampos();
+            habilitaTableView();
             carregarTableView();
         } catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.ERROR,
@@ -322,7 +344,7 @@ public class CadastrarCursoController implements Initializable {
 
     private void altera() {
 
-        if (testaDados()) return;
+        if (testaDadosAlterar()) return;
 
         try {
             String codigoCurso = txCodigoCurso.getText();
@@ -375,11 +397,22 @@ public class CadastrarCursoController implements Initializable {
                 return;
             }
 
-            Curso c = (Curso) Read.Query("from Curso where id =" + curso.getId()).get(0);
-            c.delete();
-            carregarTableView();
-        } else {
-            // ... user chose CANCEL or closed the dialog
+            try {
+                Curso c = (Curso) Read.Query("from Curso where id =" + curso.getId()).get(0);
+                c.delete();
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Remover");
+                alert2.setHeaderText("Removido com sucesso");
+                alert2.show();
+
+                carregarTableView();
+            } catch (Exception e) {
+                Alert alert2 = new Alert(Alert.AlertType.ERROR,
+                        e.getMessage(),
+                        ButtonType.OK);
+                alert2.show();
+            }
         }
     }
 

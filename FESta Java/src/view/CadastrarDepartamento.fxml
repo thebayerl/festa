@@ -6,34 +6,52 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarDepartamentoController">
+<AnchorPane id="AnchorPane" prefHeight="380.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarDepartamentoController">
     <children>
-      <Label layoutX="158.0" layoutY="52.0" text="Cadastro de Departamento">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <HBox alignment="CENTER_RIGHT" layoutX="155.0" layoutY="136.0" prefHeight="39.0" prefWidth="359.0" spacing="10.0">
+      <VBox alignment="TOP_CENTER" layoutX="11.0" layoutY="14.0" prefHeight="353.0" prefWidth="619.0" spacing="20.0">
          <children>
-            <Button fx:id="btCadastrar" mnemonicParsing="false" text="Cadastrar" />
-            <Button fx:id="btRemover" mnemonicParsing="false" text="Remover" />
-            <Button fx:id="btAlterar" mnemonicParsing="false" text="Alterar" />
-            <Button fx:id="btCancelar" mnemonicParsing="false" text="Cancelar" />
-            <Button fx:id="btConfirmar" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Confirmar" />
+            <Label text="Cadastro de Departamento">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <FlowPane alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="10.0" prefHeight="25.0" prefWidth="759.0">
+               <children>
+                  <TextField fx:id="txNome" prefHeight="25.0" prefWidth="304.0" promptText="Nome do Departamento" />
+                  <TextField fx:id="txCodigoDepartamento" prefHeight="25.0" prefWidth="304.0" promptText="Código do Departamento" />
+               </children>
+            </FlowPane>
+            <FlowPane prefHeight="362.0" prefWidth="648.0" vgap="5.0">
+               <children>
+                  <HBox prefHeight="25.0" prefWidth="229.0" spacing="10.0">
+                     <children>
+                        <TextField fx:id="txPesquisar" prefHeight="25.0" prefWidth="210.0" promptText="Pesquisar (Código ou Nome)" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                     <children>
+                        <Button fx:id="btCadastrar" mnemonicParsing="false" prefWidth="70.0" text="Cadastrar" />
+                        <Button fx:id="btRemover" mnemonicParsing="false" prefWidth="70.0" text="Remover" />
+                        <Button fx:id="btAlterar" mnemonicParsing="false" prefWidth="70.0" text="Alterar" />
+                        <Button fx:id="btCancelar" mnemonicParsing="false" prefWidth="70.0" text="Cancelar" />
+                        <Button fx:id="btConfirmar" mnemonicParsing="false" prefWidth="70.0" text="Confirmar" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tableView" prefHeight="225.0" prefWidth="619.0">
+                    <columns>
+                      <TableColumn fx:id="columnId" prefWidth="53.0" text="ID" />
+                      <TableColumn fx:id="columnCodigo" prefWidth="94.0" text="Código" />
+                        <TableColumn fx:id="columnNome" prefWidth="471.0" text="Nome" />
+                    </columns>
+                  </TableView>
+               </children>
+            </FlowPane>
          </children>
-      </HBox>
-      <TableView fx:id="tableView" layoutX="60.0" layoutY="184.0" prefHeight="332.0" prefWidth="453.0">
-        <columns>
-          <TableColumn fx:id="columnId" prefWidth="53.0" text="ID" />
-          <TableColumn fx:id="columnCodigo" prefWidth="94.0" text="Código" />
-            <TableColumn fx:id="columnNome" prefWidth="305.0" text="Nome" />
-        </columns>
-      </TableView>
-      <TextField fx:id="txNome" layoutX="290.0" layoutY="105.0" prefHeight="25.0" prefWidth="223.0" promptText="Digite o nome do Departamento.." />
-      <TextField fx:id="txCodigoDepartamento" layoutX="61.0" layoutY="105.0" prefHeight="25.0" prefWidth="210.0" promptText="Digite o Código do Departamento..." />
-      <TextField fx:id="txPesquisar" layoutX="60.0" layoutY="143.0" prefHeight="25.0" prefWidth="95.0" promptText="Pesquisar" />
+      </VBox>
    </children>
 </AnchorPane>
