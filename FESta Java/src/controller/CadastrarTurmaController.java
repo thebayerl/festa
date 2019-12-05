@@ -280,7 +280,7 @@ public class CadastrarTurmaController implements Initializable {
 		listTurmaView.clear();
 
 		listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+									"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id, d.creditos ,d.codigoDisciplina) " +
 									"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
 									"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
 

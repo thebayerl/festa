@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+
 public class InscricaoTurmas extends Application {
 	
 	private static Stage stage;
@@ -21,9 +23,8 @@ public class InscricaoTurmas extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-
 		 Parent root = FXMLLoader.load(getClass().getResource("/view/InscricaoTurmas.fxml"));//Carrega FXML
-	        
+        stage.setResizable(false);
         Scene scene = new Scene(root);
         stage.setTitle("InscricaoTurmas");
         stage.setScene(scene);
