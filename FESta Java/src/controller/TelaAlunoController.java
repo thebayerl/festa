@@ -55,5 +55,4 @@ public class TelaAlunoController {
 			e.printStackTrace();
 		}
 	}
-
 }

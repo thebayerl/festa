@@ -47,7 +47,7 @@
                         <TextField fx:id="txTelCelular" layoutX="175.0" layoutY="130.0" onKeyReleased="#txTelCelReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Celular" />
                         <DatePicker fx:id="dtNascimento" prefHeight="25.0" prefWidth="150.0" promptText="Data de Nascimento" />
                         <ComboBox fx:id="comboBoxFormacao" layoutX="340.0" layoutY="90.0" promptText="Selecionar Formação" />
-                        <ComboBox fx:id="comboBoxCurso" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Curso" />
+                        <ComboBox fx:id="comboBoxCurso" onAction="#SelecionarCurso" prefHeight="25.0" prefWidth="315.0" promptText="Selecionar Curso" />
                      </children>
                   </FlowPane>
                   <VBox prefHeight="145.0" prefWidth="315.0" spacing="5.0">

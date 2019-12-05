@@ -102,7 +102,7 @@ public class CadastrarProfessorController implements Initializable {
         inicializarTableColumns();
         carregarCursos();
         carregarFormacao();
-        carregarCapacidades();
+        //carregarCapacidades();
         carregarTableView();
 
         btCancelar.setOnMouseClicked((MouseEvent e) -> {
@@ -394,10 +394,12 @@ public class CadastrarProfessorController implements Initializable {
     }
 
     public void carregarCapacidades() {
+        Curso c = comboBoxCurso.getSelectionModel().getSelectedItem();
+
         if(!comboBoxCurso.getSelectionModel().isEmpty()) {
-            Curso c = Read.getCurso(comboBoxCurso.getId(), null, null, null).get(0);
             int deptId = c.getDepartamentoId();
-            listCapacidades = Read.getDisciplina(null, null, null, Integer.toString(deptId));
+            System.out.println("DeptID = " + deptId);
+            listCapacidades = Read.Query("from Disciplina where departamentoId = " + deptId);
 
             if (listViewCapacidades != null) {
                 listViewCapacidades.getSelectionModel().clearSelection();
@@ -642,6 +644,11 @@ public class CadastrarProfessorController implements Initializable {
                 pCapacidade.create();
             }
         }
+    }
+
+    @FXML
+    void SelecionarCurso() {
+        carregarCapacidades();
     }
 
     @FXML
