@@ -393,7 +393,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Sala(String codigoSala, Integer capacidade, String predio) {
+	public static boolean Sala(Integer id, String codigoSala, Integer capacidade, String predio) {
 		boolean sucesso = true;
 
 		Session session = factory.getCurrentSession();
@@ -401,7 +401,7 @@ public class Update {
 		try {
 			session.beginTransaction();
 			
-			Sala obj = session.get(Sala.class, codigoSala);
+			Sala obj = session.get(Sala.class, id);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -409,6 +409,9 @@ public class Update {
 			}
 			
 			if(sucesso) {
+				if(codigoSala != null) {
+					obj.setCodigoSala(codigoSala);
+				}
 				if(capacidade != null) {
 					obj.setCapacidade(capacidade);
 				}

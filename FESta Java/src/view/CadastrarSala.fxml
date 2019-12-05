@@ -1,56 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarSalaController">
+<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CadastrarSalaController">
     <children>
-      <VBox layoutX="150.0" layoutY="74.0" spacing="20.0">
+      <Label layoutX="201.0" layoutY="49.0" text="Cadastro de Sala">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER_RIGHT" layoutX="130.0" layoutY="177.0" prefHeight="39.0" prefWidth="387.0" spacing="10.0">
          <children>
-            <HBox alignment="CENTER">
-               <children>
-                  <Label text="Cadastro de Salas">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets bottom="16.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER" spacing="30.0">
-               <children>
-                  <TextField fx:id="txCodigoSala" prefHeight="25.0" prefWidth="300.0" promptText="Digite o Código da Sala..." />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="30.0">
-               <children>
-                  <TextField fx:id="txCapacidade" prefHeight="25.0" prefWidth="300.0" promptText="Digite a Capacidade da Sala..." />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="98.0" spacing="30.0">
-               <children>
-                  <ComboBox fx:id="comboBoxPredio" editable="true" prefWidth="300.0" promptText="Selecionar Prédio" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="150.0">
-               <children>
-                  <Button fx:id="btCancelar" mnemonicParsing="false" text="Voltar" />
-                  <Button fx:id="btCadastrar" mnemonicParsing="false" text="Enviar" />
-               </children>
-               <padding>
-                  <Insets top="24.0" />
-               </padding>
-            </HBox>
+            <Button fx:id="btCadastrar" mnemonicParsing="false" text="Cadastrar" />
+            <Button fx:id="btRemover" mnemonicParsing="false" text="Remover" />
+            <Button fx:id="btAlterar" mnemonicParsing="false" text="Alterar" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="btConfirmar" mnemonicParsing="false" text="Confirmar" />
          </children>
-      </VBox>
+      </HBox>
+      <TableView fx:id="tableView" layoutX="73.0" layoutY="225.0" prefHeight="291.0" prefWidth="441.0">
+        <columns>
+          <TableColumn fx:id="columnId" prefWidth="62.0" text="ID" />
+          <TableColumn fx:id="columnCodigo" prefWidth="104.0" text="Código" />
+            <TableColumn fx:id="columnCapacidade" prefWidth="140.0" text="Capacidade" />
+            <TableColumn fx:id="columnPredio" prefWidth="134.0" text="Prédio" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txCapacidade" layoutX="290.0" layoutY="92.0" prefHeight="25.0" prefWidth="223.0" promptText="Digite a capacidade da Sala..." />
+      <TextField fx:id="txCodigoSala" layoutX="61.0" layoutY="92.0" prefHeight="25.0" prefWidth="210.0" promptText="Digite o Código da Sala..." />
+      <ComboBox fx:id="comboBoxPredio" layoutX="290.0" layoutY="140.0" prefHeight="25.0" prefWidth="223.0" promptText="selecione o Prédio" />
+      <TextField fx:id="txPesquisar" layoutX="61.0" layoutY="140.0" prefHeight="25.0" prefWidth="210.0" promptText="Pesquisar" />
    </children>
 </AnchorPane>

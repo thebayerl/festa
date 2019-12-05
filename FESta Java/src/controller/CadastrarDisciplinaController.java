@@ -359,6 +359,10 @@ public class CadastrarDisciplinaController implements Initializable {
         Disciplina d = new Disciplina(nome, creditos, departamentoId, codigoDisciplina);
         d.create();
         cadastraPreRequisito(d.getId());
+
+        limpaCampos();
+        desabilitaCampos();
+        carregarTableView();
     }
 
     public void cadastraPreRequisito(int disciplinaId){

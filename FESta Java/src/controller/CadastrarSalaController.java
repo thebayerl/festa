@@ -7,20 +7,18 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import model.Read;
-import model.Sala;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.*;
+
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarSala;
@@ -36,37 +34,183 @@ public class CadastrarSalaController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
-    @FXML private TextField txCapacidade;
+
     @FXML private Button btCadastrar;
+    @FXML private Button btRemover;
+    @FXML private Button btAlterar;
     @FXML private Button btCancelar;
+    @FXML private Button btConfirmar;
+    @FXML private TableView<Sala> tableView;
+    @FXML private TableColumn<Sala, Integer> columnId;
+    @FXML private TableColumn<Sala, String> columnCodigo;
+    @FXML private TableColumn<Sala, Integer> columnCapacidade;
+    @FXML private TableColumn<Sala, String> columnPredio;
+    @FXML private TextField txCapacidade;
     @FXML private TextField txCodigoSala;
     @FXML private ComboBox<String> comboBoxPredio;
+    @FXML private TextField txPesquisar;
 
-    private List<String> listPredios = new ArrayList<>();
-    private ObservableList<String> obsPredios;
-    
+    private List<String> listPredios = new ArrayList<>(Arrays.asList("DCC", "NCE", "Letras", "CCS", "CT"));
+    private ObservableList<String> obsListPredios;
+    private List<Sala> listSala = new ArrayList<>();
+    private ObservableList<Sala> obsListSala;
+    private String acao = null;
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        limpaCampos();
+        desabilitaCampos();
+        habilitaTableView();
+        carregaPredios();
+        inicializarTableColumns();
+        carregarTableView();
 
-        carregarPredios();
-
-        btCancelar.setOnMouseClicked((MouseEvent e)->{
-            abrePrincipal();
+        btCancelar.setOnMouseClicked((MouseEvent e) -> {
+            limpaCampos();
+            desabilitaCampos();
+            habilitaTableView();
         });
-        
-        btCadastrar.setOnMouseClicked((MouseEvent e)->{
+
+        btConfirmar.setOnMouseClicked((MouseEvent e) -> {
+            realizaAcao();
+        });
+
+        btCadastrar.setOnMouseClicked((MouseEvent e) -> {
+            acao = "Cadastrar";
+            limpaCampos();
+            habilitaTodosCampos();
+            txPesquisar.setDisable(true);
+        });
+
+        btRemover.setOnMouseClicked((MouseEvent e) -> {
+            if (!tableView.getSelectionModel().isEmpty()) {
+                remover();
+            }
+        });
+
+        btAlterar.setOnMouseClicked((MouseEvent e) -> {
+            acao = "Alterar";
+            if (!tableView.getSelectionModel().isEmpty()) {
+                habilitaCamposAlteracao();
+                desabilitaTableView();
+            }
+        });
+    }
+
+    private void habilitaTableView() {
+        txPesquisar.setDisable(false);
+        tableView.setDisable(false);
+    }
+
+    private void limpaCampos() {
+        txCodigoSala.clear();
+        txCapacidade.clear();
+        txPesquisar.clear();
+        comboBoxPredio.setValue(null);
+    }
+
+    private void desabilitaCampos() {
+
+        txCapacidade.setDisable(true);
+        txCodigoSala.setDisable(true);
+        comboBoxPredio.setDisable(true);
+
+        btCancelar.setDisable(true);
+        btConfirmar.setDisable(true);
+        btAlterar.setDisable(false);
+        btRemover.setDisable(false);
+        btCadastrar.setDisable(false);
+
+    }
+
+    private void habilitaTodosCampos() {
+        txCodigoSala.setDisable(false);
+        txCapacidade.setDisable(false);
+        comboBoxPredio.setDisable(false);
+        btCancelar.setDisable(false);
+        btConfirmar.setDisable(false);
+        btAlterar.setDisable(true);
+        btRemover.setDisable(true);
+        btCadastrar.setDisable(true);
+    }
+
+    private void desabilitaTableView() {
+        txPesquisar.setDisable(true);
+        tableView.setDisable(true);
+    }
+
+    private void habilitaCamposAlteracao() {
+
+        Sala sala = tableView.getSelectionModel().getSelectedItem();
+        txCapacidade.setDisable(false);
+        txCodigoSala.setDisable(false);
+        comboBoxPredio.setDisable(false);
+        btCadastrar.setDisable(true);
+        btAlterar.setDisable(true);
+        btRemover.setDisable(true);
+        btConfirmar.setDisable(false);
+        btCancelar.setDisable(false);
+        txCodigoSala.setText(sala.getCodigoSala());
+        txCapacidade.setText(String.valueOf(sala.getCapacidade()));
+        comboBoxPredio.setValue(sala.getPredio());
+
+    }
+
+    private void realizaAcao() {
+        if (acao.equalsIgnoreCase("Alterar")) {
+            altera();
+        } else if (acao.equalsIgnoreCase("Cadastrar")) {
             cadastraSala();
+        }
+    }
+
+    private void inicializarTableColumns() {
+        columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        columnCapacidade.setCellValueFactory(new PropertyValueFactory<>("capacidade"));
+        columnCodigo.setCellValueFactory(new PropertyValueFactory<>("codigoSala"));
+        columnPredio.setCellValueFactory(new PropertyValueFactory<>("predio"));
+    }
+
+    private void carregarTableView() {
+        listSala.clear();
+
+        listSala = Read.Query("from Sala");
+
+        if (obsListSala != null) {
+            obsListSala.clear();
+        }
+        obsListSala = FXCollections.observableArrayList(listSala);
+
+        FilteredList<Sala> filteredData = new FilteredList<>(obsListSala, b -> true);
+
+        txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(objView -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (objView.getCodigoSala().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getPredio().toLowerCase().indexOf(lowerCaseFilter) != -1 )
+                    return true;
+                else
+                    return false; // Does not match.
+            });
         });
-        
+
+        SortedList<Sala> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
     }
 
     private boolean testaDados() {
         boolean erro = false;
         String alertmsg = "";
-
-        if (!Read.Query("from Sala where codigoSala = '" + txCodigoSala.getText() + "'").isEmpty()) {
+        Sala s = tableView.getSelectionModel().getSelectedItem();
+        if (!Read.Query("from Sala where codigoSala = '" + txCodigoSala.getText() + "'").isEmpty() && !s.getCodigoSala().equals(txCodigoSala.getText())) {
             alertmsg += "-Sala com codigoSala já existente\n";
             erro = true;
         }
@@ -91,18 +235,68 @@ public class CadastrarSalaController implements Initializable {
         String codigoSala = txCodigoSala.getText();
         Sala s = new Sala(codigoSala, capacidade, predio);
         s.create();
-        abrePrincipal();
+
+        limpaCampos();
+        desabilitaCampos();
+        carregarTableView();
     }
 
-    public void carregarPredios() {
-        listPredios.clear();
-        listPredios = Read.getDistinctPredio();
-        if(obsPredios != null) {
-            obsPredios.clear();
+    private void altera() {
+
+        if (testaDados()) return;
+
+        try {
+            String codigoSala = txCodigoSala.getText();
+            int capacidade = Integer.parseInt(txCapacidade.getText());
+            String predio = comboBoxPredio.getSelectionModel().getSelectedItem();
+
+            Sala s = tableView.getSelectionModel().getSelectedItem();
+
+            Update.Sala(s.getId(), codigoSala,capacidade, predio);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Disciplina alterada com sucesso!");
+            alert.show();
+
+            limpaCampos();
+            desabilitaCampos();
+            habilitaTableView();
+            carregarTableView();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    e.getMessage(),
+                    ButtonType.OK);
+            alert.show();
         }
-        obsPredios = FXCollections.observableArrayList(listPredios);
-        comboBoxPredio.getItems().clear();
-        comboBoxPredio.setItems(obsPredios);
+    }
+
+    private void remover() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remover");
+        alert.setHeaderText("Tem certeza que deseja remover?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            Sala sala = tableView.getSelectionModel().getSelectedItem();
+
+            if(!Read.Query("from Turma where salaId =" + sala.getId()).isEmpty()){
+                Alert aler = new Alert(Alert.AlertType.ERROR, "Existem Turmas cadastradas nessa Sala\n");
+                aler.setHeaderText("Erro de dependencia!");
+                aler.show();
+                return;
+            }
+
+            Sala s = (Sala) Read.Query("from Sala where id =" + sala.getId()).get(0);
+            s.delete();
+            carregarTableView();
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
+    }
+
+    public void carregaPredios() {
+        obsListPredios = FXCollections.observableArrayList(listPredios);
+        comboBoxPredio.setItems(obsListPredios);
     }
     
     public void fecha(){

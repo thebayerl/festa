@@ -31,8 +31,6 @@ import view.Principal;
  */
 public class CadastrarCursoController implements Initializable {
     
-    
-
 
     @FXML private Button btCadastrar;
     @FXML private Button btRemover;
@@ -170,7 +168,7 @@ public class CadastrarCursoController implements Initializable {
     }
 
     public void carregarDepartametos() {
-        listDepartamentos = Read.getDepartamento();
+        listDepartamentos = Read.Query("from Departamento");
         obsDepartamentos = FXCollections.observableArrayList(listDepartamentos);
         comboBoxDepartamento.setItems(obsDepartamentos);
     }
@@ -245,6 +243,8 @@ public class CadastrarCursoController implements Initializable {
         Departamento d = comboBoxDepartamento.getSelectionModel().getSelectedItem() ;
         Curso c = new Curso(codigoCurso, nome, d.getId());
         c.create();
+        limpaCampos();
+        desabilitaCampos();
         carregarTableView();
         
         
