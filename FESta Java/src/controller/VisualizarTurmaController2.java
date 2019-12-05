@@ -427,7 +427,7 @@ public class VisualizarTurmaController2 implements Initializable {
         Disciplina d = (Disciplina) Read.Query("from Disciplina where codigoDisciplina = '" + C[a][b] + "'").get(0);
         Sala s = (Sala) Read.Query("from Sala where codigoSala = '" + S[a][b] + "'").get(0);
         Turma t = (Turma) Read.Query("from Turma where disciplinaId = " + d.getId() + " and salaId =" + s.getId()).get(0);
-        Matriculado m = (Matriculado) Read.Query("from Matriculado where turmaId = " + t.getId() + "and alunoId =" + "2").get(0);
+        Matriculado m = (Matriculado) Read.Query("from Matriculado where turmaId = " + t.getId() + "and alunoId =" + userid).get(0);
         m.delete();
         if(b == 1 || b == 3)
             c=3;
@@ -454,11 +454,12 @@ public class VisualizarTurmaController2 implements Initializable {
     String[][] S = new String[5][5];
     Boolean restringir = false;
     String acao = null;
-
+    Boolean minhasturmas = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        this.userid = 2;
         limpaGrid();
         carregaTurmas();
         geraDCS();
@@ -473,10 +474,11 @@ public class VisualizarTurmaController2 implements Initializable {
         });
 
         btMinhasTurmas.setOnMouseClicked((MouseEvent e) -> {
-            this.disciplinaId = 2;
             limpaR();
             restringir = true;
+            minhasturmas = true;
             carregarTableView();
+            minhasturmas = false;
             this.disciplinaId = 0;
             tableView.setDisable(false);
             btConfirmar.setDisable(true);
@@ -573,7 +575,7 @@ public class VisualizarTurmaController2 implements Initializable {
     }
 
     private void carregaTurmas(){
-        List<Matriculado> m = Read.Query("from Matriculado where alunoId =" + "2");
+        List<Matriculado> m = Read.Query("from Matriculado where alunoId =" + userid);
         if(m.isEmpty())
             return;
         for(Matriculado mat : m){
@@ -583,17 +585,24 @@ public class VisualizarTurmaController2 implements Initializable {
         }
     }
 
-    private void carregarTableView(){
+    private void carregarTableView() {
         listTurmaView.clear();
-        if (this.disciplinaId == 0) {
+        if (minhasturmas){
+            listTurmaView=carregaTurmaAluno();
+        }else if (this.disciplinaId == 0) {
         	listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
 					"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
 					"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
 					"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
         }else {
-            listTurmaView = carregaTurmaAluno();
+            listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+                    "from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
+                    "where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.disciplinaId =" + disciplinaId);
         	
         }
+
+
         if(obsListTurmaView != null) {
             obsListTurmaView.clear();
         }
@@ -625,7 +634,7 @@ public class VisualizarTurmaController2 implements Initializable {
     private List<TurmaView> carregaTurmaAluno(){
         List<TurmaView> tv = new ArrayList<TurmaView>();
         tv.clear();
-        List<Matriculado> mat = Read.Query("from Matriculado where alunoId = " + "2");
+        List<Matriculado> mat = Read.Query("from Matriculado where alunoId = " + userid);
         for (Matriculado m :mat) {
             TurmaView t = (TurmaView) Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
                     "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
@@ -640,14 +649,21 @@ public class VisualizarTurmaController2 implements Initializable {
         boolean erro = false;
         String alertmsg = "";
         TurmaView turma = tableView.getSelectionModel().getSelectedItem();
-        if (!Read.Query("from Matriculado where turmaId = " + turma.getId() + "and alunoId =" + "2").isEmpty()) {
+
+        if (!Read.Query("from Matriculado where turmaId = " + turma.getId() + "and alunoId =" + userid).isEmpty()) {
             alertmsg += "-Você já esta matriculado nesta turma!\n";
             erro = true;
 
         }else{
             List<TurmaView> tv = carregaTurmaAluno();
+
             if (turma.getDias().equals("Segunda e Quarta") || turma.getDias().equals("Quarta e Sexta")) {
                 for (TurmaView t : tv) {
+                    if(!Read.Query("from Turma where id = " + t.getId() + " and disciplinaId = " + turma.getDisciplinaId()).isEmpty()){
+                        alertmsg += "-Você Já cursa essa Disciplina!\n";
+                        erro = true;
+                        break;
+                    }
                     if(!Read.Query("from Turma where id = " + t.getId() + "and (dias = 'Segunda e Quarta' or dias = 'Quarta e Sexta') and horarios = '" + turma.getHorarios() + "'").isEmpty()) {
                         alertmsg += "-Você Já está inscrito em uma turma nesse horário!\n";
                         erro = true;
@@ -655,7 +671,13 @@ public class VisualizarTurmaController2 implements Initializable {
                     }
                 }
             } else {
+
                 for (TurmaView t : tv) {
+                    if(!Read.Query("from Turma where id = " + t.getId() + " and disciplinaId = " + turma.getDisciplinaId()).isEmpty()){
+                        alertmsg += "-Você Já cursa essa Disciplina!\n";
+                        erro = true;
+                        break;
+                    }
                     if (t.getDias().equals("Terça e Quinta"))
                         if(!Read.Query("from Turma where id = " + t.getId() + "and dias = 'Terça e Quinta' and horarios = '" + turma.getHorarios() + "'").isEmpty()) {
                             alertmsg += "-Você Já está inscrito em uma turma nesse horário!\n";
@@ -665,6 +687,30 @@ public class VisualizarTurmaController2 implements Initializable {
                 }
 
             }
+            List<Historico> mat = Read.Query("from Historico where alunoId =" + userid);
+            List<PreRequisito> pre = Read.Query("from PreRequisito where disciplinaId =" + turma.getDisciplinaId());
+            for (Historico m : mat) {
+
+                if (!Read.Query("from Turma where id = " + m.getTurmaId() + " and disciplinaId = " + turma.getDisciplinaId() + " and resultado = Aprovado").isEmpty()) {
+                    alertmsg += "-Você Já cursou essa Disciplina!\n";
+                    erro = true;
+                    break;
+                }
+            }
+            for (PreRequisito p : pre){
+                boolean prereq = true;
+                for (Historico m : mat) {
+                    if(!Read.Query("from Turma where id = " + m.getTurmaId() + " and disciplinaId = " + p.getPrerequisitoId() + " and resultado = Aprovado" ).isEmpty()){
+                        prereq = false;
+                    }
+                }
+                if(prereq){
+                    Disciplina d = (Disciplina) Read.Query("from Disciplina where id = " + p.getPrerequisitoId()).get(0);
+                    alertmsg += "-Você Deve cursar a Disciplina " + d.getNome() +" antes!\n";
+                    erro = true;
+                }
+            }
+
         }
 
         if (erro) {
@@ -718,7 +764,7 @@ public class VisualizarTurmaController2 implements Initializable {
             try {
 
                 TurmaView t = tableView.getSelectionModel().getSelectedItem();
-                Matriculado m = Read.getMatriculado("2", String.valueOf(t.getId())).get(0);
+                Matriculado m = Read.getMatriculado(userid, String.valueOf(t.getId())).get(0);
                 m.delete();
 
                 Alert alert2 = new Alert(AlertType.INFORMATION);
@@ -892,7 +938,7 @@ public class VisualizarTurmaController2 implements Initializable {
     public void trataAddTurma(Turma t){
 
         int h = -1;
-        Matriculado m = new Matriculado(2,t.getId());
+        Matriculado m = new Matriculado(userid,t.getId());
         m.create();
 
         switch(t.getHorarios()) {

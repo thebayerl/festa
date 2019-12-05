@@ -38,6 +38,7 @@
 	    <mapping class="model.ProfessorCapacidade"/>
         <mapping class="model.Matriculado"/>
         <mapping class="model.PreRequisito"/>
+        <mapping class="model.Historico"/>
  
     </session-factory>
 
