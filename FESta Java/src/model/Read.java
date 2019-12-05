@@ -243,30 +243,33 @@ public class Read {
 		return resultado;
 	}
 	
-	public List<Historico> Historico( String nota, String alunoId, String turmaId) {
+	public List<Historico> Historico( String nota, String alunoId, String turmaId, String frequencia, String resultado) {
 		
-		//codigoTurma = aspas(codigoTurma);
+		resultado = aspas(resultado);
 		
 		String query = "from Historico where ";
 		query += add("nota",nota);
 		query += add("alunoId",alunoId);
 		query += add("turmaId",turmaId);
+		query += add("frequencia",frequencia);
+		query += add("resultado",resultado);
+
 		query = query.substring(0, query.length() - 4);
 			
-		List<Historico> resultado = null;
+		List<Historico> resul = null;
 
 		Session session = factory.getCurrentSession();
 		
 		try {		
 			session.beginTransaction();
-			resultado = session.createQuery(query).getResultList();
+			resul = session.createQuery(query).getResultList();
 			session.getTransaction().commit();
 		}
 		finally {
 			session.close();
 		}
 	
-		return resultado;
+		return resul;
 	}
 	
 	public static List<Matriculado> getMatriculado(String alunoId, String turmaId) {

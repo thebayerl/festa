@@ -13,9 +13,7 @@ import org.hibernate.cfg.Configuration;
 @Entity
 @Table(name="matriculado")
 public class Matriculado implements Serializable {
-	
-	
-	
+
 	/**
 	 * 
 	 */

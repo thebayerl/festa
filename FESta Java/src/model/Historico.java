@@ -25,6 +25,20 @@ public class Historico implements Serializable {
 	@Column(name="turma_id")
 	private int turmaId;
 
+	@Column(name="frequencia")
+	private int frequencia;
+
+	@Column(name="resultado")
+	private String resultado;
+
+	public Historico(int alunoId, int turmaId, double nota, int frequencia, String resultado) {
+		super();
+		this.alunoId = alunoId;
+		this.turmaId = turmaId;
+		this.nota = nota;
+		this.frequencia = frequencia;
+		this.resultado = resultado;
+	}
 
 	public void create() {
 		// criando session factory
@@ -99,12 +113,28 @@ public class Historico implements Serializable {
 		this.alunoId = alunoId;
 	}
 
-	public int getturmaId() {
+	public int getTurmaId() {
 		return turmaId;
 	}
 
-	public void setturmaId(int turmaId) {
+	public void setTurmaId(int turmaId) {
 		this.turmaId = turmaId;
+	}
+
+	public int getFrequencia() {
+		return frequencia;
+	}
+
+	public String getResultado() {
+		return resultado;
+	}
+
+	public void setFrequencia(int frequencia) {
+		this.frequencia = frequencia;
+	}
+
+	public void setResultado(String resultado) {
+		this.resultado = resultado;
 	}
 
 	@Override
