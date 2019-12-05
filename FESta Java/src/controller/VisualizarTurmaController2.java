@@ -521,6 +521,8 @@ public class VisualizarTurmaController2 implements Initializable {
         columnDias.setCellValueFactory(new PropertyValueFactory<>("dias"));
         columnHora.setCellValueFactory(new PropertyValueFactory<>("horarios"));
         columnProfessor.setCellValueFactory(new PropertyValueFactory<>("professorNome"));
+        columnCodigo.setCellValueFactory(new PropertyValueFactory<>("codigoDisciplina"));
+        columnCreditos.setCellValueFactory(new PropertyValueFactory<>("creditos"));
     }
     
     private void limpaCampos(){
@@ -591,12 +593,12 @@ public class VisualizarTurmaController2 implements Initializable {
             listTurmaView=carregaTurmaAluno();
         }else if (this.disciplinaId == 0) {
         	listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-					"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+					"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id, d.creditos ,d.codigoDisciplina) " +
 					"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
 					"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id");
         }else {
             listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id, d.creditos ,d.codigoDisciplina) " +
                     "from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
                     "where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.disciplinaId =" + disciplinaId);
         	
@@ -637,7 +639,7 @@ public class VisualizarTurmaController2 implements Initializable {
         List<Matriculado> mat = Read.Query("from Matriculado where alunoId = " + userid);
         for (Matriculado m :mat) {
             TurmaView t = (TurmaView) Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
-                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+                    "t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id, d.creditos ,d.codigoDisciplina) " +
                     "from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
                     "where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.id =" + m.getturmaId()).get(0);
             tv.add(t);
