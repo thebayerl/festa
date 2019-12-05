@@ -324,7 +324,7 @@ public class CadastrarDisciplinaController implements Initializable {
 
             DisciplinaView a = tableView.getSelectionModel().getSelectedItem();
 
-            Update.Disciplina(a.getId(), a.getCodigoDisciplina(), a.getNome(), a.getCreditos(), dep.getId());
+            Update.Disciplina(a.getId(), codigoDisciplina, nome, creditos, dep.getId());
             cadastraPreRequisito(a.getId());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

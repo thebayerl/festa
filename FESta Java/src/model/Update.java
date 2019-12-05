@@ -93,7 +93,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Curso(String codigoCurso, String nome, Integer departamentoId) {
+	public static boolean Curso(int id, String codigoCurso, String nome, Integer departamentoId) {
 		boolean sucesso = true;
 
 		Session session = factory.getCurrentSession();
@@ -101,7 +101,7 @@ public class Update {
 		try {
 			session.beginTransaction();
 			
-			Curso obj = session.get(Curso.class, codigoCurso);
+			Curso obj = session.get(Curso.class, id);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -111,6 +111,9 @@ public class Update {
 			if(sucesso) {
 				if(nome != null) {
 					obj.setnome(nome);
+				}
+				if(codigoCurso != null) {
+					obj.setcodigoCurso(codigoCurso);
 				}
 				if(departamentoId != null) {
 					obj.setdepartamentoId(departamentoId);
