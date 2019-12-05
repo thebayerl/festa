@@ -156,152 +156,252 @@ public class VisualizarTurmaController2 implements Initializable {
 
     @FXML void select00(MouseEvent event) {
         int a = 0,b=0;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec00.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec00.setFill(c);
     }
 
     @FXML void select01(MouseEvent event) {
         int a = 0,b=0;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec01.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec01.setFill(c);
     }
 
     @FXML void select02(MouseEvent event) {
         int a = 0,b=2;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec02.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec02.setFill(c);
     }
 
     @FXML void select03(MouseEvent event) {
         int a = 0,b=3;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec03.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec03.setFill(c);
     }
 
     @FXML void select04(MouseEvent event) {
         int a = 0,b=4;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec04.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec04.setFill(c);
     }
 
     @FXML void select10(MouseEvent event) {
         int a = 1,b=0;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec10.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec10.setFill(c);
     }
 
     @FXML void select11(MouseEvent event) {
         int a = 1,b=1;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec11.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec11.setFill(c);
     }
 
     @FXML void select12(MouseEvent event) {
         int a = 1,b=2;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec12.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec12.setFill(c);
     }
 
     @FXML void select13(MouseEvent event) {
         int a = 1,b=3;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec13.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec13.setFill(c);
     }
 
     @FXML void select14(MouseEvent event) {
         int a = 1,b=4;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec14.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec14.setFill(c);
     }
 
     @FXML void select20(MouseEvent event) {
         int a = 2,b=0;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec20.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec20.setFill(c);
     }
 
     @FXML void select21(MouseEvent event) {
         int a =2, b=1;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec21.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec21.setFill(c);
     }
 
     @FXML void select22(MouseEvent event) {
         int a =2, b=2;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec22.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec22.setFill(c);
     }
 
     @FXML void select23(MouseEvent event) {
         int a =2, b=3;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec23.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec23.setFill(c);
     }
 
     @FXML void select24(MouseEvent event) {
         int a =2, b=4;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec24.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec24.setFill(c);
     }
 
     @FXML void select30(MouseEvent event) {
         int a =3, b=0;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec30.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec30.setFill(c);
     }
 
     @FXML void select31(MouseEvent event) {
         int a =3, b=1;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec31.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec31.setFill(c);
     }
 
     @FXML void select32(MouseEvent event) {
         int a =3, b=2;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec32.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec32.setFill(c);
     }
 
     @FXML void select33(MouseEvent event) {
         int a =3, b=3;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec33.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec33.setFill(c);
     }
 
     @FXML void select34(MouseEvent event) {
         int a =3, b=4;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec34.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec34.setFill(c);
     }
 
     @FXML void select40(MouseEvent event) {
         int a =4, b=0;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec40.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec40.setFill(c);
     }
 
     @FXML void select41(MouseEvent event) {
         int a =4, b=1;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec41.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec41.setFill(c);
     }
 
     @FXML void select42(MouseEvent event) {
         int a =4, b=2;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec42.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec42.setFill(c);
     }
 
     @FXML void select43(MouseEvent event) {
         int a =4, b=3;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec43.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec43.setFill(c);
     }
 
     @FXML void select44(MouseEvent event) {
         int a =4, b=4;
+        btRemover.setDisable(false);
+        Color c = Color.color(0.7,0.7,0.7);
         trataSelect(a,b);
-        rec44.setFill(Color.color(0.7,0.7,0.7));
+        if(this.a != a && this.b != b)
+            c = Color.color(1,1,1);
+        rec44.setFill(c);
     }
 
     public void trataSelect(int a, int b){
@@ -309,6 +409,7 @@ public class VisualizarTurmaController2 implements Initializable {
             limpaR();
             this.a = -1;
             this.b = -1;
+            btRemover.setDisable(true);
             return;
         }
         limpaR();
@@ -338,7 +439,7 @@ public class VisualizarTurmaController2 implements Initializable {
         geraDCS();
     }
 
-    int a,b;
+    int a=0,b=0;
     int disciplinaId = 0;
     private List<Disciplina> listDisciplinas = new ArrayList<>();
     private ObservableList<Disciplina> obsDisciplinas;
@@ -363,6 +464,14 @@ public class VisualizarTurmaController2 implements Initializable {
 
         btInscrever.setOnMouseClicked((MouseEvent e) -> {
             cadastraMatriculado();
+        });
+
+        btRemover.setOnMouseClicked((MouseEvent e) -> {
+            if(a!=-1 && b!=-1)
+                return;
+            if(D[a][b].equals(""))
+                return;
+            remover(this.a,this.b);
         });
 
     }
