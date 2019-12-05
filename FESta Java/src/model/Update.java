@@ -6,6 +6,9 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import sun.security.krb5.internal.crypto.NullEType;
+
+import javax.persistence.criteria.CriteriaBuilder;
 
 import static model.Read.factory;
 
@@ -210,7 +213,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Historico(Integer alunoId, String codigoTurma, Double nota) {
+	public boolean Historico(Integer alunoId, Integer turmaId, Double nota, Integer frequencia, String resultado) {
 		boolean sucesso = true;
 
 		Session session = factory.getCurrentSession();
@@ -218,7 +221,7 @@ public class Update {
 		try {
 			session.beginTransaction();
 
-			List<Historico> obj = session.createQuery("from Historico where alunoId = " + alunoId + "codigoTurma = " + codigoTurma).getResultList();
+			Historico obj = (Historico) session.createQuery("from Historico where alunoId = " + alunoId + "turmaId = " + turmaId).getResultList().get(0);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {
@@ -227,11 +230,11 @@ public class Update {
 			
 			if(sucesso) {
 				// deletando o objeto
-				for(Historico o : obj) {
-					if(nota != null) {
-						//
-					}
-				}
+				obj.setAlunoId(alunoId);
+				obj.setNota(nota);
+				obj.setTurmaId(turmaId);
+				obj.setFrequencia(frequencia);
+				obj.setResultado(resultado);
 			}
 			
 			// finalizando transação
