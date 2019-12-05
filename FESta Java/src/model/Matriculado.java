@@ -10,13 +10,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="matriculado")
 public class Matriculado implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public Matriculado(){}
@@ -36,9 +35,6 @@ public class Matriculado implements Serializable {
 
 	
 	public void create() {
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).addAnnotatedClass(Turma.class).addAnnotatedClass(Matriculado.class).buildSessionFactory();
-		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
@@ -46,15 +42,9 @@ public class Matriculado implements Serializable {
 		try {
 			// iniciando a transação
 			session.beginTransaction();
-
-			//tratando os dados de entrada
-
-
 			// salvando o objeto
 			System.out.println("Salvando o Matriculado...");
 			session.save(this);
-
-			
 			// finalizando transação
 			session.getTransaction().commit();
 			
@@ -63,20 +53,16 @@ public class Matriculado implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Matriculado.class).buildSessionFactory();
 		
 		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			// deletando o objeto
@@ -91,7 +77,7 @@ public class Matriculado implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 

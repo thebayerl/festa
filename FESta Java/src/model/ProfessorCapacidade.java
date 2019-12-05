@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="professor_capacidade")
 public class ProfessorCapacidade  implements Serializable {
@@ -30,34 +32,15 @@ public class ProfessorCapacidade  implements Serializable {
 	public ProfessorCapacidade() {}
 
 	public void create() {
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
-		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
 		try {
-			boolean erro = false;
 			// iniciando a transação
 			session.beginTransaction();
-			
-			// Checando integridade dos dados
-			if(session.get(Professor.class, professorId) == null) {
-				System.out.println("\nERRO: Professor não encontrado!");
-				erro = true;
-			}
-			if(session.get(Disciplina.class, disciplinaId) == null) {
-				System.out.println("\nERRO: Disciplina não encontrada!");
-				erro = true;
-			}
-			
-			if(!erro) {
-
-				// salvando o objeto
-				System.out.println("Salvando o Professor Capacidade...");
-				session.save(this);
-				
-			}
+			// salvando o objeto
+			System.out.println("Salvando o Professor Capacidade...");
+			session.save(this);
 			
 			// finalizando transação
 			session.getTransaction().commit();
@@ -67,20 +50,15 @@ public class ProfessorCapacidade  implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ProfessorCapacidade.class).buildSessionFactory();
-		
 		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			// deletando o objeto
@@ -95,7 +73,7 @@ public class ProfessorCapacidade  implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 

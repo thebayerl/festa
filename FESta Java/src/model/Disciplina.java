@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 
 @Entity
 @Table(name="disciplina")
@@ -40,25 +42,15 @@ public class Disciplina {
 	}
 
 	public void create() {
-		boolean erro = false;
-		
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
 		// criando session
 		Session session = factory.getCurrentSession();
 		
 		try {
 			// iniciando a transação
 			session.beginTransaction();
-			
-			//inserir check do departamento depois
-			
-			if(!erro) {
-				
-				// salvando o objeto
-				System.out.println("Salvando a Disciplina...");
-				session.save(this);
-			}
+			// salvando o objeto
+			System.out.println("Salvando a Disciplina...");
+			session.save(this);
 			
 			// finalizando transa��o
 			session.getTransaction().commit();
@@ -70,20 +62,15 @@ public class Disciplina {
 		}
 		finally {
 			session.close();
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Disciplina.class).buildSessionFactory();
-		
 		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// come�ando a transa��o
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			// deletando o objeto
@@ -98,7 +85,7 @@ public class Disciplina {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	

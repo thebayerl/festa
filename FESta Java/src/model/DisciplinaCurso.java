@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="disciplina_curso")
 public class DisciplinaCurso implements Serializable {
@@ -23,10 +25,6 @@ public class DisciplinaCurso implements Serializable {
 	private int disciplinaId;
 	
 	public void create() {
-		boolean erro = false;
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DisciplinaCurso.class).addAnnotatedClass(Disciplina.class).addAnnotatedClass(Curso.class).buildSessionFactory();
-		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
@@ -34,26 +32,8 @@ public class DisciplinaCurso implements Serializable {
 			
 			// iniciando a transação
 			session.beginTransaction();
-			
-			// testando validade dos dados recebidos
-			
-			if(session.get(Disciplina.class, disciplinaId) == null) {
-				System.out.println("Disciplina com Id = " + disciplinaId + " já existente\n");
-				erro = true;
-			}
-			
-			if(session.get(Curso.class, cursoId) == null) {
-				System.out.println("Curso com codigoCurso = " + cursoId + " já existente\n");
-				erro = true;
-			}
-			
-			
-			if(!erro) {
-				
-				// salvando o objeto
-				System.out.println("Salvando a Diciplina no Curso...");
-				session.save(this);
-			}
+			System.out.println("Salvando a Diciplina no Curso...");
+			session.save(this);
 			
 			// finalizando transação
 			session.getTransaction().commit();
@@ -63,20 +43,16 @@ public class DisciplinaCurso implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(DisciplinaCurso.class).buildSessionFactory();
 		
 		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			// deletando o objeto
@@ -91,7 +67,7 @@ public class DisciplinaCurso implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 

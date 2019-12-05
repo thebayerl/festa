@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="historico")
 public class Historico implements Serializable {
@@ -40,9 +42,9 @@ public class Historico implements Serializable {
 		this.resultado = resultado;
 	}
 
+	public Historico() {}
+
 	public void create() {
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Aluno.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
@@ -65,20 +67,16 @@ public class Historico implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Historico.class).buildSessionFactory();
 		
 		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			// deletando o objeto
@@ -93,7 +91,7 @@ public class Historico implements Serializable {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 

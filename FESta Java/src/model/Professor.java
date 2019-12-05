@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="professor")
 public class Professor {
@@ -40,24 +42,16 @@ public class Professor {
 	}
 
 	public void create() {
-		boolean erro = false;
-		
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Professor.class).addAnnotatedClass(Cordenador.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
 		try {			
 			// iniciando a transação
-			session.beginTransaction();			
-			
-			if(!erro) {
-				
-				// salvando o objeto
-				System.out.println("Salvando o Professor...");
-				session.save(this);
-			};
+			session.beginTransaction();
+			// salvando o objeto
+			System.out.println("Salvando o Professor...");
+			session.save(this);
 			
 			// finalizando transação
 			session.getTransaction().commit();
@@ -67,20 +61,16 @@ public class Professor {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Professor.class).addAnnotatedClass(Usuario.class).buildSessionFactory();
-		
 		//create session
 		Session session = factory.getCurrentSession();
 		
 		try {
 			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
 			// deletando o(s) objeto(s)
@@ -97,7 +87,7 @@ public class Professor {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	

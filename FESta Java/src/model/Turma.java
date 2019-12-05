@@ -79,7 +79,7 @@ public class Turma {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class Turma {
 
 			} catch (Exception exc) {
 			} finally {
-				factory.close();
+				session.close();
 			}
 		}
 	}

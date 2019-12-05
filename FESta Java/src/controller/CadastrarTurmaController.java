@@ -54,6 +54,8 @@ public class CadastrarTurmaController implements Initializable {
 	@FXML private TableColumn<TurmaView, String> columnProfessor;
 	@FXML private TableColumn<TurmaView, String> columnSala;
 	@FXML private TableColumn<TurmaView, String> columnAno;
+	@FXML private TableColumn<TurmaView, String> columnDias;
+	@FXML private TableColumn<TurmaView, String> columnHorarios;
 	@FXML private TableColumn<TurmaView, String> columnSemestre;
 	@FXML private TableColumn<TurmaView, Integer> columnMaxAlunos;
 
@@ -64,7 +66,7 @@ public class CadastrarTurmaController implements Initializable {
 	private List<Disciplina> listDisciplinas = new ArrayList<>();
 	private List<Professor> listProfessores = new ArrayList<>();
 	private List<TurmaView> listTurmaView = new ArrayList<>();
-	private List<String> listHorarios = Arrays.asList("8h-10h","10h-12h","13h-15h","15h-17h","17h-19h");
+	private List<String> listHorarios = Arrays.asList("08h-10h","10h-12h","13h-15h","15h-17h","17h-19h");
 	private List<String> listDias = Arrays.asList("Segunda e Quarta", "Terça e Quinta", "Quarta e Sexta");
 
 	private ObservableList<String> obslistHorarios = FXCollections.observableArrayList(listHorarios);
@@ -155,6 +157,8 @@ public class CadastrarTurmaController implements Initializable {
 		columnSala.setCellValueFactory(new PropertyValueFactory<>("codigoSala"));
 		columnAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
 		columnSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
+		columnDias.setCellValueFactory(new PropertyValueFactory<>("dias"));
+		columnHorarios.setCellValueFactory(new PropertyValueFactory<>("horarios"));
 		columnMaxAlunos.setCellValueFactory(new PropertyValueFactory<>("maxAlunos"));
 	}
 	
@@ -239,6 +243,8 @@ public class CadastrarTurmaController implements Initializable {
 
 		comboBoxDept.setDisable(false);
 		comboBoxDisciplina.setDisable(false);
+		comboBoxHorarios.setDisable(false);
+		comboBoxDias.setDisable(false);
 		comboBoxProfessor.setDisable(false);
 		comboBoxPredio.setDisable(false);
 		comboBoxSala.setDisable(false);
@@ -250,16 +256,16 @@ public class CadastrarTurmaController implements Initializable {
 		btCadastrar.setDisable(true);
 		btAlterar.setDisable(true);
 		btRemover.setDisable(true);
-		
 		btConfirmar.setDisable(false);
 		btCancelar.setDisable(false);
-		
-		
+
 		comboBoxDept.setValue(dept);
 		comboBoxDisciplina.setValue(d);
 		comboBoxProfessor.setValue(p);
 		comboBoxPredio.setValue(s.getPredio());
 		comboBoxSala.setValue(s);
+		comboBoxDias.setValue(turma.getDias());
+		comboBoxHorarios.setValue(turma.getHorarios());
 		txMaxAluno.setText(turma.getMaxAlunos().toString());
 		txAno.setText(turma.getAno());
 

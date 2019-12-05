@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="sala")
 public class Sala {
@@ -36,29 +38,15 @@ public class Sala {
 	}
 
 	public void create() {
-		boolean erro = false;
-		
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
-		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
 		try {			
 			// iniciando a transação
 			session.beginTransaction();
-			
-			/*if(session.get(Sala.class, codigoSala) == null) {
-				System.out.println("\nERRO: Sala com codigoSala = " + codigoSala + " já existente\n");
-				erro = true;
-			}*/
-			
-			if(!erro) {
-				
-				// salvando o objeto
-				System.out.println("Salvando a Sala...");
-				session.save(this);
-			}
+			// salvando o objeto
+			System.out.println("Salvando a Sala...");
+			session.save(this);
 			
 			// finalizando transação
 			session.getTransaction().commit();
@@ -68,14 +56,11 @@ public class Sala {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
-		
 		//create session
 		Session session = factory.getCurrentSession();
 		
@@ -96,7 +81,7 @@ public class Sala {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 

@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static model.Read.factory;
+
 @Entity
 @Table(name="usuario")
 public class Usuario {
@@ -79,24 +81,16 @@ public class Usuario {
 	}
 
 	public void create() {
-		boolean erro = false;
-		
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).buildSessionFactory();
 		
 		// criando session
 		Session session = factory.getCurrentSession();
 		
 		try {			
 			// iniciando a transação
-			session.beginTransaction();			 
-			
-			if(!erro) {
-				
-				// salvando o objeto
-				System.out.println("Salvando o Usuario...");
-				session.save(this);
-			}
+			session.beginTransaction();
+			// salvando o objeto
+			System.out.println("Salvando o Usuario...");
+			session.save(this);
 			
 			// finalizando transação
 			session.getTransaction().commit();
@@ -106,14 +100,11 @@ public class Usuario {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 	
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Usuario.class).buildSessionFactory();
-		
 		//create session
 		Session session = factory.getCurrentSession();
 		
@@ -134,7 +125,7 @@ public class Usuario {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 

@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import static model.Read.factory;
+
 
 @Entity
 @Table(name="departamento")
@@ -34,10 +36,6 @@ public class Departamento {
 	}
 
 	public void create() {
-
-		// criando session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
-
 		// criando session
 		Session session = factory.getCurrentSession();
 
@@ -57,20 +55,15 @@ public class Departamento {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 
 	public void delete() {
-		// create session factory
-		SessionFactory factory =new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
-
 		//create session
 		Session session = factory.getCurrentSession();
 
 		try {
-			// começando a transação
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			// deletando o objeto
@@ -85,7 +78,7 @@ public class Departamento {
 		} catch(Exception exc){
 		}
 		finally {
-			factory.close();
+			session.close();
 		}
 	}
 

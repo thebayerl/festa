@@ -70,7 +70,7 @@ public class VizualizarTurmaController implements Initializable {
             session.getTransaction().commit();
         }
         finally {
-            factory.close();
+            session.close();
         }
 
         for (int i = 0; i < listTurmas.size(); i++){
