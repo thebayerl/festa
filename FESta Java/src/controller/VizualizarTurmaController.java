@@ -121,7 +121,9 @@ public class VizualizarTurmaController implements Initializable {
     	List<HistoricoView> listHistoricoView = Read.Query("select new model.HistoricoView(a.id, t.id, h.frequencia, d.creditos, h.nota, a.nome," +
                 " t.codigoTurma, t.semestre, t.ano, h.resultado, d.nome, t.dias) " +
                 "from Aluno as a, Disciplina as d, Turma as t, Historico as h " +
-    			"where a.id = h.alunoId and d.id = t.disciplinaId and t.id = h.turmaId and t.id = "+ t.getId());
+    			"where d.id = t.disciplinaId and t.id = "+ t.getId());
+    	
+    	System.out.println("sadadasdas"+ listHistoricoView.size());
     	
     	obsAlunos = FXCollections.observableArrayList(listHistoricoView);
         tableViewAluno.setItems(obsAlunos);
@@ -153,12 +155,15 @@ public class VizualizarTurmaController implements Initializable {
         //String role = user.getRole();
         //listMatriculados = Read.getMatriculado(userId, null);
         
-        List<TurmaView> listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+        List<TurmaView>  listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
 				"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id, d.creditos, d.codigoDisciplina) " +
 				"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
-				"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.professorId = " + 101);
+				"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.professorId = " + "101");
         
 
+        
+        
+        
         obsTurmas = FXCollections.observableArrayList(listTurmaView);
         tableViewTurma.setItems(obsTurmas);
         
