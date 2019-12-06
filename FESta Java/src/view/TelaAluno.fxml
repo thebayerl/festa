@@ -24,6 +24,7 @@
          <children>
             <Button fx:id="btInscricaoTurma" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="Inscrição Turma" />
             <Button fx:id="btHistorico" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="Historico" />
+            <Button fx:id="btInfo" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="Informações da Conta" />
          </children></VBox>
    </center>
 </fx:root>

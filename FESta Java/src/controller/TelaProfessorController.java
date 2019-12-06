@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import view.AtualizaProfessor;
 import view.VisualizarTurma;
 
 public class TelaProfessorController {
@@ -19,7 +20,7 @@ public class TelaProfessorController {
 			});
 	    	
 	    	this.btInfoConta.setOnMouseClicked((MouseEvent e)->{
-	    		
+	    		exibeTelaInfo();
 	    	});
 	    	
 	    }	
@@ -31,6 +32,17 @@ public class TelaProfessorController {
 
 			try {
 				telaTurmas.start(new Stage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	    
+	    private void exibeTelaInfo() {
+
+			AtualizaProfessor telaInfo = new AtualizaProfessor();
+
+			try {
+				telaInfo.start(new Stage());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

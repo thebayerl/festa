@@ -5,19 +5,17 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import view.InscricaoTurma;
+import view.AtualizaAluno;
+import view.InscricaoTurmas;
 import view.VisualizarHistorico;
 
 public class TelaAlunoController {
 	 
-	    @FXML
-	    private Button btInscricaoTurma;
+	    @FXML  private Button btInscricaoTurma;
+	    @FXML  private Button btHistorico;    
+	    @FXML  private VBox layoutPrincipalTelaAluno;	    
+	    @FXML  private Button btInfo;
 
-	    @FXML
-	    private Button btHistorico;
-	    
-	    @FXML
-	    private VBox layoutPrincipalTelaAluno;
 
 	    @FXML
 	    void initialize() {
@@ -31,28 +29,46 @@ public class TelaAlunoController {
 			this.btHistorico.setOnMouseClicked((MouseEvent e)->{
 				this.exibeHistorico();
 			});
+			
+			this.btInfo.setOnMouseClicked((MouseEvent e)->{
+				this.exibeInformacoes();
+			});
+			
 	    }
+	    
+	    private void exibeInformacoes(){
+	    	
+	    	AtualizaAluno telaAtualizaAluno = new AtualizaAluno();
+	    	
+	    	try {
+				telaAtualizaAluno.start(new Stage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    	
+	    }
+	    
 	    
 	    private void exibeTelaInscricao() {	    		    
 	    	
-	    	InscricaoTurma telaInscricaoTurma = new InscricaoTurma();
+	    	InscricaoTurmas telaInscricaoTurmas = new InscricaoTurmas();
 	    	
 	    	try {
-				telaInscricaoTurma.start(new Stage());
+				telaInscricaoTurmas.start(new Stage());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 	    }
 
-	private void exibeHistorico() {
+	    private void exibeHistorico() {
 
-		VisualizarHistorico historicoVisu = new VisualizarHistorico();
+	    	VisualizarHistorico historicoVisu = new VisualizarHistorico();
 
-		try {
-			historicoVisu.start(new Stage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    	try {
+	    		historicoVisu.start(new Stage());
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+	    	}
 	}
 
 }
