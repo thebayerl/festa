@@ -92,7 +92,6 @@ public class CadastrarTurmaController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		// TODO
 		inicializarValidators();
-		inicializarTextFieldLimitations();
 		inicializarTableColumns();
 		carregarTableView();
 		carregarDepartamentos();
@@ -111,8 +110,6 @@ public class CadastrarTurmaController implements Initializable {
 		
 		btCadastrar.setOnMouseClicked((MouseEvent e)->{
 			acao = "Cadastrar";
-			tableView.getSelectionModel().clearSelection();
-			tableView.setDisable(true);
 			habilitaTodosCampos();
 		});
 		
@@ -143,13 +140,6 @@ public class CadastrarTurmaController implements Initializable {
 		emptyValidator.registerValidator(comboBoxDept, Validator.createEmptyValidator(comboBoxDept.getPromptText()));
 
 		regexValidator.registerValidator(txAno, Validator.createRegexValidator(txAno.getPromptText(), "[0-9]{4}", Severity.ERROR));
-	}
-
-	private void inicializarTextFieldLimitations(){
-		/*txAno.setIntegerField();
-		txAno.setMaxLength(4);
-		txMaxAluno.setIntegerField();
-		txMaxAluno.setMaxLength(3);*/
 	}
 
 	private void inicializarTableColumns(){

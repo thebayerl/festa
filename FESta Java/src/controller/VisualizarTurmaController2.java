@@ -458,7 +458,6 @@ public class VisualizarTurmaController2 implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        this.userid = 2;
         limpaGrid();
         carregaTurmas();
         geraDCS();
@@ -692,7 +691,7 @@ public class VisualizarTurmaController2 implements Initializable {
             List<PreRequisito> pre = Read.Query("from PreRequisito where disciplinaId =" + turma.getDisciplinaId());
             for (Historico m : mat) {
 
-                if (!Read.Query("from Turma where id = " + m.getTurmaId() + " and disciplinaId = " + turma.getDisciplinaId() + " and resultado = Aprovado").isEmpty()) {
+                if (!Read.Query("from Turma where id = " + m.getTurmaId() + " and disciplinaId = " + turma.getDisciplinaId()).isEmpty()) {
                     alertmsg += "-Você Já cursou essa Disciplina!\n";
                     erro = true;
                     break;
@@ -701,7 +700,7 @@ public class VisualizarTurmaController2 implements Initializable {
             for (PreRequisito p : pre){
                 boolean prereq = true;
                 for (Historico m : mat) {
-                    if(!Read.Query("from Turma where id = " + m.getTurmaId() + " and disciplinaId = " + p.getPrerequisitoId() + " and resultado = Aprovado" ).isEmpty()){
+                    if(!Read.Query("from Turma where id = " + m.getTurmaId() + " and disciplinaId = " + p.getPrerequisitoId()).isEmpty()){
                         prereq = false;
                     }
                 }
