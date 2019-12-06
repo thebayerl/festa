@@ -5,8 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import static model.Read.factory;
 
@@ -18,10 +16,10 @@ public class Professor {
 	@Column(name="usuario_id")
 	private int usuarioId;
 	
-	@Column(name="nome")
+	@Column(name= "nome")
 	private String nome;
 	
-	@Column(name="matricula")
+	@Column(name= "matricula")
 	private String matricula;
 	
 	@Column(name="nivel_formacao")

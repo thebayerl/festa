@@ -111,6 +111,8 @@ public class CadastrarTurmaController implements Initializable {
 		
 		btCadastrar.setOnMouseClicked((MouseEvent e)->{
 			acao = "Cadastrar";
+			tableView.getSelectionModel().clearSelection();
+			tableView.setDisable(true);
 			habilitaTodosCampos();
 		});
 		
@@ -334,8 +336,7 @@ public class CadastrarTurmaController implements Initializable {
     	comboBoxProfessor.setDisable(false);
     	comboBoxProfessor.setItems(obsProfessores);
     }
-    
-    
+
     public void carregarDisciplinas() {
     	comboBoxDisciplina.getSelectionModel().clearSelection();
     	listDisciplinas.clear();
@@ -352,8 +353,7 @@ public class CadastrarTurmaController implements Initializable {
     	comboBoxDisciplina.setDisable(false);
     	comboBoxDisciplina.setItems(obsDisciplinas);
     }
-    
-    
+
     public void carregarDepartamentos() {
     	listDepartamento.clear();
     	comboBoxDept.getItems().clear();
@@ -457,6 +457,55 @@ public class CadastrarTurmaController implements Initializable {
 			alertmsg += "-A sala suporta no máximo " + tam + " alunos\n";
 			erro = true;
 		}
+
+		RadioButton radio = (RadioButton) grupoSemestre.getSelectedToggle();
+		String semestre = radio.getText();
+		Professor p = comboBoxProfessor.getSelectionModel().getSelectedItem();
+		Sala s = comboBoxSala.getSelectionModel().getSelectedItem();
+		List<Turma> tu1 = Read.Query("from Turma where professorId = " + p.getUsuarioId() + " and horarios = '" + comboBoxHorarios.getSelectionModel().getSelectedItem() + "'" );
+		System.out.println(tu1.size());
+		System.out.println(comboBoxDias.getSelectionModel().getSelectedIndex());
+		if(comboBoxDias.getSelectionModel().getSelectedIndex() == 1){
+			for (Turma turma : tu1){
+				if(turma.getId() == tableView.getSelectionModel().getSelectedItem().getId()) {
+				}else if(turma.getDias().equals("Terça e Quinta") && turma.getSemestre().equals(semestre) && turma.getAno().equals(txAno.getText())){
+					alertmsg += "-O Professor já está ocupado nesses dias e horários\n";
+					erro = true;
+					break;
+				}
+			}
+		}else{
+			for (Turma turma : tu1){
+				if(turma.getId() == tableView.getSelectionModel().getSelectedItem().getId()) {
+				}else if((turma.getDias().equals("Segunda e Quarta") || turma.getDias().equals("Quarta e Sexta")) && turma.getSemestre().equals(semestre) && turma.getAno().equals(txAno.getText())){
+					alertmsg += "-O Professor já está ocupado nesses dias e horários\n";
+					erro = true;
+					break;
+				}
+			}
+		}
+		List<Turma> tu2 = Read.Query("from Turma where salaId = " + s.getId() + " and horarios = '" + comboBoxHorarios.getSelectionModel().getSelectedItem() + "'" );
+		System.out.println(tu2.size());
+		if(comboBoxDias.getSelectionModel().getSelectedIndex() == 1){
+			for (Turma turma : tu2){
+				if(turma.getId() == tableView.getSelectionModel().getSelectedItem().getId()) {
+				}else if(turma.getDias().equals("Terça e Quinta") && turma.getSemestre().equals(semestre) && turma.getAno().equals(txAno.getText())){
+					alertmsg += "-A Sala já está ocupada nesses dias e horários\n";
+					erro = true;
+					break;
+				}
+			}
+		}else{
+			for (Turma turma : tu2){
+				if(turma.getId() == tableView.getSelectionModel().getSelectedItem().getId()) {
+				}else if((turma.getDias().equals("Segunda e Quarta") || turma.getDias().equals("Quarta e Sexta")) && turma.getSemestre().equals(semestre) && turma.getAno().equals(txAno.getText()) ){
+					alertmsg += "-A Sala já está ocupada nesses dias e horários\n";
+					erro = true;
+					break;
+				}
+			}
+		}
+
 
 		if(erro){
 			Alert alert = new Alert(Alert.AlertType.ERROR, alertmsg);
