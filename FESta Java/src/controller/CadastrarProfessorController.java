@@ -103,6 +103,8 @@ public class CadastrarProfessorController implements Initializable {
         carregarFormacao();
         carregarTableView();
 
+        desabilitaCampos();
+        
         btCancelar.setOnMouseClicked((MouseEvent e) -> {
             limpaCampos();
             desabilitaCampos();
@@ -240,6 +242,7 @@ public class CadastrarProfessorController implements Initializable {
         dtNascimento.setDisable(false);
         comboBoxCurso.setDisable(false);
         listViewCapacidades.setDisable(false);
+        comboBoxFormacao.setDisable(false);
 
         btCancelar.setDisable(false);
         btConfirmar.setDisable(false);
