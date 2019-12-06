@@ -111,18 +111,30 @@ public class VizualizarTurmaController implements Initializable {
     	}else {
     		situacao = "Reprovado";
     	}
-    	
-    	Update.Historico(a.getAlunoId(), a.getTurmaId(), Double.parseDouble(nota), Integer.parseInt(freq), situacao);
+    	Historico h = new Historico(a.getAlunoId(), a.getTurmaId(), Double.parseDouble(nota), Integer.parseInt(freq), situacao);
+    	h.create();
+    	Matriculado m = new Matriculado(a.getAlunoId(), a.getTurmaId());
+    	m.delete();
+    	carregarAlunos();
     }
     
 
     private void carregarAlunos() {
     	 	
-    	List<HistoricoView> listHistoricoView = Read.Query("select new model.HistoricoView(a.id, t.id, h.frequencia, d.creditos, h.nota, a.nome," +
-                " t.codigoTurma, t.semestre, t.ano, h.resultado, d.nome, t.dias) " +
-                "from Aluno as a, Disciplina as d, Turma as t, Historico as h " +
-    			"where d.id = t.disciplinaId and t.id = "+ t.getId());
-    	
+    	List<HistoricoView> listHistoricoView = new ArrayList<HistoricoView>();
+    	List<Matriculado> mat = Read.Query("from Matriculado where turmaId = " + t.getId());
+    	for(Matriculado m : mat){
+    		Aluno a = (Aluno) Read.Query("from Aluno where usuarioId = " + m.getAlunoId()).get(0);
+			HistoricoView h = new HistoricoView(m.getAlunoId(), t.getId(), null, null, null,a.getNome(),null,null,null,null,null);
+    		listHistoricoView.add(h);
+		}
+    	List<Historico> his = Read.Query("from Historico where turmaId = " + t.getId());
+    	for (Historico hi : his){
+			Aluno a = (Aluno) Read.Query("from Aluno where usuarioId = " + hi.getAlunoId()).get(0);
+			HistoricoView h = new HistoricoView(hi.getAlunoId(), t.getId(), hi.getFrequencia(), null, hi.getNota(), a.getNome(),null,null,null,null,null);
+			listHistoricoView.add(h);
+		}
+
     	System.out.println("sadadasdas"+ listHistoricoView.size());
     	
     	obsAlunos = FXCollections.observableArrayList(listHistoricoView);
@@ -140,7 +152,7 @@ public class VizualizarTurmaController implements Initializable {
         List<TurmaView>  listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
 				"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id, d.creditos, d.codigoDisciplina) " +
 				"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
-				"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.professorId = " + "101");
+				"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.professorId = " + userId);
         
 
         

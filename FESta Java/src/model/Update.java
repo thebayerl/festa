@@ -221,7 +221,7 @@ public class Update {
 		try {
 			session.beginTransaction();
 
-			Historico obj = (Historico) session.createQuery("from Historico where alunoId = " + alunoId + "turmaId = " + turmaId).getResultList().get(0);
+			Historico obj = (Historico) session.createQuery("from Historico where alunoId = " + alunoId + " and turmaId = " + turmaId).getResultList().get(0);
 			
 			// testando a validade dos dados recebidos
 			if(obj == null) {

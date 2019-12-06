@@ -3,7 +3,7 @@ package model;
 public class HistoricoView {
     Integer alunoId, turmaId, frequencia, creditos;
     Double nota;
-    String nomeAluno, codigoTurma, semestre, ano, resultado, nomeDisciplina, dias;
+    String nomeAluno, codigoTurma, semestre, ano, resultado, nomeDisciplina;
 
     public HistoricoView(Integer alunoId, Integer turmaId, Integer frequencia, Integer creditos, Double nota,
     		String nomeAluno, String codigoTurma, String semestre, String ano, String resultado, String nomeDisciplina) {
@@ -19,10 +19,8 @@ public class HistoricoView {
         this.resultado = resultado;
         this.nomeDisciplina = nomeDisciplina;
     }
-    
-    public String getDias() {
-        return dias;
-    }
+
+
     
     public String getNomeDisciplina() {
         return nomeDisciplina;
