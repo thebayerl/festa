@@ -39,6 +39,7 @@ public class VizualizarTurmaController implements Initializable {
 	@FXML private TableColumn<HistoricoView, String> columnAluno;
 	@FXML private TableColumn<HistoricoView, String> columnNota;
 	@FXML private TableColumn<HistoricoView, String> columnFreq;
+	@FXML private TableColumn<HistoricoView, String> columnSituacao;
 	
     @FXML private TableColumn<TurmaView, String> columnDisciplina;
     @FXML private TableColumn<TurmaView, String> columnSala;
@@ -88,6 +89,8 @@ public class VizualizarTurmaController implements Initializable {
 		columnFreq.setCellValueFactory(new PropertyValueFactory<>("frequencia"));
 		columnDias.setCellValueFactory(new PropertyValueFactory<>("dias"));
 		columnHorario.setCellValueFactory(new PropertyValueFactory<>("horarios"));
+		columnSituacao.setCellValueFactory(new PropertyValueFactory<>("resultado"));
+		
 		//columnMaxAlunos.setCellValueFactory(new PropertyValueFactory<>("maxAlunos"));
     
     }
