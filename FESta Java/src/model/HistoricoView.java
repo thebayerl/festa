@@ -20,7 +20,7 @@ public class HistoricoView {
         this.nomeDisciplina = nomeDisciplina;
     }
 
-    
+
     
     public String getNomeDisciplina() {
         return nomeDisciplina;

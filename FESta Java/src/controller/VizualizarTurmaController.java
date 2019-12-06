@@ -125,8 +125,14 @@ public class VizualizarTurmaController implements Initializable {
     	List<Matriculado> mat = Read.Query("from Matriculado where turmaId = " + t.getId());
     	for(Matriculado m : mat){
     		Aluno a = (Aluno) Read.Query("from Aluno where id = " + m.getAlunoId()).get(0);
-			HistoricoView h = new HistoricoView(m.getAlunoId(), t.getId(), null, null, null,a.getNome(),null,null,null,null,null,null);
+			HistoricoView h = new HistoricoView(m.getAlunoId(), t.getId(), null, null, null,a.getNome(),null,null,null,null,null);
     		listHistoricoView.add(h);
+		}
+    	List<Historico> his = Read.Query("from Historico where turmaId = " + t.getId());
+    	for (Historico hi : his){
+			Aluno a = (Aluno) Read.Query("from Aluno where id = " + hi.getAlunoId()).get(0);
+			HistoricoView h = new HistoricoView(hi.getAlunoId(), t.getId(), hi.getFrequencia(), null, hi.getNota(), a.getNome(),null,null,null,null,null);
+			listHistoricoView.add(h);
 		}
 
     	System.out.println("sadadasdas"+ listHistoricoView.size());
