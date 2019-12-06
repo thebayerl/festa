@@ -54,7 +54,6 @@ public class AtualizaAlunoController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		// TODO
-        userId =2;
 		inicializarTextMasks();
 		inicializarEmptyValidator();
 		inicializarRegexValidator();
