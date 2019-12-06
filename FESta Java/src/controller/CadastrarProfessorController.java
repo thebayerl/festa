@@ -96,13 +96,11 @@ public class CadastrarProfessorController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         inicializarTextMasks();
-        inicializarTextFieldLimitations();
         inicializarEmptyValidator();
         inicializarRegexValidator();
         inicializarTableColumns();
         carregarCursos();
         carregarFormacao();
-        carregarCapacidades();
         carregarTableView();
 
         btCancelar.setOnMouseClicked((MouseEvent e) -> {
@@ -157,14 +155,6 @@ public class CadastrarProfessorController implements Initializable {
         tffTelRes.setCaracteresValidos("0123456789");
         tffTelCel.setMask("(##)#####-####");
         tffTelCel.setCaracteresValidos("0123456789");
-    }
-
-    private void inicializarTextFieldLimitations(){
-		/*txUserName.setStandardField();
-		txUserName.setMaxLength(20);
-		txEmail.setMaxLength(40);
-		txNome.setCharsOnlyFieldwSpace();
-		txNome.setMaxLength(100);*/
     }
 
     private void inicializarEmptyValidator(){
@@ -351,11 +341,12 @@ public class CadastrarProfessorController implements Initializable {
         txTelResidencial.setText(professor.getTelRes());
         txTelCelular.setText(professor.getTelCel());
         txEmail.setText(professor.getEmail());
+        comboBoxFormacao.setValue(tableView.getSelectionModel().getSelectedItem().getFormacao());
 
         Curso c = Read.getCurso(professor.getCursoId().toString(), null, null, null).get(0);
-
         comboBoxCurso.setValue(c);
-        comboBoxFormacao.setValue(tableView.getSelectionModel().getSelectedItem().getFormacao());
+
+        carregarCapacidades();
 
         List<ProfessorCapacidade> capacidadesExistentes = Read.Query("from ProfessorCapacidade c where c.professorId = " + professor.getId().toString());
         listViewCapacidades.getSelectionModel().clearSelection();
@@ -394,10 +385,13 @@ public class CadastrarProfessorController implements Initializable {
     }
 
     public void carregarCapacidades() {
-        if(!comboBoxCurso.getSelectionModel().isEmpty()) {
-            Curso c = Read.getCurso(comboBoxCurso.getId(), null, null, null).get(0);
+        listViewCapacidades.getItems().clear();
+        Curso c = comboBoxCurso.getSelectionModel().getSelectedItem();
+        System.out.println(c);
+
+        if(c != null) {
             int deptId = c.getDepartamentoId();
-            listCapacidades = Read.getDisciplina(null, null, null, Integer.toString(deptId));
+            listCapacidades = Read.Query("from Disciplina where departamentoId = " + deptId);
 
             if (listViewCapacidades != null) {
                 listViewCapacidades.getSelectionModel().clearSelection();
@@ -451,6 +445,8 @@ public class CadastrarProfessorController implements Initializable {
         boolean erro = false;
         String alertmsg = "";
         ProfessorView professor = tableView.getSelectionModel().getSelectedItem();
+
+        System.out.println(professor.toString());
 
         if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !professor.getUsername().equals(txUserName.getText()) ) {
             alertmsg += "-Usuario com username já existente\n";
@@ -642,6 +638,11 @@ public class CadastrarProfessorController implements Initializable {
                 pCapacidade.create();
             }
         }
+    }
+
+    @FXML
+    void SelecionarCurso() {
+        carregarCapacidades();
     }
 
     @FXML

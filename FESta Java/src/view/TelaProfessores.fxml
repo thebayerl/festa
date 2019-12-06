@@ -9,17 +9,10 @@
 
 <fx:root prefHeight="600.0" prefWidth="800.0" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TelaProfessorController">
    <left>
-      <VBox prefHeight="541.0" prefWidth="140.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="590.0" prefWidth="283.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btMinhasTurmas" mnemonicParsing="false" prefHeight="48.0" prefWidth="127.0" text="Minhas Turmas">
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" top="5.0" />
-               </VBox.margin></Button>
-            <Button fx:id="btVisualizarHistorico" mnemonicParsing="false" prefHeight="48.0" prefWidth="127.0" text="Histórico">
-               <VBox.margin>
-                  <Insets left="5.0" />
-               </VBox.margin>
-            </Button>
+            <Button fx:id="btMinhasTurmas" mnemonicParsing="false" prefHeight="48.0" prefWidth="292.0" text="Minhas Turmas" />
+            <Button fx:id="btInfoConta" mnemonicParsing="false" prefHeight="48.0" prefWidth="288.0" text="Informações de Conta" />
          </children>
          <BorderPane.margin>
             <Insets top="10.0" />

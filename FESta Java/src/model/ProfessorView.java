@@ -22,6 +22,7 @@ public class ProfessorView {
         this.rg = rg;
         this.formacao = formacao;
         this.dataNascimento = dataNascimento;
+        this.username = username;
     }
 
     public Integer getId() {
@@ -115,5 +116,23 @@ public class ProfessorView {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    @Override
+    public String toString() {
+        return "ProfessorView{" +
+                "id=" + id +
+                ", cursoId=" + cursoId +
+                ", nome='" + nome + '\'' +
+                ", cursoNome='" + cursoNome + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", telCel='" + telCel + '\'' +
+                ", telRes='" + telRes + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", rg='" + rg + '\'' +
+                ", formacao='" + formacao + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                '}';
     }
 }

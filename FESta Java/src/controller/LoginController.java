@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.scene.control.*;
 import org.hibernate.Session;
 
 import javafx.scene.input.KeyCode;
@@ -18,12 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.Login;
@@ -84,7 +81,7 @@ public class LoginController implements Initializable {
         });
         
         // pega a session do hibernate
-        session = HibernateUtil.getSession();        
+        session = HibernateUtil.getSession();
     } 
     
     public void fecha(){
@@ -122,12 +119,18 @@ public class LoginController implements Initializable {
 	    	            
 	    	            p.start(new Stage());
 	    	            
-	    			} else {	    				
-	    				
-	    				this.erroLoginLabel.setVisible(true);
-	    			}	    			
+	    			} else {
+
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Erro");
+                        alert.setHeaderText("Senha incorreta");
+                        alert.show();
+	    			}
     			} else {
-    				this.erroLoginLabel.setVisible(true);
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Erro");
+                    alert.setHeaderText("Usuário não existe");
+                    alert.show();
     			}
     		} catch (Exception exception) {
     			exception.printStackTrace();   			

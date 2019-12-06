@@ -1,32 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VizualizarTurmaController">
+<AnchorPane id="AnchorPane" prefHeight="808.0" prefWidth="1142.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VizualizarTurmaController">
    <children>
-      <VBox layoutX="31.0" layoutY="62.0" prefHeight="376.0" prefWidth="438.0" spacing="20.0">
-         <children>
-            <HBox alignment="CENTER">
-               <children>
-                  <Label text="Vizualização de Turmas">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets bottom="16.0" />
-               </padding>
-            </HBox>
-            <ListView fx:id="listViewTurmas" prefHeight="230.0" prefWidth="430.0" />
-            <HBox alignment="CENTER" spacing="30.0" />
-         </children>
-      </VBox>
+      <HBox alignment="CENTER" prefHeight="27.0" prefWidth="469.0">
+         <padding>
+            <Insets bottom="16.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" spacing="30.0" />
+      <Button fx:id="btSelecionarTurma" layoutX="7.0" layoutY="147.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="216.0" text="Selecionar Turma" />
+      <TableView fx:id="tableViewTurma" layoutY="178.0" prefHeight="626.0" prefWidth="545.0">
+        <columns>
+          <TableColumn fx:id="columnDisciplina" prefWidth="115.0" text="Disciplina" />
+          <TableColumn fx:id="columnSala" prefWidth="123.0" text="Sala" />
+            <TableColumn fx:id="columnDias" prefWidth="114.0" text="Dias" />
+            <TableColumn fx:id="columnHorario" prefWidth="108.0" text="Horário" />
+            <TableColumn fx:id="columnNumAlunos" prefWidth="83.0" text="N° Alunos" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txPesquisar" layoutX="227.0" layoutY="147.0" prefHeight="25.0" prefWidth="317.0" />
+      <Label layoutX="423.0" layoutY="35.0" text="Vizualização de Turmas">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableViewAluno" layoutX="554.0" layoutY="178.0" prefHeight="626.0" prefWidth="585.0">
+        <columns>
+          <TableColumn fx:id="columnAluno" prefWidth="450.0" text="Aluno" />
+            <TableColumn fx:id="columnNota" prefWidth="152.0" text="Nota" />
+        </columns>
+      </TableView>
+      <Button fx:id="btLancarNota" layoutX="554.0" layoutY="148.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" text="Lançar Nota" />
+      <TextField fx:id="txNota" layoutX="770.0" layoutY="148.0" prefHeight="25.0" prefWidth="368.0" />
    </children>
 </AnchorPane>
