@@ -44,31 +44,31 @@ public class Principal extends Application {
     public void start(Stage stage) throws Exception {
     	
         Parent root = FXMLLoader.load(getClass().getResource("/view/Principal.fxml")); //Carrega FXML
-        Scene scene;
-        
-        System.out.println("role: " + this.loggedUser.getRole());
-                
-        if (this.loggedUser.getRole().compareTo("docente") == 0) {
-        	// inicia tela de professores
-        	scene = new Scene(new TelaProfessores());
-        } else if (this.loggedUser.getRole().compareTo("discente") == 0) {
-        	// inicia tela de alunos        	
-        	scene = new Scene(new TelaAluno());
-        } else if (this.loggedUser.getRole().compareTo("secretario") == 0) {
-        	// inicia a tela de secretario
-        	scene = new Scene(new TelaSecretario());
-        } else {
+        Scene scene = new Scene(root); //Coloca o FXML em uma cena;
+        try {
+	        System.out.println("role: " + this.loggedUser.getRole());
+	                
+	        if (this.loggedUser.getRole().compareTo("docente") == 0) {
+	        	// inicia tela de professores
+	        	scene = new Scene(new TelaProfessores());
+	        } else if (this.loggedUser.getRole().compareTo("discente") == 0) {
+	        	// inicia tela de alunos        	
+	        	scene = new Scene(new TelaAluno());
+	        } else if (this.loggedUser.getRole().compareTo("admin") == 0) {
+	        	// inicia a tela de secretario
+	        	scene = new Scene(new TelaSecretario());
+	        }
+	        
+        } catch (Exception e) { 	       
         	// inicia tela padrão de erro
         	System.out.println("role desconhecida");
-        	scene = new Scene(root); //Coloca o FXML em uma cena
-        }        
-        
-        stage.setTitle("Principal");
-        stage.setScene(scene); //Coloca a cena em uma janela
-        
-        stage.show();
-        
-        setStage(stage);        
+	    } finally {
+	    	
+	    	stage.setTitle("Principal");
+	        stage.setScene(scene); //Coloca a cena em uma janela	        
+	        stage.show();	        
+	        setStage(stage);
+	    }                
     }
 
     /**
