@@ -520,7 +520,8 @@ public class CadastrarAlunoController implements Initializable {
 
 			AlunoView a = tableView.getSelectionModel().getSelectedItem();
 
-			Update.Aluno(a.getId(), null, nome, dataIngresso.toString(), cursoId);
+			String matricula = String.format("%04d",a.getId()) + String.format("%02d",cursoId);
+			Update.Aluno(a.getId(), matricula, nome, dataIngresso.toString(), cursoId);
 			Update.Usuario(a.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
 
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -563,8 +564,8 @@ public class CadastrarAlunoController implements Initializable {
 			Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
 			u.create();
 			int usuarioId = u.getId();
-
-			Aluno a = new Aluno(usuarioId, nome, dataIngresso, cursoId);
+			String matricula =String.format("%04d",usuarioId) + String.format("%02d",cursoId);
+			Aluno a = new Aluno(usuarioId, nome, matricula ,dataIngresso, cursoId);
 			a.create();
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Aluno cadastrado com sucesso!");

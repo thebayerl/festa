@@ -48,7 +48,7 @@ public class Turma {
 
 	public Turma(int maxAlunos, String ano, String semestre, String dias, String horarios, int professorId, int disciplinaId, int salaId) {
 		super();
-		this.codigoTurma = "dsadsada";
+		this.codigoTurma = "";
 		this.maxAlunos = maxAlunos;
 		this.ano = ano;
 		this.semestre = semestre;

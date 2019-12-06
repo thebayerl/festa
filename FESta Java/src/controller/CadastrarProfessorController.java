@@ -564,6 +564,7 @@ public class CadastrarProfessorController implements Initializable {
             Professor professor = Read.getProfessor(p.getId().toString(), null, null, null, null).get(0);
             Usuario usuario = Read.getUsuario(p.getId().toString(), null, null, null, null).get(0);
 
+            String matricula =String.format("%04d",usuario.getId()) + String.format("%02d",cursoId);
             Update.Professor(professor.getUsuarioId(), nome, formacao, cursoId);
             Update.Usuario(usuario.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento);
 
@@ -613,8 +614,8 @@ public class CadastrarProfessorController implements Initializable {
             Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
             u.create();
             int usuarioId = u.getId();
-
-            Professor p = new Professor(usuarioId, nome, formacao, cursoId);
+            String matricula =String.format("%04d",usuarioId) + String.format("%02d",cursoId);
+            Professor p = new Professor(usuarioId, nome, matricula, formacao, cursoId);
             p.create();
             cadastrarCapacidades(usuarioId);
 

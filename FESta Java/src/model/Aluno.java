@@ -36,10 +36,10 @@ public class Aluno {
 	
 	public Aluno() {}
 	
-	public Aluno(int usuarioId, String nome, String dataIngresso, int cursoId) {
+	public Aluno(int usuarioId, String nome,String matricula, String dataIngresso, int cursoId) {
 		super();
 		this.usuarioId = usuarioId;
-		this.matricula = "";
+		this.matricula = matricula;
 		this.nome = nome;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");				
 		try {
