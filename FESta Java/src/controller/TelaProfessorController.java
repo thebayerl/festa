@@ -1,13 +1,9 @@
 package controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import view.InscricaoTurmas;
 import view.VisualizarTurma;
 
 public class TelaProfessorController {
@@ -16,11 +12,15 @@ public class TelaProfessorController {
 	    @FXML private Button btInfoConta;
 	    
 	    @FXML
-	    void initialize(URL url, ResourceBundle rb) {
+	    void initialize() {
 	      
 	    	this.btMinhasTurmas.setOnMouseClicked((MouseEvent e)->{
 				this.exibeTelaTurmas();
 			});
+	    	
+	    	this.btInfoConta.setOnMouseClicked((MouseEvent e)->{
+	    		
+	    	});
 	    	
 	    }	
 	    

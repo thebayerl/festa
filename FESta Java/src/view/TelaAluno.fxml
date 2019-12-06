@@ -23,7 +23,7 @@
       <VBox fx:id="layoutPrincipalTelaAluno" alignment="CENTER" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btInscricaoTurma" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="Inscrição Turma" />
-            <Button fx:id="btVerMinhasTurmas" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="Ver Inscrições" />
+            <Button fx:id="btHistorico" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="Historico" />
          </children></VBox>
    </center>
 </fx:root>

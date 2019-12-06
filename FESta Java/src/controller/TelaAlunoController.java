@@ -5,16 +5,19 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import view.CadastrarAluno;
 import view.InscricaoTurma;
-import view.InscricaoTurmas;
-import view.VisualizarTurma;
+import view.VisualizarHistorico;
 
 public class TelaAlunoController {
 	 
-	    @FXML  private Button btInscricaoTurma;
-	    @FXML  private Button btVerMinhasTurmas;	    
-	    @FXML  private VBox layoutPrincipalTelaAluno;
+	    @FXML
+	    private Button btInscricaoTurma;
+
+	    @FXML
+	    private Button btHistorico;
+	    
+	    @FXML
+	    private VBox layoutPrincipalTelaAluno;
 
 	    @FXML
 	    void initialize() {
@@ -25,30 +28,31 @@ public class TelaAlunoController {
 	            this.exibeTelaInscricao();
 	        });
 
-			this.btVerMinhasTurmas.setOnMouseClicked((MouseEvent e)->{
-				this.exibeTelaTurmas();
+			this.btHistorico.setOnMouseClicked((MouseEvent e)->{
+				this.exibeHistorico();
 			});
 	    }
 	    
 	    private void exibeTelaInscricao() {	    		    
 	    	
-	    	InscricaoTurmas telaInscricaoTurmas = new InscricaoTurmas();
+	    	InscricaoTurma telaInscricaoTurma = new InscricaoTurma();
 	    	
 	    	try {
-				telaInscricaoTurmas.start(new Stage());
+				telaInscricaoTurma.start(new Stage());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 	    }
 
-	private void exibeTelaTurmas() {
+	private void exibeHistorico() {
 
-		VisualizarTurma telaTurmas = new VisualizarTurma();
+		VisualizarHistorico historicoVisu = new VisualizarHistorico();
 
 		try {
-			telaTurmas.start(new Stage());
+			historicoVisu.start(new Stage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

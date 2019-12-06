@@ -128,24 +128,6 @@ public class VizualizarTurmaController implements Initializable {
     	obsAlunos = FXCollections.observableArrayList(listHistoricoView);
         tableViewAluno.setItems(obsAlunos);
     	
-		/*
-		 * FilteredList<HistoricoView> filteredData = new FilteredList<>(obsAlunos, b ->
-		 * true);
-		 * 
-		 * txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
-		 * filteredData.setPredicate(objView -> { if (newValue == null ||
-		 * newValue.isEmpty()) { return true; } String lowerCaseFilter =
-		 * newValue.toLowerCase();
-		 * 
-		 * if (objView.getNomeDisciplina().toLowerCase().indexOf(lowerCaseFilter) != -1
-		 * || objView.getDias().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
-		 * objView.getCodigoSala().toLowerCase().indexOf(lowerCaseFilter) != -1) return
-		 * true; else return false; // Does not match. }); });
-		 * 
-		 * SortedList<HistoricoView> sortedData = new SortedList<>(filteredData);
-		 * sortedData.comparatorProperty().bind(tableViewAluno.comparatorProperty());
-		 * tableViewAluno.setItems(sortedData);
-		 */
     }
     
     private void carregarTurmas() {
