@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- *//*
-
 package controller;
 
 import javafx.collections.FXCollections;
@@ -43,7 +37,6 @@ public class AtualizaAlunoController implements Initializable {
 	@FXML private TextField txTelResidencial;
 	@FXML private TextField txTelCelular;
 	@FXML private TextField txEmail;
-	@FXML private TextField txPesquisar;
 	@FXML private DatePicker dtNascimento;
 	@FXML private Button btAlterar;
 	@FXML private Button btConfirmar;
@@ -61,26 +54,64 @@ public class AtualizaAlunoController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		// TODO
+        userId =2;
 		inicializarTextMasks();
-
 		inicializarEmptyValidator();
 		inicializarRegexValidator();
-		carregarTableView();
+        habilitaCamposAlteracao();
+        desabilitaCampos();
 
 		btCancelar.setOnMouseClicked((MouseEvent e) -> {
-
+            habilitaCamposAlteracao();
+            desabilitaCampos();
+            btConfirmar.setDisable(true);
+            btCancelar.setDisable(true);
+            btAlterar.setDisable(false);
 		});
 
 		btConfirmar.setOnMouseClicked((MouseEvent e) -> {
-			realizaAcao();
+			alteraAluno();
+            habilitaCamposAlteracao();
+            desabilitaCampos();
+            btConfirmar.setDisable(true);
+            btCancelar.setDisable(true);
+            btAlterar.setDisable(false);
 		});
 
 		btAlterar.setOnMouseClicked((MouseEvent e) -> {
-			acao = "Alterar";
+			habilitaCampos();
+			btConfirmar.setDisable(false);
+			btCancelar.setDisable(false);
 		});
 	}
 
+    private void desabilitaCampos(){
+	    Boolean o = true;
+	    txCPF.setDisable(o);
+	    txEmail.setDisable(o);
+        txNome.setDisable(o);
+        txRG.setDisable(o);
+        txTelCelular.setDisable(o);
+        txTelResidencial.setDisable(o);
+        txUserName.setDisable(o);
+        psSenha.setDisable(o);
+        psSenhaConf.setDisable(o);
+        dtNascimento.setDisable(o);
+    }
 
+    private void habilitaCampos(){
+        Boolean o = false;
+        txCPF.setDisable(o);
+        txEmail.setDisable(o);
+        txNome.setDisable(o);
+        txRG.setDisable(o);
+        txTelCelular.setDisable(o);
+        txTelResidencial.setDisable(o);
+        txUserName.setDisable(o);
+        psSenha.setDisable(o);
+        psSenhaConf.setDisable(o);
+        dtNascimento.setDisable(o);
+    }
 
 	private void inicializarTextMasks() {
 		tffCpf.setMask("###.###.###-##");
@@ -157,18 +188,10 @@ public class AtualizaAlunoController implements Initializable {
 		return false;
 	}
 
-	private void realizaAcao() {
-		if (acao.equalsIgnoreCase("Alterar")) {
-			alteraAluno();
-		} else if (acao.equalsIgnoreCase("Cadastrar")) {
-			cadastraAluno();
-		}
-	}
-
 	private void habilitaCamposAlteracao() {
 
-		Aluno aluno = Read.Query("from Aluno where id = " + userId).get(0);
-		Usuario u = Read.getUsuario(aluno.getId().toString(), null, null, null, null).get(0);
+		Aluno aluno = (Aluno) Read.Query("from Aluno where usuarioId = " + userId).get(0);
+		Usuario u = (Usuario) Read.Query("from Usuario where id = " + userId).get(0);
 
 		txNome.setDisable(false);
 		txEmail.setDisable(false);
@@ -182,29 +205,20 @@ public class AtualizaAlunoController implements Initializable {
 		psSenha.setDisable(false);
 		psSenhaConf.setDisable(false);
 
-		btAlterar.setDisable(true);
-		btConfirmar.setDisable(false);
-		btCancelar.setDisable(false);
 
 		txUserName.setText(u.getUsername());
 		psSenha.setText(u.getSenha());
 		psSenhaConf.setText(u.getSenha());
 		txNome.setText(aluno.getNome());
-		txRG.setText(aluno.getRg());
-		txCPF.setText(aluno.getCpf());
-		txTelResidencial.setText(aluno.getTelRes());
-		txTelCelular.setText(aluno.getTelCel());
-		txEmail.setText(aluno.getEmail());
+		txRG.setText(u.getRg());
+		txCPF.setText(u.getCpf());
+		txTelResidencial.setText(u.getTelResidencial());
+		txTelCelular.setText(u.getTelCelular());
+		txEmail.setText(u.getEmail());
 
-		Curso c = Read.getCurso(aluno.getCursoId().toString(), null, null, null).get(0);
+        LocalDate dataNascimento = stringToLocalDate(u.getDataNascimento());
+        dtNascimento.setValue(dataNascimento);
 
-		comboBoxCurso.setValue(c);
-
-		LocalDate dataNascimento = stringToLocalDate(aluno.getDataNascimento());
-		dtNascimento.setValue(dataNascimento);
-
-		LocalDate dataIngresso = stringToLocalDate(aluno.getDataIngresso());
-		dtIngresso.setValue(dataIngresso);
 	}
 
 	private LocalDate stringToLocalDate(String date) {
@@ -212,96 +226,29 @@ public class AtualizaAlunoController implements Initializable {
 		return LocalDate.parse(date, formatter);
 	}
 
-	private void carregarTableView() {
-		listAlunoView.clear();
-
-		listAlunoView = Read.Query("select new model.AlunoView(u.id, c.id, a.nome, c.nome, u.email, u.telCelular, " +
-				"u.telResidencial, u.cpf, u.rg, a.dataIngresso, u.dataNascimento, u.username) " +
-				"from Usuario as u, Aluno as a, Curso as c " +
-				"where u.id = a.id and a.cursoId = c.id");
-
-		if (obsListAlunoView != null) {
-			obsListAlunoView.clear();
-		}
-		obsListAlunoView = FXCollections.observableArrayList(listAlunoView);
-
-		FilteredList<AlunoView> filteredData = new FilteredList<>(obsListAlunoView, b -> true);
-
-		txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredData.setPredicate(objView -> {
-				if (newValue == null || newValue.isEmpty()) {
-					return true;
-				}
-				String lowerCaseFilter = newValue.toLowerCase();
-
-				if (objView.getNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
-					objView.getCpf().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
-					objView.getEmail().toLowerCase().indexOf(lowerCaseFilter) != -1)
-					return true;
-				else
-					return false; // Does not match.
-			});
-		});
-
-		SortedList<AlunoView> sortedData = new SortedList<>(filteredData);
-		sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-		tableView.setItems(sortedData);
-	}
-
 	private boolean testaDadosAlterar() {
 		boolean erro = false;
 		String alertmsg = "";
-		AlunoView aluno = tableView.getSelectionModel().getSelectedItem();
 
-		if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !aluno.getUsername().equals(txUserName.getText()) ) {
+        Aluno aluno = (Aluno) Read.Query("from Aluno where usuarioId = " + userId).get(0);
+        Usuario u = (Usuario) Read.Query("from Usuario where id = " + userId).get(0);
+
+		if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty() && !u.getUsername().equals(txUserName.getText()) ) {
 			alertmsg += "-Usuario com username já existente\n";
 			erro = true;
 		}
 
-		if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty() && !aluno.getRg().equals(txRG.getText()) ) {
+		if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty() && !u.getRg().equals(txRG.getText()) ) {
 			alertmsg += "-Usuario com rg já existente\n";
 			erro = true;
 		}
 
-		if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty() && !aluno.getCpf().equals(txCPF.getText())) {
+		if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty() && !u.getCpf().equals(txCPF.getText())) {
 			alertmsg += "-Usuario com cpf já existente\n";
 			erro = true;
 		}
 
-		if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty() && !aluno.getEmail().equals(txEmail.getText())) {
-			alertmsg += "-Usuario com email já existente\n";
-			erro = true;
-		}
-
-		if (erro) {
-			Alert alert = new Alert(AlertType.ERROR, alertmsg);
-			alert.setHeaderText("Dados inválidos!");
-			alert.show();
-		}
-
-		return erro;
-	}
-
-	private boolean testaDadosCadastrar() {
-		boolean erro = false;
-		String alertmsg = "";
-
-		if (!Read.Query("from Usuario where username = '" + txUserName.getText() + "'").isEmpty()) {
-			alertmsg += "-Usuario com username já existente\n";
-			erro = true;
-		}
-
-		if (!Read.Query("from Usuario where rg = '" + txRG.getText() + "'").isEmpty()) {
-			alertmsg += "-Usuario com rg já existente\n";
-			erro = true;
-		}
-
-		if (!Read.Query("from Usuario where cpf = '" + txCPF.getText() + "'").isEmpty()) {
-			alertmsg += "-Usuario com cpf já existente\n";
-			erro = true;
-		}
-
-		if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty()) {
+		if (!Read.Query("from Usuario where email = '" + txEmail.getText() + "'").isEmpty() && !u.getEmail().equals(txEmail.getText())) {
 			alertmsg += "-Usuario com email já existente\n";
 			erro = true;
 		}
@@ -329,66 +276,14 @@ public class AtualizaAlunoController implements Initializable {
 			String email = txEmail.getText();
 			String nome = txNome.getText();
 			LocalDate dataNascimento = dtNascimento.getValue();
-			LocalDate dataIngresso = dtIngresso.getValue();
-			Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
 
-			int cursoId = curso.getId();
-
-			AlunoView a = tableView.getSelectionModel().getSelectedItem();
-
-			Update.Aluno(a.getId(), null, nome, dataIngresso.toString(), cursoId);
-			Update.Usuario(a.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
+			Update.Aluno(userId, null, nome, null, null);
+			Update.Usuario(userId, username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
 
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setHeaderText("Aluno alterado com sucesso!");
 			alert.show();
 
-			limpaCampos();
-			desabilitaCampos();
-			habilitaTableView();
-			carregarTableView();
-		} catch (Exception e) {
-			Alert alert = new Alert(AlertType.ERROR,
-					e.getMessage(),
-					ButtonType.OK);
-			alert.show();
-		}
-	}
-
-	private void cadastraAluno() {
-		if(errorsDialog()) return;
-		if(testaDadosCadastrar()) return;
-
-		try {
-			String username = txUserName.getText();
-			String senha = psSenha.getText();
-			String rg = txRG.getText();
-			String cpf = txCPF.getText();
-			String telResidencial = txTelResidencial.getText();
-			String telCelular = txTelCelular.getText();
-			String email = txEmail.getText();
-			String nome = txNome.getText();
-			String dataNascimento = dtNascimento.getValue().toString();
-			System.out.println(dataNascimento);
-			String dataIngresso = dtIngresso.getValue().toString();
-			String role = "discente";
-			Curso curso = comboBoxCurso.getSelectionModel().getSelectedItem();
-
-			int cursoId = curso.getId();
-
-			Usuario u = new Usuario(username, senha, rg, cpf, dataNascimento, telResidencial, telCelular, email, role);
-			u.create();
-			int usuarioId = u.getId();
-
-			Aluno a = new Aluno(usuarioId, nome, dataIngresso, cursoId);
-			a.create();
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Aluno cadastrado com sucesso!");
-			alert.show();
-
-			limpaCampos();
-			desabilitaCampos();
-			carregarTableView();
 		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR,
 					e.getMessage(),
@@ -425,4 +320,3 @@ public class AtualizaAlunoController implements Initializable {
 		CadastrarAluno.getStage().close();
 	}
 }
-*/

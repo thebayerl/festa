@@ -458,6 +458,7 @@ public class VisualizarTurmaController2 implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        this.userid = 2;
         limpaGrid();
         carregaTurmas();
         geraDCS();
