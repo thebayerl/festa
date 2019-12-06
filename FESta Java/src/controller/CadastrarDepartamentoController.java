@@ -294,7 +294,7 @@ public class CadastrarDepartamentoController implements Initializable {
         try{
             String nome = txNome.getText();
             String codigoDepartamento = txCodigoDepartamento.getText();
-            Departamento d = new Departamento(codigoDepartamento, nome);
+            Departamento d = new Departamento(nome, codigoDepartamento);
             d.create();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
