@@ -56,7 +56,7 @@ public class VisualizarHistoricoController implements Initializable {
 
     private void inicializarTableColumns() {
         columnTurma.setCellValueFactory(new PropertyValueFactory<>("codigoTurma"));
-        columnDisciplina.setCellValueFactory(new PropertyValueFactory<>("disciplinaNome"));
+        columnDisciplina.setCellValueFactory(new PropertyValueFactory<>("nomeDisciplina"));
         columnCreditos.setCellValueFactory(new PropertyValueFactory<>("creditos"));
         columnNota.setCellValueFactory(new PropertyValueFactory<>("note"));
         columnSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
@@ -65,50 +65,16 @@ public class VisualizarHistoricoController implements Initializable {
     }
 
     private void carregarTableView(){
-        obsListHistoricoView.clear();
+        listHistoricoView.clear();
 
-        listHistoricoView = Read.Query("select new model.HistoricoView(a.id, t.id, t.frequencia, d.creditos, h.nota, a.nome," +
+        listHistoricoView = Read.Query("select new model.HistoricoView(a.id, t.id, h.frequencia, d.creditos, h.nota, a.nome," +
                                     " t.codigoTurma, t.semestre, t.ano, h.resultado, d.nome) " +
                 "from Aluno as a, Disciplina as d, Turma as t, Historico as h " +
                 "where a.id = h.alunoId and d.id = t.disciplinaId and t.id = h.turmaId");
 
-        if (listHistoricoView != null) {
-            listHistoricoView.clear();
-        }
         obsListHistoricoView = FXCollections.observableArrayList(listHistoricoView);
 
-        FilteredList<HistoricoView> filteredData = new FilteredList<>(obsListHistoricoView, b -> true);
-
-        txAno.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(objView -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (objView.getAno().toLowerCase().indexOf(lowerCaseFilter) != -1)
-                    return true;
-                else
-                    return false; // Does not match.
-            });
-        });
-        txDisciplina.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(objView -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (objView.getNomeDisciplina().toLowerCase().indexOf(lowerCaseFilter) != -1)
-                    return true;
-                else
-                    return false; // Does not match.
-            });
-        });
-
-        SortedList<HistoricoView> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-        tableView.setItems(sortedData);
+        tableView.setItems(obsListHistoricoView);
 
     }
 
