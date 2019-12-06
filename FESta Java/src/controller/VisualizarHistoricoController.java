@@ -43,7 +43,6 @@ public class VisualizarHistoricoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        userId = 2;
         inicializarTableColumns();
         carregarTableView();
 
