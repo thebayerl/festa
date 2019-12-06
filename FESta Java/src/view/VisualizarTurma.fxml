@@ -36,11 +36,13 @@
       </Label>
       <TableView fx:id="tableViewAluno" layoutX="554.0" layoutY="178.0" prefHeight="626.0" prefWidth="585.0">
         <columns>
-          <TableColumn fx:id="columnAluno" prefWidth="450.0" text="Aluno" />
-            <TableColumn fx:id="columnNota" prefWidth="152.0" text="Nota" />
+          <TableColumn fx:id="columnAluno" prefWidth="146.0" text="Aluno" />
+            <TableColumn fx:id="columnNota" prefWidth="265.0" text="Nota" />
+            <TableColumn fx:id="columnFreq" prefWidth="173.0" text="Frequência" />
         </columns>
       </TableView>
-      <Button fx:id="btLancarNota" layoutX="554.0" layoutY="148.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" text="Lançar Nota" />
-      <TextField fx:id="txNota" layoutX="770.0" layoutY="148.0" prefHeight="25.0" prefWidth="368.0" />
+      <Button fx:id="btLancarNota" layoutX="554.0" layoutY="148.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" text="Lançar" />
+      <TextField fx:id="txNota" layoutX="770.0" layoutY="148.0" prefHeight="25.0" prefWidth="167.0" />
+      <TextField fx:id="txFreq" layoutX="950.0" layoutY="148.0" prefHeight="25.0" prefWidth="177.0" />
    </children>
 </AnchorPane>
