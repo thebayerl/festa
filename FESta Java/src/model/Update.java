@@ -213,7 +213,7 @@ public class Update {
 		return sucesso;
 	}
 
-	public boolean Historico(Integer alunoId, Integer turmaId, Double nota, Integer frequencia, String resultado) {
+	public static boolean Historico(Integer alunoId, Integer turmaId, Double nota, Integer frequencia, String resultado) {
 		boolean sucesso = true;
 
 		Session session = factory.getCurrentSession();
