@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="402.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AtualizaAlunoController">
+    <children>
+      <Label layoutX="161.0" layoutY="29.0" text="Dados do Aluno">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <VBox layoutX="28.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" spacing="15.0">
+         <children>
+            <TextField fx:id="txUserName" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Nome de Usuário" />
+            <PasswordField fx:id="psSenha" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Senha" />
+            <PasswordField fx:id="psSenhaConf" disable="true" prefHeight="25.0" prefWidth="150.0" promptText="Confirmar Senha" />
+            <TextField fx:id="txNome" disable="true" prefHeight="25.0" prefWidth="315.0" promptText="Nome Completo" />
+            <TextField fx:id="txEmail" disable="true" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="601.0" promptText="Email" />
+         </children>
+      </VBox>
+      <VBox layoutX="242.0" layoutY="90.0" prefHeight="200.0" prefWidth="200.0" spacing="15.0">
+         <children>
+            <TextField fx:id="txRG" disable="true" onKeyReleased="#txRgKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="RG" />
+            <TextField fx:id="txCPF" disable="true" onKeyReleased="#txCpfKeyReleased" prefHeight="25.0" prefWidth="150.0" promptText="CPF" />
+            <TextField fx:id="txTelResidencial" disable="true" onKeyReleased="#txTelResReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Residencial" />
+            <TextField fx:id="txTelCelular" disable="true" onKeyReleased="#txTelCelReleased" prefHeight="25.0" prefWidth="150.0" promptText="Tel. Celular" />
+            <DatePicker fx:id="dtNascimento" disable="true" prefHeight="25.0" prefWidth="200.0" promptText="Data de Nascimento" />
+         </children>
+      </VBox>
+      <HBox layoutX="107.0" layoutY="305.0" prefHeight="32.0" prefWidth="271.0" spacing="30.0">
+         <children>
+            <Button fx:id="btAlterar" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Alterar" />
+            <Button fx:id="btCancelar" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancelar" />
+            <Button fx:id="btConfirmar" disable="true" mnemonicParsing="false" prefHeight="10.0" prefWidth="70.0" text="Confirmar" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
