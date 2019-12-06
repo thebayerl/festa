@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -30,15 +31,18 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="79.0" prefHeight="54.0" prefWidth="610.0" spacing="20.0">
+      <HBox alignment="CENTER_RIGHT" layoutX="90.0" layoutY="79.0" prefHeight="54.0" prefWidth="534.0" spacing="20.0">
          <children>
-            <TextField fx:id="txDisciplina" prefHeight="25.0" prefWidth="156.0" promptText="Selecione a Disciplina..." />
-            <TextField fx:id="txAno" prefHeight="25.0" prefWidth="121.0" promptText="Selecione um Ano..." />
+            <TextField fx:id="txDisciplina" prefHeight="25.0" prefWidth="138.0" promptText="Selecione a Disciplina..." />
+            <TextField fx:id="txAno" prefHeight="25.0" prefWidth="68.0" promptText="Ano..." />
             <HBox alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="127.0" spacing="5.0">
                <children>
                   <Label text="Semestre:" />
-                  <RadioButton fx:id="rb1" mnemonicParsing="false" text="1º" />
-                  <RadioButton fx:id="rb2" mnemonicParsing="false" text="2º" />
+                  <RadioButton fx:id="rb1" mnemonicParsing="false" text="1º">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="semestre" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="rb2" mnemonicParsing="false" text="2º" toggleGroup="$semestre" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="54.0" prefWidth="137.0" spacing="5.0">
@@ -46,8 +50,11 @@
                   <Label text="Situação:" />
                   <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="80.0" spacing="3.0">
                      <children>
-                        <RadioButton fx:id="rbAprovado" mnemonicParsing="false" text="Aprovado" />
-                        <RadioButton fx:id="rbReprovado" mnemonicParsing="false" text="Reprovado" />
+                        <RadioButton fx:id="rbAprovado" mnemonicParsing="false" text="Aprovado">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="situacao" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="rbReprovado" mnemonicParsing="false" text="Reprovado" toggleGroup="$situacao" />
                      </children>
                   </VBox>
                </children>
@@ -55,5 +62,6 @@
          </children>
       </HBox>
       <Button fx:id="btBuscar" layoutX="632.0" layoutY="87.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0" text="Buscar" />
+      <Button fx:id="btLimpar" layoutX="14.0" layoutY="87.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="65.0" text="Limpar" />
    </children>
 </AnchorPane>
