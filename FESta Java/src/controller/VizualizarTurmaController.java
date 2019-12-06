@@ -111,18 +111,24 @@ public class VizualizarTurmaController implements Initializable {
     	}else {
     		situacao = "Reprovado";
     	}
-    	
-    	Update.Historico(a.getAlunoId(), a.getTurmaId(), Double.parseDouble(nota), Integer.parseInt(freq), situacao);
+    	Historico h = new Historico(a.getAlunoId(), a.getTurmaId(), Double.parseDouble(nota), Integer.parseInt(freq), situacao);
+    	h.create();
+    	Matriculado m = new Matriculado(a.getAlunoId(), a.getTurmaId());
+    	m.delete();
+    	carregarAlunos();
     }
     
 
     private void carregarAlunos() {
     	 	
-    	List<HistoricoView> listHistoricoView = Read.Query("select new model.HistoricoView(a.id, t.id, h.frequencia, d.creditos, h.nota, a.nome," +
-                " t.codigoTurma, t.semestre, t.ano, h.resultado, d.nome, t.dias) " +
-                "from Aluno as a, Disciplina as d, Turma as t, Historico as h " +
-    			"where d.id = t.disciplinaId and t.id = "+ t.getId());
-    	
+    	List<HistoricoView> listHistoricoView = new ArrayList<HistoricoView>();
+    	List<Matriculado> mat = Read.Query("from Matriculado where turmaId = " + t.getId());
+    	for(Matriculado m : mat){
+    		Aluno a = (Aluno) Read.Query("from Aluno where id = " + m.getAlunoId()).get(0);
+			HistoricoView h = new HistoricoView(m.getAlunoId(), t.getId(), null, null, null,a.getNome(),null,null,null,null,null,null);
+    		listHistoricoView.add(h);
+		}
+
     	System.out.println("sadadasdas"+ listHistoricoView.size());
     	
     	obsAlunos = FXCollections.observableArrayList(listHistoricoView);
