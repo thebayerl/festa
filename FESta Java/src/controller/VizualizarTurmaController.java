@@ -134,7 +134,7 @@ public class VizualizarTurmaController implements Initializable {
     	List<Historico> his = Read.Query("from Historico where turmaId = " + t.getId());
     	for (Historico hi : his){
 			Aluno a = (Aluno) Read.Query("from Aluno where usuarioId = " + hi.getAlunoId()).get(0);
-			HistoricoView h = new HistoricoView(hi.getAlunoId(), t.getId(), hi.getFrequencia(), null, hi.getNota(), a.getNome(),null,null,null,null,null);
+			HistoricoView h = new HistoricoView(hi.getAlunoId(), t.getId(), hi.getFrequencia(), null, hi.getNota(), a.getNome(),null,null,null,hi.getResultado(),null);
 			listHistoricoView.add(h);
 		}
 
