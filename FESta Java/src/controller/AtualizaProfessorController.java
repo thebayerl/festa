@@ -48,7 +48,6 @@ public class AtualizaProfessorController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		// TODO
-		userId = 101;
 		inicializarTextMasks();
 		inicializarEmptyValidator();
 		inicializarRegexValidator();
