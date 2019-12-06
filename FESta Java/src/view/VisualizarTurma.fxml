@@ -39,7 +39,7 @@
           <TableColumn fx:id="columnAluno" prefWidth="131.0" text="Aluno" />
             <TableColumn fx:id="columnNota" minWidth="0.0" prefWidth="87.0" text="Nota" />
             <TableColumn fx:id="columnFreq" prefWidth="79.0" text="Frequência" />
-            <TableColumn prefWidth="75.0" text="Situação" />
+            <TableColumn fx:id="columnSituacao" prefWidth="75.0" text="Situação" />
         </columns>
       </TableView>
       <Button fx:id="btLancarNota" layoutX="474.0" layoutY="148.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Lançar" />

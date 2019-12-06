@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.CadastrarAluno;
+import view.CadastrarCurso;
+import view.CadastrarDepartamento;
 import view.CadastrarDisciplina;
 import view.CadastrarProfessor;
 import view.CadastrarTurma;
@@ -21,11 +23,21 @@ public class TelaSecretarioController {
     @FXML private Button btCadastrarDisciplina;
     @FXML private Button btCadastrarTurma;
     @FXML private Button btVisualizarTurma;
+    @FXML private Button btCadastrarCurso;
+    @FXML private Button btCadastrarDepartamento;
     
     
     @FXML
     void initialize() {
         
+    	this.btCadastrarDepartamento.setOnMouseClicked((MouseEvent e)->{    		
+            this.initializeNewScreen(new CadastrarDepartamento(), "Cadastrar Departamento");
+         });
+    	
+    	this.btCadastrarCurso.setOnMouseClicked((MouseEvent e)->{    		
+            this.initializeNewScreen(new CadastrarCurso(), "Cadastrar Curso");
+         });
+    	
     	this.btCadastrarAluno.setOnMouseClicked((MouseEvent e)->{    		
            this.initializeNewScreen(new CadastrarAluno(), "Cadastrar Aluno");
         });
