@@ -22,7 +22,6 @@ public class TelaSecretarioController {
     @FXML private Button btCadastrarAluno;
     @FXML private Button btCadastrarDisciplina;
     @FXML private Button btCadastrarTurma;
-    @FXML private Button btVisualizarTurma;
     @FXML private Button btCadastrarCurso;
     @FXML private Button btCadastrarDepartamento;
     
@@ -53,11 +52,7 @@ public class TelaSecretarioController {
     	this.btCadastrarTurma.setOnMouseClicked((MouseEvent e)->{
     		this.initializeNewScreen(new CadastrarTurma(), "Cadastrar Turma");
         });
-    	
-    	this.btVisualizarTurma.setOnMouseClicked((MouseEvent e)->{
-    		this.initializeNewScreen(new VisualizarTurma(), "Visualizar Turma");
-        });
-    	    	
+    	    	    	
     }
   
     // inicializa a tela passada como parâmetro
