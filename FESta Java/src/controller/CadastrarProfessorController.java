@@ -565,7 +565,7 @@ public class CadastrarProfessorController implements Initializable {
             Usuario usuario = Read.getUsuario(p.getId().toString(), null, null, null, null).get(0);
 
             String matricula =String.format("%04d",usuario.getId()) + String.format("%02d",cursoId);
-            Update.Professor(professor.getUsuarioId(), nome, formacao, cursoId);
+            Update.Professor(professor.getUsuarioId(), nome,matricula, formacao, cursoId);
             Update.Usuario(usuario.getId(), username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento);
 
             Session session = Read.factory.getCurrentSession();

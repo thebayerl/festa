@@ -270,7 +270,7 @@ public class AtualizaProfessorController implements Initializable {
 			String nome = txNome.getText();
 			LocalDate dataNascimento = dtNascimento.getValue();
 
-			Update.Professor(userId, nome, null, null);
+			Update.Professor(userId, nome, null, null,null);
 			Update.Usuario(userId, username, senha, rg, cpf, email, telCelular, telResidencial, dataNascimento.toString());
 
 			Alert alert = new Alert(AlertType.INFORMATION);
