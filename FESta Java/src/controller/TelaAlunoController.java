@@ -7,18 +7,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import view.CadastrarAluno;
 import view.InscricaoTurma;
+import view.InscricaoTurmas;
 import view.VisualizarTurma;
 
 public class TelaAlunoController {
 	 
-	    @FXML
-	    private Button btInscricaoTurma;
-
-	    @FXML
-	    private Button btVerMinhasTurmas;
-	    
-	    @FXML
-	    private VBox layoutPrincipalTelaAluno;
+	    @FXML  private Button btInscricaoTurma;
+	    @FXML  private Button btVerMinhasTurmas;	    
+	    @FXML  private VBox layoutPrincipalTelaAluno;
 
 	    @FXML
 	    void initialize() {
@@ -36,10 +32,10 @@ public class TelaAlunoController {
 	    
 	    private void exibeTelaInscricao() {	    		    
 	    	
-	    	InscricaoTurma telaInscricaoTurma = new InscricaoTurma();
+	    	InscricaoTurmas telaInscricaoTurmas = new InscricaoTurmas();
 	    	
 	    	try {
-				telaInscricaoTurma.start(new Stage());
+				telaInscricaoTurmas.start(new Stage());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

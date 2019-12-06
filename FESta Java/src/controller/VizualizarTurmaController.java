@@ -7,9 +7,13 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.*;
 import org.hibernate.Session;
@@ -27,61 +31,141 @@ import java.util.logging.Logger;
 
 public class VizualizarTurmaController implements Initializable {
 
-    @FXML private ListView<String> listViewTurmas;
+    //@FXML private ListView<String> listViewTurmas;
+	
+	@FXML private TableView<TurmaView> tableViewTurma;
+	@FXML private TableView<HistoricoView> tableViewAluno;
+	@FXML private TableColumn<?, ?> columnNumAlunos;
+	@FXML private TableColumn<?, ?> columnAluno;
+	@FXML private TableColumn<?, ?> columnNota;
+    @FXML private TableColumn<TurmaView, String> columnDisciplina;
+    @FXML private TableColumn<TurmaView, String> columnSala;
+    @FXML private TableColumn<TurmaView, String> columnDias;
+    @FXML private TableColumn<TurmaView, String> columnHorario;
+    @FXML private TextField txPesquisar;
+    @FXML private Button btSelecionarTurma;
+    @FXML private Button btLancarNota;
+    @FXML private TextField txNota;
 
-    private List<Matriculado> listMatriculados = new ArrayList<>();
 
-    private List<Turma> listTurmas = new ArrayList<>();
-    private List<String> listTurmasStr = new ArrayList<>();
-    private ObservableList<String> obsTurmas;
+    //private List<Turma> listTurmas = new ArrayList<>();
+    //private List<String> listTurmasStr = new ArrayList<>();
+    private ObservableList<TurmaView> obsTurmas;
+    private ObservableList<HistoricoView> obsAlunos;
 
-    private List<Professor> listProfessor = new ArrayList<>();
-    private ObservableList<Professor> obsProfessor;
+    //private List<Professor> listProfessor = new ArrayList<>();
+    //private ObservableList<Professor> obsProfessor;
 	    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    	
     	carregarTurmas();
+    	
+    	btLancarNota.setOnMouseClicked((MouseEvent e) -> {
+    	    lancaNota();
+    	});
+    	
+    	btSelecionarTurma.setOnMouseClicked((MouseEvent e) -> {
+    	    selecionaTurma();
+    	});
+	
     }
+    
+    private void inicializarTableColumns(){
+		//columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		columnDisciplina.setCellValueFactory(new PropertyValueFactory<>("disciplinaNome"));
+		//columnProfessor.setCellValueFactory(new PropertyValueFactory<>("professorNome"));
+		columnSala.setCellValueFactory(new PropertyValueFactory<>("codigoSala"));
+		//columnAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
+		//columnSemestre.setCellValueFactory(new PropertyValueFactory<>("semestre"));
+		columnDias.setCellValueFactory(new PropertyValueFactory<>("dias"));
+		columnHorario.setCellValueFactory(new PropertyValueFactory<>("horarios"));
+		//columnMaxAlunos.setCellValueFactory(new PropertyValueFactory<>("maxAlunos"));
+    
+    
+    private void selecionaTurma() {
+    	TurmaView t = tableViewTurma.getSelectionModel().getSelectedItem();
+    	carregarAlunos();
+    }
+    
+    private void lancaNota(){
+    	AlunoView a = tableViewAluno.getSelectionModel().getSelectedItem();
+    	String nota = txNota.getText();
+    }
+    
 
-    public void carregarTurmas() {
+    private void carregarAlunos() {
+    	
+    	List<HistoricoView> listHistoricoView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+				"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+				"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
+				"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.professorId = " + userId);
+    	
+    	obsAlunos = FXCollections.observableArrayList(listHistoricoView);
+        tableViewAluno.setItems(obsAlunos);
+    	
+        FilteredList<HistoricoView> filteredData = new FilteredList<>(obsAlunos, b -> true);
+
+        txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(objView -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (objView.getDisciplinaNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getDias().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getCodigoSala().toLowerCase().indexOf(lowerCaseFilter) != -1)
+                    return true;
+                else
+                    return false; // Does not match.
+            });
+        });
+
+        SortedList<TurmaView> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableViewAluno.comparatorProperty());
+        tableViewAluno.setItems(sortedData);
+    }
+    
+    private void carregarTurmas() {
 
         Usuario user = LoggedUser.getInstance();
-        String alunoId = String.valueOf(user.getId());
+        String userId = String.valueOf(user.getId());
         //String role = user.getRole();
-        listMatriculados = Read.getMatriculado(alunoId, null);
-        String turmaId;
-        for(Matriculado elemento: listMatriculados){
-            turmaId = String.valueOf(elemento.getturmaId());
-            Turma t = Read.getTurma(turmaId,  null,  null,  null,  null,  null,  null, null).get(0);
-            listTurmas.add(t);
+        //listMatriculados = Read.getMatriculado(userId, null);
+        
+        List<TurmaView> listTurmaView = Read.Query("select new model.TurmaView(t.id, t.professorId, t.disciplinaId, t.salaId, " +
+				"t.maxAlunos, p.nome, d.nome, s.codigoSala, t.ano, t.semestre, t.dias, t.horarios, dept.id) " +
+				"from Departamento dept, Turma t, Professor p, Sala s, Disciplina d " +
+				"where t.professorId = p.id and t.disciplinaId = d.id and t.salaId = s.id and d.departamentoId = dept.id and t.professorId = " + userId);
+        
 
-        }
+        obsTurmas = FXCollections.observableArrayList(listTurmaView);
+        tableViewTurma.setItems(obsTurmas);
+        
+        FilteredList<TurmaView> filteredData = new FilteredList<>(obsTurmas, b -> true);
 
-        //listTurmas = Read.getTurma(null, null, null, null, null, null, null, null);
-        List<String> professores = new ArrayList<>();
+        txPesquisar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(objView -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
 
-        SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Sala.class).buildSessionFactory();
-        Session session = factory.getCurrentSession();
+                if (objView.getDisciplinaNome().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getDias().toLowerCase().indexOf(lowerCaseFilter) != -1 ||
+                        objView.getCodigoSala().toLowerCase().indexOf(lowerCaseFilter) != -1)
+                    return true;
+                else
+                    return false; // Does not match.
+            });
+        });
 
-        try {
-            session.beginTransaction();
-            professores = session.createQuery("select p.nome from Professor p, Turma t where p.id = t.professorId").getResultList();
-            session.getTransaction().commit();
-        }
-        finally {
-            session.close();
-        }
-
-        for (int i = 0; i < listTurmas.size(); i++){
-            listTurmasStr.add("Professor: " + professores.get(i)
-                    + "  Semestre: " +  listTurmas.get(i).getSemestre()
-                    + "  Ano: " + listTurmas.get(i).getAno()
-                    + "  Qnt. Alunos: " +  listTurmas.get(i).getMaxAlunos());
-        }
-
-        obsTurmas = FXCollections.observableArrayList(listTurmasStr);
-        listViewTurmas.setItems(obsTurmas);
+        SortedList<TurmaView> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableViewTurma.comparatorProperty());
+        tableViewTurma.setItems(sortedData);
+        
     }
 
     public void fecha(){
