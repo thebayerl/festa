@@ -165,6 +165,9 @@ public class Update {
 				if(codigoDisciplina != null){
 					obj.setcodigoDisciplina(codigoDisciplina);
 				}
+				if(departamentoId != null){
+					obj.setDepartamentoId(departamentoId);
+				}
 			}
 			
 			// finalizando transação

@@ -125,7 +125,7 @@ public class CadastrarDisciplinaController implements Initializable {
         emptyValidator.registerValidator(comboBoxDepartamento, Validator.createEmptyValidator(comboBoxDepartamento.getPromptText()));
         emptyValidator.registerValidator(comboBoxCreditos, Validator.createEmptyValidator(comboBoxCreditos.getPromptText()));
 
-        regexValidator.registerValidator(txNome, Validator.createRegexValidator(txNome.getPromptText(), "[a-z A-Z\\u00C0-\\u00FF]{0,50}", Severity.ERROR));
+        regexValidator.registerValidator(txNome, Validator.createRegexValidator(txNome.getPromptText(), "[a-z A-Z 0-9\\u00C0-\\u00FF]{0,50}", Severity.ERROR));
         regexValidator.registerValidator(txCodigoDisciplina, Validator.createRegexValidator(txCodigoDisciplina.getPromptText(), "\\S{6}", Severity.ERROR));
     }
 
@@ -457,6 +457,7 @@ public class CadastrarDisciplinaController implements Initializable {
             limpaCampos();
             desabilitaCampos();
             carregarTableView();
+            carregarPrerequisitos();
         } catch (Exception e){
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     e.getMessage(),

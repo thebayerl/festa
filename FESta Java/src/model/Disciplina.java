@@ -121,7 +121,7 @@ public class Disciplina {
 		return departamentoId;
 	}
 
-	public void setDepartamentoId(int departamento) {
+	public void setDepartamentoId(int departamentoId) {
 		this.departamentoId = departamentoId;
 	}
 
